@@ -21,7 +21,7 @@ class PDFParser(object):
 			print(str(e))
 		return text
 
-	def pdf_to_text(self, pdf_f_name, in_dir = '/data/test_PDFs/', out_dir = '/data/test_TXTs/'):
+	def pdf_to_text(self, pdf_f_name, in_dir, out_dir):
 		
 		if not os.path.exists('..' + in_dir + pdf_f_name):
 			raise OSError("'{}' does not exist!".format(pdf_f_name))
