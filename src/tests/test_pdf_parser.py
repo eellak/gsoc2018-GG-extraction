@@ -10,8 +10,6 @@ class PDFParserTest(unittest.TestCase):
 		self.test_txts_dir = '/data/test_TXTs/'
 
 	def tearDown(self): 
-		
-		print(os.getcwd())
 
 		# Remove all test texts
 		txt_list = os.listdir('..' + self.test_txts_dir)

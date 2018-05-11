@@ -38,9 +38,9 @@ class PDFParser(object):
 			
 			# Convert
 			cmd = 'pdf2txt.py {} > {}'.format(rel_in, rel_out)
-			print("'{}' -> '{}' (...) ".format(pdf_f_name, txt_f_name))
+			print("'{}' -> '{}' (...)".format(pdf_f_name, txt_f_name), end="")
 			call(cmd, shell=True)
-			print("'{}': DONE.".format(txt_f_name))
+			print(": DONE.")
 
 		# Read .txt locally
 		text = None
