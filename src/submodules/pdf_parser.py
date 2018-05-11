@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import os
+from subprocess import call
 from glob import glob
 from re import escape
 
@@ -12,31 +13,38 @@ class PDFParser(object):
 
 	# Define custom getter functions
 	# ... 
-		
-	def pdf_to_txt(self, in_dir = '../data/test_PDFs/'):
-		
-		os.chdir(in_dir)
-		
-		PDFs = glob('*.pdf'.format(in_dir))
 	
-		# print(PDFs)
-		print("Converting [../data/PDFs] -> [../data/TXTs] ")
+	def get_pdf_text(self, pdf_f_name, in_dir, out_dir):
+		try:
+			text = self.pdf_to_text(pdf_f_name, in_dir, out_dir)
+		except OSError as e:
+			print(str(e))
+		return text
+
+	def pdf_to_text(self, pdf_f_name, in_dir = '/data/test_PDFs/', out_dir = '/data/test_TXTs/'):
 		
-		for pdf in PDFs:
+		if not os.path.exists('..' + in_dir + pdf_f_name):
+			raise OSError("'{}' does not exist!".format(pdf_f_name))
+		
+		# Get text file name 
+		txt_f_name = pdf_f_name.strip('.pdf') + '.txt'
+		
+		if os.path.exists('..' + out_dir + txt_f_name):
+			print("'{}' already exists! Fetching text anyway...".format(txt_f_name))
+		else:
+
+			rel_in =  '..' + in_dir + escape(pdf_f_name)
+			rel_out = '..' + out_dir + escape(txt_f_name)
 			
-			txt = pdf.strip('.pdf') + '.txt'
-			
-			# Escape spaces etc. for greek char formatting support
-			in_pdf = escape(pdf)
-			out_txt = '../test_TXTs/' + escape(txt)
-			
-			if not os.path.exists('../test_TXTs/' + txt):
-				os.system('pdf2txt.py {} > {}'.format(in_pdf, out_txt))
-			else:
-				print("File {} already exists.".format(txt))
-		
-		print("DONE!")
-		
-		os.chdir(self.src_root)
-		
-		return
+			# Convert
+			cmd = 'pdf2txt.py {} > {}'.format(rel_in, rel_out)
+			print("'{}' -> '{}' (...) ".format(pdf_f_name, txt_f_name))
+			call(cmd, shell=True)
+			print("'{}': DONE.".format(txt_f_name))
+
+		# Read .txt locally
+		text = None
+		with open('..' + out_dir + txt_f_name) as txt_file:
+			text = txt_file.read()
+
+		return text
