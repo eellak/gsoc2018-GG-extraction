@@ -1,5 +1,5 @@
 from context import submodules, unittest, call, os
-from submodules.pdf_parser import PDFParser
+from submodules.parser import PDFParser
 
 
 class PDFParserTest(unittest.TestCase):
