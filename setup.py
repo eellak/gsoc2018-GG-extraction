@@ -1,18 +1,88 @@
+import sqlite3
 import os
+from shutil import rmtree
 import errno
-import sys
+from sys import argv as args
 import platform
 import zipfile
 from subprocess import call 
 from src.utilities.helper import Helper
 
-# , ... 
-DEPENDENCIES = ['selenium', "pdfminer.six"]
 
-# class DBInitializer:
-#   ...
+def install_dependencies(DEPENDENCIES = ['selenium', 'bs4']):
+    # Check if pip is installed 
+    try:
+        import pip
+    except ImportError as e:
+        raise e
+    
+    if(len(DEPENDENCIES)>1):
+        # Write to requirements file
+        with open('requirements', "w") as out_file:
+            out_file.write("\n".join(DEPENDENCIES))
+        
+        # Make install cmd        
+        cmd = 'pip install -r requirements'
+        
+        # pip install 
+        call(cmd, shell=True)
 
-def download_latest_chromedriver_release():
+        # Remove requirements file
+        rmv_reqs_cmd = 'rm -f requirements'
+        call(rmv_reqs_cmd, shell=True)
+
+    else:
+        # Make install cmd        
+        cmd = "pip install {}".format(DEPENDENCIES)
+        
+        # pip install 
+        call(cmd, shell=True)
+
+def init_db():
+    if len(args) > 1:
+        if args[1] == '--delete_db':
+            print("Deleting SQLite db")
+            DBSetup.delete_sqlite_db()
+            return 
+                
+    print("Setting up local SQLite db")
+    DBSetup.setup_sqlite_db()
+
+class DBSetup:    
+    @staticmethod
+    def delete_sqlite_db():
+        try:
+            rmtree('src/dbdata')
+            print("SQLite db has been deleted")
+        except FileNotFoundError as e:
+            print("File has not been found")
+        except PermissionError as e:
+            print("File could not be deleted")
+
+
+    @staticmethod
+    def setup_sqlite_db():
+        # Create the dbdata folder
+        try:
+            os.makedirs('src/dbdata')
+        except OSError as e:
+            if e.errno != errno.EEXIST:
+                raise
+
+        db = sqlite3.connect('src/dbdata/default')
+        cursor = db.cursor()
+
+        # Executes the default.sql to create default database schema
+        install_sql = open('install/default.sql', 'r', encoding='utf8').read()
+        cursor.executescript(install_sql)
+
+        db.commit()
+        cursor.close()
+        db.close()
+
+
+def init_chromedriver():
+    '''Download latest chromedriver release'''
     if os.path.isfile('drivers/chromedriver'):
         print('chromedriver is already downloaded')
         return
@@ -55,42 +125,12 @@ def download_latest_chromedriver_release():
         else:
             os.chmod('drivers/chromedriver', 0o755)
     else:
-        print('Downloading chromedriver for selenium failed.')
-
-def install_dependencies():
-    # Check if pip is installed 
-    try:
-        import pip
-    except ImportError as e:
-        raise e
-    
-    
-    if(len(DEPENDENCIES)>1):
-        with open('requirements.txt', "w") as out_file:
-            out_file.write("\n".join(DEPENDENCIES))
-        
-        # Make install cmd        
-        cmd = 'pip install -r requirements.txt'
-        
-        # pip install 
-        call(cmd, shell=True)
-
-        # Remove requirements.txt
-        rmv_reqs_cmd = 'rm -f requirements.txt'
-        call(rmv_reqs_cmd, shell=True)
-
-    else:
-        # Make install cmd        
-        cmd = "pip install {}".format(DEPENDENCIES)
-        
-        # pip install 
-        call(cmd, shell=True)
-    
+        print('Downloading chromedriver for selenium failed.')    
     
 def setup():
     install_dependencies()
-    # db init ...
-    download_latest_chromedriver_release()
+    init_db()
+    init_chromedriver()
 
 if __name__ == '__main__':
     setup()
