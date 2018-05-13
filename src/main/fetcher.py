@@ -238,4 +238,4 @@ class Fetcher:
         # Download issue pdfs
         for year in range(year_start, year_end + 1):
             for i in self.__possible_issues:
-                self.download_all_issues(i, year)
+                self.download_all_issues(i, year)                

@@ -1,0 +1,17 @@
+from context import main, unittest, call, os
+from main.fetcher import Fetcher
+
+class PDFFetcherTest(unittest.TestCase):
+	
+	def setUp(self):
+		self.fetcher = Fetcher("http://www.et.gr/idocs-nph/search/fekForm.html")
+
+	def tearDown(self):
+		pass
+
+	def test_fetching_pdf_issues(self):
+		# Fetch pdfs of 2018
+		self.fetcher.scrape_pdfs(2018, 2018)		
+
+if __name__ == '__main__':
+	unittest.main()
