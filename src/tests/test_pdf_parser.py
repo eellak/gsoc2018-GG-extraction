@@ -1,5 +1,5 @@
-from context import submodules, unittest, call, os
-from submodules.parser import PDFParser
+from context import main, unittest, call, os
+from main.parser import PDFParser
 
 
 class PDFParserTest(unittest.TestCase):
@@ -10,7 +10,6 @@ class PDFParserTest(unittest.TestCase):
 		self.test_txts_dir = '/data/test_TXTs/'
 
 	def tearDown(self): 
-
 		# Remove all test texts
 		txt_list = os.listdir('..' + self.test_txts_dir)
 		for txt in txt_list: 
