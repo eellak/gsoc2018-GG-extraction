@@ -1,6 +1,5 @@
 import sqlite3
 import os
-from shutil import rmtree
 import errno
 from sys import argv as args
 import platform
@@ -52,7 +51,7 @@ class DBSetup:
     @staticmethod
     def delete_sqlite_db():
         try:
-            rmtree('src/dbdata')
+            os.remove('src/data/default')
             print("SQLite db has been deleted")
         except FileNotFoundError as e:
             print("File has not been found")
@@ -62,14 +61,16 @@ class DBSetup:
 
     @staticmethod
     def setup_sqlite_db():
-        # Create the dbdata folder
-        try:
-            os.makedirs('src/dbdata')
-        except OSError as e:
-            if e.errno != errno.EEXIST:
-                raise
+        
+        if not os.path.exists('src/data'):
+            # Create data folder
+            try:
+                os.makedirs('src/data')
+            except OSError as e:
+                if e.errno != errno.EEXIST:
+                    raise
 
-        db = sqlite3.connect('src/dbdata/default')
+        db = sqlite3.connect('src/data/default')
         cursor = db.cursor()
 
         # Executes the default.sql to create default database schema
