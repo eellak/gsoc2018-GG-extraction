@@ -1,4 +1,5 @@
-from context import main, unittest, call, os
+from context import main, unittest, call, os, shutil
+from shutil import rmtree
 from main.fetcher import Fetcher
 
 class PDFFetcherTest(unittest.TestCase):
@@ -7,6 +8,7 @@ class PDFFetcherTest(unittest.TestCase):
 		self.fetcher = Fetcher("http://www.et.gr/idocs-nph/search/fekForm.html")
 
 	def tearDown(self):
+		# rmtree(path/to/download_folder)
 		pass
 
 	def test_fetching_pdf_issues(self):

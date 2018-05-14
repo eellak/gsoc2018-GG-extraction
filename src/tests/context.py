@@ -1,4 +1,6 @@
 import unittest
+import errno
+import shutil
 import os
 import sys
 from subprocess import call
