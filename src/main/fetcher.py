@@ -40,10 +40,10 @@ class Fetcher:
     def set_driver(self, chromeOptions):
         if platform.system() != 'Windows':
             self.__driver = webdriver.Chrome(os.path.join(os.path.join(os.path.dirname(__file__), ".."), "../drivers/chromedriver"),
-                                            chrome_options=chromeOptions)
+                                            options=chromeOptions)
         else:
             self.__driver = webdriver.Chrome(os.path.join(os.path.join(os.path.dirname(__file__), ".."), "../drivers/chromedriver.exe"),
-                                            chrome_options=chromeOptions)
+                                            options=chromeOptions)
 
     def set_download_folder(self, download_dir):
         self.download_folder = os.path.join(os.getcwd(), download_dir)
@@ -224,7 +224,7 @@ class Fetcher:
             download_dir = str(year_start) + '_to_' + str(year_end) + '_' + 'issues'
             download_dir = '../data/' + download_dir
         else:
-            download_dir = '../data/' + 'issues'
+            download_dir = '../data/' + str(year_start) + '_' + 'issues'
 
         self.reset_download_settings(download_dir)
 

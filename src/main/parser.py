@@ -6,7 +6,7 @@ from subprocess import call
 from glob import glob
 from re import escape
 
-class PDFParser(object):
+class Parser(object):
 	
 	def __init__(self):
 		self.src_root = os.getcwd()

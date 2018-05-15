@@ -2,7 +2,7 @@ from context import main, unittest, call, os, shutil
 from shutil import rmtree
 from main.fetcher import Fetcher
 
-class PDFFetcherTest(unittest.TestCase):
+class FetcherTest(unittest.TestCase):
 	
 	def setUp(self):
 		self.fetcher = Fetcher("http://www.et.gr/idocs-nph/search/fekForm.html")

@@ -1,12 +1,12 @@
 from context import main, unittest, call, os, errno, shutil
 from shutil import rmtree
-from main.parser import PDFParser
+from main.parser import Parser
 
 
-class PDFParserTest(unittest.TestCase):
+class ParserTest(unittest.TestCase):
 	
 	def setUp(self):
-		self.parser = PDFParser()
+		self.parser = Parser()
 		self.test_pdfs_dir = '/data/test_PDFs/'
 		self.test_txts_dir = '/data/test_TXTs/'
 		
@@ -18,7 +18,7 @@ class PDFParserTest(unittest.TestCase):
 				raise
 
 	def tearDown(self): 
-		# rmtree('..' + self.test_txts_dir)
+		rmtree('..' + self.test_txts_dir)
 		pass 
 		
 
