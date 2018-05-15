@@ -16,8 +16,7 @@ class Parser(object):
 	def get_simple_pdf_text(self, pdf_f_name, in_dir, out_dir):
 		try:
 			text = self.simple_pdf_to_text(pdf_f_name, in_dir, out_dir)
-		except OSError as e:
-			print(str(e))
+		except OSError:
 			raise
 
 		return text

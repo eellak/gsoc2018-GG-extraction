@@ -40,5 +40,7 @@ class ParserTest(unittest.TestCase):
 		
 		self.assertTrue(all(text is not None for text in texts))
 
+	
+
 if __name__ == '__main__':
 	unittest.main()

@@ -1,5 +1,7 @@
 import time
 import re
+from urllib.request import urlopen
+from openpyxl import load_workbook
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import Select
@@ -20,15 +22,17 @@ from utilities.helper import Helper
 
 class Fetcher:
 
-    __source = ""
+    __pdf_source = ""
+    __paorg_source = ""
     # Holds the id's of the issues that may appear on the search page
     __possible_issues = range(1, 16)
     __driver = None
 
     download_folder = 'pdfs'
 
-    def __init__(self, source):
-        self.__source = source
+    def __init__(self, pdf_source):
+        self.__pdf_source = pdf_source
+        self.__paorg_source = 'http://www.minfin.gr/epopteuomenoi-phoreis'
         self.download_links = []
         self.download_folder = os.path.join(os.getcwd(), self.download_folder)
 
@@ -71,7 +75,7 @@ class Fetcher:
     def download_all_issues(self, type, year):
 
         driver = self.__driver
-        driver.get(self.__source)
+        driver.get(self.__pdf_source)
         print("@@@@@@@@@@@@@@@")
         # Indicates whether or not more searches will be needed to find all results
         additional_issues = True
@@ -238,4 +242,52 @@ class Fetcher:
         # Download issue pdfs
         for year in range(year_start, year_end + 1):
             for i in self.__possible_issues:
-                self.download_all_issues(i, year)                
+                self.download_all_issues(i, year)
+
+    def scrape_paorgs(self, local_files):
+        # From local data 
+        files_location = '../data/NE_resources' 
+        local_PAOrgs = []
+        for file in local_files:
+            file_path = files_location + '/' + file
+            wb = load_workbook(filename=file_path)
+            ws = wb.active
+            # PAOrgs in col C for currently tested xlsx docs
+            PAOrg_col = ws['C']
+            local_PAOrgs = list(set([cell.value for cell in PAOrg_col] + local_PAOrgs))
+
+        # From web data
+        src_html = urlopen(self.__paorg_source)
+        soup = BeautifulSoup(src_html, 'html.parser')
+
+        web_PAOrgs = []
+        ep_foreis_table = soup.find('table', attrs={'border':"0", 'cellpadding':"0", 'cellspacing':"0", 'width':"582"})
+
+        ep_foreis_body = ep_foreis_table.find('tbody')
+        ep_foreis = ep_foreis_body.find_all('tr')
+
+        for row in ep_foreis:
+            cols = row.find_all('td')
+            cols = [elem.text.strip() for elem in cols]
+            
+            # Get non-empty values
+            paorg = [elem for elem in cols if elem]
+            paorg = ''.join(paorg)
+            
+            if '(' in paorg:
+                # Strip any parentheses & their content
+                paorg = re.sub(r'\([^)]*\)', '', paorg)
+                # Trim whitespace left
+                paorg = paorg[:len(paorg)-1]
+
+            web_PAOrgs.append(paorg)
+
+        return list(set(local_PAOrgs + web_PAOrgs))
+
+    def fetch_paorgs(self, local_files):
+        try:
+            PAOrgs = self.scrape_paorgs(local_files)
+        except FileNotFoundError:
+            raise
+
+        return PAOrgs
