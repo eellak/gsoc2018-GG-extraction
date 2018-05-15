@@ -13,16 +13,16 @@ class PDFParser(object):
 
 	# @TODO: Define custom getter functions
 	
-	def get_pdf_text(self, pdf_f_name, in_dir, out_dir):
+	def get_simple_pdf_text(self, pdf_f_name, in_dir, out_dir):
 		try:
-			text = self.pdf_to_text(pdf_f_name, in_dir, out_dir)
+			text = self.simple_pdf_to_text(pdf_f_name, in_dir, out_dir)
 		except OSError as e:
 			print(str(e))
 			raise
 
 		return text
 
-	def pdf_to_text(self, pdf_f_name, in_dir, out_dir):
+	def simple_pdf_to_text(self, pdf_f_name, in_dir, out_dir):
 		if not os.path.exists('..' + in_dir + pdf_f_name):
 			raise OSError("'{}' does not exist!".format(pdf_f_name))
 		

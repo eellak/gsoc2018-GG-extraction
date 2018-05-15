@@ -22,19 +22,19 @@ class PDFParserTest(unittest.TestCase):
 		pass 
 		
 
-	def test_pdf_to_txt(self): 
+	def test_simple_pdf_to_txt(self): 
 		
 		texts = []
 		
-		texts.append(self.parser.get_pdf_text('ΦΕΚ A 1 - 12.01.2016.pdf', 
+		texts.append(self.parser.get_simple_pdf_text('ΦΕΚ A 1 - 12.01.2016.pdf', 
 													  self.test_pdfs_dir, 
 													  self.test_txts_dir))
 
-		texts.append(self.parser.get_pdf_text('ΦΕΚ A 12 - 01.02.2016.pdf', 
+		texts.append(self.parser.get_simple_pdf_text('ΦΕΚ A 12 - 01.02.2016.pdf', 
 													 self.test_pdfs_dir, 
 													 self.test_txts_dir))
 
-		texts.append(self.parser.get_pdf_text('ΦΕΚ A 35 - 02.03.2016.pdf', 
+		texts.append(self.parser.get_simple_pdf_text('ΦΕΚ A 35 - 02.03.2016.pdf', 
 													 self.test_pdfs_dir, 
 													 self.test_txts_dir))
 		
