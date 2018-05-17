@@ -20,27 +20,28 @@ class ParserTest(unittest.TestCase):
 	def tearDown(self): 
 		rmtree('..' + self.test_txts_dir)
 		pass 
-		
+	
+	def test_custom_pdf_to_txt(self):
+		# May take several minutes, depending on work load
+		texts = []
+		texts.append(self.parser.get_custom_pdf_text('..' + self.test_pdfs_dir + 'ΦΕΚ A 1 - 12.01.2016.pdf'))
+		texts.append(self.parser.get_custom_pdf_text('..' + self.test_pdfs_dir + 'ΦΕΚ A 12 - 01.02.2016.pdf'))
+		texts.append(self.parser.get_custom_pdf_text('..' + self.test_pdfs_dir + 'ΦΕΚ A 35 - 02.03.2016.pdf'))
+
+		self.assertTrue(all(text is not None for text in texts))		
 
 	def test_simple_pdf_to_txt(self): 
-		
+		# May take several minutes, depending on work load
 		texts = []
-		
-		texts.append(self.parser.get_simple_pdf_text('ΦΕΚ A 1 - 12.01.2016.pdf', 
-													  self.test_pdfs_dir, 
-													  self.test_txts_dir))
+		texts.append(self.parser.get_simple_pdf_text('..' + self.test_pdfs_dir + 'ΦΕΚ A 1 - 12.01.2016.pdf', 
+													 '..' + self.test_txts_dir + 'ΦΕΚ A 1 - 12.01.2016.txt' ))
+		texts.append(self.parser.get_simple_pdf_text('..' + self.test_pdfs_dir + 'ΦΕΚ A 12 - 01.02.2016.pdf', 
+													 '..' + self.test_txts_dir + 'ΦΕΚ A 12 - 01.02.2016.txt'))
+		texts.append(self.parser.get_simple_pdf_text('..' + self.test_pdfs_dir + 'ΦΕΚ A 35 - 02.03.2016.pdf', 
+													 '..' + self.test_txts_dir + 'ΦΕΚ A 35 - 02.03.2016.txt'))
 
-		texts.append(self.parser.get_simple_pdf_text('ΦΕΚ A 12 - 01.02.2016.pdf', 
-													 self.test_pdfs_dir, 
-													 self.test_txts_dir))
-
-		texts.append(self.parser.get_simple_pdf_text('ΦΕΚ A 35 - 02.03.2016.pdf', 
-													 self.test_pdfs_dir, 
-													 self.test_txts_dir))
-		
 		self.assertTrue(all(text is not None for text in texts))
 
-	
 
 if __name__ == '__main__':
 	unittest.main()
