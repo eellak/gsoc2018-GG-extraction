@@ -284,6 +284,7 @@ class Fetcher:
 
         return list(set(local_PAOrgs + web_PAOrgs))
 
+    # Fetch public administration organizations
     def fetch_paorgs(self, local_files):
         try:
             PAOrgs = self.scrape_paorgs(local_files)
@@ -291,3 +292,8 @@ class Fetcher:
             raise
 
         return PAOrgs
+
+    # Fetch responsibility assignments
+    def fetch_respas():
+        assignment_verbs = []
+        pass 
