@@ -5,7 +5,7 @@ import os
 import sys
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from io import StringIO
-from re import compile, findall, search,escape
+from re import compile, findall, search, escape
 from time import time
 from subprocess import call
 from glob import glob
@@ -26,20 +26,41 @@ from pdfminer.layout import LTTextBoxHorizontal
 from pdfminer.layout import LTChar
 from pdfminer.pdfpage import PDFPage
 
+from difflib import get_close_matches, SequenceMatcher
+
 from utilities.helper import Helper
 
 class Parser(object):
 	
 	def __init__(self):
 		self.src_root = os.getcwd()
+		self.manual_paorg_detect_accuracy = 0.65
 		self.__project_path = os.getcwd()
 		self.__illegal_chars = compile(r"\d+")
 		# char_margin=4, word_margin=0.25, all_texts=True
 		self.laparams = LAParams(line_overlap=2, char_margin=0.5, detect_vertical=False, all_texts=False)
 
-	# @TODO: Functions for segmenting GG text to sections & 
-	# separate decisions. The parser will also extract useful 
-	# metadata for each article of the GG text (e.g. date, signee).
+	# @TODO: Methods for:
+	# - Segmenting GG text to sections & separate decisions. The parser will also extract useful 
+	#   metadata for each article of the GG text (e.g. date, signee).
+	# - Manual annotation/extraction module of PAOrgs & RespAs, inputs: PAOrgs-assignment keys lists
+	
+	# @TODO: Add acronym detection (e.g., currently only supports: 'ΤΕΑΠΑΣΑ', not 'Τ.Ε.Α.Π.Α.Σ.Α.')
+	def get_paorgs_from_txt(self, txt, paorgs_list):
+		matching_paorgs = []
+		txt = txt.replace('-', '').replace('\n', ' ').replace('  ', ' ')
+		consec_capital_regex = compile('([Α-ΩΆ-Ώ][α-ωά-ώΑ-ΩΆ-Ώ]+(?=\s[α-ωά-ώΑ-ΩΆ-Ώ]*\s*[και]*\-*\s*[Α-ΩΆ-Ώ])(?:\s[α-ωά-ώΑ-ΩΆ-Ώ]*\s*[και]*\-*\s*[Α-ΩΆ-Ώ][α-ωά-ώΑ-ΩΆ-Ώ]+)+)')
+		consec_capital_text = findall(consec_capital_regex, txt)
+		
+		for word in consec_capital_text:
+			best_matches = get_close_matches(word.upper(), paorgs_list, cutoff=self.manual_paorg_detect_accuracy)
+			# score = SequenceMatcher(None, word, best_match).ratio()
+			if best_matches:
+				matching_paorgs.append({word:best_matches})
+		return matching_paorgs
+
+	def get_respas_from_txt(self, txt):
+		pass
 
 	# Uses libpoppler's pdfimages tool to extract all images from the pdf and then uses PIL to convert from ppm to jpg
 	# @return A list of image paths extracted from this pdf
