@@ -48,11 +48,14 @@ class Parser(object):
 	# @TODO: Add acronym detection (e.g., currently only supports: 'ΤΕΑΠΑΣΑ', not 'Τ.Ε.Α.Π.Α.Σ.Α.')
 	def get_paorgs_from_txt(self, txt, paorgs_list):
 		matching_paorgs = []
-		txt = txt.replace('-', '').replace('\n', ' ').replace('  ', ' ')
-		consec_capital_regex = compile('([Α-ΩΆ-Ώ][α-ωά-ώΑ-ΩΆ-Ώ]+(?=\s[α-ωά-ώΑ-ΩΆ-Ώ]*\s*[και]*\-*\s*[Α-ΩΆ-Ώ])(?:\s[α-ωά-ώΑ-ΩΆ-Ώ]*\s*[και]*\-*\s*[Α-ΩΆ-Ώ][α-ωά-ώΑ-ΩΆ-Ώ]+)+)')
-		consec_capital_text = findall(consec_capital_regex, txt)
+		# Strip of excess delimiters etc.
+		txt = txt.replace('−\n ', ' ').replace('−\n', '').replace('−', '').replace('− ', ' ').replace('\n ', ' ').replace('\n', ' ').replace('  ', ' ').replace(' και ', ' ').replace(' της ', ' ').replace(' του ', ' ').replace(' των ', ' ').replace(' − ', ' ')
+		# Match consecutive capitalized words possibly signifying PAOrgs
+		possible_paorgs_regex = compile('([Α-ΩΆ-Ώ][α-ωά-ώΑ-ΩΆ-Ώ]+(?=\s[Α-ΩΆ-Ώ])(?:\s[Α-ΩΆ-Ώ][α-ωά-ώΑ-ΩΆ-Ώ]+)+)')
+		possible_paorgs_text = findall(possible_paorgs_regex, txt)
 		
-		for word in consec_capital_text:
+		for word in possible_paorgs_text:
+			print(word)
 			best_matches = get_close_matches(word.upper(), paorgs_list, cutoff=self.manual_paorg_detect_accuracy)
 			# score = SequenceMatcher(None, word, best_match).ratio()
 			if best_matches:
