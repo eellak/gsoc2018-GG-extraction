@@ -254,7 +254,18 @@ class Fetcher:
             ws = wb.active
             # PAOrgs in col C for currently tested xlsx docs
             PAOrg_col = ws['C']
-            local_PAOrgs = list(set([cell.value for cell in PAOrg_col] + local_PAOrgs))
+        
+            for cell in PAOrg_col:
+                paorg = cell.value
+                # Strip paorg of possible acronyms & append them both to list
+                parentheses = re.findall(r'\([^)]*\)', paorg)
+                for parenth_elem in parentheses:
+                    paorg = paorg.replace(parenth_elem, '')
+                    parenth_elem = parenth_elem.replace('(', '').replace(')', '')
+                    local_PAOrgs.append(parenth_elem)
+                local_PAOrgs.append(paorg)
+
+            local_PAOrgs = list(set(local_PAOrgs))
 
         # From web data
         src_html = urlopen(self.__paorg_source)
@@ -270,16 +281,16 @@ class Fetcher:
             cols = row.find_all('td')
             cols = [elem.text.strip() for elem in cols]
             
-            # Get non-empty values
+            # Get paorg (non-empty values)
             paorg = [elem for elem in cols if elem]
             paorg = ''.join(paorg)
             
-            if '(' in paorg:
-                # Strip any parentheses & their content
-                paorg = re.sub(r'\([^)]*\)', '', paorg)
-                # Trim whitespace left
-                paorg = paorg[:len(paorg)-1]
-
+            # Strip paorg of possible acronyms & append them both to list
+            parentheses = re.findall(r'\([^)]*\)', paorg)
+            for parenth_elem in parentheses:
+                paorg = paorg.replace(parenth_elem, '')
+                parenth_elem = parenth_elem.replace('(', '').replace(')', '')
+                web_PAOrgs.append(parenth_elem)
             web_PAOrgs.append(paorg)
 
         return list(set(local_PAOrgs + web_PAOrgs))
