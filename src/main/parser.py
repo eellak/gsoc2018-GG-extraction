@@ -34,7 +34,8 @@ class Parser(object):
 	
 	def __init__(self):
 		self.src_root = os.getcwd()
-		self.manual_paorg_detect_accuracy = 0.65
+		self.standard_paorg_detect_accuracy = 0.65
+		self.acronym_paorg_detect_accuracy = 0.85
 		self.__project_path = os.getcwd()
 		self.__illegal_chars = compile(r"\d+")
 		# char_margin=4, word_margin=0.25, all_texts=True
@@ -45,19 +46,30 @@ class Parser(object):
 	#   metadata for each article of the GG text (e.g. date, signee).
 	# - Manual annotation/extraction module of PAOrgs & RespAs, inputs: PAOrgs-assignment keys lists
 	
-	# @TODO: Add acronym detection (e.g., currently only supports: 'ΤΕΑΠΑΣΑ', not 'Τ.Ε.Α.Π.Α.Σ.Α.')
 	def get_paorgs_from_txt(self, txt, paorgs_list):
 		matching_paorgs = []
 		# Strip of excess delimiters etc.
 		txt = txt.replace('−\n ', ' ').replace('−\n', '').replace('−', '').replace('− ', ' ').replace('\n ', ' ').replace('\n', ' ').replace('  ', ' ').replace(' και ', ' ').replace(' της ', ' ').replace(' του ', ' ').replace(' των ', ' ').replace(' − ', ' ')
+		
+		# Match possible PAOrg acronyms 	
+		possible_paorg_acronyms_regex = compile('([Α-ΩΆ-Ώ](?=\.[Α-ΩΆ-Ώ])(?:\.[Α-ΩΆ-Ώ])+)') 
+		possible_paorg_acronyms = findall(possible_paorg_acronyms_regex, txt)
+		# print(possible_paorg_acronyms)
+		
 		# Match consecutive capitalized words possibly signifying PAOrgs
 		possible_paorgs_regex = compile('([Α-ΩΆ-Ώ][α-ωά-ώΑ-ΩΆ-Ώ]+(?=\s[Α-ΩΆ-Ώ])(?:\s[Α-ΩΆ-Ώ][α-ωά-ώΑ-ΩΆ-Ώ]+)+)')
-		possible_paorgs_text = findall(possible_paorgs_regex, txt)
+		possible_paorgs = findall(possible_paorgs_regex, txt)
 		
-		for word in possible_paorgs_text:
+		possible_paorgs = list(set(possible_paorg_acronyms + possible_paorgs))
+
+		for word in possible_paorgs:
 			print(word)
-			best_matches = get_close_matches(word.upper(), paorgs_list, cutoff=self.manual_paorg_detect_accuracy)
-			# score = SequenceMatcher(None, word, best_match).ratio()
+			if word not in possible_paorg_acronyms:
+				best_matches = get_close_matches(word.upper(), paorgs_list, cutoff=self.standard_paorg_detect_accuracy)
+			else:
+				best_matches = get_close_matches(word.upper(), paorgs_list, cutoff=self.acronym_paorg_detect_accuracy)
+				best_matches += get_close_matches(word.upper().replace('.',''), paorgs_list, cutoff=self.acronym_paorg_detect_accuracy)
+			
 			if best_matches:
 				matching_paorgs.append({word:best_matches})
 		return matching_paorgs
