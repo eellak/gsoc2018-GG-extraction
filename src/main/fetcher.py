@@ -304,7 +304,8 @@ class Fetcher:
 
         return PAOrgs
 
-    # Fetch responsibility assignments
-    def fetch_respas():
+    # Fetch responsibility assignments key - signifiers
+    def fetch_respa_keys():
+        #@TODO: Read from local file & return
         assignment_verbs = []
-        pass 
+        pass
