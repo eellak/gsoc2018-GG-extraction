@@ -48,8 +48,11 @@ class Parser(object):
 	
 	def get_paorgs_from_txt(self, txt, paorgs_list):
 		matching_paorgs = []
-		# Strip of excess delimiters etc.
-		txt = txt.replace('−\n ', ' ').replace('−\n', '').replace('−', '').replace('− ', ' ').replace('\n ', ' ').replace('\n', ' ').replace('  ', ' ').replace(' και ', ' ').replace(' της ', ' ').replace(' του ', ' ').replace(' των ', ' ').replace(' − ', ' ')
+		# Strip of junk
+		txt = txt.replace('−\n', '').replace('-\n', '')\
+			  	 .replace('−', '').replace('-', '').replace('\n', ' ')\
+			     .replace(' και ', ' ').replace(' της ', ' ').replace(' του ', ' ').replace(' των ', ' ')\
+			     .replace('  ', ' ').replace('   ', ' ')
 		
 		# Match possible PAOrg acronyms 	
 		possible_paorg_acronyms_regex = compile('([Α-ΩΆ-Ώ](?=\.[Α-ΩΆ-Ώ])(?:\.[Α-ΩΆ-Ώ])+)') 
@@ -438,7 +441,7 @@ class Parser(object):
 			print("DONE.")
 
 		# Read .txt locally
-		text = None
+		text = ''
 		with open(txt_name) as txt_file:
 			text = txt_file.read()
 
@@ -470,6 +473,7 @@ class Parser(object):
 		temp_pages = []
 
 		# Get the first page's text
+		text = ''
 		text = retstr.getvalue()
 		num_signature_points = 1
 		if 'ΠΕΡΙΕΧΟΜΕΝΑ' in text:
