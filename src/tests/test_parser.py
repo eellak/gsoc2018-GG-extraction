@@ -22,58 +22,47 @@ class ParserTest(unittest.TestCase):
 	def tearDown(self): 
 		rmtree('..' + self.test_txts_dir)
 		pass
-
-	def paorgs_mentioned_in_txt(self, file_name):
-		
-		text =	self.parser.get_simple_pdf_text('..' + self.test_pdfs_dir + file_name + '.pdf', 
-			 								    '..' + self.test_txts_dir + file_name + '.txt')
-		
-		
-		paorgs = self.fetcher.fetch_paorgs(['DIAVGEIA_ORGS.xlsx', 
-				    						'20170615_organosi_mhtrooy_foreon_2017.xlsx'])
-
-		# print(PAOrgs)
-		
-		return self.parser.get_paorgs_from_txt(text, paorgs)
 	
 	def test_get_paorgs_mentioned_in_txt(self):
 		# May take several minutes, depending on work load
-		text_1 = 'ΦΕΚ A 132 - 06.09.2017'
-		text_2 = 'ΦΕΚ A 14 - 05.02.2016'
 		
-		print("Getting paorgs for")
-		# print(text_1)
-		# paorgs_mentioned_in_text_1 = self.paorgs_mentioned_in_txt(text_1)
-		print(text_2)
-		paorgs_mentioned_in_text_2 = self.paorgs_mentioned_in_txt(text_2)
+		def paorgs_mentioned_in_txt(file_name):
+			text =	self.parser.get_simple_pdf_text('..' + self.test_pdfs_dir + file_name + '.pdf', 
+				 								    '..' + self.test_txts_dir + file_name + '.txt')
+			paorgs = self.fetcher.fetch_paorgs(['DIAVGEIA_ORGS.xlsx', 
+					    						'20170615_organosi_mhtrooy_foreon_2017.xlsx'])
 
+			return self.parser.get_paorgs_from_txt(text, paorgs)
+
+		text_1 = '2'
+		print("Getting paorgs for")
+		print(text_1 + '.pdf')
+		paorgs_mentioned_in_text_1 = paorgs_mentioned_in_txt(text_1)
 		print("Results (format: '{mentioned_str_containing_PAOrg: list_of_possible_PAOrgs}'):")
-		# print(text_1, ':\n', paorgs_mentioned_in_text_1)
-		print(text_2, ':\n', paorgs_mentioned_in_text_2)
+		print(text_1, ':\n', paorgs_mentioned_in_text_1)
 
 	def test_custom_pdf_to_txt(self):
 		# May take several minutes, depending on work load
 		texts = []
 		
-		texts.append(self.parser.get_custom_pdf_text('..' + self.test_pdfs_dir + 'ΦΕΚ A 1 - 12.01.2016.pdf'))
-		texts.append(self.parser.get_custom_pdf_text('..' + self.test_pdfs_dir + 'ΦΕΚ A 12 - 01.02.2016.pdf'))
-		texts.append(self.parser.get_custom_pdf_text('..' + self.test_pdfs_dir + 'ΦΕΚ A 35 - 02.03.2016.pdf'))
+		texts.append(self.parser.get_custom_pdf_text('..' + self.test_pdfs_dir + '1.pdf'))
+		# texts.append(self.parser.get_custom_pdf_text('..' + self.test_pdfs_dir + '2.pdf'))
+		# texts.append(self.parser.get_custom_pdf_text('..' + self.test_pdfs_dir + '3.pdf'))
 		
-		self.assertTrue(all(text is not None for text in texts))		
+		self.assertTrue(all(text is not '' for text in texts))		
 
 	def test_simple_pdf_to_txt(self): 
 		# May take several minutes, depending on work load
 		texts = []
-		texts.append(self.parser.get_simple_pdf_text('..' + self.test_pdfs_dir + 'ΦΕΚ A 14 - 05.02.2016.pdf', 
-													 '..' + self.test_txts_dir + 'ΦΕΚ A 14 - 05.02.2016.txt' ))
-		texts.append(self.parser.get_simple_pdf_text('..' + self.test_pdfs_dir + 'ΦΕΚ A 1 - 12.01.2016.pdf', 
-													 '..' + self.test_txts_dir + 'ΦΕΚ A 1 - 12.01.2016.txt' ))
-		texts.append(self.parser.get_simple_pdf_text('..' + self.test_pdfs_dir + 'ΦΕΚ A 12 - 01.02.2016.pdf', 
-													 '..' + self.test_txts_dir + 'ΦΕΚ A 12 - 01.02.2016.txt'))
-		texts.append(self.parser.get_simple_pdf_text('..' + self.test_pdfs_dir + 'ΦΕΚ A 35 - 02.03.2016.pdf', 
-													 '..' + self.test_txts_dir + 'ΦΕΚ A 35 - 02.03.2016.txt'))
-		print(texts[0])
-		self.assertTrue(all(text is not None for text in texts))
+	
+		texts.append(self.parser.get_simple_pdf_text('..' + self.test_pdfs_dir + '2.pdf', 
+		 											 '..' + self.test_txts_dir + '2.txt' ))
+		# texts.append(self.parser.get_simple_pdf_text('..' + self.test_pdfs_dir + '3.pdf', 
+		# 											 '..' + self.test_txts_dir + '3.txt'))
+		# texts.append(self.parser.get_simple_pdf_text('..' + self.test_pdfs_dir + '4.pdf', 
+		# 											 '..' + self.test_txts_dir + '4.txt'))
+		# print(texts[0])
+		self.assertTrue(all(text is not '' for text in texts))
 
 
 if __name__ == '__main__':
