@@ -46,6 +46,12 @@ class Parser(object):
 	#   metadata for each article of the GG text (e.g. date, signee).
 	# - Manual annotation/extraction module of PAOrgs & RespAs, inputs: PAOrgs-assignment keys lists
 	
+	def get_sections_from_txt(self, txt):
+		pass
+
+	def get_decisions_from_txt(self, txt):
+		pass
+
 	def get_paorgs_from_txt(self, txt, paorgs_list):
 		matching_paorgs = []
 		# Strip of junk
@@ -444,6 +450,15 @@ class Parser(object):
 		text = ''
 		with open(txt_name) as txt_file:
 			text = txt_file.read()
+
+		cid_occurs = findall(r'\(cid:[0-9]+\)', text)
+		
+		# Ignore cid occurences for now
+		for cid in cid_occurs:
+			text = text.replace(cid, '')
+			# cid_int = int(''.join(filter(str.isdigit, cid)))
+		
+		text = ' '.join(text.split())
 
 		return text
 

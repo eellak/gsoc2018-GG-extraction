@@ -45,23 +45,24 @@ class ParserTest(unittest.TestCase):
 		# May take several minutes, depending on work load
 		texts = []
 		
-		texts.append(self.parser.get_custom_pdf_text('..' + self.test_pdfs_dir + '1.pdf'))
+		texts.append(self.parser.get_custom_pdf_text('..' + self.test_pdfs_dir + '4.pdf'))
 		# texts.append(self.parser.get_custom_pdf_text('..' + self.test_pdfs_dir + '2.pdf'))
 		# texts.append(self.parser.get_custom_pdf_text('..' + self.test_pdfs_dir + '3.pdf'))
-		
+		print(texts[0])
 		self.assertTrue(all(text is not '' for text in texts))		
 
 	def test_simple_pdf_to_txt(self): 
 		# May take several minutes, depending on work load
 		texts = []
 	
+		# texts.append(self.parser.get_simple_pdf_text('..' + self.test_pdfs_dir + '2.pdf', 
+		#  											 '..' + self.test_txts_dir + '2.txt' ))
 		texts.append(self.parser.get_simple_pdf_text('..' + self.test_pdfs_dir + '2.pdf', 
-		 											 '..' + self.test_txts_dir + '2.txt' ))
-		# texts.append(self.parser.get_simple_pdf_text('..' + self.test_pdfs_dir + '3.pdf', 
-		# 											 '..' + self.test_txts_dir + '3.txt'))
+													 '..' + self.test_txts_dir + '2.txt'))
 		# texts.append(self.parser.get_simple_pdf_text('..' + self.test_pdfs_dir + '4.pdf', 
 		# 											 '..' + self.test_txts_dir + '4.txt'))
 		# print(texts[0])
+		# print(texts[1])
 		self.assertTrue(all(text is not '' for text in texts))
 
 
