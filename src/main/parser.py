@@ -5,7 +5,7 @@ import os
 import sys
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from io import StringIO
-from re import compile, findall, search, escape
+from re import compile, sub, findall, search, escape, DOTALL
 from time import time
 from subprocess import call
 from glob import glob
@@ -42,12 +42,41 @@ class Parser(object):
 		self.laparams = LAParams(line_overlap=2, char_margin=0.5, detect_vertical=False, all_texts=False)
 
 	# @TODO: Methods for:
-	# - Segmenting GG text to sections & separate decisions. The parser will also extract useful 
-	#   metadata for each article of the GG text (e.g. date, signee).
+	# - Segmenting GG text to sections & separate decisions. 
+	# - The parser will also extract useful metadata for each article of the GG text (e.g. date, signee).
 	# - Manual annotation/extraction module of PAOrgs & RespAs, inputs: PAOrgs-assignment keys lists
 	
 	def get_sections_from_txt(self, txt):
-		pass
+		txt = txt.replace('-\n', '').replace('−\n', '').replace('. ', '.')
+
+		dec_contents_key = "ΠΕΡΙΕΧΟΜΕΝΑ\nΑΠΟΦΑΣΕΙΣ"
+		dec_key = "ΑΠΟΦΑΣΕΙΣ"
+		
+		def get_dec_contents():
+			dec_contents = findall(r"{}(.+?){}".format(dec_contents_key, dec_key), txt, flags=DOTALL)
+			if dec_contents:
+				assert(len(dec_contents) == 1)
+				dec_contents = dec_contents[0]
+			return dec_contents
+		
+		def get_dec_summaries(dec_contents):
+			if dec_contents:
+				dec_summaries = findall(r"([Α-ΩΆ-Ώ].*?\.\s?\n)[0-9]?\n?", dec_contents, flags=DOTALL)
+				# Strip of redundant dots
+				dec_summaries = [sub("\.{3,}", "", dec_sum) for dec_sum in dec_summaries]
+			else:
+				dec_summaries = findall(r"{}\n[^\n]+?\n(.+?)\.\n\s*[Α-ΩΆ-Ώ]".format(dec_key), txt, flags=DOTALL)
+			
+			return dec_summaries
+
+		def get_decisions():
+			pass
+
+		dec_contents = get_dec_contents(); 
+		dec_summaries = get_dec_summaries(dec_contents); 
+		
+		# decisions = get_decisions()
+		return dec_contents, dec_summaries
 
 	def get_decisions_from_txt(self, txt):
 		pass
@@ -444,12 +473,11 @@ class Parser(object):
 			cmd = 'pdf2txt.py {} > {}'.format(rel_in, rel_out)
 			print("'{}' -> '{}':".format(file_name, txt_name), end="")
 			call(cmd, shell=True)
-			print("DONE.")
 
 		# Read .txt locally
 		text = ''
-		with open(txt_name) as txt_file:
-			text = txt_file.read()
+		with open(txt_name) as out_file:
+			text = out_file.read()
 
 		cid_occurs = findall(r'\(cid:[0-9]+\)', text)
 		
@@ -458,7 +486,14 @@ class Parser(object):
 			text = text.replace(cid, '')
 			# cid_int = int(''.join(filter(str.isdigit, cid)))
 		
-		text = ' '.join(text.split())
+
+		# Overwrite .txt 
+		with StringIO(text) as in_file, open(txt_name, 'w') as out_file:
+			for line in in_file:
+				if not line.strip(): continue # skip empty lines
+				out_file.write(line)
+		
+		print("DONE.")
 
 		return text
 

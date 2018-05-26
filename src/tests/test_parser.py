@@ -20,17 +20,21 @@ class ParserTest(unittest.TestCase):
 				raise
 
 	def tearDown(self): 
-		rmtree('..' + self.test_txts_dir)
+		#rmtree('..' + self.test_txts_dir)
 		pass
 	
+	def get_txt(self, file_name):
+			return self.parser.get_simple_pdf_text('..' + self.test_pdfs_dir + file_name + '.pdf', 
+												   '..' + self.test_txts_dir + file_name + '.txt')
+
 	def test_get_paorgs_mentioned_in_txt(self):
 		# May take several minutes, depending on work load
 		
 		def paorgs_mentioned_in_txt(file_name):
-			text =	self.parser.get_simple_pdf_text('..' + self.test_pdfs_dir + file_name + '.pdf', 
-				 								    '..' + self.test_txts_dir + file_name + '.txt')
+			text =	self.get_txt(file_name)
+
 			paorgs = self.fetcher.fetch_paorgs(['DIAVGEIA_ORGS.xlsx', 
-					    						'20170615_organosi_mhtrooy_foreon_2017.xlsx'])
+												'20170615_organosi_mhtrooy_foreon_2017.xlsx'])
 
 			return self.parser.get_paorgs_from_txt(text, paorgs)
 
@@ -55,15 +59,45 @@ class ParserTest(unittest.TestCase):
 		# May take several minutes, depending on work load
 		texts = []
 	
-		# texts.append(self.parser.get_simple_pdf_text('..' + self.test_pdfs_dir + '2.pdf', 
-		#  											 '..' + self.test_txts_dir + '2.txt' ))
-		texts.append(self.parser.get_simple_pdf_text('..' + self.test_pdfs_dir + '2.pdf', 
-													 '..' + self.test_txts_dir + '2.txt'))
-		# texts.append(self.parser.get_simple_pdf_text('..' + self.test_pdfs_dir + '4.pdf', 
-		# 											 '..' + self.test_txts_dir + '4.txt'))
+		texts.append(self.get_txt('2'))
+		texts.append(self.get_txt('3'))
+		texts.append(self.get_txt('5'))
+		texts.append(self.get_txt('14'))
+		texts.append(self.get_txt('16'))
+		texts.append(self.get_txt('17'))
+
 		# print(texts[0])
 		# print(texts[1])
 		self.assertTrue(all(text is not '' for text in texts))
+
+	def test_get_sections_from_txt(self):
+		
+		# Issues without contents - only one decision
+		dec_contents_1, dec_summaries_1 = self.parser.get_sections_from_txt(self.get_txt('2'))
+		dec_contents_2, dec_summaries_2 = self.parser.get_sections_from_txt(self.get_txt('3'))
+		dec_contents_3, dec_summaries_3 = self.parser.get_sections_from_txt(self.get_txt('17'))
+		
+		self.assertTrue((not dec_contents_1) and \
+			   			(not dec_contents_2) and \
+			   			(not dec_contents_3))
+		
+		self.assertTrue(dec_summaries_1[0]	== 'Καθορισμός της διαδικασίας εγκατάστασης και \nλειτουργίας των Κέντρων Αποθήκευσης και Διανομής, σύμφωνα με το άρθρο 48ΙΑ του ν.4442/ \n2016 (Α’ 230), και λοιπών συναφών θεμάτων'
+						and dec_summaries_2[0] == 'Αναθεώρηση προτύπων τευχών διακηρύξεων \nανοικτής διαδικασίας για τη σύναψη ηλεκτρονικών δημοσίων συμβάσεων μελετών άνω των ορίων και κάτω των ορίων του ν.4412/2016 (A΄\xa0147), \nμε κριτήριο ανάθεσης την πλέον συμφέρουσα \nαπό οικονομική άποψη προσφορά βάσει βέλτιστης σχέσης ποιότητας - τιμής'
+						and dec_summaries_3[0] == 'Λήψη απόφασης επί της από 28.5.2004 (αριθμ.ημ.Πρωτ.\n2717) καταγγελίας των εταιρειών «ΣΑΡΛΗΣ ΚΟΝΤΕΪΝΕΡ  ΣΕΡΒΙΣΕΣ  Α.Ε.»  και  «ΣΑΡΛΗΣ  ΚΑΙ  ΑΓΓΕΛΟΠΟΥΛΟΣ ΠΡΑΚΤΟΡΕΙΟΝ ΕΠΕ» κατά της Εταιρείας \n«ΟΡΓΑΝΙΣΜΟΣ ΛΙΜΕΝΟΣ ΠΕΙΡΑΙΩΣ Α.Ε.» (ΟΛΠ) για \nπαράβαση των άρθρων 1, 2 ν.703/1977 ΚΑΙ 81, 82 \nΣυνθΕΚ και κατά της Εταιρείας «MEDITERRANEAN \nSHIPPING COMPANY S.A.(MSC) για παράβαση των \nάρθρων 1 ν.703/1977 ΚΑΙ 81 ΣυνθΕΚ')
+
+		# Issues with contents - more than one decisions
+		dec_contents_4, dec_summaries_4 = self.parser.get_sections_from_txt(self.get_txt('5'))
+		dec_contents_5, dec_summaries_5 = self.parser.get_sections_from_txt(self.get_txt('14'))
+		dec_contents_6, dec_summaries_6 = self.parser.get_sections_from_txt(self.get_txt('16'))
+
+		self.assertTrue(dec_contents_4 and \
+			   			dec_contents_5 and \
+			   			dec_contents_6)
+
+		self.assertTrue(len(dec_summaries_4) == 9 and\
+						len(dec_summaries_5) == 6 and\
+						len(dec_summaries_6) == 7)
+
 
 
 if __name__ == '__main__':
