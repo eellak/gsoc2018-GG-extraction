@@ -65,21 +65,20 @@ class Parser(object):
 				# Strip of redundant dots
 				dec_summaries = [sub("\.{3,}", "", dec_sum) for dec_sum in dec_summaries]
 			else:
-				dec_summaries = findall(r"{}\n[^\n]+?\n(.+?)\.\n\s*[Α-ΩΆ-Ώ]".format(dec_key), txt, flags=DOTALL)
-			
+				dec_summaries = findall(r"{}\n\s*(.+?)\.\n\s*[Α-ΩΆ-Ώ()]".format(dec_key), txt, flags=DOTALL)
 			return dec_summaries
-
-		def get_decisions():
-			pass
 
 		dec_contents = get_dec_contents(); 
 		dec_summaries = get_dec_summaries(dec_contents); 
+
 		
 		# decisions = get_decisions()
 		return dec_contents, dec_summaries
 
 	def get_decisions_from_txt(self, txt):
-		pass
+		
+		def get_decisions():
+			pass
 
 	def get_paorgs_from_txt(self, txt, paorgs_list):
 		matching_paorgs = []
