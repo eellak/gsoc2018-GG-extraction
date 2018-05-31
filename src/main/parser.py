@@ -5,11 +5,11 @@ import os
 import sys
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from io import StringIO
-from re import compile, sub, findall, search, escape, DOTALL
+from re import compile, sub, findall, search, escape, DOTALL, match
 from time import time
 from subprocess import call
 from glob import glob
-
+from itertools import zip_longest
 from PIL import Image
 from pdfminer.pdfinterp import PDFResourceManager, PDFPageInterpreter
 from pdfminer.converter import PDFPageAggregator
@@ -64,16 +64,35 @@ class Parser(object):
 				dec_summaries = findall(r"([Α-ΩΆ-Ώ].*?\.\s?\n)[0-9]?\n?", dec_contents, flags=DOTALL)
 				# Strip of redundant dots
 				dec_summaries = [sub("\.{3,}", "", dec_sum) for dec_sum in dec_summaries]
+				# Ignore possible "ΔΙΟΡΘΩΣΗ ΣΦΑΛΜΑΤΩΝ" section
+				dec_summaries = [dec_sum for dec_sum in dec_summaries if 'Διόρθωση' not in dec_sum]
 			else:
+				# Will also contain number e.g. Αριθμ. ...
 				dec_summaries = findall(r"{}\n\s*(.+?)\.\n\s*[Α-ΩΆ-Ώ()]".format(dec_key), txt, flags=DOTALL)
+				assert(len(dec_summaries) == 1)
+
 			return dec_summaries
 
+		def get_dec_nums(dec_summaries):
+			if len(dec_summaries) == 1:
+				dec_nums = {1: [dec_num for dec_num in dec_summaries[0].split('\n') if 'ριθμ.' in dec_num][0]}
+			elif len(dec_summaries) > 1:
+				dec_idxs = []
+				for idx in range(len(dec_summaries)):
+					dec_idxs.append(int(findall("\(({})\)\n".format(idx + 1), txt)[0]))
+				
+				dec_nums = findall("(['A'|'Α']ριθμ\.[^\n]+)\n", txt)
+				dec_nums = dict(zip_longest(dec_idxs, dec_nums))
+
+			return dec_nums
+				
 		dec_contents = get_dec_contents(); 
 		dec_summaries = get_dec_summaries(dec_contents); 
-
+		# Dict containing keys:decision_indeces and values:decision_numbers, 
+		# e.g. '2': 'Aριθμ.Β2−210', '4': None
+		dec_nums = get_dec_nums(dec_summaries)
 		
-		# decisions = get_decisions()
-		return dec_contents, dec_summaries
+		return dec_contents, dec_summaries, dec_nums
 
 	def get_decisions_from_txt(self, txt):
 		
