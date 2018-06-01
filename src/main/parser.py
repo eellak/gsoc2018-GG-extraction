@@ -41,7 +41,12 @@ class Parser(object):
 		# char_margin=4, word_margin=0.25, all_texts=True
 		self.laparams = LAParams(line_overlap=2, char_margin=0.5, detect_vertical=False, all_texts=False)
 		self.dec_contents_key = "ΠΕΡΙΕΧΟΜΕΝΑ\nΑΠΟΦΑΣΕΙΣ"
-		self.dec_key = "ΑΠΟΦΑΣΕΙΣ"
+		self.decs_key = "ΑΠΟΦΑΣΕΙΣ"
+		# Must be expanded (lots of variants)
+		self.dec_prereq_keys = ["Έχοντας υπόψη:", "Έχοντας υπ\' όψη:"]
+		self.dec_init_keys = ["αποφασίζουμε:", "αποφασίζουμε τα ακόλουθα:", "αποφασίζουμε τα εξής:",
+							  "αποφασίζει:", "αποφασίζει τα ακόλουθα:", "αποφασίζει τα εξής:", 
+							  "αποφασίζεται:"]
 
 	# @TODO: Methods for:
 	# - Segmenting GG text to sections & separate decisions. 
@@ -59,7 +64,7 @@ class Parser(object):
 
 	def get_dec_contents_from_txt(self, txt):
 		txt = self.clean_up_for_dec_related_getter(txt)
-		dec_contents = findall(r"{}(.+?){}".format(self.dec_contents_key, self.dec_key), txt, flags=DOTALL)
+		dec_contents = findall(r"{}(.+?){}".format(self.dec_contents_key, self.decs_key), txt, flags=DOTALL)
 		if dec_contents:
 			assert(len(dec_contents) == 1)
 			dec_contents = dec_contents[0]
@@ -76,32 +81,54 @@ class Parser(object):
 			dec_summaries = [dec_sum for dec_sum in dec_summaries if 'Διόρθωση' not in dec_sum]
 		else:
 			# Will also contain number e.g. Αριθμ. ...
-			dec_summaries = findall(r"{}\n\s*(.+?)\.\n\s*[Α-ΩΆ-Ώ()]".format(self.dec_key), txt, flags=DOTALL)
+			dec_summaries = findall(r"{}\n\s*(.+?)\.\n\s*[Α-ΩΆ-Ώ()]".format(self.decs_key), txt, flags=DOTALL)
 			assert(len(dec_summaries) == 1)
 		return dec_summaries
 
 	def get_dec_nums_from_txt(self, txt, dec_summaries):
 		""" Must be fed 'dec_summaries' as returned by get_dec_summaries() """
 		txt = self.clean_up_for_dec_related_getter(txt)
-		if len(dec_summaries) == 1:
-			dec_nums = {1: [dec_num for dec_num in dec_summaries[0].split('\n') if 'ριθμ.' in dec_num][0]}
-		elif len(dec_summaries) > 1:
-			dec_idxs = []
-			for idx in range(len(dec_summaries)):
-				dec_idxs.append(int(findall("\(({})\)\n".format(idx + 1), txt)[0]))
-			
-			dec_nums = findall("(['A'|'Α']ριθμ\.[^\n]+)\n", txt)
-			dec_nums = dict(zip_longest(dec_idxs, dec_nums))
+		dec_nums = []
+		if dec_summaries:
+			if len(dec_summaries) == 1:
+				dec_nums = {1: [dec_num for dec_num in dec_summaries[0].split('\n') if 'ριθμ.' in dec_num][0]}
+			elif len(dec_summaries) > 1:
+				dec_idxs = []
+				for idx in range(len(dec_summaries)):
+					dec_idxs.append(int(findall("\(({})\)\n".format(idx + 1), txt)[0]))
+				
+				dec_nums = findall("(['A'|'Α']ριθμ\.[^\n]+)\n", txt)
+				dec_nums = dict(zip_longest(dec_idxs, dec_nums))
 		return dec_nums
 
-	def get_decisions_from_txt(self, txt):
-		
-		def get_decisions():
-			pass
+	def get_decisions_from_txt(self, txt, dec_num):
+		""" Must be fed 'dec_contents' as returned by get_dec_contents() """
+		txt = self.clean_up_for_dec_related_getter(txt)
+
+		def get_dec_prereqs():
+			dec_prereqs = {}
+			# Must be expanded (lots of variants)
+			prereq_bodies = findall(r"(?:{}|{})(.+?)(?:{}|{}|{}|{}|{}|{}|{})".format(self.dec_prereq_keys[0], self.dec_prereq_keys[1],
+											   	 	   					   	   		 self.dec_init_keys[0], self.dec_init_keys[1], self.dec_init_keys[2],
+											   	 	   					   	   		 self.dec_init_keys[3], self.dec_init_keys[4], self.dec_init_keys[5],
+											   	 	   					   	   		 self.dec_init_keys[6]), 
+											 			   	   		  				 txt, flags=DOTALL)
+			if(len(prereq_bodies) == dec_num):
+				for dec_idx in range(dec_num):
+					dec_prereqs[dec_idx + 1] = prereq_bodies[dec_idx]
+			elif (len(prereq_bodies) < dec_num):
+				# Just return detected ones as list (without index correspondence)
+				dec_prereqs = prereq_bodies
+
+			return dec_prereqs
+
+		dec_prereqs = get_dec_prereqs()
+		decisions = []
+			
+		print(dec_prereqs)
 
 	def get_paorgs_from_txt(self, txt, paorgs_list):
 		matching_paorgs = []
-		# Strip of junk
 		txt = self.clean_up_for_paorgs_getter(txt)
 		
 		# Match possible PAOrg acronyms 	

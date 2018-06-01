@@ -75,7 +75,7 @@ class ParserTest(unittest.TestCase):
 		################################
 		#  Issues w only one decision  #
 		################################
-		
+
 		txt_1 = self.get_txt('2')
 		txt_2 = self.get_txt('3')
 		txt_3 = self.get_txt('17')
@@ -94,7 +94,9 @@ class ParserTest(unittest.TestCase):
 		dec_nums_2 = self.parser.get_dec_nums_from_txt(txt_2, dec_summaries_2)
 		dec_nums_3 = self.parser.get_dec_nums_from_txt(txt_3, dec_summaries_3)
 		
-		# dec_prereqs = get_dec_prereqs()
+		# decision_1 = get_decisions_from_txt(txt_1, dec_contents_1)
+		# decision_2 = get_decisions_from_txt(txt_2, dec_contents_2)
+		# decision_3 = get_decisions_from_txt(txt_3, dec_contents_3)
 		
 		self.assertTrue((not dec_contents_1) and \
 			   			(not dec_contents_2) and \
@@ -104,7 +106,7 @@ class ParserTest(unittest.TestCase):
 						and dec_summaries_2[0] == 'Αριθμ.απόφ.134/2017 \nΑναθεώρηση προτύπων τευχών διακηρύξεων \nανοικτής διαδικασίας για τη σύναψη ηλεκτρονικών δημοσίων συμβάσεων μελετών άνω των ορίων και κάτω των ορίων του ν.4412/2016 (A΄\xa0147), \nμε κριτήριο ανάθεσης την πλέον συμφέρουσα \nαπό οικονομική άποψη προσφορά βάσει βέλτιστης σχέσης ποιότητας - τιμής'
 						and dec_summaries_3[0] == 'Αριθμ.  οικ.132\nΛήψη απόφασης επί της από 28.5.2004 (αριθμ.ημ.Πρωτ.\n2717) καταγγελίας των εταιρειών «ΣΑΡΛΗΣ ΚΟΝΤΕΪΝΕΡ  ΣΕΡΒΙΣΕΣ  Α.Ε.»  και  «ΣΑΡΛΗΣ  ΚΑΙ  ΑΓΓΕΛΟΠΟΥΛΟΣ ΠΡΑΚΤΟΡΕΙΟΝ ΕΠΕ» κατά της Εταιρείας \n«ΟΡΓΑΝΙΣΜΟΣ ΛΙΜΕΝΟΣ ΠΕΙΡΑΙΩΣ Α.Ε.» (ΟΛΠ) για \nπαράβαση των άρθρων 1, 2 ν.703/1977 ΚΑΙ 81, 82 \nΣυνθΕΚ και κατά της Εταιρείας «MEDITERRANEAN \nSHIPPING COMPANY S.A.(MSC) για παράβαση των \nάρθρων 1 ν.703/1977 ΚΑΙ 81 ΣυνθΕΚ')
 
-		print(dec_nums_1); print(dec_nums_2); print(dec_nums_3)
+		# print(dec_nums_1); print(dec_nums_2); print(dec_nums_3)
 
 		################################
 		#    Issues w many decisions   #
@@ -128,6 +130,10 @@ class ParserTest(unittest.TestCase):
 		dec_nums_5 = self.parser.get_dec_nums_from_txt(txt_5, dec_summaries_5)
 		dec_nums_6 = self.parser.get_dec_nums_from_txt(txt_6, dec_summaries_6)
 
+		# decision_4 = get_decisions_from_txt(txt_4, dec_contents_4)
+		# decision_5 = get_decisions_from_txt(txt_5, dec_contents_5)
+		# decision_6 = get_decisions_from_txt(txt_6, dec_contents_6)
+
 		self.assertTrue(dec_contents_4 and \
 			   			dec_contents_5 and \
 			   			dec_contents_6)
@@ -136,8 +142,15 @@ class ParserTest(unittest.TestCase):
 						len(dec_summaries_5) == 6 and\
 						len(dec_summaries_6) == 5)
 
-		print(dec_nums_4); print(dec_nums_5); print(dec_nums_6)
+		# print(dec_nums_4); print(dec_nums_5); print(dec_nums_6)
 
+		print('text_1 prereqs:'); self.parser.get_decisions_from_txt(txt_1, len(dec_summaries_1))
+		print('text_2 prereqs:'); self.parser.get_decisions_from_txt(txt_2, len(dec_summaries_2))
+		print('text_3 prereqs:'); self.parser.get_decisions_from_txt(txt_3, len(dec_summaries_3))
+
+		print('text_4 prereqs:'); self.parser.get_decisions_from_txt(txt_4, len(dec_summaries_4))
+		print('text_5 prereqs:'); self.parser.get_decisions_from_txt(txt_5, len(dec_summaries_5))
+		print('text_6 prereqs:'); self.parser.get_decisions_from_txt(txt_6, len(dec_summaries_6))
 
 if __name__ == '__main__':
 	unittest.main()
