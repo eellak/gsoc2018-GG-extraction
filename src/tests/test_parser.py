@@ -72,10 +72,29 @@ class ParserTest(unittest.TestCase):
 
 	def test_get_sections_from_txt(self):
 		
-		# Issues without contents - only one decision
-		dec_contents_1, dec_summaries_1, dec_nums_1 = self.parser.get_sections_from_txt(self.get_txt('2'))
-		dec_contents_2, dec_summaries_2, dec_nums_2 = self.parser.get_sections_from_txt(self.get_txt('3'))
-		dec_contents_3, dec_summaries_3, dec_nums_3 = self.parser.get_sections_from_txt(self.get_txt('17'))
+		################################
+		#  Issues w only one decision  #
+		################################
+		
+		txt_1 = self.get_txt('2')
+		txt_2 = self.get_txt('3')
+		txt_3 = self.get_txt('17')
+
+		dec_contents_1 = self.parser.get_dec_contents_from_txt(txt_1); 
+		dec_contents_2 = self.parser.get_dec_contents_from_txt(txt_2);
+		dec_contents_3 = self.parser.get_dec_contents_from_txt(txt_3);  
+		
+		dec_summaries_1 = self.parser.get_dec_summaries_from_txt(txt_1, dec_contents_1); 
+		dec_summaries_2 = self.parser.get_dec_summaries_from_txt(txt_2, dec_contents_2);
+		dec_summaries_3 = self.parser.get_dec_summaries_from_txt(txt_3, dec_contents_3);
+
+		# Dictionaries containing keys: decision_indeces & values: decision_numbers, 
+		# e.g. 2: 'Aριθμ.Β2−210', 4: None, 3: 'Αριθμ. blah blah blah'
+		dec_nums_1 = self.parser.get_dec_nums_from_txt(txt_1, dec_summaries_1)
+		dec_nums_2 = self.parser.get_dec_nums_from_txt(txt_2, dec_summaries_2)
+		dec_nums_3 = self.parser.get_dec_nums_from_txt(txt_3, dec_summaries_3)
+		
+		# dec_prereqs = get_dec_prereqs()
 		
 		self.assertTrue((not dec_contents_1) and \
 			   			(not dec_contents_2) and \
@@ -87,10 +106,27 @@ class ParserTest(unittest.TestCase):
 
 		print(dec_nums_1); print(dec_nums_2); print(dec_nums_3)
 
-		# Issues with contents - more than one decisions
-		dec_contents_4, dec_summaries_4, dec_nums_4 = self.parser.get_sections_from_txt(self.get_txt('5'))
-		dec_contents_5, dec_summaries_5, dec_nums_5 = self.parser.get_sections_from_txt(self.get_txt('14'))
-		dec_contents_6, dec_summaries_6, dec_nums_6 = self.parser.get_sections_from_txt(self.get_txt('16'))
+		################################
+		#    Issues w many decisions   #
+		################################
+
+		txt_4 = self.get_txt('5')
+		txt_5 = self.get_txt('14')
+		txt_6 = self.get_txt('16')
+
+		dec_contents_4 = self.parser.get_dec_contents_from_txt(txt_4); 
+		dec_contents_5 = self.parser.get_dec_contents_from_txt(txt_5);
+		dec_contents_6 = self.parser.get_dec_contents_from_txt(txt_6);  
+		
+		dec_summaries_4 = self.parser.get_dec_summaries_from_txt(txt_4, dec_contents_4); 
+		dec_summaries_5 = self.parser.get_dec_summaries_from_txt(txt_5, dec_contents_5);
+		dec_summaries_6 = self.parser.get_dec_summaries_from_txt(txt_6, dec_contents_6);
+
+		# Dictionaries containing keys: decision_indeces & values: decision_numbers, 
+		# e.g. 2: 'Aριθμ.Β2−210', 4: None, 3: 'Αριθμ. blah blah blah'
+		dec_nums_4 = self.parser.get_dec_nums_from_txt(txt_4, dec_summaries_4)
+		dec_nums_5 = self.parser.get_dec_nums_from_txt(txt_5, dec_summaries_5)
+		dec_nums_6 = self.parser.get_dec_nums_from_txt(txt_6, dec_summaries_6)
 
 		self.assertTrue(dec_contents_4 and \
 			   			dec_contents_5 and \

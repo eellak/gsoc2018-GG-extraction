@@ -40,59 +40,59 @@ class Parser(object):
 		self.__illegal_chars = compile(r"\d+")
 		# char_margin=4, word_margin=0.25, all_texts=True
 		self.laparams = LAParams(line_overlap=2, char_margin=0.5, detect_vertical=False, all_texts=False)
+		self.dec_contents_key = "ΠΕΡΙΕΧΟΜΕΝΑ\nΑΠΟΦΑΣΕΙΣ"
+		self.dec_key = "ΑΠΟΦΑΣΕΙΣ"
 
 	# @TODO: Methods for:
 	# - Segmenting GG text to sections & separate decisions. 
 	# - The parser will also extract useful metadata for each article of the GG text (e.g. date, signee).
 	# - Manual annotation/extraction module of PAOrgs & RespAs, inputs: PAOrgs-assignment keys lists
 	
-	def get_sections_from_txt(self, txt):
-		txt = txt.replace('-\n', '').replace('−\n', '').replace('. ', '.')
+	def clean_up_for_dec_related_getter(self, txt):
+		return txt.replace('-\n', '').replace('−\n', '').replace('. ', '.')
 
-		dec_contents_key = "ΠΕΡΙΕΧΟΜΕΝΑ\nΑΠΟΦΑΣΕΙΣ"
-		dec_key = "ΑΠΟΦΑΣΕΙΣ"
-		
-		def get_dec_contents():
-			dec_contents = findall(r"{}(.+?){}".format(dec_contents_key, dec_key), txt, flags=DOTALL)
-			if dec_contents:
-				assert(len(dec_contents) == 1)
-				dec_contents = dec_contents[0]
-			return dec_contents
-		
-		def get_dec_summaries(dec_contents):
-			if dec_contents:
-				dec_summaries = findall(r"([Α-ΩΆ-Ώ].*?\.\s?\n)[0-9]?\n?", dec_contents, flags=DOTALL)
-				# Strip of redundant dots
-				dec_summaries = [sub("\.{3,}", "", dec_sum) for dec_sum in dec_summaries]
-				# Ignore possible "ΔΙΟΡΘΩΣΗ ΣΦΑΛΜΑΤΩΝ" section
-				dec_summaries = [dec_sum for dec_sum in dec_summaries if 'Διόρθωση' not in dec_sum]
-			else:
-				# Will also contain number e.g. Αριθμ. ...
-				dec_summaries = findall(r"{}\n\s*(.+?)\.\n\s*[Α-ΩΆ-Ώ()]".format(dec_key), txt, flags=DOTALL)
-				assert(len(dec_summaries) == 1)
+	def clean_up_for_paorgs_getter(self, txt):
+		return txt.replace('−\n', '').replace('-\n', '')\
+			  	  .replace('−', '').replace('-', '').replace('\n', ' ')\
+			      .replace(' και ', ' ').replace(' της ', ' ').replace(' του ', ' ').replace(' των ', ' ')\
+			      .replace('  ', ' ').replace('   ', ' ')
 
-			return dec_summaries
+	def get_dec_contents_from_txt(self, txt):
+		txt = self.clean_up_for_dec_related_getter(txt)
+		dec_contents = findall(r"{}(.+?){}".format(self.dec_contents_key, self.dec_key), txt, flags=DOTALL)
+		if dec_contents:
+			assert(len(dec_contents) == 1)
+			dec_contents = dec_contents[0]
+		return dec_contents
+	
+	def get_dec_summaries_from_txt(self, txt, dec_contents):
+		""" Must be fed 'dec_contents' as returned by get_dec_contents() """
+		txt = self.clean_up_for_dec_related_getter(txt)
+		if dec_contents:
+			dec_summaries = findall(r"([Α-ΩΆ-Ώ].*?\.\s?\n)[0-9]?\n?", dec_contents, flags=DOTALL)
+			# Strip of redundant dots
+			dec_summaries = [sub("\.{3,}", "", dec_sum) for dec_sum in dec_summaries]
+			# Ignore possible "ΔΙΟΡΘΩΣΗ ΣΦΑΛΜΑΤΩΝ" section
+			dec_summaries = [dec_sum for dec_sum in dec_summaries if 'Διόρθωση' not in dec_sum]
+		else:
+			# Will also contain number e.g. Αριθμ. ...
+			dec_summaries = findall(r"{}\n\s*(.+?)\.\n\s*[Α-ΩΆ-Ώ()]".format(self.dec_key), txt, flags=DOTALL)
+			assert(len(dec_summaries) == 1)
+		return dec_summaries
 
-		def get_dec_nums(dec_summaries):
-			if len(dec_summaries) == 1:
-				dec_nums = {1: [dec_num for dec_num in dec_summaries[0].split('\n') if 'ριθμ.' in dec_num][0]}
-			elif len(dec_summaries) > 1:
-				dec_idxs = []
-				for idx in range(len(dec_summaries)):
-					dec_idxs.append(int(findall("\(({})\)\n".format(idx + 1), txt)[0]))
-				
-				dec_nums = findall("(['A'|'Α']ριθμ\.[^\n]+)\n", txt)
-				dec_nums = dict(zip_longest(dec_idxs, dec_nums))
-
-			return dec_nums
-				
-		dec_contents = get_dec_contents(); 
-		dec_summaries = get_dec_summaries(dec_contents); 
-		# Dict containing keys:decision_indeces and values:decision_numbers, 
-		# e.g. '2': 'Aριθμ.Β2−210', '4': None
-		dec_nums = get_dec_nums(dec_summaries)
-		
-		return dec_contents, dec_summaries, dec_nums
+	def get_dec_nums_from_txt(self, txt, dec_summaries):
+		""" Must be fed 'dec_summaries' as returned by get_dec_summaries() """
+		txt = self.clean_up_for_dec_related_getter(txt)
+		if len(dec_summaries) == 1:
+			dec_nums = {1: [dec_num for dec_num in dec_summaries[0].split('\n') if 'ριθμ.' in dec_num][0]}
+		elif len(dec_summaries) > 1:
+			dec_idxs = []
+			for idx in range(len(dec_summaries)):
+				dec_idxs.append(int(findall("\(({})\)\n".format(idx + 1), txt)[0]))
+			
+			dec_nums = findall("(['A'|'Α']ριθμ\.[^\n]+)\n", txt)
+			dec_nums = dict(zip_longest(dec_idxs, dec_nums))
+		return dec_nums
 
 	def get_decisions_from_txt(self, txt):
 		
@@ -102,10 +102,7 @@ class Parser(object):
 	def get_paorgs_from_txt(self, txt, paorgs_list):
 		matching_paorgs = []
 		# Strip of junk
-		txt = txt.replace('−\n', '').replace('-\n', '')\
-			  	 .replace('−', '').replace('-', '').replace('\n', ' ')\
-			     .replace(' και ', ' ').replace(' της ', ' ').replace(' του ', ' ').replace(' των ', ' ')\
-			     .replace('  ', ' ').replace('   ', ' ')
+		txt = self.clean_up_for_paorgs_getter(txt)
 		
 		# Match possible PAOrg acronyms 	
 		possible_paorg_acronyms_regex = compile('([Α-ΩΆ-Ώ](?=\.[Α-ΩΆ-Ώ])(?:\.[Α-ΩΆ-Ώ])+)') 
