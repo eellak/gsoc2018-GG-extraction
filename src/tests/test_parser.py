@@ -130,10 +130,6 @@ class ParserTest(unittest.TestCase):
 		dec_nums_5 = self.parser.get_dec_nums_from_txt(txt_5, dec_summaries_5)
 		dec_nums_6 = self.parser.get_dec_nums_from_txt(txt_6, dec_summaries_6)
 
-		# decision_4 = get_decisions_from_txt(txt_4, dec_contents_4)
-		# decision_5 = get_decisions_from_txt(txt_5, dec_contents_5)
-		# decision_6 = get_decisions_from_txt(txt_6, dec_contents_6)
-
 		self.assertTrue(dec_contents_4 and \
 			   			dec_contents_5 and \
 			   			dec_contents_6)
@@ -144,13 +140,22 @@ class ParserTest(unittest.TestCase):
 
 		# print(dec_nums_4); print(dec_nums_5); print(dec_nums_6)
 
-		print('text_1 prereqs:'); self.parser.get_decisions_from_txt(txt_1, len(dec_summaries_1))
-		print('text_2 prereqs:'); self.parser.get_decisions_from_txt(txt_2, len(dec_summaries_2))
-		print('text_3 prereqs:'); self.parser.get_decisions_from_txt(txt_3, len(dec_summaries_3))
+		decisions_1 = self.parser.get_decisions_from_txt(txt_1, len(dec_summaries_1))
+		decisions_2 = self.parser.get_decisions_from_txt(txt_2, len(dec_summaries_2))
+		decisions_3 = self.parser.get_decisions_from_txt(txt_3, len(dec_summaries_3))
 
-		print('text_4 prereqs:'); self.parser.get_decisions_from_txt(txt_4, len(dec_summaries_4))
-		print('text_5 prereqs:'); self.parser.get_decisions_from_txt(txt_5, len(dec_summaries_5))
-		print('text_6 prereqs:'); self.parser.get_decisions_from_txt(txt_6, len(dec_summaries_6))
+		decisions_4 = self.parser.get_decisions_from_txt(txt_4, len(dec_summaries_4))
+		decisions_5 = self.parser.get_decisions_from_txt(txt_5, len(dec_summaries_5))
+		decisions_6 = self.parser.get_decisions_from_txt(txt_6, len(dec_summaries_6))
+
+		self.assertTrue(len(decisions_1) == len(dec_summaries_1))
+		self.assertTrue(len(decisions_2) == len(dec_summaries_2))
+		self.assertTrue(len(decisions_3) == len(dec_summaries_3))
+
+		self.assertTrue(len(decisions_4) == len(dec_summaries_4))
+		self.assertTrue(len(decisions_5) == len(dec_summaries_5))
+		self.assertTrue(len(decisions_6) == len(dec_summaries_6))
+
 
 if __name__ == '__main__':
 	unittest.main()

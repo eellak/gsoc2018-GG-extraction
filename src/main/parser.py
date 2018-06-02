@@ -46,7 +46,9 @@ class Parser(object):
 		self.dec_prereq_keys = ["Έχοντας υπόψη:", "Έχοντας υπ\' όψη:"]
 		self.dec_init_keys = ["αποφασίζουμε:", "αποφασίζουμε τα ακόλουθα:", "αποφασίζουμε τα εξής:",
 							  "αποφασίζει:", "αποφασίζει τα ακόλουθα:", "αποφασίζει τα εξής:", 
-							  "αποφασίζεται:"]
+							  "αποφασίζεται:", "με τα παρακάτω στοιχεία:"]
+		self.dec_end_keys = ["Η απόφαση αυτή", "Ηαπόφαση αυτή", "Η απόφαση", "Η περίληψη αυτή", 
+							 "να δημοσιευθεί", "να δημοσιευθούν", "F\n"]
 
 	# @TODO: Methods for:
 	# - Segmenting GG text to sections & separate decisions. 
@@ -105,13 +107,13 @@ class Parser(object):
 		""" Must be fed 'dec_contents' as returned by get_dec_contents() """
 		txt = self.clean_up_for_dec_related_getter(txt)
 
+		# @TODO: still requires fine-tuning
 		def get_dec_prereqs():
 			dec_prereqs = {}
-			# Must be expanded (lots of variants)
-			prereq_bodies = findall(r"(?:{}|{})(.+?)(?:{}|{}|{}|{}|{}|{}|{})".format(self.dec_prereq_keys[0], self.dec_prereq_keys[1],
+			prereq_bodies = findall(r"(?:{}|{})(.+?)(?:{}|{}|{}|{}|{}|{}|{}|{})".format(self.dec_prereq_keys[0], self.dec_prereq_keys[1],
 											   	 	   					   	   		 self.dec_init_keys[0], self.dec_init_keys[1], self.dec_init_keys[2],
 											   	 	   					   	   		 self.dec_init_keys[3], self.dec_init_keys[4], self.dec_init_keys[5],
-											   	 	   					   	   		 self.dec_init_keys[6]), 
+											   	 	   					   	   		 self.dec_init_keys[6], self.dec_init_keys[7]), 
 											 			   	   		  				 txt, flags=DOTALL)
 			if(len(prereq_bodies) == dec_num):
 				for dec_idx in range(dec_num):
@@ -122,10 +124,35 @@ class Parser(object):
 
 			return dec_prereqs
 
+		def get_decisions():
+			dec_bodies = findall(r"(?:{}|{}|{}|{}|{}|{}|{}|{})(.+?)(?:{}|{}|{}|{}).+?(?:{}|{})"\
+									  .format(    self.dec_init_keys[0], self.dec_init_keys[1], 
+								   				  self.dec_init_keys[2], self.dec_init_keys[3], 
+								   				  self.dec_init_keys[4], self.dec_init_keys[5],
+											   	  self.dec_init_keys[6], self.dec_init_keys[7],
+
+											   	  self.dec_end_keys[0], self.dec_end_keys[1], 
+											   	  self.dec_end_keys[2], self.dec_end_keys[3],
+											   	  self.dec_end_keys[4], self.dec_end_keys[5]
+											   	), txt, flags=DOTALL)
+
+			# Get possible leftovers (exceptions)
+			if(len(dec_bodies) < dec_num):
+				# Just fetch raw part from (remaining_dec_idx) to (remaining_dec_idx + 1)
+				for remaining_dec_idx in range(len(dec_bodies), dec_num):
+					leftover_dec_bodies = findall(r"(?:\n\({}\)\n).+?(?:\n\({}\)\n)"\
+										  		  .format(remaining_dec_idx + 1, remaining_dec_idx + 2), 
+										  	 	 txt, flags=DOTALL)
+
+					dec_bodies += leftover_dec_bodies
+
+			return dec_bodies
+
 		dec_prereqs = get_dec_prereqs()
-		decisions = []
-			
-		print(dec_prereqs)
+		# print(len(dec_prereqs))
+		decisions = get_decisions()
+		
+		return decisions
 
 	def get_paorgs_from_txt(self, txt, paorgs_list):
 		matching_paorgs = []
