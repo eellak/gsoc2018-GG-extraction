@@ -1,3 +1,6 @@
+![license](https://img.shields.io/badge/license-GPL--3.0--or--later-orange.svg)
+![language](https://img.shields.io/badge/python-3.x-green.svg)
+
 # NER & Metadata Extraction from the Greek Government Gazette 
 A module for NER and Metadata extraction (of responsibility assignments (RespA) to organizations of public administration (PAOrgs)) of Greek Government Gazette documents.
 
