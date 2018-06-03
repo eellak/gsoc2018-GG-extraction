@@ -107,14 +107,19 @@ class Parser(object):
 		""" Must be fed 'dec_contents' as returned by get_dec_contents() """
 		txt = self.clean_up_for_dec_related_getter(txt)
 
+		def get_special_regex_disjunction(key_list):
+			regex_disj_str = ''
+			for key in key_list:
+				regex_disj_str += key + '|'
+			return regex_disj_str[:-1]
+
+
 		# @TODO: still requires fine-tuning
 		def get_dec_prereqs():
 			dec_prereqs = {}
-			prereq_bodies = findall(r"(?:{}|{})(.+?)(?:{}|{}|{}|{}|{}|{}|{}|{})".format(self.dec_prereq_keys[0], self.dec_prereq_keys[1],
-											   	 	   					   	   		 self.dec_init_keys[0], self.dec_init_keys[1], self.dec_init_keys[2],
-											   	 	   					   	   		 self.dec_init_keys[3], self.dec_init_keys[4], self.dec_init_keys[5],
-											   	 	   					   	   		 self.dec_init_keys[6], self.dec_init_keys[7]), 
-											 			   	   		  				 txt, flags=DOTALL)
+			prereq_bodies = findall(r"(?:{})(.+?)(?:{})".format(get_special_regex_disjunction(self.dec_prereq_keys),
+											   	 	   		    get_special_regex_disjunction(self.dec_init_keys)), 
+											 			   	   	txt, flags=DOTALL)
 			if(len(prereq_bodies) == dec_num):
 				for dec_idx in range(dec_num):
 					dec_prereqs[dec_idx + 1] = prereq_bodies[dec_idx]
@@ -125,16 +130,11 @@ class Parser(object):
 			return dec_prereqs
 
 		def get_decisions():
-			dec_bodies = findall(r"(?:{}|{}|{}|{}|{}|{}|{}|{})(.+?)(?:{}|{}|{}|{}).+?(?:{}|{})"\
-									  .format(    self.dec_init_keys[0], self.dec_init_keys[1], 
-								   				  self.dec_init_keys[2], self.dec_init_keys[3], 
-								   				  self.dec_init_keys[4], self.dec_init_keys[5],
-											   	  self.dec_init_keys[6], self.dec_init_keys[7],
-
-											   	  self.dec_end_keys[0], self.dec_end_keys[1], 
-											   	  self.dec_end_keys[2], self.dec_end_keys[3],
-											   	  self.dec_end_keys[4], self.dec_end_keys[5]
-											   	), txt, flags=DOTALL)
+			dec_bodies = findall(r"(?:{})(.+?)(?:{}).+?(?:{})"\
+									  .format(get_special_regex_disjunction(self.dec_init_keys),
+									  		  get_special_regex_disjunction(self.dec_end_keys[:4]),
+									  		  get_special_regex_disjunction(self.dec_end_keys[4:])), 
+									  		  txt, flags=DOTALL)
 
 			# Get possible leftovers (exceptions)
 			if(len(dec_bodies) < dec_num):
@@ -149,7 +149,6 @@ class Parser(object):
 			return dec_bodies
 
 		dec_prereqs = get_dec_prereqs()
-		# print(len(dec_prereqs))
 		decisions = get_decisions()
 		
 		return decisions
