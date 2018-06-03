@@ -8,7 +8,6 @@ class ParserTest(unittest.TestCase):
 	
 	def setUp(self):
 		self.parser = Parser()
-		self.fetcher = Fetcher("http://www.et.gr/idocs-nph/search/fekForm.html")
 		self.test_pdfs_dir = '/data/test_PDFs/'
 		self.test_txts_dir = '/data/test_TXTs/'
 		
@@ -32,8 +31,8 @@ class ParserTest(unittest.TestCase):
 		
 		def paorgs_mentioned_in_txt(file_name):
 			text =	self.get_txt(file_name)
-
-			paorgs = self.fetcher.fetch_paorgs(['DIAVGEIA_ORGS.xlsx', 
+			fetcher = Fetcher("http://www.et.gr/idocs-nph/search/fekForm.html")
+			paorgs = fetcher.fetch_paorgs(['DIAVGEIA_ORGS.xlsx', 
 												'20170615_organosi_mhtrooy_foreon_2017.xlsx'])
 
 			return self.parser.get_paorgs_from_txt(text, paorgs)
