@@ -117,15 +117,22 @@ class Parser(object):
 		prereq_bodies = findall(r"(?:{})(.+?)(?:{})".format(self.get_special_regex_disjunction(self.dec_prereq_keys),
 										   	 	   		    self.get_special_regex_disjunction(self.dec_init_keys)), 
 										 			   	   	txt, flags=DOTALL)
-		if(len(prereq_bodies) == dec_num):
-			for dec_idx in range(dec_num):
-				dec_prereqs[dec_idx + 1] = prereq_bodies[dec_idx]
-		elif (len(prereq_bodies) < dec_num):
-			# Just return detected ones as list (without index correspondence)
-			dec_prereqs = prereq_bodies
+		if prereq_bodies:
+			if(len(prereq_bodies) == dec_num):
+				for dec_idx in range(dec_num):
+					dec_prereqs[dec_idx + 1] = prereq_bodies[dec_idx]
+			elif (len(prereq_bodies) < dec_num):
+				# Just return detected ones as list (without index correspondence)
+				dec_prereqs = prereq_bodies
+		else: 
+			if dec_num == 1:
+				dec_prereqs = findall(r"\.\n[Α-ΩΆ-Ώ](.+?)(?:{})".format(self.get_special_regex_disjunction(self.dec_init_keys)), 
+										   				 		    txt, flags=DOTALL)
+			elif dec_num > 1:
+			# For now 
+				pass				
 
 		return dec_prereqs
-		
 
 	def get_decisions_from_txt(self, txt, dec_num):
 		""" Must be fed 'dec_num', currently: len(dec_summaries) """
