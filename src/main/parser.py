@@ -64,6 +64,12 @@ class Parser(object):
 			      .replace(' και ', ' ').replace(' της ', ' ').replace(' του ', ' ').replace(' των ', ' ')\
 			      .replace('  ', ' ').replace('   ', ' ')
 
+	def get_special_regex_disjunction(self, key_list):
+			regex_disj_str = ''
+			for key in key_list:
+				regex_disj_str += key + '|'
+			return regex_disj_str[:-1]
+
 	def get_dec_contents_from_txt(self, txt):
 		txt = self.clean_up_for_dec_related_getter(txt)
 		dec_contents = findall(r"{}(.+?){}".format(self.dec_contents_key, self.decs_key), txt, flags=DOTALL)
@@ -103,55 +109,44 @@ class Parser(object):
 				dec_nums = dict(zip_longest(dec_idxs, dec_nums))
 		return dec_nums
 
-	def get_decisions_from_txt(self, txt, dec_num):
-		""" Must be fed 'dec_contents' as returned by get_dec_contents() """
+	# @TODO: still requires fine-tuning
+	def get_dec_prereqs_from_txt(self, txt, dec_num):
+		""" Must be fed 'dec_num', currently: len(dec_summaries) """
 		txt = self.clean_up_for_dec_related_getter(txt)
+		dec_prereqs = {}
+		prereq_bodies = findall(r"(?:{})(.+?)(?:{})".format(self.get_special_regex_disjunction(self.dec_prereq_keys),
+										   	 	   		    self.get_special_regex_disjunction(self.dec_init_keys)), 
+										 			   	   	txt, flags=DOTALL)
+		if(len(prereq_bodies) == dec_num):
+			for dec_idx in range(dec_num):
+				dec_prereqs[dec_idx + 1] = prereq_bodies[dec_idx]
+		elif (len(prereq_bodies) < dec_num):
+			# Just return detected ones as list (without index correspondence)
+			dec_prereqs = prereq_bodies
 
-		def get_special_regex_disjunction(key_list):
-			regex_disj_str = ''
-			for key in key_list:
-				regex_disj_str += key + '|'
-			return regex_disj_str[:-1]
-
-
-		# @TODO: still requires fine-tuning
-		def get_dec_prereqs():
-			dec_prereqs = {}
-			prereq_bodies = findall(r"(?:{})(.+?)(?:{})".format(get_special_regex_disjunction(self.dec_prereq_keys),
-											   	 	   		    get_special_regex_disjunction(self.dec_init_keys)), 
-											 			   	   	txt, flags=DOTALL)
-			if(len(prereq_bodies) == dec_num):
-				for dec_idx in range(dec_num):
-					dec_prereqs[dec_idx + 1] = prereq_bodies[dec_idx]
-			elif (len(prereq_bodies) < dec_num):
-				# Just return detected ones as list (without index correspondence)
-				dec_prereqs = prereq_bodies
-
-			return dec_prereqs
-
-		def get_decisions():
-			dec_bodies = findall(r"(?:{})(.+?)(?:{}).+?(?:{})"\
-									  .format(get_special_regex_disjunction(self.dec_init_keys),
-									  		  get_special_regex_disjunction(self.dec_end_keys[:4]),
-									  		  get_special_regex_disjunction(self.dec_end_keys[4:])), 
-									  		  txt, flags=DOTALL)
-
-			# Get possible leftovers (exceptions)
-			if(len(dec_bodies) < dec_num):
-				# Just fetch raw part from (remaining_dec_idx) to (remaining_dec_idx + 1)
-				for remaining_dec_idx in range(len(dec_bodies), dec_num):
-					leftover_dec_bodies = findall(r"(?:\n\({}\)\n).+?(?:\n\({}\)\n)"\
-										  		  .format(remaining_dec_idx + 1, remaining_dec_idx + 2), 
-										  	 	 txt, flags=DOTALL)
-
-					dec_bodies += leftover_dec_bodies
-
-			return dec_bodies
-
-		dec_prereqs = get_dec_prereqs()
-		decisions = get_decisions()
+		return dec_prereqs
 		
-		return decisions
+
+	def get_decisions_from_txt(self, txt, dec_num):
+		""" Must be fed 'dec_num', currently: len(dec_summaries) """
+		txt = self.clean_up_for_dec_related_getter(txt)
+		dec_bodies = findall(r"(?:{})(.+?)(?:{}).+?(?:{})"\
+								  .format(self.get_special_regex_disjunction(self.dec_init_keys),
+								  		  self.get_special_regex_disjunction(self.dec_end_keys[:4]),
+								  		  self.get_special_regex_disjunction(self.dec_end_keys[4:])), 
+								  		  txt, flags=DOTALL)
+
+		# Get possible leftovers (exceptions)
+		if(len(dec_bodies) < dec_num):
+			# Just fetch raw part from (remaining_dec_idx) to (remaining_dec_idx + 1)
+			for remaining_dec_idx in range(len(dec_bodies), dec_num):
+				leftover_dec_bodies = findall(r"(?:\n\({}\)\n).+?(?:\n\({}\)\n)"\
+									  		  .format(remaining_dec_idx + 1, remaining_dec_idx + 2), 
+									  	 	 txt, flags=DOTALL)
+
+				dec_bodies += leftover_dec_bodies
+		
+		return dec_bodies
 
 	def get_paorgs_from_txt(self, txt, paorgs_list):
 		matching_paorgs = []
