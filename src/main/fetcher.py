@@ -19,7 +19,6 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 from db.issue import IssueHandler
 from utilities.helper import Helper
 
-
 class Fetcher:
 
     __pdf_source = ""
@@ -76,7 +75,6 @@ class Fetcher:
 
         driver = self.__driver
         driver.get(self.__pdf_source)
-        print("@@@@@@@@@@@@@@@")
         # Indicates whether or not more searches will be needed to find all results
         additional_issues = True
 
@@ -305,7 +303,10 @@ class Fetcher:
         return PAOrgs
 
     # Fetch responsibility assignments key - signifiers
-    def fetch_respa_keys():
-        #@TODO: Read from local file & return
-        assignment_verbs = []
-        pass
+    def fetch_respa_keys(self, local_file):
+        files_location = '../data/NE_resources' 
+        file_path = files_location + '/' + local_file
+        with open(file_path, 'r') as RespA_verbs_file:
+            RespA_keys = RespA_verbs_file.read().splitlines()
+
+        return  RespA_keys
