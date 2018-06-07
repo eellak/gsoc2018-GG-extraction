@@ -41,11 +41,11 @@ class Parser(object):
 		self.dec_contents_key = "ΠΕΡΙΕΧΟΜΕΝΑ\nΑΠΟΦΑΣΕΙΣ"
 		self.decs_key = "ΑΠΟΦΑΣΕΙΣ"
 		# Must be expanded (lots of variants)
-		self.dec_prereq_keys = ["Έχοντας υπόψη:", "Έχοντας υπ\' όψη:"]
+		self.dec_prereq_keys = ["Έχοντας υπόψη:", "Έχοντας υπόψη:", "Έχοντας υπ\' όψη:", "Έχοντας υπ\’ όψη:", "Αφού έλαβε υπόψη:"]
 		self.dec_init_keys = ["αποφασίζουμε:", "αποφασίζουμε τα ακόλουθα:", "αποφασίζουμε τα εξής:",
 							  "αποφασίζει:", "αποφασίζει τα ακόλουθα:", "αποφασίζει τα εξής:", 
-							  "αποφασίζεται:", "με τα παρακάτω στοιχεία:"]
-		self.dec_end_keys = ["Η απόφαση αυτή", "Ηαπόφαση αυτή", "Η απόφαση", "Η περίληψη αυτή", 
+							  "αποφασίζει τα κάτωθι", "αποφασίζεται:", "με τα παρακάτω στοιχεία:"]
+		self.dec_end_keys = ["Η απόφαση αυτή", "Ηαπόφαση αυτή", "Η απόφαση", "Η περίληψη αυτή",
 							 "να δημοσιευθεί", "να δημοσιευθούν", "F\n"]
 
 	# @TODO: Methods for:
@@ -80,7 +80,7 @@ class Parser(object):
 		""" Must be fed 'dec_contents' as returned by get_dec_contents() """
 		txt = self.clean_up_for_dec_related_getter(txt)
 		if dec_contents:
-			dec_summaries = findall(r"([Α-ΩΆ-Ώ].*?\.\s?\n)[0-9]?\n?", dec_contents, flags=DOTALL)
+			dec_summaries = findall(r"([Α-ΩΆ-Ώ].+?(?:(?![β-δζθκ-ξπ-τφ-ψ]\.\s?\n).)+?\.\s?\n)[0-9]?\n?", dec_contents, flags=DOTALL)
 			# Strip of redundant dots
 			dec_summaries = [sub("\.{3,}", "", dec_sum) for dec_sum in dec_summaries]
 			# Ignore possible "ΔΙΟΡΘΩΣΗ ΣΦΑΛΜΑΤΩΝ" section
@@ -91,6 +91,7 @@ class Parser(object):
 			assert(len(dec_summaries) == 1)
 		return dec_summaries
 
+	# Nums, meaning e.g. "Αριθμ." ...
 	def get_dec_nums_from_txt(self, txt, dec_summaries):
 		""" Must be fed 'dec_summaries' as returned by get_dec_summaries() """
 		txt = self.clean_up_for_dec_related_getter(txt)
@@ -101,9 +102,10 @@ class Parser(object):
 			elif len(dec_summaries) > 1:
 				dec_idxs = []
 				for idx in range(len(dec_summaries)):
-					dec_idxs.append(int(findall("\(({})\)\n".format(idx + 1), txt)[0]))
+					num_in_parenth = findall("\(({})\)\n?".format(idx + 1), txt)[0]
+					dec_idxs.append(int(num_in_parenth))
 				
-				dec_nums = findall("(['A'|'Α']ριθμ\.[^\n]+)\n", txt)
+				dec_nums = findall("\n\s*((?:(?:['A'|'Α']ριθμ\.)|(?:['A'|'Α']ριθ\.))[^\n]+)\n", txt)
 				dec_nums = dict(zip_longest(dec_idxs, dec_nums))
 		return dec_nums
 
@@ -134,22 +136,25 @@ class Parser(object):
 	def get_decisions_from_txt(self, txt, dec_num):
 		""" Must be fed 'dec_num', currently: len(dec_summaries) """
 		txt = self.clean_up_for_dec_related_getter(txt)
-		dec_bodies = findall(r"(?:{})(.+?)(?:{}).+?(?:{})"\
+		dec_bodies = findall(r"(?:{})(.+?)(?:(?:(?:{}).+?(?:{}))|(?:{}))"\
 								  .format(self.get_special_regex_disjunction(self.dec_init_keys),
 								  		  self.get_special_regex_disjunction(self.dec_end_keys[:4]),
-								  		  self.get_special_regex_disjunction(self.dec_end_keys[4:])), 
+								  		  self.get_special_regex_disjunction(self.dec_end_keys[4:]),
+								  		  self.get_special_regex_disjunction(self.dec_prereq_keys)), 
 								  		  txt, flags=DOTALL)
 
-		# Get possible leftovers (exceptions)
+		# Try to get possible leftovers (exceptions)
 		if(len(dec_bodies) < dec_num):
-			# Just fetch raw part from (remaining_dec_idx) to (remaining_dec_idx + 1)
+			# Fetch raw part from (remaining_dec_idx) to (remaining_dec_idx + 1)
 			for remaining_dec_idx in range(len(dec_bodies), dec_num):
 				leftover_dec_bodies = findall(r"(?:\n\({}\)\n).+?(?:\n\({}\)\n)"\
 									  		  .format(remaining_dec_idx + 1, remaining_dec_idx + 2), 
 									  	 	 txt, flags=DOTALL)
 
 				dec_bodies += leftover_dec_bodies
-		
+		elif len(dec_bodies) == dec_num:
+			dec_bodies = dict(zip(range(1, dec_num + 1), dec_bodies))
+	
 		return dec_bodies
 
 	def get_dec_signees_from_txt(self, txt):
@@ -223,7 +228,6 @@ class Parser(object):
 			text = text.replace(cid, '')
 			# cid_int = int(''.join(filter(str.isdigit, cid)))
 		
-
 		# Overwrite .txt 
 		with StringIO(text) as in_file, open(txt_name, 'w') as out_file:
 			for line in in_file:
@@ -231,5 +235,10 @@ class Parser(object):
 				out_file.write(line)
 		
 		print("DONE.")
+
+		# Read .txt locally again
+		text = ''
+		with open(txt_name) as out_file:
+			text = out_file.read()
 
 		return text
