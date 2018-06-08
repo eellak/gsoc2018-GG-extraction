@@ -70,7 +70,7 @@ class Parser(object):
 		""" Must be fed 'dec_contents' as returned by get_dec_contents() """
 		txt = Helper.clean_up_for_dec_related_getter(txt)
 		if dec_contents:
-			dec_summaries = findall(r"([Α-ΩΆ-Ώ].+?(?:(?![β-δζθκμνξπρτφ-ψ]\.\s?\n).)+?\.\s?\n)[0-9]?\n?", dec_contents, flags=DOTALL)
+			dec_summaries = findall(r"([Α-ΩΆ-Ώ].+?(?:(?![β-δζθκμνξπρτφ-ψ]\.\s?\n).)+?\.\s?\n)\d?\n?", dec_contents, flags=DOTALL)
 			# Strip of redundant dots
 			dec_summaries = [sub("\.{3,}", "", dec_sum) for dec_sum in dec_summaries]
 			# Ignore possible "ΔΙΟΡΘΩΣΗ ΣΦΑΛΜΑΤΩΝ" section
@@ -151,7 +151,9 @@ class Parser(object):
 		pass
 
 	def get_dec_location_and_date_from_txt(self, txt):
-		pass
+		regex_dec_location_and_date = Helper.get_dec_location_and_date_before_signees_regex()
+		dec_location_and_dates = findall(regex_dec_location_and_date, txt)
+		return dec_location_and_dates
 
 	def get_paorgs_from_txt(self, txt, paorgs_list):
 		""" Must be fed a pre-fetched 'paorgs_list' """
@@ -211,7 +213,7 @@ class Parser(object):
 		with open(txt_name) as out_file:
 			text = out_file.read()
 
-		cid_occurs = findall(r'\(cid:[0-9]+\)', text)
+		cid_occurs = findall(r'\(cid:\d+\)', text)
 		
 		# Ignore cid occurences for now
 		for cid in cid_occurs:
