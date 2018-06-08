@@ -223,7 +223,7 @@ class ParserTest(unittest.TestCase):
 
 		# print(dec_nums_4); print(dec_nums_5); print(dec_nums_6)
 		# print(dec_nums_7)
-
+		
 		dec_prereqs_4 = self.parser.get_dec_prereqs_from_txt(txt_4, len(dec_summaries_4))
 		dec_prereqs_5 = self.parser.get_dec_prereqs_from_txt(txt_5, len(dec_summaries_5))
 		dec_prereqs_6 = self.parser.get_dec_prereqs_from_txt(txt_6, len(dec_summaries_6))

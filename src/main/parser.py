@@ -48,28 +48,14 @@ class Parser(object):
 		self.dec_end_keys = ["Η απόφαση αυτή", "Ηαπόφαση αυτή", "Η απόφαση", "Η περίληψη αυτή",
 							 "να δημοσιευθεί", "να δημοσιευθούν", "F\n"]
 
+
 	# @TODO: Methods for:
 	# - Fine-tune section getters
 	# - Create useful metadata getters for each article / decision (e.g. date, signee).
 	# - Manual annotation/extraction module of PAOrgs & RespAs, inputs: PAOrgs-assignment keys lists
-	
-	def clean_up_for_dec_related_getter(self, txt):
-		return txt.replace('-\n', '').replace('−\n', '').replace('. ', '.')
-
-	def clean_up_for_paorgs_getter(self, txt):
-		return txt.replace('−\n', '').replace('-\n', '')\
-			  	  .replace('−', '').replace('-', '').replace('\n', ' ')\
-			      .replace(' και ', ' ').replace(' της ', ' ').replace(' του ', ' ').replace(' των ', ' ')\
-			      .replace('  ', ' ').replace('   ', ' ')
-
-	def get_special_regex_disjunction(self, key_list):
-			regex_disj_str = ''
-			for key in key_list:
-				regex_disj_str += key + '|'
-			return regex_disj_str[:-1]
 
 	def get_dec_contents_from_txt(self, txt):
-		txt = self.clean_up_for_dec_related_getter(txt)
+		txt = Helper.clean_up_for_dec_related_getter(txt)
 		dec_contents = findall(r"{}(.+?){}".format(self.dec_contents_key, self.decs_key), txt, flags=DOTALL)
 		if dec_contents:
 			assert(len(dec_contents) == 1)
@@ -78,7 +64,7 @@ class Parser(object):
 	
 	def get_dec_summaries_from_txt(self, txt, dec_contents):
 		""" Must be fed 'dec_contents' as returned by get_dec_contents() """
-		txt = self.clean_up_for_dec_related_getter(txt)
+		txt = Helper.clean_up_for_dec_related_getter(txt)
 		if dec_contents:
 			dec_summaries = findall(r"([Α-ΩΆ-Ώ].+?(?:(?![β-δζθκ-ξπ-τφ-ψ]\.\s?\n).)+?\.\s?\n)[0-9]?\n?", dec_contents, flags=DOTALL)
 			# Strip of redundant dots
@@ -94,7 +80,7 @@ class Parser(object):
 	# Nums, meaning e.g. "Αριθμ." ...
 	def get_dec_nums_from_txt(self, txt, dec_summaries):
 		""" Must be fed 'dec_summaries' as returned by get_dec_summaries() """
-		txt = self.clean_up_for_dec_related_getter(txt)
+		txt = Helper.clean_up_for_dec_related_getter(txt)
 		dec_nums = []
 		if dec_summaries:
 			if len(dec_summaries) == 1:
@@ -111,10 +97,10 @@ class Parser(object):
 
 	def get_dec_prereqs_from_txt(self, txt, dec_num):
 		""" Must be fed 'dec_num', currently: len(dec_summaries) """
-		txt = self.clean_up_for_dec_related_getter(txt)
+		txt = Helper.clean_up_for_dec_related_getter(txt)
 		dec_prereqs = {}
-		prereq_bodies = findall(r"(?:{})(.+?)(?:{})".format(self.get_special_regex_disjunction(self.dec_prereq_keys),
-										   	 	   		    self.get_special_regex_disjunction(self.dec_init_keys)), 
+		prereq_bodies = findall(r"(?:{})(.+?)(?:{})".format(Helper.get_special_regex_disjunction(self.dec_prereq_keys),
+										   	 	   		    Helper.get_special_regex_disjunction(self.dec_init_keys)), 
 										 			   	   	txt, flags=DOTALL)
 		if prereq_bodies:
 			if(len(prereq_bodies) == dec_num):
@@ -125,7 +111,7 @@ class Parser(object):
 				dec_prereqs = prereq_bodies
 		else: 
 			if dec_num == 1:
-				dec_prereqs = findall(r"\.\n[Α-ΩΆ-Ώ](.+?)(?:{})".format(self.get_special_regex_disjunction(self.dec_init_keys)), 
+				dec_prereqs = findall(r"\.\n[Α-ΩΆ-Ώ](.+?)(?:{})".format(Helper.get_special_regex_disjunction(self.dec_init_keys)), 
 										   				 		    txt, flags=DOTALL)
 			elif dec_num > 1:
 			# For now 
@@ -135,12 +121,12 @@ class Parser(object):
 
 	def get_decisions_from_txt(self, txt, dec_num):
 		""" Must be fed 'dec_num', currently: len(dec_summaries) """
-		txt = self.clean_up_for_dec_related_getter(txt)
+		txt = Helper.clean_up_for_dec_related_getter(txt)
 		dec_bodies = findall(r"(?:{})(.+?)(?:(?:(?:{}).+?(?:{}))|(?:{}))"\
-								  .format(self.get_special_regex_disjunction(self.dec_init_keys),
-								  		  self.get_special_regex_disjunction(self.dec_end_keys[:4]),
-								  		  self.get_special_regex_disjunction(self.dec_end_keys[4:]),
-								  		  self.get_special_regex_disjunction(self.dec_prereq_keys)), 
+								  .format(Helper.get_special_regex_disjunction(self.dec_init_keys),
+								  		  Helper.get_special_regex_disjunction(self.dec_end_keys[:4]),
+								  		  Helper.get_special_regex_disjunction(self.dec_end_keys[4:]),
+								  		  Helper.get_special_regex_disjunction(self.dec_prereq_keys)), 
 								  		  txt, flags=DOTALL)
 
 		# Try to get possible leftovers (exceptions)
@@ -158,14 +144,14 @@ class Parser(object):
 		return dec_bodies
 
 	def get_dec_signees_from_txt(self, txt):
-		pass
+		dec_signees = findall(r"", txt, flags=DOTALL)
 
 	def get_dec_date_from_txt(self, txt):
 		pass
 
 	def get_paorgs_from_txt(self, txt, paorgs_list):
 		""" Must be fed a pre-fetched 'paorgs_list' """
-		txt = self.clean_up_for_paorgs_getter(txt)
+		txt = Helper.clean_up_for_paorgs_getter(txt)
 		
 		# Match possible PAOrg acronyms 	
 		possible_paorg_acronyms_regex = compile('([Α-ΩΆ-Ώ](?=\.[Α-ΩΆ-Ώ])(?:\.[Α-ΩΆ-Ώ])+)') 
