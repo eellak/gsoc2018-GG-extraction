@@ -17,7 +17,7 @@ from http.client import RemoteDisconnected
 import platform
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 from db.issue import IssueHandler
-from utilities.helper import Helper
+from util.helper import Helper
 
 
 class Fetcher:

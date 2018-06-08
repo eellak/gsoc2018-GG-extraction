@@ -28,7 +28,7 @@ from pdfminer.pdfpage import PDFPage
 
 from difflib import get_close_matches, SequenceMatcher
 
-from utilities.helper import Helper
+from util.helper import Helper
 
 class Parser(object):
 	
