@@ -47,13 +47,9 @@ class Parser(object):
 							  "αποφασίζει τα κάτωθι", "αποφασίζεται:", "με τα παρακάτω στοιχεία:"]
 		self.dec_end_keys = ["Η απόφαση αυτή", "Ηαπόφαση αυτή", "Η απόφαση", "Η περίληψη αυτή",
 							 "να δημοσιευθεί", "να δημοσιευθούν", "F\n"]
-		# Must be expanded (lots of variants)
-		self.dec_singular_signee_keys = ["Ο ΥΠΟΥΡΓΟΣ", "O Υπουργός", 
-										 "Ο ΠΡΟΕΔΡΟΣ", "Ο Πρόεδρος", "Ο Προεδρεύων"]
-		self.dec_plular_signee_keys = ["ΟΙ ΥΠΟΥΡΓΟΙ", "Οι Υπουργοί"]
 
 
-	# @TODO: Methods for:
+	# @TODO:
 	# - Fine-tune section getters
 	# - Create useful metadata getters for each article / decision (e.g. date, signee).
 	# - Manual annotation/extraction module of PAOrgs & RespAs, inputs: PAOrgs-assignment keys lists
@@ -147,8 +143,28 @@ class Parser(object):
 	
 		return dec_bodies
 
+	# @TODO: Make format of final result definite
 	def get_dec_signees_from_txt(self, txt):
-		pass
+		# E.g. "Οι Υπουργοί", "Ο ΠΡΟΕΔΡΕΥΩΝ" etc.
+		dec_signees_general_occup_pattern = "{year}\s*\n\s*{ordered_by}?((?:{gen_occupation}))\s*\n"\
+											.format(year="\s\d{4}", 
+										    		ordered_by= "(?:Με εντολή(?:[ ][Α-ΩΆ-Ώ][α-ωά-ώΑ-ΩΆ-Ώ]+)+\n)",
+										    		gen_occupation="[Α-ΩΆ-Ώ][α-ωά-ώΑ-ΩΆ-Ώ]?(?:[ ][Α-ΩΆ-Ώ][α-ωά-ώΑ-ΩΆ-Ώ]+)+")
+		regex_dec_signees_general_occup = compile(dec_signees_general_occup_pattern, flags=DOTALL)
+		dec_signees_general_occup = findall(regex_dec_signees_general_occup, txt)
+
+		# E.g. "ΧΑΡΑΛΑΜΠΟΣ ΧΡΥΣΑΝΘΑΚΗΣ"
+		dec_signees = []
+		if dec_signees_general_occup:
+			for general_occup in dec_signees_general_occup:
+				dec_signees_pattern = "\n\s*{general_occup}\s*\n\s*({signees})\n"\
+									  .format(general_occup=general_occup,
+											  signees="(?:[Α-ΩΆ-Ώκ−-][α-ωά-ώΑ-ΩΆ-ΏΪΫ\.,−-]*\s*)+")
+				regex_dec_signees = compile(dec_signees_pattern, flags=DOTALL)
+				dec_signees.append(findall(regex_dec_signees, txt))
+		
+		assert(len(dec_signees_general_occup) == len(dec_signees))
+		return dict(zip(dec_signees_general_occup, dec_signees))
 
 	def get_dec_location_and_date_from_txt(self, txt):
 		regex_dec_location_and_date = Helper.get_dec_location_and_date_before_signees_regex()

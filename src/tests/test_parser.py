@@ -189,12 +189,22 @@ class ParserTest(unittest.TestCase):
 		## 
 		#	Location & Date of signing
 		##
-		print(self.parser.get_dec_location_and_date_from_txt(txt_1))
-		print(self.parser.get_dec_location_and_date_from_txt(txt_2))
-		print(self.parser.get_dec_location_and_date_from_txt(txt_3))
-		print(self.parser.get_dec_location_and_date_from_txt(txt_4))
-		print(self.parser.get_dec_location_and_date_from_txt(txt_5))
-		print(self.parser.get_dec_location_and_date_from_txt(txt_6))
+		# print(self.parser.get_dec_location_and_date_from_txt(txt_1))
+		# print(self.parser.get_dec_location_and_date_from_txt(txt_2))
+		# print(self.parser.get_dec_location_and_date_from_txt(txt_3))
+		# print(self.parser.get_dec_location_and_date_from_txt(txt_4))
+		# print(self.parser.get_dec_location_and_date_from_txt(txt_5))
+		# print(self.parser.get_dec_location_and_date_from_txt(txt_6))
+
+		## 
+		#	Signees
+		##
+		print(self.parser.get_dec_signees_from_txt(txt_1))
+		print(self.parser.get_dec_signees_from_txt(txt_2))
+		print(self.parser.get_dec_signees_from_txt(txt_3))		
+		print(self.parser.get_dec_signees_from_txt(txt_4))
+		print(self.parser.get_dec_signees_from_txt(txt_5))
+		print(self.parser.get_dec_signees_from_txt(txt_6))
 
 	def test_get_dec_sections_from_txts_2(self):
 		
@@ -318,12 +328,23 @@ class ParserTest(unittest.TestCase):
 		## 
 		#	Location & Date of signing
 		##
-		print(self.parser.get_dec_location_and_date_from_txt(txt_1))
-		print(self.parser.get_dec_location_and_date_from_txt(txt_2))
-		print(self.parser.get_dec_location_and_date_from_txt(txt_3))
-		print(self.parser.get_dec_location_and_date_from_txt(txt_4))
-		print(self.parser.get_dec_location_and_date_from_txt(txt_5))
-		print(self.parser.get_dec_location_and_date_from_txt(txt_6))
+		# print(self.parser.get_dec_location_and_date_from_txt(txt_1))
+		# print(self.parser.get_dec_location_and_date_from_txt(txt_2))
+		# print(self.parser.get_dec_location_and_date_from_txt(txt_3))
+		# print(self.parser.get_dec_location_and_date_from_txt(txt_4))
+		# print(self.parser.get_dec_location_and_date_from_txt(txt_5))
+		# print(self.parser.get_dec_location_and_date_from_txt(txt_6))
+
+		## 
+		#	Signees
+		##
+		print(self.parser.get_dec_signees_from_txt(txt_1))
+		print(self.parser.get_dec_signees_from_txt(txt_2))
+		print(self.parser.get_dec_signees_from_txt(txt_3))
+		print(self.parser.get_dec_signees_from_txt(txt_4))
+		print(self.parser.get_dec_signees_from_txt(txt_5))
+		print(self.parser.get_dec_signees_from_txt(txt_6))
+		
 
 		
 if __name__ == '__main__':
