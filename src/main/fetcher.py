@@ -223,14 +223,14 @@ class Fetcher:
                       "issue_type": issue_type}
             self.handle_download(download_link, params)
 
-    def scrape_pdfs(self, year_start=2016, year_end=2017, issue_types = []):
+    def scrape_pdfs(self, year_start=2016, year_end=2017, issue_types = [], input_dir = '../data'):
 
         # Set custom download_folder & reset pre-existing settings 
         if year_end > year_start:
             download_dir = str(year_start) + '_to_' + str(year_end) + '_' + 'issues'
-            download_dir = '../data/' + download_dir
+            download_dir = input_dir + '/' + download_dir
         else:
-            download_dir = '../data/' + str(year_start) + '_' + 'issues'
+            download_dir = input_dir + '/' + str(year_start) + '_' + 'issues'
 
         self.reset_download_settings(download_dir)
 
