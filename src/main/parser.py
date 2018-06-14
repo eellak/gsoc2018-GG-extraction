@@ -185,7 +185,7 @@ class Parser(object):
 		possible_paorgs = findall(possible_paorgs_regex, txt)
 		
 		possible_paorgs = list(set(possible_paorg_acronyms + possible_paorgs))
-
+		matching_paorgs = []
 		for word in possible_paorgs:
 			print(word)
 			if word not in possible_paorg_acronyms:
@@ -196,6 +196,7 @@ class Parser(object):
 			
 			if best_matches:
 				matching_paorgs.append({word:best_matches})
+		
 		return matching_paorgs
 
 	def get_respas_from_txt(self, txt):
