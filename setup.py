@@ -5,7 +5,7 @@ from sys import argv as args
 import platform
 import zipfile
 from subprocess import call 
-from src.utilities.helper import Helper
+from src.util.helper import Helper
 
 
 def install_dependencies(DEPENDENCIES = ['selenium', 'bs4']):
