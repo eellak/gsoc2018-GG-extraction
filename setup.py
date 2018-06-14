@@ -8,7 +8,7 @@ from subprocess import call
 from src.util.helper import Helper
 
 
-def install_dependencies(DEPENDENCIES = ['selenium', 'bs4']):
+def install_dependencies(DEPENDENCIES = ['selenium', 'bs4', 'pdfminer.six', 'openpyxl']):
     # Check if pip is installed 
     try:
         import pip
