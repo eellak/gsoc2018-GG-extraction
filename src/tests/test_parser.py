@@ -189,16 +189,18 @@ class ParserTest(unittest.TestCase):
 		## 
 		#	Location & Date of signing
 		##
-		# print(self.parser.get_dec_location_and_date_from_txt(txt_1))
-		# print(self.parser.get_dec_location_and_date_from_txt(txt_2))
-		# print(self.parser.get_dec_location_and_date_from_txt(txt_3))
-		# print(self.parser.get_dec_location_and_date_from_txt(txt_4))
-		# print(self.parser.get_dec_location_and_date_from_txt(txt_5))
-		# print(self.parser.get_dec_location_and_date_from_txt(txt_6))
+		print('\n* Location & Date of signing *\n')
+		print(self.parser.get_dec_location_and_date_from_txt(txt_1))
+		print(self.parser.get_dec_location_and_date_from_txt(txt_2))
+		print(self.parser.get_dec_location_and_date_from_txt(txt_3))
+		print(self.parser.get_dec_location_and_date_from_txt(txt_4))
+		print(self.parser.get_dec_location_and_date_from_txt(txt_5))
+		print(self.parser.get_dec_location_and_date_from_txt(txt_6))
 
 		## 
 		#	Signees
 		##
+		print('\n* Signees *\n')
 		print(self.parser.get_dec_signees_from_txt(txt_1))
 		print(self.parser.get_dec_signees_from_txt(txt_2))
 		print(self.parser.get_dec_signees_from_txt(txt_3))		
@@ -328,16 +330,18 @@ class ParserTest(unittest.TestCase):
 		## 
 		#	Location & Date of signing
 		##
-		# print(self.parser.get_dec_location_and_date_from_txt(txt_1))
-		# print(self.parser.get_dec_location_and_date_from_txt(txt_2))
-		# print(self.parser.get_dec_location_and_date_from_txt(txt_3))
-		# print(self.parser.get_dec_location_and_date_from_txt(txt_4))
-		# print(self.parser.get_dec_location_and_date_from_txt(txt_5))
-		# print(self.parser.get_dec_location_and_date_from_txt(txt_6))
+		print('\n* Location & Date of signing *\n')
+		print(self.parser.get_dec_location_and_date_from_txt(txt_1))
+		print(self.parser.get_dec_location_and_date_from_txt(txt_2))
+		print(self.parser.get_dec_location_and_date_from_txt(txt_3))
+		print(self.parser.get_dec_location_and_date_from_txt(txt_4))
+		print(self.parser.get_dec_location_and_date_from_txt(txt_5))
+		print(self.parser.get_dec_location_and_date_from_txt(txt_6))
 
 		## 
 		#	Signees
 		##
+		print('\n* Signees *\n')
 		print(self.parser.get_dec_signees_from_txt(txt_1))
 		print(self.parser.get_dec_signees_from_txt(txt_2))
 		print(self.parser.get_dec_signees_from_txt(txt_3))
@@ -346,6 +350,5 @@ class ParserTest(unittest.TestCase):
 		print(self.parser.get_dec_signees_from_txt(txt_6))
 		
 
-		
 if __name__ == '__main__':
 	unittest.main() 
