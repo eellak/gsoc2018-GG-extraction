@@ -19,20 +19,23 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 from db.issue import IssueHandler
 from utilities.helper import Helper
 
-
 class Fetcher:
 
     __pdf_source = ""
-    __paorg_source = ""
-    # Holds the id's of the issues that may appear on the search page
-    __possible_issues = range(1, 16)
+    __paorg_source = 'http://www.minfin.gr/epopteuomenoi-phoreis'
+    # Holds the ids of the issues that may appear on the search page
+    __possible_issues = dict(zip(['Α', 'Β', 'Γ', 'Δ', 
+                                  'Ν.Π.Δ.Δ.', 'Α.Π.Σ.', 'ΠΑΡΑΡΤΗΜΑ', 'Δ.Ε.Β.Ι.', 
+                                  'Α.ΕΙ.Δ.', 'Α.Σ.Ε.Π.', 'ΑΕ-ΕΠΕ', 'Δ.Δ.Σ.', 
+                                  'Ο.Π.Κ.', 'Υ.Ο.Δ.Δ.', 'Α.Α.Π.'],
+                                   range(1, 16)))
     __driver = None
 
+    # Default
     download_folder = 'pdfs'
 
     def __init__(self, pdf_source):
         self.__pdf_source = pdf_source
-        self.__paorg_source = 'http://www.minfin.gr/epopteuomenoi-phoreis'
         self.download_links = []
         self.download_folder = os.path.join(os.getcwd(), self.download_folder)
 
@@ -76,7 +79,6 @@ class Fetcher:
 
         driver = self.__driver
         driver.get(self.__pdf_source)
-        print("@@@@@@@@@@@@@@@")
         # Indicates whether or not more searches will be needed to find all results
         additional_issues = True
 
@@ -221,14 +223,14 @@ class Fetcher:
                       "issue_type": issue_type}
             self.handle_download(download_link, params)
 
-    def scrape_pdfs(self, year_start=2016, year_end=2017):
+    def scrape_pdfs(self, year_start=2016, year_end=2017, issue_types = [], input_dir = '../data'):
 
         # Set custom download_folder & reset pre-existing settings 
         if year_end > year_start:
             download_dir = str(year_start) + '_to_' + str(year_end) + '_' + 'issues'
-            download_dir = '../data/' + download_dir
+            download_dir = input_dir + '/' + download_dir
         else:
-            download_dir = '../data/' + str(year_start) + '_' + 'issues'
+            download_dir = input_dir + '/' + str(year_start) + '_' + 'issues'
 
         self.reset_download_settings(download_dir)
 
@@ -239,10 +241,18 @@ class Fetcher:
             if e.errno != errno.EEXIST:
                 raise
 
-        # Download issue pdfs
+        # Download
         for year in range(year_start, year_end + 1):
-            for i in self.__possible_issues:
-                self.download_all_issues(i, year)
+            if not issue_types:
+                # All issue types for given year range
+                for i in self.__possible_issues.values():
+                    self.download_all_issues(i, year)
+            else:
+                for issue_type in issue_types:
+                    issue_id = self.__possible_issues[issue_type]
+                    # Only correctly-given issues types
+                    if issue_id in self.__possible_issues.values():
+                        self.download_all_issues(issue_id, year)
 
     def scrape_paorgs(self, local_files):
         # From local data 
@@ -305,7 +315,10 @@ class Fetcher:
         return PAOrgs
 
     # Fetch responsibility assignments key - signifiers
-    def fetch_respa_keys():
-        #@TODO: Read from local file & return
-        assignment_verbs = []
-        pass
+    def fetch_respa_keys(self, local_file):
+        files_location = '../data/NE_resources' 
+        file_path = files_location + '/' + local_file
+        with open(file_path, 'r') as RespA_verbs_file:
+            RespA_keys = RespA_verbs_file.read().splitlines()
+
+        return  RespA_keys

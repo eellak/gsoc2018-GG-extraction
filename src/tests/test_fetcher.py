@@ -11,9 +11,14 @@ class FetcherTest(unittest.TestCase):
 		# rmtree(path/to/download_folder)
 		pass
 
-	def test_fetching_pdf_issues(self):
-		# Fetch pdfs of 2018
+	def test_fetching_all_pdf_issues(self):
+		# Fetch issues of 2018
 		self.fetcher.scrape_pdfs(2018, 2018)		
+
+	def test_fetching_all_pdf_issues_of_specific_types(self):
+		# Fetch section 'Β' issues of 2013
+		issue_types = ['Β']
+		self.fetcher.scrape_pdfs(2013, 2013, issue_types )		
 
 	def test_fetching_paorgs(self):
 		# Fetch PAOrgs from local files and web
@@ -23,6 +28,10 @@ class FetcherTest(unittest.TestCase):
 		print(PAOrgs)
 		self.assertTrue(PAOrgs)
 
+	def test_fetching_respa_keys(self):
+		# Fetch RespA keys from local file
+		RespA_keys = self.fetcher.fetch_respa_keys('RespA_keys')
+		print(RespA_keys)
 
 if __name__ == '__main__':
 	unittest.main()
