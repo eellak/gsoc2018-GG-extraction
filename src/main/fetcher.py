@@ -179,8 +179,8 @@ class Fetcher:
 
         if Helper.download(download_link, params['issue_title'] + ".pdf", self.download_folder):
             issue_file = os.path.join(self.download_folder, params['issue_title'] + ".pdf")
-            self.__issue_handler.create(params['issue_title'], params['issue_type'], params['issue_number'],
-                                        issue_file, params['issue_date'])
+            # self.__issue_handler.create(params['issue_title'], params['issue_type'], params['issue_number'],
+            #                             issue_file, params['issue_date'])
 
     def extract_download_links(self, html, issue_type):
         beautiful_soup = BeautifulSoup(html, "html.parser")
