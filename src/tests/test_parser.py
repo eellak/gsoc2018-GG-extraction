@@ -69,12 +69,12 @@ class ParserTest(unittest.TestCase):
 		txt_3 = self.get_txt('3')
 
 		## 
-		#	Decision Contents
+		#  Decision Contents
 		##
 		dec_contents_1 = self.parser.get_dec_contents_from_txt(txt_1); 
 		dec_contents_2 = self.parser.get_dec_contents_from_txt(txt_2);
 		dec_contents_3 = self.parser.get_dec_contents_from_txt(txt_3);  
-		
+		# print(dec_contents_1); print(dec_contents_2); print(dec_contents_3)
 		self.assertTrue((not dec_contents_1))
 		self.assertTrue((not dec_contents_2))
 		self.assertTrue((not dec_contents_3))
@@ -85,10 +85,10 @@ class ParserTest(unittest.TestCase):
 		dec_summaries_1 = self.parser.get_dec_summaries_from_txt(txt_1, dec_contents_1); 
 		dec_summaries_2 = self.parser.get_dec_summaries_from_txt(txt_2, dec_contents_2);
 		dec_summaries_3 = self.parser.get_dec_summaries_from_txt(txt_3, dec_contents_3);
-
-		self.assertTrue(dec_summaries_1[0]	== 'Aριθμ.Φ.61/5542/72 \nΚαθορισμός της διαδικασίας εγκατάστασης και \nλειτουργίας των Κέντρων Αποθήκευσης και Διανομής, σύμφωνα με το άρθρο 48ΙΑ του ν.4442/ \n2016 (Α’ 230), και λοιπών συναφών θεμάτων')
-		self.assertTrue(dec_summaries_2[0] == 'Αριθμ.απόφ.134/2017 \nΑναθεώρηση προτύπων τευχών διακηρύξεων \nανοικτής διαδικασίας για τη σύναψη ηλεκτρονικών δημοσίων συμβάσεων μελετών άνω των ορίων και κάτω των ορίων του ν.4412/2016 (A΄\xa0147), \nμε κριτήριο ανάθεσης την πλέον συμφέρουσα \nαπό οικονομική άποψη προσφορά βάσει βέλτιστης σχέσης ποιότητας - τιμής')
-		self.assertTrue(dec_summaries_3[0] == 'Αριθμ.  οικ.132\nΛήψη απόφασης επί της από 28.5.2004 (αριθμ.ημ.Πρωτ.\n2717) καταγγελίας των εταιρειών «ΣΑΡΛΗΣ ΚΟΝΤΕΪΝΕΡ  ΣΕΡΒΙΣΕΣ  Α.Ε.»  και  «ΣΑΡΛΗΣ  ΚΑΙ  ΑΓΓΕΛΟΠΟΥΛΟΣ ΠΡΑΚΤΟΡΕΙΟΝ ΕΠΕ» κατά της Εταιρείας \n«ΟΡΓΑΝΙΣΜΟΣ ΛΙΜΕΝΟΣ ΠΕΙΡΑΙΩΣ Α.Ε.» (ΟΛΠ) για \nπαράβαση των άρθρων 1, 2 ν.703/1977 ΚΑΙ 81, 82 \nΣυνθΕΚ και κατά της Εταιρείας «MEDITERRANEAN \nSHIPPING COMPANY S.A.(MSC) για παράβαση των \nάρθρων 1 ν.703/1977 ΚΑΙ 81 ΣυνθΕΚ')
+		# print(dec_summaries_1); print(dec_summaries_2); print(dec_summaries_3);
+		self.assertTrue(len(dec_summaries_1) == 1)
+		self.assertTrue(len(dec_summaries_2) == 1)
+		self.assertTrue(len(dec_summaries_3) == 1)
 		
 		## 
 		#  Decision Numbers
@@ -100,6 +100,9 @@ class ParserTest(unittest.TestCase):
 		dec_nums_2 = self.parser.get_dec_nums_from_txt(txt_2, dec_summaries_2)
 		dec_nums_3 = self.parser.get_dec_nums_from_txt(txt_3, dec_summaries_3)
 		# print(dec_nums_1); print(dec_nums_2); print(dec_nums_3)
+		self.assertTrue(len(dec_nums_1) == 1)
+		self.assertTrue(len(dec_nums_2) == 1)
+		self.assertTrue(len(dec_nums_3) == 1)
 
 		## 
 		#  Decision Prerequisites
@@ -110,14 +113,17 @@ class ParserTest(unittest.TestCase):
 		dec_prereqs_2 = self.parser.get_dec_prereqs_from_txt(txt_2, len(dec_summaries_2))
 		dec_prereqs_3 = self.parser.get_dec_prereqs_from_txt(txt_3, len(dec_summaries_3))
 		# print(len(dec_prereqs_1)); print(len(dec_prereqs_2)); print(len(dec_prereqs_3))
+		self.assertTrue(len(dec_prereqs_1) == 1)
+		self.assertTrue(len(dec_prereqs_2) == 1)
+		self.assertTrue(len(dec_prereqs_3) == 1)
 
 		## 
-		#	Decisions
+		#  Decisions
 		##
 		decisions_1 = self.parser.get_decisions_from_txt(txt_1, len(dec_summaries_1))
 		decisions_2 = self.parser.get_decisions_from_txt(txt_2, len(dec_summaries_2))
 		decisions_3 = self.parser.get_decisions_from_txt(txt_3, len(dec_summaries_3))
-
+		# print(len(dec_decisions_1)); print(len(dec_decisions_2)); print(len(dec_decisions_3))
 		self.assertTrue(len(decisions_1) == len(dec_summaries_1))
 		self.assertTrue(len(decisions_2) == len(dec_summaries_2))
 		self.assertTrue(len(decisions_3) == len(dec_summaries_3))
@@ -131,26 +137,26 @@ class ParserTest(unittest.TestCase):
 		txt_6 = self.get_txt('6')
 
 		## 
-		#	Decision Contents
+		#  Decision Contents
 		##
 		dec_contents_4 = self.parser.get_dec_contents_from_txt(txt_4); 
 		dec_contents_5 = self.parser.get_dec_contents_from_txt(txt_5);
 		dec_contents_6 = self.parser.get_dec_contents_from_txt(txt_6);  
-		
-		self.assertTrue(dec_contents_4)
-		self.assertTrue(dec_contents_5)
-		self.assertTrue(dec_contents_6)
+		# print(dec_contents_4); print(dec_contents_5); print(dec_contents_6)
+		self.assertTrue(dec_contents_4);
+		self.assertTrue(dec_contents_5); 
+		self.assertTrue(dec_contents_6); 
 
 		## 
-		#	Decision Summaries
+		#  Decision Summaries
 		##
 		dec_summaries_4 = self.parser.get_dec_summaries_from_txt(txt_4, dec_contents_4); 
 		dec_summaries_5 = self.parser.get_dec_summaries_from_txt(txt_5, dec_contents_5);
 		dec_summaries_6 = self.parser.get_dec_summaries_from_txt(txt_6, dec_contents_6);
-
-		self.assertTrue(len(dec_summaries_4) == 9)
-		self.assertTrue(len(dec_summaries_5) == 6)
-		self.assertTrue(len(dec_summaries_6) == 5)
+		# print(dec_summaries_4); print(dec_summaries_5); print(dec_summaries_6);
+		self.assertTrue(len(dec_summaries_4) > 1)
+		self.assertTrue(len(dec_summaries_5) > 1)
+		self.assertTrue(len(dec_summaries_6) > 1)
 
 		## 
 		#  Decision Numbers
@@ -161,8 +167,10 @@ class ParserTest(unittest.TestCase):
 		dec_nums_4 = self.parser.get_dec_nums_from_txt(txt_4, dec_summaries_4)
 		dec_nums_5 = self.parser.get_dec_nums_from_txt(txt_5, dec_summaries_5)
 		dec_nums_6 = self.parser.get_dec_nums_from_txt(txt_6, dec_summaries_6)
-		
 		# print(dec_nums_4); print(dec_nums_5); print(dec_nums_6)
+		self.assertTrue(len(dec_nums_4) > 1)
+		self.assertTrue(len(dec_nums_5) > 1)
+		self.assertTrue(len(dec_nums_6) > 1)
 
 		## 
 		#  Decision Prerequisites
@@ -173,21 +181,24 @@ class ParserTest(unittest.TestCase):
 		dec_prereqs_5 = self.parser.get_dec_prereqs_from_txt(txt_5, len(dec_summaries_5))
 		dec_prereqs_6 = self.parser.get_dec_prereqs_from_txt(txt_6, len(dec_summaries_6))
 		# print(len(dec_prereqs_4)); print(len(dec_prereqs_5)); print(len(dec_prereqs_6))
+		self.assertTrue(len(dec_prereqs_4) > 1)
+		self.assertTrue(len(dec_prereqs_5) > 1)
+		self.assertTrue(len(dec_prereqs_6) > 1)
 
 		## 
-		#	Decisions
+		#  Decisions
 		##
 		decisions_4 = self.parser.get_decisions_from_txt(txt_4, len(dec_summaries_4))
 		decisions_5 = self.parser.get_decisions_from_txt(txt_5, len(dec_summaries_5))
 		decisions_6 = self.parser.get_decisions_from_txt(txt_6, len(dec_summaries_6))
-
+		# print(decisions_4); print(decisions_5); print(decisions_6)
 		self.assertTrue(len(decisions_4) == len(dec_summaries_4))
 		self.assertTrue(len(decisions_5) == len(dec_summaries_5))
 		self.assertTrue(len(decisions_6) == len(dec_summaries_6))
 
 		
 		## 
-		#	Location & Date of signing
+		#  Location & Date of signing
 		##
 		print('\n* Location & Date of signing *\n')
 		print(self.parser.get_dec_location_and_date_from_txt(txt_1))
@@ -198,7 +209,7 @@ class ParserTest(unittest.TestCase):
 		print(self.parser.get_dec_location_and_date_from_txt(txt_6))
 
 		## 
-		#	Signees
+		#  Signees
 		##
 		print('\n* Signees *\n')
 		print(self.parser.get_dec_signees_from_txt(txt_1))
@@ -218,11 +229,11 @@ class ParserTest(unittest.TestCase):
 		txt_2 = self.get_txt('8')
 
 		## 
-		#	Decision Contents
+		#  Decision Contents
 		##
 		dec_contents_1 = self.parser.get_dec_contents_from_txt(txt_1); 
 		dec_contents_2 = self.parser.get_dec_contents_from_txt(txt_2);
-		
+		# print(dec_contents_1); print(dec_contents_2)
 		self.assertTrue(not dec_contents_1)
 		self.assertTrue(not dec_contents_2)
 
@@ -232,6 +243,8 @@ class ParserTest(unittest.TestCase):
 		dec_summaries_1 = self.parser.get_dec_summaries_from_txt(txt_1, dec_contents_1); 
 		dec_summaries_2 = self.parser.get_dec_summaries_from_txt(txt_2, dec_contents_2);
 		# print(dec_summaries_1); print(dec_summaries_2)
+		self.assertTrue(len(dec_summaries_1) == 1)
+		self.assertTrue(len(dec_summaries_2) == 1)
 
 		## 
 		#  Decision Numbers
@@ -242,6 +255,8 @@ class ParserTest(unittest.TestCase):
 		dec_nums_1 = self.parser.get_dec_nums_from_txt(txt_1, dec_summaries_1)
 		dec_nums_2 = self.parser.get_dec_nums_from_txt(txt_2, dec_summaries_2)
 		# print(dec_nums_1); print(dec_nums_2)
+		self.assertTrue(len(dec_nums_1) == 1)
+		self.assertTrue(len(dec_nums_2) == 1)
 
 		## 
 		#  Decision Prerequisites
@@ -251,13 +266,17 @@ class ParserTest(unittest.TestCase):
 		dec_prereqs_1 = self.parser.get_dec_prereqs_from_txt(txt_1, len(dec_summaries_1))
 		dec_prereqs_2 = self.parser.get_dec_prereqs_from_txt(txt_2, len(dec_summaries_2))
 		# print(dec_prereqs_1); print(dec_prereqs_2)
+		self.assertTrue(len(dec_prereqs_1) == 1)
+		self.assertTrue(len(dec_prereqs_2) == 1)
 
 		## 
-		#	Decisions
+		#  Decisions
 		##
 		decisions_1 = self.parser.get_decisions_from_txt(txt_1, len(dec_summaries_1))
 		decisions_2 = self.parser.get_decisions_from_txt(txt_2, len(dec_summaries_2))
 		# print(decisions_1); print(decisions_2)
+		self.assertTrue(len(decisions_1) == len(dec_summaries_1))
+		self.assertTrue(len(decisions_2) == len(dec_summaries_2))
 
 		################################
 		#    Issues w many decisions   #
@@ -269,14 +288,18 @@ class ParserTest(unittest.TestCase):
 		txt_6 = self.get_txt('12')
 
 		## 
-		#	Decision Contents
+		#  Decision Contents
 		##
 		dec_contents_3 = self.parser.get_dec_contents_from_txt(txt_3); 
 		dec_contents_4 = self.parser.get_dec_contents_from_txt(txt_4);
 		dec_contents_5 = self.parser.get_dec_contents_from_txt(txt_5);  
 		dec_contents_6 = self.parser.get_dec_contents_from_txt(txt_6);  
-		# print(dec_contents_4); print(dec_contents_5); print(dec_contents_6)
-		# print(dec_contents_7)
+		# print(dec_contents_3); print(dec_contents_4); print(dec_contents_5)
+		# print(dec_contents_6)
+		self.assertTrue(dec_contents_3)
+		self.assertTrue(dec_contents_4)
+		self.assertTrue(dec_contents_5)
+		self.assertTrue(dec_contents_6)
 
 		## 
 		#  Decision Summaries
@@ -285,8 +308,12 @@ class ParserTest(unittest.TestCase):
 		dec_summaries_4 = self.parser.get_dec_summaries_from_txt(txt_4, dec_contents_4);
 		dec_summaries_5 = self.parser.get_dec_summaries_from_txt(txt_5, dec_contents_5);
 		dec_summaries_6 = self.parser.get_dec_summaries_from_txt(txt_6, dec_contents_6);
-		# print(dec_summaries_4); print(dec_summaries_5); print(dec_summaries_6)
-		# print(len(dec_summaries_7))
+		# print(dec_summaries_3); print(dec_summaries_4); print(dec_summaries_5)
+		# print(len(dec_summaries_6))
+		self.assertTrue(len(dec_summaries_3) > 1)
+		self.assertTrue(len(dec_summaries_4) > 1)
+		self.assertTrue(len(dec_summaries_5) > 1)
+		self.assertTrue(len(dec_summaries_6) > 1)
 
 		## 
 		#  Decision Numbers
@@ -298,9 +325,13 @@ class ParserTest(unittest.TestCase):
 		dec_nums_4 = self.parser.get_dec_nums_from_txt(txt_4, dec_summaries_4)
 		dec_nums_5 = self.parser.get_dec_nums_from_txt(txt_5, dec_summaries_5)
 		dec_nums_6 = self.parser.get_dec_nums_from_txt(txt_6, dec_summaries_6)
-		# print(dec_nums_4); print(dec_nums_5); print(dec_nums_6)
-		# print(dec_nums_7)
-
+		# print(dec_nums_3); print(dec_nums_4); print(dec_nums_5)
+		# print(dec_nums_6)
+		self.assertTrue(len(dec_nums_3) > 1)
+		self.assertTrue(len(dec_nums_4) > 1)
+		self.assertTrue(len(dec_nums_5) > 1)
+		self.assertTrue(len(dec_nums_6) > 1)
+		
 		## 
 		#  Decision Prerequisites
 		## 		
@@ -309,26 +340,32 @@ class ParserTest(unittest.TestCase):
 		dec_prereqs_3 = self.parser.get_dec_prereqs_from_txt(txt_3, len(dec_summaries_3))
 		dec_prereqs_4 = self.parser.get_dec_prereqs_from_txt(txt_4, len(dec_summaries_4))
 		dec_prereqs_5 = self.parser.get_dec_prereqs_from_txt(txt_5, len(dec_summaries_5))
-		
-		 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! #
-		#  This one seems to require our attention! (some prereqs scrambled up)  #
-		 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! #
+		# ! This one seems to require our attention! (some prereqs scrambled up)   
 		dec_prereqs_6 = self.parser.get_dec_prereqs_from_txt(txt_6, len(dec_summaries_6))
-		# print(dec_prereqs_4); print(dec_prereqs_5); print(dec_prereqs_6)
-		# print(dec_prereqs_7)
+		# print(dec_prereqs_3); print(dec_prereqs_4); print(dec_prereqs_5)
+		# print(dec_prereqs_6)
+		self.assertTrue(len(dec_prereqs_3) > 1)
+		self.assertTrue(len(dec_prereqs_4) > 1)
+		self.assertTrue(len(dec_prereqs_5) > 1)
+		self.assertTrue(len(dec_prereqs_6) > 1)
 
 		## 
-		#	Decisions
+		#  Decisions
 		##
 		decisions_3 = self.parser.get_decisions_from_txt(txt_3, len(dec_summaries_3))
 		decisions_4 = self.parser.get_decisions_from_txt(txt_4, len(dec_summaries_4))
 		decisions_5 = self.parser.get_decisions_from_txt(txt_5, len(dec_summaries_5))
 		decisions_6 = self.parser.get_decisions_from_txt(txt_6, len(dec_summaries_6))
-		# print(decisions_4); print(decisions_5); print(decisions_6)
-		# print(decisions_7)
+		# print(decisions_3); print(decisions_4); print(decisions_5)
+		# print(decisions_6)
+		self.assertTrue(len(decisions_3) == len(dec_summaries_3))
+		self.assertTrue(len(decisions_4) == len(dec_summaries_4))
+		self.assertTrue(len(decisions_5) == len(dec_summaries_5))
+		# ! One decision not detected
+		self.assertTrue(len(decisions_6) == len(dec_summaries_6) - 1)
 
 		## 
-		#	Location & Date of signing
+		#  Location & Date of signing
 		##
 		print('\n* Location & Date of signing *\n')
 		print(self.parser.get_dec_location_and_date_from_txt(txt_1))
@@ -339,7 +376,7 @@ class ParserTest(unittest.TestCase):
 		print(self.parser.get_dec_location_and_date_from_txt(txt_6))
 
 		## 
-		#	Signees
+		#  Signees
 		##
 		print('\n* Signees *\n')
 		print(self.parser.get_dec_signees_from_txt(txt_1))
