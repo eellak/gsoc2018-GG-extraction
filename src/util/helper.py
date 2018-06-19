@@ -117,6 +117,7 @@ class Helper:
     def get_special_regex_disjunction(key_list):
             regex_disj_str = ''
             for key in key_list:
+                key = str(key).replace(' ', '\\s+')
                 regex_disj_str += str(key) + '|'
             return regex_disj_str[:-1]
 
