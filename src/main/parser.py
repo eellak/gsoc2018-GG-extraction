@@ -41,17 +41,18 @@ class Parser(object):
 		self.dec_contents_key = "ΠΕΡΙΕΧΟΜΕΝΑ\nΑΠΟΦΑΣΕΙΣ"
 		self.decs_key = "ΑΠΟΦΑΣΕΙΣ"
 		# Must be expanded (lots of variants)
-		self.dec_prereq_keys = ["Έχοντας υπόψη:", "Έχοντας υπόψη:", "Έχοντας υπ\' όψη:", "Έχοντας υπ\’ όψη:", "Αφού έλαβε υπόψη:"]
+		self.dec_prereq_keys = ["Εχοντας υπόψη:", "Έχοντας υπόψη:", "Έχοντας υπόψη:", "Έχοντας υπόψη του:", "Έχοντας υπ\' όψη:", 
+							    "Έχοντας υπ\’ όψη:", "Αφού έλαβε υπόψη:", "Λαμβάνοντας υπόψη:"]
 		self.dec_init_keys = ["αποφασίζουμε:", "αποφασίζουμε τα ακόλουθα:", "αποφασίζουμε τα εξής:",
-							  "αποφασίζει:", "αποφασίζει τα ακόλουθα:", "αποφασίζει τα εξής:", 
-							  "αποφασίζει τα κάτωθι", "αποφασίζεται:", "με τα παρακάτω στοιχεία:"]
-		self.dec_end_keys = ["Η απόφαση αυτή", "Ηαπόφαση αυτή", "Η απόφαση", "Η περίληψη αυτή",
-							 "να δημοσιευθεί", "να δημοσιευθούν", "F\n"]
+							  "αποφασίζει:", "αποφασίζει τα ακόλουθα:", "αποφασίζει τα εξής:", "αποφασίζει ομόφωνα:",
+							  "αποφασίζει ομόφωνα και εγκρίνει:", "αποφασίζει τα κάτωθι", "αποφασίζεται:", 
+							  "με τα παρακάτω στοιχεία:"]
+		self.dec_end_keys = {'start_group': ["Η απόφαση αυτή", "Ηαπόφαση αυτή", "Η απόφαση", "Η περίληψη αυτή", "ισχύει"],
+							 'finish_group': ["την δημοσίευση", "να δημοσιευθεί", "να δημοσιευθούν",  "F\n"]}
 
 
 	# @TODO:
 	# - Fine-tune section getters
-	# - Create useful metadata getters for each article / decision (e.g. date, signee).
 	# - Manual annotation/extraction module of PAOrgs & RespAs, inputs: PAOrgs-assignment keys lists
 
 	def get_dec_contents_from_txt(self, txt):
@@ -62,11 +63,12 @@ class Parser(object):
 			dec_contents = dec_contents[0]
 		return dec_contents
 	
+	# @TODO: Find a way to always properly separate dec_summaries from each other
 	def get_dec_summaries_from_txt(self, txt, dec_contents):
 		""" Must be fed 'dec_contents' as returned by get_dec_contents() """
 		txt = Helper.clean_up_for_dec_related_getter(txt)
 		if dec_contents:
-			dec_summaries = findall(r"([Α-ΩΆ-Ώ].+?(?:(?![β-δζθκμνξπρτφ-ψ]\.\s?\n).)+?\.\s?\n)\d?\n?", dec_contents, flags=DOTALL)
+			dec_summaries = findall(r"([Α-ΩΆ-Ώ].+?(?:(?![Β-ΔΖΘΚΜΝΞΠΡΤΦ-Ψβ-δζθκνμξπρτφ-ψ]\.\s?\n).)+?\.\s?\n)\d?\n?", dec_contents, flags=DOTALL)
 			# Strip of redundant dots
 			dec_summaries = [sub("\.{3,}", "", dec_sum) for dec_sum in dec_summaries]
 			# Ignore possible "ΔΙΟΡΘΩΣΗ ΣΦΑΛΜΑΤΩΝ" section
@@ -103,18 +105,21 @@ class Parser(object):
 										   	 	   		    Helper.get_special_regex_disjunction(self.dec_init_keys)), 
 										 			   	   	txt, flags=DOTALL)
 		if prereq_bodies:
-			if(len(prereq_bodies) == dec_num):
-				for dec_idx in range(dec_num):
+			if(len(prereq_bodies) >= dec_num):
+				for dec_idx in range(len(prereq_bodies)):
 					dec_prereqs[dec_idx + 1] = prereq_bodies[dec_idx]
+
 			elif (len(prereq_bodies) < dec_num):
 				# Just return detected ones as list (without index correspondence)
 				dec_prereqs = prereq_bodies
+
 		else: 
 			if dec_num == 1:
 				dec_prereqs = findall(r"\.\n[Α-ΩΆ-Ώ](.+?)(?:{})".format(Helper.get_special_regex_disjunction(self.dec_init_keys)), 
 										   				 		    txt, flags=DOTALL)
 			elif dec_num > 1:
 			# For now 
+
 				pass				
 
 		return dec_prereqs
@@ -124,11 +129,12 @@ class Parser(object):
 		txt = Helper.clean_up_for_dec_related_getter(txt)
 		dec_bodies = findall(r"(?:{})(.+?)(?:(?:(?:{}).+?(?:{}))|(?:{}))"\
 								  .format(Helper.get_special_regex_disjunction(self.dec_init_keys),
-								  		  Helper.get_special_regex_disjunction(self.dec_end_keys[:4]),
-								  		  Helper.get_special_regex_disjunction(self.dec_end_keys[4:]),
+								  		  Helper.get_special_regex_disjunction(self.dec_end_keys['start_group']),
+								  		  Helper.get_special_regex_disjunction(self.dec_end_keys['finish_group']),
 								  		  Helper.get_special_regex_disjunction(self.dec_prereq_keys)), 
 								  		  txt, flags=DOTALL)
 
+		if dec_num == 2: print(txt)
 		# Try to get possible leftovers (exceptions)
 		if(len(dec_bodies) < dec_num):
 			# Fetch raw part from (remaining_dec_idx) to (remaining_dec_idx + 1)
@@ -138,7 +144,7 @@ class Parser(object):
 									  	 	 txt, flags=DOTALL)
 
 				dec_bodies += leftover_dec_bodies
-		elif len(dec_bodies) == dec_num:
+		elif len(dec_bodies) >= dec_num:
 			dec_bodies = dict(zip(range(1, dec_num + 1), dec_bodies))
 	
 		return dec_bodies
