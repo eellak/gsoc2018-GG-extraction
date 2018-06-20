@@ -47,9 +47,8 @@ class Parser(object):
 							  "αποφασίζει:", "αποφασίζει τα ακόλουθα:", "αποφασίζει τα εξής:", "αποφασίζει ομόφωνα:",
 							  "αποφασίζει ομόφωνα και εγκρίνει:", "αποφασίζει τα κάτωθι", "αποφασίζεται:", 
 							  "με τα παρακάτω στοιχεία:"]
-		self.dec_end_keys = {'start_group': ["Η απόφαση αυτή", "Ηαπόφαση αυτή", "Η απόφαση", "Η περίληψη αυτή", "ισχύει"],
-							 'finish_group': ["την δημοσίευση", "να δημοσιευθεί", "να δημοσιευθούν",  "F\n"]}
-
+		self.dec_end_keys = {'start_group': ["Η απόφαση αυτή", "Ηαπόφαση αυτή", "Η απόφαση", "Η περίληψη αυτή", "ισχύει"],	
+							 'finish_group': ["την δημοσίευση", "τη δημοσίευση", "τη δημοσίευσή", "να δημοσιευθεί", "να δημοσιευτεί", "να δημοσιευθούν",  "F\n"]}
 
 	# @TODO:
 	# - Fine-tune section getters (see specific @TODOs)
@@ -133,8 +132,7 @@ class Parser(object):
 								  		  Helper.get_special_regex_disjunction(self.dec_end_keys['finish_group']),
 								  		  Helper.get_special_regex_disjunction(self.dec_prereq_keys)), 
 								  		  txt, flags=DOTALL)
-
-		if dec_num == 2: print(txt)
+		
 		# Try to get possible leftovers (exceptions)
 		if(len(dec_bodies) < dec_num):
 			# Fetch raw part from (remaining_dec_idx) to (remaining_dec_idx + 1)
@@ -167,7 +165,7 @@ class Parser(object):
 			for general_occup in dec_signees_general_occup:
 				dec_signees_pattern = "\n\s*{general_occup}\s*\n\s*({signees})\n"\
 									  .format(general_occup=general_occup,
-											  signees="(?:[Α-ΩΆ-Ώκ−-][α-ωά-ώΑ-ΩΆ-ΏΪΫ\.,−/-]*\s*)+")
+											  signees="(?:[Α-ΩΆ-Ώκ−-][α-ωά-ώΑ-ΩΆ-ΏΪΫ\.,−/\-]*\s*)+")
 				regex_dec_signees = compile(dec_signees_pattern, flags=DOTALL)
 				dec_signees.append(findall(regex_dec_signees, txt))
 		
