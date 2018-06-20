@@ -52,7 +52,7 @@ class Parser(object):
 
 
 	# @TODO:
-	# - Fine-tune section getters
+	# - Fine-tune section getters (see specific @TODOs)
 	# - Manual annotation/extraction module of PAOrgs & RespAs, inputs: PAOrgs-assignment keys lists
 
 	def get_dec_contents_from_txt(self, txt):
@@ -149,7 +149,9 @@ class Parser(object):
 	
 		return dec_bodies
 
-	# @TODO: Make format of final result definite
+	# @TODO: 
+	# 		1. Refine
+	#		2. Make format of final result definite
 	def get_dec_signees_from_txt(self, txt):
 		# E.g. "Οι Υπουργοί", "Ο ΠΡΟΕΔΡΕΥΩΝ" etc.
 		dec_signees_general_occup_pattern = "{year}\s*\n\s*{ordered_by}?((?:{gen_occupation}))\s*\n"\
@@ -165,7 +167,7 @@ class Parser(object):
 			for general_occup in dec_signees_general_occup:
 				dec_signees_pattern = "\n\s*{general_occup}\s*\n\s*({signees})\n"\
 									  .format(general_occup=general_occup,
-											  signees="(?:[Α-ΩΆ-Ώκ−-][α-ωά-ώΑ-ΩΆ-ΏΪΫ\.,−-]*\s*)+")
+											  signees="(?:[Α-ΩΆ-Ώκ−-][α-ωά-ώΑ-ΩΆ-ΏΪΫ\.,−/-]*\s*)+")
 				regex_dec_signees = compile(dec_signees_pattern, flags=DOTALL)
 				dec_signees.append(findall(regex_dec_signees, txt))
 		
