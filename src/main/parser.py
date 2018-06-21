@@ -49,6 +49,8 @@ class Parser(object):
 							  "με τα παρακάτω στοιχεία:"]
 		self.dec_end_keys = {'start_group': ["Η απόφαση αυτή", "Ηαπόφαση αυτή", "Η απόφαση", "Η περίληψη αυτή", "ισχύει"],	
 							 'finish_group': ["την δημοσίευση", "τη δημοσίευση", "τη δημοσίευσή", "να δημοσιευθεί", "να δημοσιευτεί", "να δημοσιευθούν",  "F\n"]}
+		self.respa_keys = {'assignment_verbs':["Αναθέτουμε", "αναθέτουμε"], 
+						   'assignment_types':["καθηκόντων", "αρμοδιοτήτων"]}
 
 	# @TODO:
 	# - Fine-tune section getters (see specific @TODOs)
@@ -206,7 +208,13 @@ class Parser(object):
 		return matching_paorgs
 
 	def get_respas_from_txt(self, txt):
-		pass
+		respas = []
+		if txt:
+			rough_respas = findall(r"\n(.+?(?:{assign_verb}).+?(?:{assign_type}).+?)\.\s*\n"\
+								   .format(assign_verb=Helper.get_special_regex_disjunction(self.respa_keys['assignment_verbs']), 
+								   		   assign_type=Helper.get_special_regex_disjunction(self.respa_keys['assignment_types'])), 
+									txt, flags=DOTALL)
+		return rough_respas
 
 	def get_simple_pdf_text(self, file_name, txt_name):
 		try:
