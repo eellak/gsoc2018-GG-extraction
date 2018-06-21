@@ -532,5 +532,42 @@ class ParserTest(unittest.TestCase):
 		print(self.parser.get_dec_signees_from_txt(txt_3))
 		print(self.parser.get_dec_signees_from_txt(txt_4))
 
+	def test_get_respas_from_txts_1(self):
+		respa_pdf_path = self.test_pdfs_dir + '/RespA_Issues/'
+		txt_1 = self.get_txt('1_w_RespAs', pdf_path=respa_pdf_path)
+		txt_2 = self.get_txt('2_w_RespAs', pdf_path=respa_pdf_path)
+		txt_3 = self.get_txt('3_w_RespAs', pdf_path=respa_pdf_path)
+		txt_4 = self.get_txt('4_w_RespAs', pdf_path=respa_pdf_path)
+
+		## 
+		#  Decision Contents
+		##
+		dec_contents_1 = self.parser.get_dec_contents_from_txt(txt_1); 
+		dec_contents_2 = self.parser.get_dec_contents_from_txt(txt_2);
+		dec_contents_3 = self.parser.get_dec_contents_from_txt(txt_3);  
+		dec_contents_4 = self.parser.get_dec_contents_from_txt(txt_4);
+
+		## 
+		#  Decision Summaries
+		## 
+		dec_summaries_1 = self.parser.get_dec_summaries_from_txt(txt_1, dec_contents_1); 
+		dec_summaries_2 = self.parser.get_dec_summaries_from_txt(txt_2, dec_contents_2);
+		dec_summaries_3 = self.parser.get_dec_summaries_from_txt(txt_3, dec_contents_3);
+		dec_summaries_4 = self.parser.get_dec_summaries_from_txt(txt_4, dec_contents_4);
+
+		## 
+		#  Decisions
+		##
+		decisions_1 = self.parser.get_decisions_from_txt(txt_1, len(dec_summaries_1))
+		decisions_2 = self.parser.get_decisions_from_txt(txt_2, len(dec_summaries_2))
+		decisions_3 = self.parser.get_decisions_from_txt(txt_3, len(dec_summaries_3))
+		decisions_4 = self.parser.get_decisions_from_txt(txt_4, len(dec_summaries_4))
+
+		## 
+		#  RespAs
+		##
+		respas_1 = self.parser.get_respas_from_txt(decisions_1[0])
+		print(respas_1)
+
 if __name__ == '__main__':
 	unittest.main() 
