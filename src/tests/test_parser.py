@@ -563,11 +563,31 @@ class ParserTest(unittest.TestCase):
 		decisions_3 = self.parser.get_decisions_from_txt(txt_3, len(dec_summaries_3))
 		decisions_4 = self.parser.get_decisions_from_txt(txt_4, len(dec_summaries_4))
 
-		## 
+		##
 		#  RespAs
 		##
-		respas_1 = self.parser.get_respas_from_txt(decisions_1[0])
-		print(respas_1)
+		
+		# Convert any dict to list
+		if isinstance(decisions_1, dict): decisions_1 = list(decisions_1.values())
+		if isinstance(decisions_2, dict): decisions_2 = list(decisions_2.values())
+		if isinstance(decisions_3, dict): decisions_3 = list(decisions_3.values())
+		if isinstance(decisions_4, dict): decisions_4 = list(decisions_4.values())
+
+		for dec in decisions_1:
+			respas_1 = self.parser.get_dec_respa_sections_from_txt(dec)
+			print(respas_1, '\n')
+		
+		for dec in decisions_2:
+			respas_2 = self.parser.get_dec_respa_sections_from_txt(dec)
+			print(respas_2, '\n')
+
+		for dec in decisions_3:
+			respas_3 = self.parser.get_dec_respa_sections_from_txt(dec)
+			print(respas_3, '\n')
+		
+		for dec in decisions_4:
+			respas_4 = self.parser.get_dec_respa_sections_from_txt(dec)
+			print(respas_4, '\n')
 
 if __name__ == '__main__':
 	unittest.main() 
