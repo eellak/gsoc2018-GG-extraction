@@ -49,8 +49,8 @@ class Parser(object):
 							  "με τα παρακάτω στοιχεία:"]
 		self.dec_end_keys = {'start_group': ["Η απόφαση αυτή", "Ηαπόφαση αυτή", "Η απόφαση", "Η περίληψη αυτή", "ισχύει"],	
 							 'finish_group': ["την δημοσίευση", "τη δημοσίευση", "τη δημοσίευσή", "να δημοσιευθεί", "να δημοσιευτεί", "να δημοσιευθούν",  "F\n"]}
-		self.respa_keys = {'assignment_verbs':["Αναθέτουμε", "αναθέτουμε"], 
-						   'assignment_types':["καθηκόντων", "αρμοδιοτήτων"]}
+		self.respa_keys = {'assignment_verbs':["Αναθέτουμε", "αναθέτουμε", "Απαλλάσσουμε"], 
+						   'assignment_types':["καθηκόντων", "αρμοδιοτήτων", "καθήκοντα", "αρμοδιότητες"]}
 
 	# @TODO:
 	# - Fine-tune section getters (see specific @TODOs)
@@ -64,7 +64,8 @@ class Parser(object):
 			dec_contents = dec_contents[0]
 		return dec_contents
 	
-	# @TODO: Find a way to always properly separate dec_summaries from each other
+	# @TODO: Find a way to always properly separate dec_summaries from each other:
+	# 		 Idea: Problems possibly solved just by detecting '\n\s*ΑΠΟΦΑΣΕΙΣ' as end
 	def get_dec_summaries_from_txt(self, txt, dec_contents):
 		""" Must be fed 'dec_contents' as returned by get_dec_contents() """
 		txt = Helper.clean_up_for_dec_related_getter(txt)
@@ -207,14 +208,38 @@ class Parser(object):
 		
 		return matching_paorgs
 
-	def get_respas_from_txt(self, txt):
-		respas = []
+	# Get RespA sections contained in decision body 
+	def get_dec_respa_sections_from_txt(self, txt):
+		""" Must be fed 'txt' containing decision """
+		dec_respa_sections_in_articles = []
+		dec_respa_sections_not_in_articles = []
 		if txt:
-			rough_respas = findall(r"\n(.+?(?:{assign_verb}).+?(?:{assign_type}).+?)\.\s*\n"\
-								   .format(assign_verb=Helper.get_special_regex_disjunction(self.respa_keys['assignment_verbs']), 
-								   		   assign_type=Helper.get_special_regex_disjunction(self.respa_keys['assignment_types'])), 
-									txt, flags=DOTALL)
-		return rough_respas
+			
+			dec_respa_sections_in_articles = findall(r"\n(.+?(?:{assign_verb}).+?(?:{assign_type}).+?)\.\s*\n\s*Άρθρο"\
+													   .format(assign_verb=Helper.get_special_regex_disjunction(self.respa_keys['assignment_verbs']), 
+													   		   assign_type=Helper.get_special_regex_disjunction(self.respa_keys['assignment_types'])), 
+														txt, flags=DOTALL)
+
+			# Attempt 1
+			dec_respa_sections_not_in_articles_1 = findall(r"\n?(.+?(?:{assign_verb}).+?(?:{assign_type}).+?)\.\s*\n\s*[Α-ΩΆ-Ώ]"\
+													   .format(assign_verb=Helper.get_special_regex_disjunction(self.respa_keys['assignment_verbs']), 
+													   		   assign_type=Helper.get_special_regex_disjunction(self.respa_keys['assignment_types'])), 
+														txt, flags=DOTALL)
+
+			# Attempt 2
+			dec_respa_sections_not_in_articles_2 = findall(r"\n?(.+?(?:{assign_verb}).+?(?:{assign_type}).+?)\.\s*\n\s*[Α-ΩΆ-Ώ]?"\
+													   .format(assign_verb=Helper.get_special_regex_disjunction(self.respa_keys['assignment_verbs']), 
+													   		   assign_type=Helper.get_special_regex_disjunction(self.respa_keys['assignment_types'])), 
+														txt, flags=DOTALL)
+
+		dec_respa_sections = dec_respa_sections_in_articles + dec_respa_sections_not_in_articles_1 + dec_respa_sections_not_in_articles_2
+
+		return dec_respa_sections
+
+	# Get RespA references contained in decision prerequisites
+	def get_dec_respa_reference_sections_from_txt(self, txt):
+		""" Must be fed 'txt' containing decision prerequisites """
+		pass
 
 	def get_simple_pdf_text(self, file_name, txt_name):
 		try:
