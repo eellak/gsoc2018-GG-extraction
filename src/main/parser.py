@@ -211,34 +211,37 @@ class Parser(object):
 	# Get RespA sections contained in decision body 
 	def get_dec_respa_sections_from_txt(self, txt):
 		""" Must be fed 'txt' containing decision """
-		dec_respa_sections_in_articles = []
-		dec_respa_sections_not_in_articles = []
+		dec_respa_sections_in_articles, \
+		dec_respa_sections_not_in_articles_1, \
+		dec_respa_sections_not_in_articles_2 = [], [], []
+
 		if txt:
 			
-			dec_respa_sections_in_articles = findall(r"\n(.+?(?:{assign_verb}).+?(?:{assign_type}).+?)\.\s*\n\s*Άρθρο"\
-													   .format(assign_verb=Helper.get_special_regex_disjunction(self.respa_keys['assignment_verbs']), 
-													   		   assign_type=Helper.get_special_regex_disjunction(self.respa_keys['assignment_types'])), 
-														txt, flags=DOTALL)
+			main_respa_section_pattern = '(.+?(?:{assign_verb}).+?(?:{assign_type}).+?)\.\s*\n\s*'.\
+											format(assign_verb=Helper.get_special_regex_disjunction(self.respa_keys['assignment_verbs']), 
+									  		 	   assign_type=Helper.get_special_regex_disjunction(self.respa_keys['assignment_types']))
+
+			dec_respa_sections_in_articles = findall(r"\n" + main_respa_section_pattern + "Άρθρο", txt, flags=DOTALL)
 
 			# Attempt 1
-			dec_respa_sections_not_in_articles_1 = findall(r"\n?(.+?(?:{assign_verb}).+?(?:{assign_type}).+?)\.\s*\n\s*[Α-ΩΆ-Ώ]"\
-													   .format(assign_verb=Helper.get_special_regex_disjunction(self.respa_keys['assignment_verbs']), 
-													   		   assign_type=Helper.get_special_regex_disjunction(self.respa_keys['assignment_types'])), 
-														txt, flags=DOTALL)
+			dec_respa_sections_not_in_articles_1 = findall(r"\n?" + main_respa_section_pattern + "[Α-ΩΆ-Ώ]", txt, flags=DOTALL)
 
 			# Attempt 2
-			dec_respa_sections_not_in_articles_2 = findall(r"\n?(.+?(?:{assign_verb}).+?(?:{assign_type}).+?)\.\s*\n\s*[Α-ΩΆ-Ώ]?"\
-													   .format(assign_verb=Helper.get_special_regex_disjunction(self.respa_keys['assignment_verbs']), 
-													   		   assign_type=Helper.get_special_regex_disjunction(self.respa_keys['assignment_types'])), 
-														txt, flags=DOTALL)
+			dec_respa_sections_not_in_articles_2 = findall(r"\n?" + main_respa_section_pattern + "[Α-ΩΆ-Ώ]?", txt, flags=DOTALL)
 
-		dec_respa_sections = dec_respa_sections_in_articles + dec_respa_sections_not_in_articles_1 + dec_respa_sections_not_in_articles_2
+		dec_respa_sections = dec_respa_sections_in_articles + \
+							 dec_respa_sections_not_in_articles_1 + \
+							 dec_respa_sections_not_in_articles_2
 
 		return dec_respa_sections
 
 	# Get RespA references contained in decision prerequisites
 	def get_dec_respa_reference_sections_from_txt(self, txt):
 		""" Must be fed 'txt' containing decision prerequisites """
+		pass
+
+	# Get a dictionary containing assignment: {'PAOrg': ..., 'Responsibility': ..., etc.}
+	def get_respa_association(self, respa):
 		pass
 
 	def get_simple_pdf_text(self, file_name, txt_name):
