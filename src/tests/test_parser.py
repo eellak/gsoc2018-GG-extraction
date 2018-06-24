@@ -532,6 +532,18 @@ class ParserTest(unittest.TestCase):
 		print(self.parser.get_dec_signees_from_txt(txt_3))
 		print(self.parser.get_dec_signees_from_txt(txt_4))
 
+	def test_get_dec_sections_from_txts_4(self):
+				
+		# respa_pdf_path = self.test_pdfs_dir + '/RespA_Issues/'
+		# txt_1 = self.get_txt('5_w_RespAs', pdf_path=respa_pdf_path)
+		# txt_2 = self.get_txt('6_w_RespAs', pdf_path=respa_pdf_path)
+		# txt_3 = self.get_txt('7_w_RespAs', pdf_path=respa_pdf_path)
+		# txt_4 = self.get_txt('8_w_RespAs', pdf_path=respa_pdf_path)
+		
+		# ...
+
+		pass
+		
 	def test_get_respas_from_txts_1(self):
 		respa_pdf_path = self.test_pdfs_dir + '/RespA_Issues/'
 		txt_1 = self.get_txt('1_w_RespAs', pdf_path=respa_pdf_path)
@@ -589,6 +601,18 @@ class ParserTest(unittest.TestCase):
 		print(respa_sections_2, '\n')
 		print(respa_sections_3, '\n')
 		print(respa_sections_4, '\n')
+
+	def test_get_respas_from_txts_2(self):
+		
+		# respa_pdf_path = self.test_pdfs_dir + '/RespA_Issues/'
+		# txt_1 = self.get_txt('5_w_RespAs', pdf_path=respa_pdf_path)
+		# txt_2 = self.get_txt('6_w_RespAs', pdf_path=respa_pdf_path)
+		# txt_3 = self.get_txt('7_w_RespAs', pdf_path=respa_pdf_path)
+		# txt_4 = self.get_txt('8_w_RespAs', pdf_path=respa_pdf_path)
+		
+		# ...
+
+		pass
 		
 if __name__ == '__main__':
 	unittest.main() 
