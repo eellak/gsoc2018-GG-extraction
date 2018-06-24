@@ -482,7 +482,7 @@ class ParserTest(unittest.TestCase):
 		#  Decision Prerequisites
 		## 		
 
-		# e.g. "Έχοντας υπόψη:" *[...]* "αποφασίζουμε:"
+		# e.g. "Έχοντας υπόψη:" *[...]* ", αποφασίζουμε:"
 		dec_prereqs_1 = self.parser.get_dec_prereqs_from_txt(txt_1, len(dec_summaries_1))
 		dec_prereqs_2 = self.parser.get_dec_prereqs_from_txt(txt_2, len(dec_summaries_2))
 		dec_prereqs_3 = self.parser.get_dec_prereqs_from_txt(txt_3, len(dec_summaries_3))
@@ -564,7 +564,7 @@ class ParserTest(unittest.TestCase):
 		decisions_4 = self.parser.get_decisions_from_txt(txt_4, len(dec_summaries_4))
 
 		##
-		#  RespAs
+		#  RespA Sections
 		##
 		
 		# Convert any dict to list
@@ -572,22 +572,23 @@ class ParserTest(unittest.TestCase):
 		if isinstance(decisions_2, dict): decisions_2 = list(decisions_2.values())
 		if isinstance(decisions_3, dict): decisions_3 = list(decisions_3.values())
 		if isinstance(decisions_4, dict): decisions_4 = list(decisions_4.values())
-
-		for dec in decisions_1:
-			respas_1 = self.parser.get_dec_respa_sections_from_txt(dec)
-			print(respas_1, '\n')
 		
-		for dec in decisions_2:
-			respas_2 = self.parser.get_dec_respa_sections_from_txt(dec)
-			print(respas_2, '\n')
-
-		for dec in decisions_3:
-			respas_3 = self.parser.get_dec_respa_sections_from_txt(dec)
-			print(respas_3, '\n')
+		# Get RespA sections found in decision text
+		respa_sections_1 = [self.parser.get_dec_respa_sections_from_txt(dec) for dec in decisions_1]
+		respa_sections_2 = [self.parser.get_dec_respa_sections_from_txt(dec) for dec in decisions_2]
+		respa_sections_3 = [self.parser.get_dec_respa_sections_from_txt(dec) for dec in decisions_3]
+		respa_sections_4 = [self.parser.get_dec_respa_sections_from_txt(dec) for dec in decisions_4]
 		
-		for dec in decisions_4:
-			respas_4 = self.parser.get_dec_respa_sections_from_txt(dec)
-			print(respas_4, '\n')
-
+		# Get non-empty lists
+		respa_sections_1 = list(filter(None, respa_sections_1))[0]
+		respa_sections_2 = list(filter(None, respa_sections_2))[0]
+		respa_sections_3 = list(filter(None, respa_sections_3))[0]
+		respa_sections_4 = list(filter(None, respa_sections_4))[0]
+		
+		print(respa_sections_1, '\n')
+		print(respa_sections_2, '\n')
+		print(respa_sections_3, '\n')
+		print(respa_sections_4, '\n')
+		
 if __name__ == '__main__':
 	unittest.main() 
