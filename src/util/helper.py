@@ -153,15 +153,17 @@ class Helper:
                 'Ιουλίου': 7, 'Αυγούστου': 8, 'Σεπτεμβρίου': 9, 'Οκτωβρίου': 10, 'Νοεμβρίου': 11,
                 'Δεκεμβρίου': 12, 'Μαίου': 5}
 
+    # @TODO: Add Attica Prefectures
     @staticmethod
     def get_dec_location_and_date_before_signees_regex():
         greek_cities = Helper.get_greek_cities()
         days = range(1,31+1)        
         greek_months = Helper.get_greek_months().keys()
-        dec_loc_and_data_pattern = "\s*\n\s*((?:{city}),\s+(?:{day})\s+(?:{month})\s+(?:{year}))\s*\n".format(city=Helper.get_special_regex_disjunction(greek_cities),
-                                                                           day=Helper.get_special_regex_disjunction(days),
-                                                                           month=Helper.get_special_regex_disjunction(greek_months),
-                                                                           year="\d{4}")
+        dec_loc_and_data_pattern = "\s*\n\s*((?:{city}),\s+(?:{day})\s+(?:{month})\s+(?:{year}))\s*\n"\
+                                    .format(city=Helper.get_special_regex_disjunction(greek_cities),
+                                            day=Helper.get_special_regex_disjunction(days),
+                                            month=Helper.get_special_regex_disjunction(greek_months),
+                                            year="\d{4}")
         return re.compile(dec_loc_and_data_pattern, flags=re.DOTALL)
 
     # Converts a textual date to a unix timestamp
