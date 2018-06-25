@@ -41,13 +41,13 @@ class Parser(object):
 		self.dec_contents_key = "ΠΕΡΙΕΧΟΜΕΝΑ\nΑΠΟΦΑΣΕΙΣ"
 		self.decs_key = "ΑΠΟΦΑΣΕΙΣ"
 		# Must be expanded (lots of variants)
-		self.dec_prereq_keys = ["Εχοντας υπόψη:", "Έχοντας υπόψη:", "Έχοντας υπόψη:", "Έχοντας υπόψη του:", "Έχοντας υπ\' όψη:", 
-							    "Έχοντας υπ\’ όψη:", "Αφού έλαβε υπόψη:", "Λαμβάνοντας υπόψη:"]
+		self.dec_prereq_keys = ["χοντας υπόψη:", "Έχοντες υπόψη:", "Έχουσα υπόψη:", "χοντας υπόψη του:", "χοντας υπ\' όψη:", 
+							    "χοντας υπ\’ όψη:", "Αφού έλαβε υπόψη:", "Λαμβάνοντας υπόψη:"]
 		self.dec_init_keys = ["αποφασίζουμε:", "αποφασίζουμε τα ακόλουθα:", "αποφασίζουμε τα εξής:",
 							  "αποφασίζει:", "αποφασίζει τα ακόλουθα:", "αποφασίζει τα εξής:", "αποφασίζει ομόφωνα:",
-							  "αποφασίζει ομόφωνα και εγκρίνει:", "αποφασίζει τα κάτωθι", "αποφασίζεται:", 
+							  "αποφασίζει ομόφωνα και εγκρίνει:", "αποφασίζει τα κάτωθι", "αποφασίζεται:",
 							  "με τα παρακάτω στοιχεία:"]
-		self.dec_end_keys = {'start_group': ["Η απόφαση αυτή", "Ηαπόφαση αυτή", "Η απόφαση", "Η περίληψη αυτή", "ισχύει"],	
+		self.dec_end_keys = {'start_group': ["Η απόφαση αυτή", "Ηαπόφαση αυτή", "Η απόφαση", "Η περίληψη αυτή", "η παρούσα ισχύει", "Η παρούσα απόφαση"],	
 							 'finish_group': ["την δημοσίευση", "τη δημοσίευση", "τη δημοσίευσή", "να δημοσιευθεί", "να δημοσιευτεί", "να δημοσιευθούν",  "F\n"]}
 		self.respa_keys = {'assignment_verbs':["Αναθέτουμε", "αναθέτουμε", "Ανατίθεται", "ανατίθεται", "Ανατίθενται", "ανατίθενται", "Απαλλάσσουμε", "Ορίζουμε", "ορίζουμε", "μεταβιβάζουμε"], 
 						   'assignment_types':["καθηκόντων", "αρμοδιοτήτων", "καθήκοντα", "αρμοδιότητες"]}
@@ -64,8 +64,11 @@ class Parser(object):
 			dec_contents = dec_contents[0]
 		return dec_contents
 	
-	# @TODO: Find a way to always properly separate dec_summaries from each other:
-	# 		 Idea: Problems possibly solved just by detecting '\n\s*ΑΠΟΦΑΣΕΙΣ' as end
+	# @TODO: 
+
+	#		 1. Find a way to always properly separate dec_summaries from each other:
+	# 		    Idea: Problems possibly solved just by detecting '\n\s*ΑΠΟΦΑΣΕΙΣ' as end key
+	# 		 2. Manage "ΔΙΟΡΘΩΣΗ ΣΦΑΛΜΑΤΩΝ" section
 	def get_dec_summaries_from_txt(self, txt, dec_contents):
 		""" Must be fed 'dec_contents' as returned by get_dec_contents() """
 		txt = Helper.clean_up_for_dec_related_getter(txt)
@@ -81,7 +84,7 @@ class Parser(object):
 			assert(len(dec_summaries) == 1)
 		return dec_summaries
 
-	# Nums, meaning e.g. "Αριθμ." ...
+	# Nums, meaning e.g. "Αριθμ. [...]"
 	def get_dec_nums_from_txt(self, txt, dec_summaries):
 		""" Must be fed 'dec_summaries' as returned by get_dec_summaries() """
 		txt = Helper.clean_up_for_dec_related_getter(txt)
