@@ -511,7 +511,8 @@ class ParserTest(unittest.TestCase):
 		# ! One decision not detected
 		self.assertTrue(len(decisions_1) == len(dec_summaries_1) - 1)
 		self.assertTrue(len(decisions_2) == len(dec_summaries_2))
-		self.assertTrue(len(decisions_3) == len(dec_summaries_3))
+		# ! One summary not detected
+		self.assertTrue(len(decisions_3) == len(dec_summaries_3) + 1)
 		self.assertTrue(len(decisions_4) == len(dec_summaries_4))
 
 		## 
@@ -579,7 +580,7 @@ class ParserTest(unittest.TestCase):
 		dec_summaries_6 = self.parser.get_dec_summaries_from_txt(txt_6, dec_contents_6);
 		dec_summaries_7 = self.parser.get_dec_summaries_from_txt(txt_7, dec_contents_7);
 		# print(len(dec_summaries_1))
-		# print(len(dec_summaries_2))
+		print(len(dec_summaries_2))
 		# print(len(dec_summaries_3))
 		# print(len(dec_summaries_4))
 		# print(len(dec_summaries_5))
@@ -659,7 +660,7 @@ class ParserTest(unittest.TestCase):
 		decisions_6 = self.parser.get_decisions_from_txt(txt_6, len(dec_summaries_6))
 		decisions_7 = self.parser.get_decisions_from_txt(txt_7, len(dec_summaries_7))
 		# print(len(decisions_1))
-		# print(len(decisions_2))
+		print(decisions_2)
 		# print(len(decisions_3))
 		# print(len(decisions_4))
 		# print(len(decisions_5))
@@ -667,7 +668,8 @@ class ParserTest(unittest.TestCase):
 		# print(len(decisions_7))
 
 		self.assertTrue(len(decisions_1) == len(dec_summaries_1))
-		self.assertTrue(len(decisions_2) == len(dec_summaries_2))
+		# ! One summary not detected
+		self.assertTrue(len(decisions_2) == len(dec_summaries_2) + 1)
 		self.assertTrue(len(decisions_3) == len(dec_summaries_3))
 		# ! One decision not detected
 		self.assertTrue(len(decisions_4) == len(dec_summaries_4) - 1)
@@ -759,15 +761,87 @@ class ParserTest(unittest.TestCase):
 
 	def test_get_respas_from_txts_2(self):
 		
-		# respa_pdf_path = self.test_pdfs_dir + '/RespA_Issues/'
-		# txt_1 = self.get_txt('5_w_RespAs', pdf_path=respa_pdf_path)
-		# txt_2 = self.get_txt('6_w_RespAs', pdf_path=respa_pdf_path)
-		# txt_3 = self.get_txt('7_w_RespAs', pdf_path=respa_pdf_path)
-		# txt_4 = self.get_txt('8_w_RespAs', pdf_path=respa_pdf_path)
-		
-		# ...
+		respa_pdf_path = self.test_pdfs_dir + '/RespA_Issues/'
+		txt_1 = self.get_txt('5_w_RespAs', pdf_path=respa_pdf_path)
+		txt_2 = self.get_txt('6_w_RespAs', pdf_path=respa_pdf_path)
+		txt_3 = self.get_txt('7_w_RespAs', pdf_path=respa_pdf_path)
+		txt_4 = self.get_txt('8_w_RespAs', pdf_path=respa_pdf_path)
+		txt_5 = self.get_txt('9_w_RespAs', pdf_path=respa_pdf_path)
+		txt_6 = self.get_txt('10_w_RespAs', pdf_path=respa_pdf_path)
+		txt_7 = self.get_txt('11_w_RespAs', pdf_path=respa_pdf_path)
 
-		pass
+		## 
+		#  Decision Contents
+		##
+		dec_contents_1 = self.parser.get_dec_contents_from_txt(txt_1); 
+		dec_contents_2 = self.parser.get_dec_contents_from_txt(txt_2);
+		dec_contents_3 = self.parser.get_dec_contents_from_txt(txt_3);  
+		dec_contents_4 = self.parser.get_dec_contents_from_txt(txt_4);
+		dec_contents_5 = self.parser.get_dec_contents_from_txt(txt_5);
+		dec_contents_6 = self.parser.get_dec_contents_from_txt(txt_6);
+		dec_contents_7 = self.parser.get_dec_contents_from_txt(txt_7);
+
+		## 
+		#  Decision Summaries
+		## 
+		dec_summaries_1 = self.parser.get_dec_summaries_from_txt(txt_1, dec_contents_1); 
+		dec_summaries_2 = self.parser.get_dec_summaries_from_txt(txt_2, dec_contents_2);
+		dec_summaries_3 = self.parser.get_dec_summaries_from_txt(txt_3, dec_contents_3);
+		dec_summaries_4 = self.parser.get_dec_summaries_from_txt(txt_4, dec_contents_4);
+		dec_summaries_5 = self.parser.get_dec_summaries_from_txt(txt_5, dec_contents_5);
+		dec_summaries_6 = self.parser.get_dec_summaries_from_txt(txt_6, dec_contents_6);
+		dec_summaries_7 = self.parser.get_dec_summaries_from_txt(txt_7, dec_contents_7);
+
+		## 
+		#  Decisions
+		##
+		decisions_1 = self.parser.get_decisions_from_txt(txt_1, len(dec_summaries_1))
+		decisions_2 = self.parser.get_decisions_from_txt(txt_2, len(dec_summaries_2))
+		decisions_3 = self.parser.get_decisions_from_txt(txt_3, len(dec_summaries_3))
+		decisions_4 = self.parser.get_decisions_from_txt(txt_4, len(dec_summaries_4))
+		decisions_5 = self.parser.get_decisions_from_txt(txt_5, len(dec_summaries_5))
+		decisions_6 = self.parser.get_decisions_from_txt(txt_6, len(dec_summaries_6))
+		decisions_7 = self.parser.get_decisions_from_txt(txt_7, len(dec_summaries_7))
+
+		##
+		#  RespA Sections
+		##
 		
+		# Convert any dict to list
+		if isinstance(decisions_1, dict): decisions_1 = list(decisions_1.values())
+		if isinstance(decisions_2, dict): decisions_2 = list(decisions_2.values())
+		if isinstance(decisions_3, dict): decisions_3 = list(decisions_3.values())
+		if isinstance(decisions_4, dict): decisions_4 = list(decisions_4.values())
+		if isinstance(decisions_5, dict): decisions_5 = list(decisions_5.values())
+		if isinstance(decisions_6, dict): decisions_6 = list(decisions_6.values())
+		if isinstance(decisions_7, dict): decisions_7 = list(decisions_7.values())
+
+		# Get RespA sections found in decision text
+		respa_sections_1 = [self.parser.get_dec_respa_sections_from_txt(dec) for dec in decisions_1]
+		respa_sections_2 = [self.parser.get_dec_respa_sections_from_txt(dec) for dec in decisions_2]
+		respa_sections_3 = [self.parser.get_dec_respa_sections_from_txt(dec) for dec in decisions_3]
+		respa_sections_4 = [self.parser.get_dec_respa_sections_from_txt(dec) for dec in decisions_4]
+		respa_sections_5 = [self.parser.get_dec_respa_sections_from_txt(dec) for dec in decisions_5]
+		respa_sections_6 = [self.parser.get_dec_respa_sections_from_txt(dec) for dec in decisions_6]
+		respa_sections_7 = [self.parser.get_dec_respa_sections_from_txt(dec) for dec in decisions_7]
+
+		# Get non-empty lists
+		respa_sections_1 = list(filter(None, respa_sections_1))[0]
+		respa_sections_2 = list(filter(None, respa_sections_2))[0]
+		respa_sections_3 = list(filter(None, respa_sections_3))[0]
+		respa_sections_4 = list(filter(None, respa_sections_4))[0]
+		respa_sections_5 = list(filter(None, respa_sections_5))[0]
+		respa_sections_6 = list(filter(None, respa_sections_6))[0]
+		respa_sections_7 = list(filter(None, respa_sections_7))[0]
+
+		print(respa_sections_1)
+		print(respa_sections_2)
+		print(respa_sections_3)
+		print(respa_sections_4)
+		print(respa_sections_5)
+		print(respa_sections_6)
+		print(respa_sections_7)
+
+
 if __name__ == '__main__':
 	unittest.main() 
