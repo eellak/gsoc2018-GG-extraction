@@ -49,8 +49,9 @@ class Parser(object):
 							  "με τα παρακάτω στοιχεία:"]
 		self.dec_end_keys = {'start_group': ["Η απόφαση αυτή", "Ηαπόφαση αυτή", "Η απόφαση", "Η περίληψη αυτή", "η παρούσα ισχύει", "Η παρούσα απόφαση"],	
 							 'finish_group': ["την δημοσίευση", "τη δημοσίευση", "τη δημοσίευσή", "να δημοσιευθεί", "να δημοσιευτεί", "να δημοσιευθούν",  "F\n"]}
-		self.respa_keys = {'assignment_verbs':["Αναθέτουμε", "αναθέτουμε", "Ανατίθεται", "ανατίθεται", "Ανατίθενται", "ανατίθενται", "Απαλλάσσουμε", "Ορίζουμε", "ορίζουμε", "μεταβιβάζουμε"], 
-						   'assignment_types':["καθηκόντων", "αρμοδιοτήτων", "καθήκοντα", "αρμοδιότητες"]}
+		self.respa_keys = {'assignment_verbs':["Αναθέτουμε", " αναθέτουμε", "Ανατίθεται", " ανατίθεται", "Ανατίθενται", " ανατίθενται", 
+											   "Απαλλάσσουμε", "Ορίζουμε", " ορίζουμε", "Μεταβιβάζουμε", " μεταβιβάζουμε"], 
+						   'assignment_types':["καθηκόντων", "αρμοδιοτήτων", "καθήκοντα", "αρμοδιότητα", "αρμοδιότητες"]}
 
 	# @TODO:
 	# - Fine-tune section getters (see specific @TODOs)
@@ -139,9 +140,9 @@ class Parser(object):
 								  		  Helper.get_special_regex_disjunction(self.dec_prereq_keys)), 
 								  		  txt, flags=DOTALL)
 		
-		# Try to get possible leftovers (exceptions)
 		if(len(dec_bodies) < dec_num):
-			# Fetch raw part from (remaining_dec_idx) to (remaining_dec_idx + 1)
+			# Try to get possible leftovers (exceptions)
+			# By fetch txt between (remaining_dec_idx) and (remaining_dec_idx + 1)
 			for remaining_dec_idx in range(len(dec_bodies), dec_num):
 				leftover_dec_bodies = findall(r"(?:\n\({}\)\n).+?(?:\n\({}\)\n)"\
 									  		  .format(remaining_dec_idx + 1, remaining_dec_idx + 2), 
@@ -149,7 +150,7 @@ class Parser(object):
 
 				dec_bodies += leftover_dec_bodies
 		elif len(dec_bodies) >= dec_num:
-			dec_bodies = dict(zip(range(1, dec_num + 1), dec_bodies))
+			dec_bodies = dict(zip(range(1, len(dec_bodies) + 1), dec_bodies))
 	
 		return dec_bodies
 
@@ -217,10 +218,10 @@ class Parser(object):
 		dec_respa_sections_in_articles, \
 		dec_respa_sections_not_in_articles_1, \
 		dec_respa_sections_not_in_articles_2 = [], [], []
-
+		
 		if txt:
 			
-			main_respa_section_pattern = '(.+?(?:{assign_verb}).+?(?:{assign_type}).+?)\.\s*\n\s*'.\
+			main_respa_section_pattern = '(.+?(?:{assign_verb}).+?(?:{assign_type})?.+?)\.\s*\n\s*'.\
 											format(assign_verb=Helper.get_special_regex_disjunction(self.respa_keys['assignment_verbs']), 
 									  		 	   assign_type=Helper.get_special_regex_disjunction(self.respa_keys['assignment_types']))
 
