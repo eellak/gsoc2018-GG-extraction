@@ -156,15 +156,57 @@ class Helper:
     # @TODO: Add Attica Prefectures
     @staticmethod
     def get_dec_location_and_date_before_signees_regex():
-        greek_cities = Helper.get_greek_cities()
+        greek_cities = [Helper.deintonate_txt(city) for city in Helper.get_greek_cities()]
         days = range(1,31+1)        
-        greek_months = Helper.get_greek_months().keys()
+        greek_months = [Helper.deintonate_txt(month) for month in Helper.get_greek_months().keys()]
         dec_loc_and_data_pattern = "\s*\n\s*((?:{city}),\s+(?:{day})\s+(?:{month})\s+(?:{year}))\s*\n"\
                                     .format(city=Helper.get_special_regex_disjunction(greek_cities),
                                             day=Helper.get_special_regex_disjunction(days),
                                             month=Helper.get_special_regex_disjunction(greek_months),
                                             year="\d{4}")
         return re.compile(dec_loc_and_data_pattern, flags=re.DOTALL)
+
+    @staticmethod
+    def get_greek_intonations():
+       return { 'lowercase':{
+                                'ά': 'α',
+                                'έ': 'ε',
+                                'ί': 'ι',
+                                'ϊ': 'ι',
+                                'ΐ': 'ι',
+                                'ό': 'ο',
+                                'ύ': 'υ',
+                                'ϋ': 'υ',
+                                'ΰ': 'υ',
+                                'ή': 'η',
+                                'ώ': 'ω'
+                            },
+
+                'uppercase':{
+                                'Ά': 'Α',
+                                'Έ': 'Ε',
+                                'Ί': 'Ι',
+                                'Ϊ': 'Ι',
+                                'Ό': 'Ο',
+                                'Ύ': 'Υ',
+                                'Ϋ': 'Υ',
+                                'Ή': 'Η',
+                                'Ώ': 'Ω'
+                            }
+               }       
+
+    @staticmethod
+    def deintonate_txt(txt):
+        intonations = Helper.get_greek_intonations()
+        
+        for key, val in intonations['lowercase'].items():
+            txt = txt.replace(key, val)
+
+        for key, val in intonations['uppercase'].items():
+            txt = txt.replace(key, val)
+        
+        return txt
+
 
     # Converts a textual date to a unix timestamp
     @staticmethod
