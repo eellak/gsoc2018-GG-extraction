@@ -2,6 +2,7 @@ from context import main, unittest, call, os, errno, shutil
 from shutil import rmtree
 from main.parser import Parser
 from main.fetcher import Fetcher
+from util.helper import Helper
 
 class ParserTest(unittest.TestCase):
 	
@@ -59,6 +60,13 @@ class ParserTest(unittest.TestCase):
 		# print(texts[1])
 		self.assertTrue(all(text is not '' for text in texts))
 
+	def test_deintonate_txt(self):
+		txt_1 = self.get_txt('1')
+		txt_1 = Helper.deintonate_txt(txt_1)
+
+		print(txt_1)
+
+
 	def test_get_dec_sections_from_txts_1(self):
 		
 		################################
@@ -94,7 +102,6 @@ class ParserTest(unittest.TestCase):
 		self.assertTrue(len(dec_summaries_1) == 1)
 		self.assertTrue(len(dec_summaries_2) == 1)
 		self.assertTrue(len(dec_summaries_3) == 1)
-		
 		## 
 		#  Decision Numbers
 		## 
@@ -579,7 +586,7 @@ class ParserTest(unittest.TestCase):
 		dec_summaries_5 = self.parser.get_dec_summaries_from_txt(txt_5, dec_contents_5);
 		dec_summaries_6 = self.parser.get_dec_summaries_from_txt(txt_6, dec_contents_6);
 		dec_summaries_7 = self.parser.get_dec_summaries_from_txt(txt_7, dec_contents_7);
-		# print(len(dec_summaries_1))
+		print(len(dec_summaries_1))
 		print(len(dec_summaries_2))
 		# print(len(dec_summaries_3))
 		# print(len(dec_summaries_4))
@@ -634,7 +641,7 @@ class ParserTest(unittest.TestCase):
 		dec_prereqs_5 = self.parser.get_dec_prereqs_from_txt(txt_5, len(dec_summaries_5))
 		dec_prereqs_6 = self.parser.get_dec_prereqs_from_txt(txt_6, len(dec_summaries_6))
 		dec_prereqs_7 = self.parser.get_dec_prereqs_from_txt(txt_7, len(dec_summaries_7))
-		# print(len(dec_prereqs_1))
+		print(len(dec_prereqs_1))
 		# print(len(dec_prereqs_2))
 		# print(len(dec_prereqs_3))
 		# print(len(dec_prereqs_4))
@@ -841,7 +848,6 @@ class ParserTest(unittest.TestCase):
 		print(respa_sections_5)
 		print(respa_sections_6)
 		print(respa_sections_7)
-
 
 if __name__ == '__main__':
 	unittest.main() 
