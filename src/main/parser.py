@@ -248,9 +248,31 @@ class Parser(object):
 		pass
 
 	def get_simple_pdf_text(self, file_name, txt_name):
+		
+		def clean_up_text(text, txt_name):
+			cid_occurs = findall(r'\(cid:\d+\)', text)
+		
+			# Ignore cid occurences for now
+			for cid in cid_occurs:
+				text = text.replace(cid, '')
+				# cid_int = int(''.join(filter(str.isdigit, cid)))
+			
+			# Overwrite .txt 
+			with StringIO(text) as in_file, open(txt_name, 'w') as out_file:
+				for line in in_file:
+					if not line.strip(): continue # skip empty lines
+					out_file.write(line)
+			
+			# Read .txt locally again
+			text = ''
+			with open(txt_name) as out_file:
+				text = out_file.read()
+
+			return Helper.deintonate_txt(text)
+
 		try:
 			text = self.simple_pdf_to_text(file_name, txt_name)
-			text = Helper.deintonate_txt(text)
+			text = clean_up_text(text, txt_name)
 		except OSError:
 			raise
 
@@ -276,24 +298,6 @@ class Parser(object):
 		with open(txt_name) as out_file:
 			text = out_file.read()
 
-		cid_occurs = findall(r'\(cid:\d+\)', text)
-		
-		# Ignore cid occurences for now
-		for cid in cid_occurs:
-			text = text.replace(cid, '')
-			# cid_int = int(''.join(filter(str.isdigit, cid)))
-		
-		# Overwrite .txt 
-		with StringIO(text) as in_file, open(txt_name, 'w') as out_file:
-			for line in in_file:
-				if not line.strip(): continue # skip empty lines
-				out_file.write(line)
-		
 		print("DONE.")
-
-		# Read .txt locally again
-		text = ''
-		with open(txt_name) as out_file:
-			text = out_file.read()
 
 		return text

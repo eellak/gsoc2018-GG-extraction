@@ -223,7 +223,6 @@ class ParserTest(unittest.TestCase):
 		self.assertTrue(len(decisions_4) == len(dec_summaries_4))
 		self.assertTrue(len(decisions_5) == len(dec_summaries_5))
 		self.assertTrue(len(decisions_6) == len(dec_summaries_6))
-
 		
 		## 
 		#  Location & Dates of signing
