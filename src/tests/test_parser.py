@@ -707,7 +707,7 @@ class ParserTest(unittest.TestCase):
 		print(self.parser.get_dec_signees_from_txt(txt_6))
 		print(self.parser.get_dec_signees_from_txt(txt_7))
 		
-	def test_get_respas_from_txts_1(self):
+	def test_get_respa_sections_from_txts_1(self):
 		respa_pdf_path = self.test_pdfs_dir + '/RespA_Issues/'
 		txt_1 = self.get_txt('1_w_RespAs', pdf_path=respa_pdf_path)
 		txt_2 = self.get_txt('2_w_RespAs', pdf_path=respa_pdf_path)
@@ -765,7 +765,7 @@ class ParserTest(unittest.TestCase):
 		print(respa_sections_3, '\n')
 		print(respa_sections_4, '\n')
 
-	def test_get_respas_from_txts_2(self):
+	def test_get_respa_sections_from_txts_2(self):
 		
 		respa_pdf_path = self.test_pdfs_dir + '/RespA_Issues/'
 		txt_1 = self.get_txt('5_w_RespAs', pdf_path=respa_pdf_path)
