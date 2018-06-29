@@ -21,7 +21,7 @@ def install_dependencies(DEPENDENCIES = ['selenium', 'bs4', 'pdfminer.six', 'ope
             out_file.write("\n".join(DEPENDENCIES))
         
         # Make install cmd        
-        cmd = 'pip install -r requirements'
+        cmd = 'pip3 install -r requirements'
         
         # pip install 
         call(cmd, shell=True)
@@ -32,7 +32,7 @@ def install_dependencies(DEPENDENCIES = ['selenium', 'bs4', 'pdfminer.six', 'ope
 
     else:
         # Make install cmd        
-        cmd = "pip install {}".format(DEPENDENCIES)
+        cmd = "pip3 install {}".format(DEPENDENCIES)
         
         # pip install 
         call(cmd, shell=True)
