@@ -848,5 +848,8 @@ class ParserTest(unittest.TestCase):
 		print(respa_sections_6)
 		print(respa_sections_7)
 
+	def test_get_ref_respa_sections_from_txts_1(self):
+		pass
+
 if __name__ == '__main__':
 	unittest.main() 

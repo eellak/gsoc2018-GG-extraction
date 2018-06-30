@@ -212,7 +212,7 @@ class Parser(object):
 
 	# Get RespA sections contained in decision body 
 	def get_dec_respa_sections_from_txt(self, txt):
-		""" Must be fed 'txt' containing decision """
+		""" Ideally to be fed 'txt' containing decision """
 		dec_respa_sections_in_articles, \
 		dec_respa_sections_not_in_articles_1, \
 		dec_respa_sections_not_in_articles_2 = [], [], []
@@ -237,9 +237,9 @@ class Parser(object):
 
 		return dec_respa_sections
 
-	# Get RespA references contained in decision prerequisites
-	def get_dec_respa_reference_sections_from_txt(self, txt):
-		""" Must be fed 'txt' containing decision prerequisites """
+	# Get RespA decisions referred in decision prerequisites
+	def get_referred_dec_respa_sections_from_txt(self, txt):
+		""" Ideally to be fed 'txt' containing decision prerequisites """
 		pass
 
 	# Get a dictionary containing assignment: {'PAOrg': ..., 'Responsibility': ..., etc.}
