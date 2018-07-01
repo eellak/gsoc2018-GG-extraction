@@ -821,6 +821,120 @@ class ParserTest(unittest.TestCase):
 		print(self.parser.get_dec_signees_from_txt(txt_2))
 		print(self.parser.get_dec_signees_from_txt(txt_3))
 		print(self.parser.get_dec_signees_from_txt(txt_4))
+
+	def test_get_dec_sections_from_txts_6(self):
+		
+		respa_pdf_path = self.test_pdfs_dir + '/RespA_Issues/Referenced RespA Decisions/'
+		txt_1 = self.get_txt('5_w_Ref_RespAs', pdf_path=respa_pdf_path)
+		txt_2 = self.get_txt('6_w_Ref_RespAs', pdf_path=respa_pdf_path)
+		txt_3 = self.get_txt('7_w_Ref_RespAs', pdf_path=respa_pdf_path)
+		txt_4 = self.get_txt('8_w_Ref_RespAs', pdf_path=respa_pdf_path)
+		
+		## 
+		#  Decision Contents
+		##
+		dec_contents_1 = self.parser.get_dec_contents_from_txt(txt_1); 
+		dec_contents_2 = self.parser.get_dec_contents_from_txt(txt_2);
+		dec_contents_3 = self.parser.get_dec_contents_from_txt(txt_3);  
+		dec_contents_4 = self.parser.get_dec_contents_from_txt(txt_4);
+		# print(dec_contents_1)
+		# print(dec_contents_2) 
+		# print(dec_contents_3)
+		# print(dec_contents_4)
+
+		self.assertTrue(dec_contents_1);
+		self.assertTrue(dec_contents_2); 
+		self.assertTrue(dec_contents_3); 
+		self.assertTrue(dec_contents_4);
+		
+		## 
+		#  Decision Summaries
+		## 
+		dec_summaries_1 = self.parser.get_dec_summaries_from_txt(txt_1, dec_contents_1); 
+		dec_summaries_2 = self.parser.get_dec_summaries_from_txt(txt_2, dec_contents_2);
+		dec_summaries_3 = self.parser.get_dec_summaries_from_txt(txt_3, dec_contents_3);
+		dec_summaries_4 = self.parser.get_dec_summaries_from_txt(txt_4, dec_contents_4);
+		# print(dec_summaries_1)
+		# print(dec_summaries_2)
+		# print(dec_summaries_3)
+		# print(dec_summaries_4)
+
+		self.assertTrue(len(dec_summaries_1) > 1)
+		self.assertTrue(len(dec_summaries_2) > 1)
+		self.assertTrue(len(dec_summaries_3) > 1)
+		self.assertTrue(len(dec_summaries_4) > 1)
+
+		# ## 
+		# #  Decision Numbers
+		# ## 
+
+		# Dictionaries containing keys: decision_indeces & values: decision_numbers, 
+		# e.g. 2: 'Aριθμ.Β2−210', 4: None, 3: 'Αριθμ. blah blah blah'
+		dec_nums_1 = self.parser.get_dec_nums_from_txt(txt_1, dec_summaries_1)
+		dec_nums_2 = self.parser.get_dec_nums_from_txt(txt_2, dec_summaries_2)
+		dec_nums_3 = self.parser.get_dec_nums_from_txt(txt_3, dec_summaries_3)
+		dec_nums_4 = self.parser.get_dec_nums_from_txt(txt_4, dec_summaries_4)
+		# print(dec_nums_1)
+		# print(dec_nums_2)
+		# print(dec_nums_3)
+		# print(dec_nums_4)
+		self.assertTrue(len(dec_nums_1) > 1)
+		self.assertTrue(len(dec_nums_2) > 1)
+		self.assertTrue(len(dec_nums_3) > 1)
+		self.assertTrue(len(dec_nums_4) > 1)
+
+		# ## 
+		# #  Decision Prerequisites
+		# ## 		
+
+		# e.g. "Έχοντας υπόψη:" *[...]* ", αποφασίζουμε:"
+		dec_prereqs_1 = self.parser.get_dec_prereqs_from_txt(txt_1, len(dec_summaries_1))
+		dec_prereqs_2 = self.parser.get_dec_prereqs_from_txt(txt_2, len(dec_summaries_2))
+		dec_prereqs_3 = self.parser.get_dec_prereqs_from_txt(txt_3, len(dec_summaries_3))
+		dec_prereqs_4 = self.parser.get_dec_prereqs_from_txt(txt_4, len(dec_summaries_4))
+		# print(len(dec_prereqs_1))
+		# print(len(dec_prereqs_2))
+		# print(len(dec_prereqs_3))
+		# print(len(dec_prereqs_4))
+		self.assertTrue(len(dec_prereqs_1) > 1)
+		self.assertTrue(len(dec_prereqs_2) > 1)
+		self.assertTrue(len(dec_prereqs_3) > 1)
+		self.assertTrue(len(dec_prereqs_4) > 1)
+
+		## 
+		#  Decisions
+		##
+		decisions_1 = self.parser.get_decisions_from_txt(txt_1, len(dec_summaries_1))
+		decisions_2 = self.parser.get_decisions_from_txt(txt_2, len(dec_summaries_2))
+		decisions_3 = self.parser.get_decisions_from_txt(txt_3, len(dec_summaries_3))
+		decisions_4 = self.parser.get_decisions_from_txt(txt_4, len(dec_summaries_4))
+		print(len(decisions_1))
+		print(len(decisions_2))
+		print(len(decisions_3))
+		print(len(decisions_4))
+
+		self.assertTrue(len(decisions_1) == len(dec_summaries_1))
+		self.assertTrue(len(decisions_2) == len(dec_summaries_2))
+		self.assertTrue(len(decisions_3) == len(dec_summaries_3))
+		self.assertTrue(len(decisions_4) == len(dec_summaries_4))
+
+		## 
+		#  Location & Dates of signing
+		##
+		print('\n* Location & Dates of signing *\n')
+		print(self.parser.get_dec_location_and_date_from_txt(txt_1))
+		print(self.parser.get_dec_location_and_date_from_txt(txt_2))
+		print(self.parser.get_dec_location_and_date_from_txt(txt_3))
+		print(self.parser.get_dec_location_and_date_from_txt(txt_4))
+
+		## 
+		#  Signees
+		##
+		print('\n* Signees *\n')
+		print(self.parser.get_dec_signees_from_txt(txt_1))
+		print(self.parser.get_dec_signees_from_txt(txt_2))
+		print(self.parser.get_dec_signees_from_txt(txt_3))
+		print(self.parser.get_dec_signees_from_txt(txt_4))
 		
 	def test_get_respa_sections_from_txts_1(self):
 		respa_pdf_path = self.test_pdfs_dir + '/RespA_Issues/'
@@ -1018,7 +1132,6 @@ class ParserTest(unittest.TestCase):
 		# ! One respa ref not detected due to forgotten '»' (typo)
 		print(respa_sections_3)
 		print(respa_sections_4)
-
 		
 if __name__ == '__main__':
 	unittest.main() 
