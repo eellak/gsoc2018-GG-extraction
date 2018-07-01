@@ -245,7 +245,7 @@ class Parser(object):
 
 		if txt:
 			print(txt)
-			ref_respa_section_pattern = '((?:[α-ωa-zΑ-ΩA-Z]+\)|\d+\.)[^»]+?«[^»]+?(?:{assign_verb})[^»]+?(?:{assign_type})[^»]+?».+?)\.\s*\n\s*'.\
+			ref_respa_section_pattern = '((?:[α-ωa-zΑ-ΩA-Z]+(?:\)|\.)|\d+\.)[^»]+?«[^»]+?(?:{assign_verb})[^»]+?(?:{assign_type})[^»]+?».+?)(?:\.|,)\s*\n\s*'.\
 											format(assign_verb=Helper.get_special_regex_disjunction(self.respa_keys['assignment_verbs']), 
 									  		 	   assign_type=Helper.get_special_regex_disjunction(self.respa_keys['assignment_types']))
 
