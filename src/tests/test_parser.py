@@ -1132,6 +1132,60 @@ class ParserTest(unittest.TestCase):
 		# ! One respa ref not detected due to forgotten '»' (typo)
 		print(respa_sections_3)
 		print(respa_sections_4)
+
+	def test_get_ref_respa_sections_from_txts_2(self):
+		ref_respa_pdf_path = self.test_pdfs_dir + '/RespA_Issues/Referenced RespA Decisions/'
+		txt_1 = self.get_txt('5_w_Ref_RespAs', pdf_path=ref_respa_pdf_path)
+		txt_2 = self.get_txt('6_w_Ref_RespAs', pdf_path=ref_respa_pdf_path)
+		txt_3 = self.get_txt('7_w_Ref_RespAs', pdf_path=ref_respa_pdf_path)
+		txt_4 = self.get_txt('8_w_Ref_RespAs', pdf_path=ref_respa_pdf_path)
+		
+		## 
+		#  Decision Contents
+		##
+		dec_contents_1 = self.parser.get_dec_contents_from_txt(txt_1); 
+		dec_contents_2 = self.parser.get_dec_contents_from_txt(txt_2);
+		dec_contents_3 = self.parser.get_dec_contents_from_txt(txt_3);  
+		dec_contents_4 = self.parser.get_dec_contents_from_txt(txt_4);
+		
+		## 
+		#  Decision Summaries
+		## 
+		dec_summaries_1 = self.parser.get_dec_summaries_from_txt(txt_1, dec_contents_1); 
+		dec_summaries_2 = self.parser.get_dec_summaries_from_txt(txt_2, dec_contents_2);
+		dec_summaries_3 = self.parser.get_dec_summaries_from_txt(txt_3, dec_contents_3);
+		dec_summaries_4 = self.parser.get_dec_summaries_from_txt(txt_4, dec_contents_4);
+
+		## 
+		#  Decision Prerequisites
+		## 		
+
+		# e.g. "Έχοντας υπόψη:" *[...]* ", αποφασίζουμε:"
+		dec_prereqs_1 = self.parser.get_dec_prereqs_from_txt(txt_1, len(dec_summaries_1))
+		dec_prereqs_2 = self.parser.get_dec_prereqs_from_txt(txt_2, len(dec_summaries_2))
+		dec_prereqs_3 = self.parser.get_dec_prereqs_from_txt(txt_3, len(dec_summaries_3))
+		dec_prereqs_4 = self.parser.get_dec_prereqs_from_txt(txt_4, len(dec_summaries_4))
+		# print(dec_prereqs_1)
+		# print(dec_prereqs_2)
+		# print(dec_prereqs_3)
+		# print(dec_prereqs_4)
+
+		# Convert any dict to list
+		if isinstance(dec_prereqs_1, dict): dec_prereqs_1 = list(dec_prereqs_1.values())
+		if isinstance(dec_prereqs_2, dict): dec_prereqs_2 = list(dec_prereqs_2.values())
+		if isinstance(dec_prereqs_3, dict): dec_prereqs_3 = list(dec_prereqs_3.values())
+		if isinstance(dec_prereqs_4, dict): dec_prereqs_4 = list(dec_prereqs_4.values())
+
+		# Get RespA sections found in decision text
+		respa_sections_1 = [self.parser.get_referred_dec_respa_sections_from_txt(dec_prereq) for dec_prereq in dec_prereqs_1]
+		respa_sections_2 = [self.parser.get_referred_dec_respa_sections_from_txt(dec_prereq) for dec_prereq in dec_prereqs_2]
+		respa_sections_3 = [self.parser.get_referred_dec_respa_sections_from_txt(dec_prereq) for dec_prereq in dec_prereqs_3]
+		respa_sections_4 = [self.parser.get_referred_dec_respa_sections_from_txt(dec_prereq) for dec_prereq in dec_prereqs_4]
+
+		print(respa_sections_1)
+		print(respa_sections_2)
+		print(respa_sections_3)
+		print(respa_sections_4)
 		
 if __name__ == '__main__':
 	unittest.main() 
