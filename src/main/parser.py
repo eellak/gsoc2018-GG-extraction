@@ -41,9 +41,9 @@ class Parser(object):
 		self.dec_contents_key = "ΠΕΡΙΕΧΟΜΕΝΑ\nΑΠΟΦΑΣΕΙΣ"
 		self.decs_key = "ΑΠΟΦΑΣΕΙΣ"
 		# Must be expanded (lots of variants)
-		self.dec_prereq_keys = ["χοντας υποψη:", "χοντες υποψη:", "χουσα υποψη:", "χοντας υποψη του:", 
+		self.dec_prereq_keys = ["χοντας υποψη:", "χοντας υποψη", "χοντες υποψη:", "χουσα υποψη:", "χοντας υποψη του:", 
 								"χοντας υπ\' οψη:", "χοντας υπ\’ οψη:", "Αφου ελαβε υποψη:", "Λαμβανοντας υποψη:"]
-		self.dec_init_keys = ["αποφασιζουμε:", "αποφασιζουμε τα ακολουθα:", "αποφασιζουμε τα εξης:",
+		self.dec_init_keys = ["αποφασιζουμε:", "αποφασιζουμε τα ακολουθα:", "αποφασιζουμε τα εξης:", "διαπιστωνεται:",
 							  "αποφασιζει:", "αποφασιζει τα ακολουθα:", "αποφασιζει τα εξης:", "αποφασιζει ομοφωνα:",
 							  "αποφασιζει ομοφωνα και εγκρινει:", "αποφασιζει τα κατωθι", "αποφασιζεται:",
 							  "με τα παρακατω στοιχεια:"]
@@ -73,14 +73,14 @@ class Parser(object):
 		""" Must be fed 'dec_contents' as returned by get_dec_contents() """
 		txt = Helper.clean_up_for_dec_related_getter(txt)
 		if dec_contents:
-			dec_summaries = findall(r"([Α-ΩΑ].+?(?:(?![Β-ΔΖΘΚΜΝΞΠΡΤΦ-Ψβ-δζθκμνξπρτφ-ψ]\.\s?\n).)+?\.\s?\n)\d?\n?", dec_contents, flags=DOTALL)
+			dec_summaries = findall(r"([Α-ΩA-Z].+?(?:(?![Β-ΔΖΘΚΜΝΞΠΡΤΦ-Ψβ-δζθκμνξπρτφ-ψ]\.\s?\n).)+?\.\s?\n)\d?\n?", dec_contents, flags=DOTALL)
 			# Strip of redundant dots
 			dec_summaries = [sub("\.{3,}", "", dec_sum) for dec_sum in dec_summaries]
 			# Ignore possible "ΔΙΟΡΘΩΣΗ ΣΦΑΛΜΑΤΩΝ" section
 			dec_summaries = [dec_sum for dec_sum in dec_summaries if 'Διορθωση' not in dec_sum and 'ΔΙΟΡΘΩΣΗ' not in dec_sum]
 		else:
 			# Will also contain number e.g. Αριθμ. ...
-			dec_summaries = findall(r"{}\n\s*(.+?)\.\n\s*[Α-Ω()]".format(self.decs_key), txt, flags=DOTALL)
+			dec_summaries = findall(r"{}\n\s*(.+?)\.\n\s*[Α-ΩA-Z()]".format(self.decs_key), txt, flags=DOTALL)
 			assert(len(dec_summaries) == 1)
 		return dec_summaries
 
@@ -120,7 +120,7 @@ class Parser(object):
 
 		else: 
 			if dec_num == 1:
-				dec_prereqs = findall(r"\.\n[Α-Ω](.+?)(?:{})".format(Helper.get_special_regex_disjunction(self.dec_init_keys)), 
+				dec_prereqs = findall(r"\.\n[Α-ΩA-Z](.+?)(?:{})".format(Helper.get_special_regex_disjunction(self.dec_init_keys)), 
 										   				 		    txt, flags=DOTALL)
 			elif dec_num > 1:
 			# For now 
@@ -157,10 +157,10 @@ class Parser(object):
 	#		2. Make format of final result definite
 	def get_dec_signees_from_txt(self, txt):
 		# E.g. "Οι Υπουργοί", "Ο ΠΡΟΕΔΡΕΥΩΝ" etc.
-		dec_signees_general_occup_pattern = "{year}\s*\n\s*{ordered_by}?((?:{gen_occupation}))\s*\n"\
+		dec_signees_general_occup_pattern = "{year}\s*\n\s*{by_order_of}?((?:{gen_occupation}))\s*\n"\
 											.format(year="\s\d{4}", 
-										    		ordered_by= "(?:Με εντολη(?:[ ][Α-Ω][α-ωΑ-Ω]+)+\n)",
-										    		gen_occupation="[Α-Ω][α-ωΑ-Ω]?(?:[ ][Α-Ω][α-ωΑ-Ω]+)+")
+										    		by_order_of= "(?:Με εντολη(?:[ ][Α-ΩA-Z][α-ωa-zΑ-ΩA-Z]+)+\n)",
+										    		gen_occupation="[Α-ΩA-Z][α-ωa-zΑ-ΩA-Z]?(?:[ ][Α-ΩA-Z][α-ωa-zΑ-ΩA-Z]+)+")
 		regex_dec_signees_general_occup = compile(dec_signees_general_occup_pattern, flags=DOTALL)
 		dec_signees_general_occup = findall(regex_dec_signees_general_occup, txt)
 
@@ -170,11 +170,12 @@ class Parser(object):
 			for general_occup in dec_signees_general_occup:
 				dec_signees_pattern = "\n\s*{general_occup}\s*\n\s*({signees})\n"\
 									  .format(general_occup=general_occup,
-											  signees="(?:[Α-Ωκ−-][α-ωΑ-Ω\.,−/\-]*\s*)+")
+											  signees="(?:[Α-ΩA-Zκ−-][α-ωa-zΑ-ΩA-Z\.,−/\-]*\s*)+")
 				regex_dec_signees = compile(dec_signees_pattern, flags=DOTALL)
 				dec_signees.append(findall(regex_dec_signees, txt))
 		
 		assert(len(dec_signees_general_occup) == len(dec_signees))
+
 		return dict(zip(dec_signees_general_occup, dec_signees))
 
 	def get_dec_location_and_date_from_txt(self, txt):
@@ -187,12 +188,12 @@ class Parser(object):
 		txt = Helper.clean_up_for_paorgs_getter(txt)
 		
 		# Match possible PAOrg acronyms 	
-		possible_paorg_acronyms_regex = compile('([Α-Ω](?=\.[Α-Ω])(?:\.[Α-Ω])+)') 
+		possible_paorg_acronyms_regex = compile('([Α-ΩA-Z](?=\.[Α-ΩA-Z])(?:\.[Α-ΩA-Z])+)') 
 		possible_paorg_acronyms = findall(possible_paorg_acronyms_regex, txt)
 		# print(possible_paorg_acronyms)
 		
 		# Match consecutive capitalized words possibly signifying PAOrgs
-		possible_paorgs_regex = compile('([Α-Ω][α-ωΑ-Ω]+(?=\s[Α-Ω])(?:\s[Α-Ω][α-ωΑ-Ω]+)+)')
+		possible_paorgs_regex = compile('([Α-ΩA-Z][α-ωa-zΑ-ΩA-Z]+(?=\s[Α-ΩA-Z])(?:\s[Α-ΩA-Z][α-ωa-zΑ-ΩA-Z]+)+)')
 		possible_paorgs = findall(possible_paorgs_regex, txt)
 		
 		possible_paorgs = list(set(possible_paorg_acronyms + possible_paorgs))
@@ -226,10 +227,10 @@ class Parser(object):
 			dec_respa_sections_in_articles = findall(r"\n" + main_respa_section_pattern + "Αρθρο", txt, flags=DOTALL)
 
 			# Attempt 1
-			dec_respa_sections_not_in_articles_1 = findall(r"\n?" + main_respa_section_pattern + "[Α-Ω]", txt, flags=DOTALL)
+			dec_respa_sections_not_in_articles_1 = findall(r"\n?" + main_respa_section_pattern + "[Α-ΩA-Z]", txt, flags=DOTALL)
 
 			# Attempt 2
-			dec_respa_sections_not_in_articles_2 = findall(r"\n?" + main_respa_section_pattern + "[Α-Ω]?", txt, flags=DOTALL)
+			dec_respa_sections_not_in_articles_2 = findall(r"\n?" + main_respa_section_pattern + "[Α-ΩA-Z]?", txt, flags=DOTALL)
 
 		dec_respa_sections = dec_respa_sections_in_articles + \
 							 dec_respa_sections_not_in_articles_1 + \
@@ -244,7 +245,7 @@ class Parser(object):
 
 		if txt:
 			print(txt)
-			ref_respa_section_pattern = '((?:[α-ωΑ-Ω]+\)|\d+\.)[^»]+?«[^»]+?(?:{assign_verb})[^»]+?(?:{assign_type})[^»]+?».+?)\.\s*\n\s*'.\
+			ref_respa_section_pattern = '((?:[α-ωa-zΑ-ΩA-Z]+\)|\d+\.)[^»]+?«[^»]+?(?:{assign_verb})[^»]+?(?:{assign_type})[^»]+?».+?)\.\s*\n\s*'.\
 											format(assign_verb=Helper.get_special_regex_disjunction(self.respa_keys['assignment_verbs']), 
 									  		 	   assign_type=Helper.get_special_regex_disjunction(self.respa_keys['assignment_types']))
 
