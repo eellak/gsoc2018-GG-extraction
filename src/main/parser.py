@@ -49,7 +49,7 @@ class Parser(object):
 							  "με τα παρακατω στοιχεια:"]
 		self.dec_end_keys = {'start_group': ["Η αποφαση αυτη", "Ηαποφαση αυτη", "Η αποφαση", "Η περιληψη αυτη", "η παρουσα ισχυει", "Η παρουσα αποφαση"],	
 							 'finish_group': ["την δημοσιευση", "τη δημοσιευση", "να δημοσιευθει", "να δημοσιευτει", "να δημοσιευθουν",  "F\n"]}
-		self.respa_keys = {'assignment_verbs':["ναθετουμε", "νατιθεται", "νατιθενται", "ριζουμε","παλλασσουμε", "εταβιβαζουμε"], 
+		self.respa_keys = {'assignment_verbs':["ναθετουμε", "νατιθεται", "νατιθενται", "ναθεση", "ριζουμε", "παλλασσουμε", "εταβιβαζουμε"], 
 						   'assignment_types':["αθηκοντ", "ρμοδιοτητ"]}
 
 	# @TODO:
@@ -73,11 +73,11 @@ class Parser(object):
 		""" Must be fed 'dec_contents' as returned by get_dec_contents() """
 		txt = Helper.clean_up_for_dec_related_getter(txt)
 		if dec_contents:
-			dec_summaries = findall(r"([Α-Ω].+?(?:(?![Β-ΔΖΘΚΜΝΞΠΡΤΦ-Ψβ-δζθκνμξπρτφ-ψ]\.\s?\n).)+?\.\s?\n)\d?\n?", dec_contents, flags=DOTALL)
+			dec_summaries = findall(r"([Α-ΩΑ].+?(?:(?![Β-ΔΖΘΚΜΝΞΠΡΤΦ-Ψβ-δζθκμνξπρτφ-ψ]\.\s?\n).)+?\.\s?\n)\d?\n?", dec_contents, flags=DOTALL)
 			# Strip of redundant dots
 			dec_summaries = [sub("\.{3,}", "", dec_sum) for dec_sum in dec_summaries]
 			# Ignore possible "ΔΙΟΡΘΩΣΗ ΣΦΑΛΜΑΤΩΝ" section
-			dec_summaries = [dec_sum for dec_sum in dec_summaries if 'Διορθωση' not in dec_sum]
+			dec_summaries = [dec_sum for dec_sum in dec_summaries if 'Διορθωση' not in dec_sum and 'ΔΙΟΡΘΩΣΗ' not in dec_sum]
 		else:
 			# Will also contain number e.g. Αριθμ. ...
 			dec_summaries = findall(r"{}\n\s*(.+?)\.\n\s*[Α-Ω()]".format(self.decs_key), txt, flags=DOTALL)
@@ -240,7 +240,17 @@ class Parser(object):
 	# Get RespA decisions referred in decision prerequisites
 	def get_referred_dec_respa_sections_from_txt(self, txt):
 		""" Ideally to be fed 'txt' containing decision prerequisites """
-		pass
+		ref_dec_respa_sections = []
+
+		if txt:
+			print(txt)
+			ref_respa_section_pattern = '((?:[α-ωΑ-Ω]+\)|\d+\.)[^»]+?«[^»]+?(?:{assign_verb})[^»]+?(?:{assign_type})[^»]+?».+?)\.\s*\n\s*'.\
+											format(assign_verb=Helper.get_special_regex_disjunction(self.respa_keys['assignment_verbs']), 
+									  		 	   assign_type=Helper.get_special_regex_disjunction(self.respa_keys['assignment_types']))
+
+			ref_dec_respa_sections = findall(ref_respa_section_pattern, txt, flags=DOTALL)
+
+		return ref_dec_respa_sections
 
 	# Get a dictionary containing assignment: {'PAOrg': ..., 'Responsibility': ..., etc.}
 	def get_respa_association(self, respa):
