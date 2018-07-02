@@ -220,9 +220,10 @@ class Parser(object):
 		
 		if txt:
 			
-			main_respa_section_pattern = '(.+?(?:{assign_verb}).+?(?:{assign_type})?.+?)\.\s*\n\s*'.\
-											format(assign_verb=Helper.get_special_regex_disjunction(self.respa_keys['assignment_verbs']), 
-									  		 	   assign_type=Helper.get_special_regex_disjunction(self.respa_keys['assignment_types']))
+			main_respa_section_pattern = \
+			'(.+?(?:{assign_verb}).+?(?:{assign_type})?.+?)\.\s*\n\s*'.\
+			format(assign_verb=Helper.get_special_regex_disjunction(self.respa_keys['assignment_verbs']), 
+	  		 	   assign_type=Helper.get_special_regex_disjunction(self.respa_keys['assignment_types']))
 
 			dec_respa_sections_in_articles = findall(r"\n" + main_respa_section_pattern + "Αρθρο", txt, flags=DOTALL)
 
@@ -245,9 +246,10 @@ class Parser(object):
 
 		if txt:
 			print(txt)
-			ref_respa_section_pattern = '((?:[α-ωa-zΑ-ΩA-Z]+(?:\)|\.)|\d+\.)[^»]+?«[^»]+?(?:{assign_verb})[^»]+?(?:{assign_type})[^»]+?».+?)(?:\.|,)\s*\n\s*'.\
-											format(assign_verb=Helper.get_special_regex_disjunction(self.respa_keys['assignment_verbs']), 
-									  		 	   assign_type=Helper.get_special_regex_disjunction(self.respa_keys['assignment_types']))
+			ref_respa_section_pattern = \
+			'((?:[α-ωa-zΑ-ΩA-Z]+(?:\)|\.)|\d+\.)[^»]+?«[^»]+?(?:{assign_verb})[^»]+?(?:{assign_type})[^»]+?».+?)(?:\.|,)\s*\n\s*'.\
+			format(assign_verb=Helper.get_special_regex_disjunction(self.respa_keys['assignment_verbs']), 
+	  		 	   assign_type=Helper.get_special_regex_disjunction(self.respa_keys['assignment_types']))
 
 			ref_dec_respa_sections = findall(ref_respa_section_pattern, txt, flags=DOTALL)
 
@@ -278,7 +280,7 @@ class Parser(object):
 			with open(txt_name) as out_file:
 				text = out_file.read()
 
-			return Helper.deintonate_txt(text)
+			return text
 
 		try:
 			text = self.simple_pdf_to_text(file_name, txt_name)
@@ -286,7 +288,7 @@ class Parser(object):
 		except OSError:
 			raise
 
-		return text
+		return Helper.deintonate_txt(text)
 
 	def simple_pdf_to_text(self, file_name, txt_name):
 		if not os.path.exists(file_name):
