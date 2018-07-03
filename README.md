@@ -1,4 +1,4 @@
-![license](https://img.shields.io/badge/license-GPL--3.0--or--later-orange.svg)
+![license](https://img.shields.io/badge/License-GPLv3-blue.svg)
 ![language](https://img.shields.io/badge/python-3.x-green.svg)
 
 # NER & Metadata Extraction from the Greek Government Gazette 
