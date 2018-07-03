@@ -16,8 +16,8 @@ class Helper:
 
     # Initialize empty dict for saving compiled regex objects
     date_patterns = {}
-    camel_case_patteren = re.compile("([α-ω])([Α-Ω])")
-    final_s_pattern = re.compile("(ς)([Α-Ωα-ωά-ώ])")
+    camel_case_patteren = re.compile("([α-ωά-ώ])([Α-ΩΆ-Ώ])")
+    final_s_pattern = re.compile("(ς)([Α-ΩΆ-Ώα-ωά-ώ])")
     upper_s_pattern = re.compile("(Σ)(ΚΑΙ)")
     u_pattern = re.compile("(ύ)(και)")
 
@@ -41,7 +41,7 @@ class Helper:
             name = name.replace(char, replace_chars[char])
 
         # Remove characters that should not belong in the name
-        name = re.sub("[^Α-ΩΪΫ\s]+", "", name)
+        name = re.sub("[^Α-ΩΆ-ΏΪΫ\s]+", "", name)
 
         return ' '.join(name.split())
 
@@ -117,6 +117,7 @@ class Helper:
     def get_special_regex_disjunction(key_list):
             regex_disj_str = ''
             for key in key_list:
+                key = str(key).replace(' ', '\\s+')
                 regex_disj_str += str(key) + '|'
             return regex_disj_str[:-1]
 
@@ -152,16 +153,60 @@ class Helper:
                 'Ιουλίου': 7, 'Αυγούστου': 8, 'Σεπτεμβρίου': 9, 'Οκτωβρίου': 10, 'Νοεμβρίου': 11,
                 'Δεκεμβρίου': 12, 'Μαίου': 5}
 
+    # @TODO: Add Attica Prefectures
     @staticmethod
     def get_dec_location_and_date_before_signees_regex():
         greek_cities = Helper.get_greek_cities()
         days = range(1,31+1)        
-        greek_months = Helper.get_greek_months().keys()
-        dec_loc_and_data_pattern = "\s*\n\s*((?:{city}),\s+(?:{day})\s+(?:{month})\s+(?:{year}))\s*\n".format(city=Helper.get_special_regex_disjunction(greek_cities),
-                                                                           day=Helper.get_special_regex_disjunction(days),
-                                                                           month=Helper.get_special_regex_disjunction(greek_months),
-                                                                           year="\d{4}")
+        greek_months = Helper.get_greek_months()
+        dec_loc_and_data_pattern = "\s*\n\s*((?:{city}),\s+(?:{day})\s+(?:{month})\s+(?:{year}))\s*\n"\
+                                    .format(city=Helper.get_special_regex_disjunction(greek_cities),
+                                            day=Helper.get_special_regex_disjunction(days),
+                                            month=Helper.get_special_regex_disjunction(greek_months),
+                                            year="\d{4}")
         return re.compile(dec_loc_and_data_pattern, flags=re.DOTALL)
+
+    @staticmethod
+    def get_greek_intonations():
+       return { 'lowercase':{
+                                'ά': 'α',
+                                'έ': 'ε',
+                                'ί': 'ι',
+                                'ϊ': 'ι',
+                                'ΐ': 'ι',
+                                'ό': 'ο',
+                                'ύ': 'υ',
+                                'ϋ': 'υ',
+                                'ΰ': 'υ',
+                                'ή': 'η',
+                                'ώ': 'ω'
+                            },
+
+                'uppercase':{
+                                'Ά': 'Α',
+                                'Έ': 'Ε',
+                                'Ί': 'Ι',
+                                'Ϊ': 'Ι',
+                                'Ό': 'Ο',
+                                'Ύ': 'Υ',
+                                'Ϋ': 'Υ',
+                                'Ή': 'Η',
+                                'Ώ': 'Ω'
+                            }
+               }       
+
+    @staticmethod
+    def deintonate_txt(txt):
+        intonations = Helper.get_greek_intonations()
+        
+        for key, val in intonations['lowercase'].items():
+            txt = txt.replace(key, val)
+
+        for key, val in intonations['uppercase'].items():
+            txt = txt.replace(key, val)
+        
+        return txt
+
 
     # Converts a textual date to a unix timestamp
     @staticmethod
@@ -175,7 +220,7 @@ class Helper:
                       'Δεκεμβρίου': 12, 'Μαίου': 5}
             text_month = False
             separator = " "
-            pattern = "Α-Ωα-ωά-ώ"
+            pattern = "Α-ΩΆ-Ώα-ωά-ώ"
 
         if re.match('[0-9]{1,2} [' + pattern + ']{1,} [0-9]{4,4}', date):
             separator = " "

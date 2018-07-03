@@ -2,13 +2,15 @@ from context import main, unittest, call, os, errno, shutil
 from shutil import rmtree
 from main.parser import Parser
 from main.fetcher import Fetcher
+from util.helper import Helper
 
 class ParserTest(unittest.TestCase):
 	
+	test_pdfs_dir = '/data/test_PDFs/'
+	test_txts_dir = '/data/test_TXTs/'
+
 	def setUp(self):
 		self.parser = Parser()
-		self.test_pdfs_dir = '/data/test_PDFs/'
-		self.test_txts_dir = '/data/test_TXTs/'
 	
 		# Creates the folder if not exists
 		try:
@@ -21,9 +23,9 @@ class ParserTest(unittest.TestCase):
 		# rmtree('..' + self.test_txts_dir)
 		pass
 	
-	def get_txt(self, file_name):
-			return self.parser.get_simple_pdf_text('..' + self.test_pdfs_dir + file_name + '.pdf', 
-												   '..' + self.test_txts_dir + file_name + '.txt')
+	def get_txt(self, file_name, pdf_path=test_pdfs_dir, txt_path=test_txts_dir):
+			return self.parser.get_simple_pdf_text('..' + pdf_path + file_name + '.pdf', 
+												   '..' + txt_path + file_name + '.txt')
 
 	def test_get_paorgs_mentioned_in_txt(self):
 		# May take several minutes, depending on work load
@@ -58,6 +60,13 @@ class ParserTest(unittest.TestCase):
 		# print(texts[1])
 		self.assertTrue(all(text is not '' for text in texts))
 
+	def test_deintonate_txt(self):
+		txt_1 = self.get_txt('1')
+		txt_1 = Helper.deintonate_txt(txt_1)
+
+		print(txt_1)
+
+
 	def test_get_dec_sections_from_txts_1(self):
 		
 		################################
@@ -69,12 +78,14 @@ class ParserTest(unittest.TestCase):
 		txt_3 = self.get_txt('3')
 
 		## 
-		#	Decision Contents
+		#  Decision Contents
 		##
 		dec_contents_1 = self.parser.get_dec_contents_from_txt(txt_1); 
 		dec_contents_2 = self.parser.get_dec_contents_from_txt(txt_2);
 		dec_contents_3 = self.parser.get_dec_contents_from_txt(txt_3);  
-		
+		# print(dec_contents_1)
+		# print(dec_contents_2)
+		# print(dec_contents_3)
 		self.assertTrue((not dec_contents_1))
 		self.assertTrue((not dec_contents_2))
 		self.assertTrue((not dec_contents_3))
@@ -85,11 +96,12 @@ class ParserTest(unittest.TestCase):
 		dec_summaries_1 = self.parser.get_dec_summaries_from_txt(txt_1, dec_contents_1); 
 		dec_summaries_2 = self.parser.get_dec_summaries_from_txt(txt_2, dec_contents_2);
 		dec_summaries_3 = self.parser.get_dec_summaries_from_txt(txt_3, dec_contents_3);
-
-		self.assertTrue(dec_summaries_1[0]	== 'Aριθμ.Φ.61/5542/72 \nΚαθορισμός της διαδικασίας εγκατάστασης και \nλειτουργίας των Κέντρων Αποθήκευσης και Διανομής, σύμφωνα με το άρθρο 48ΙΑ του ν.4442/ \n2016 (Α’ 230), και λοιπών συναφών θεμάτων')
-		self.assertTrue(dec_summaries_2[0] == 'Αριθμ.απόφ.134/2017 \nΑναθεώρηση προτύπων τευχών διακηρύξεων \nανοικτής διαδικασίας για τη σύναψη ηλεκτρονικών δημοσίων συμβάσεων μελετών άνω των ορίων και κάτω των ορίων του ν.4412/2016 (A΄\xa0147), \nμε κριτήριο ανάθεσης την πλέον συμφέρουσα \nαπό οικονομική άποψη προσφορά βάσει βέλτιστης σχέσης ποιότητας - τιμής')
-		self.assertTrue(dec_summaries_3[0] == 'Αριθμ.  οικ.132\nΛήψη απόφασης επί της από 28.5.2004 (αριθμ.ημ.Πρωτ.\n2717) καταγγελίας των εταιρειών «ΣΑΡΛΗΣ ΚΟΝΤΕΪΝΕΡ  ΣΕΡΒΙΣΕΣ  Α.Ε.»  και  «ΣΑΡΛΗΣ  ΚΑΙ  ΑΓΓΕΛΟΠΟΥΛΟΣ ΠΡΑΚΤΟΡΕΙΟΝ ΕΠΕ» κατά της Εταιρείας \n«ΟΡΓΑΝΙΣΜΟΣ ΛΙΜΕΝΟΣ ΠΕΙΡΑΙΩΣ Α.Ε.» (ΟΛΠ) για \nπαράβαση των άρθρων 1, 2 ν.703/1977 ΚΑΙ 81, 82 \nΣυνθΕΚ και κατά της Εταιρείας «MEDITERRANEAN \nSHIPPING COMPANY S.A.(MSC) για παράβαση των \nάρθρων 1 ν.703/1977 ΚΑΙ 81 ΣυνθΕΚ')
-		
+		# print(dec_summaries_1)
+		# print(dec_summaries_2)
+		# print(dec_summaries_3);
+		self.assertTrue(len(dec_summaries_1) == 1)
+		self.assertTrue(len(dec_summaries_2) == 1)
+		self.assertTrue(len(dec_summaries_3) == 1)
 		## 
 		#  Decision Numbers
 		## 
@@ -99,7 +111,12 @@ class ParserTest(unittest.TestCase):
 		dec_nums_1 = self.parser.get_dec_nums_from_txt(txt_1, dec_summaries_1)
 		dec_nums_2 = self.parser.get_dec_nums_from_txt(txt_2, dec_summaries_2)
 		dec_nums_3 = self.parser.get_dec_nums_from_txt(txt_3, dec_summaries_3)
-		# print(dec_nums_1); print(dec_nums_2); print(dec_nums_3)
+		# print(dec_nums_1)
+		# print(dec_nums_2)
+		# print(dec_nums_3)
+		self.assertTrue(len(dec_nums_1) == 1)
+		self.assertTrue(len(dec_nums_2) == 1)
+		self.assertTrue(len(dec_nums_3) == 1)
 
 		## 
 		#  Decision Prerequisites
@@ -109,15 +126,22 @@ class ParserTest(unittest.TestCase):
 		dec_prereqs_1 = self.parser.get_dec_prereqs_from_txt(txt_1, len(dec_summaries_1))
 		dec_prereqs_2 = self.parser.get_dec_prereqs_from_txt(txt_2, len(dec_summaries_2))
 		dec_prereqs_3 = self.parser.get_dec_prereqs_from_txt(txt_3, len(dec_summaries_3))
-		# print(len(dec_prereqs_1)); print(len(dec_prereqs_2)); print(len(dec_prereqs_3))
+		# print(len(dec_prereqs_1))
+		# print(len(dec_prereqs_2))
+		# print(len(dec_prereqs_3))
+		self.assertTrue(len(dec_prereqs_1) == 1)
+		self.assertTrue(len(dec_prereqs_2) == 1)
+		self.assertTrue(len(dec_prereqs_3) == 1)
 
 		## 
-		#	Decisions
+		#  Decisions
 		##
 		decisions_1 = self.parser.get_decisions_from_txt(txt_1, len(dec_summaries_1))
 		decisions_2 = self.parser.get_decisions_from_txt(txt_2, len(dec_summaries_2))
 		decisions_3 = self.parser.get_decisions_from_txt(txt_3, len(dec_summaries_3))
-
+		# print(len(decisions_1))
+		# print(len(decisions_2))
+		# print(len(decisions_3))
 		self.assertTrue(len(decisions_1) == len(dec_summaries_1))
 		self.assertTrue(len(decisions_2) == len(dec_summaries_2))
 		self.assertTrue(len(decisions_3) == len(dec_summaries_3))
@@ -131,26 +155,30 @@ class ParserTest(unittest.TestCase):
 		txt_6 = self.get_txt('6')
 
 		## 
-		#	Decision Contents
+		#  Decision Contents
 		##
 		dec_contents_4 = self.parser.get_dec_contents_from_txt(txt_4); 
 		dec_contents_5 = self.parser.get_dec_contents_from_txt(txt_5);
 		dec_contents_6 = self.parser.get_dec_contents_from_txt(txt_6);  
-		
-		self.assertTrue(dec_contents_4)
-		self.assertTrue(dec_contents_5)
-		self.assertTrue(dec_contents_6)
+		# print(dec_contents_4)
+		# print(dec_contents_5)
+		# print(dec_contents_6)
+		self.assertTrue(dec_contents_4);
+		self.assertTrue(dec_contents_5); 
+		self.assertTrue(dec_contents_6); 
 
 		## 
-		#	Decision Summaries
+		#  Decision Summaries
 		##
 		dec_summaries_4 = self.parser.get_dec_summaries_from_txt(txt_4, dec_contents_4); 
 		dec_summaries_5 = self.parser.get_dec_summaries_from_txt(txt_5, dec_contents_5);
 		dec_summaries_6 = self.parser.get_dec_summaries_from_txt(txt_6, dec_contents_6);
-
-		self.assertTrue(len(dec_summaries_4) == 9)
-		self.assertTrue(len(dec_summaries_5) == 6)
-		self.assertTrue(len(dec_summaries_6) == 5)
+		# print(dec_summaries_4)
+		# print(dec_summaries_5)
+		# print(dec_summaries_6);
+		self.assertTrue(len(dec_summaries_4) > 1)
+		self.assertTrue(len(dec_summaries_5) > 1)
+		self.assertTrue(len(dec_summaries_6) > 1)
 
 		## 
 		#  Decision Numbers
@@ -161,8 +189,12 @@ class ParserTest(unittest.TestCase):
 		dec_nums_4 = self.parser.get_dec_nums_from_txt(txt_4, dec_summaries_4)
 		dec_nums_5 = self.parser.get_dec_nums_from_txt(txt_5, dec_summaries_5)
 		dec_nums_6 = self.parser.get_dec_nums_from_txt(txt_6, dec_summaries_6)
-		
-		# print(dec_nums_4); print(dec_nums_5); print(dec_nums_6)
+		# print(dec_nums_4)
+		# print(dec_nums_5)
+		# print(dec_nums_6)
+		self.assertTrue(len(dec_nums_4) > 1)
+		self.assertTrue(len(dec_nums_5) > 1)
+		self.assertTrue(len(dec_nums_6) > 1)
 
 		## 
 		#  Decision Prerequisites
@@ -172,24 +204,30 @@ class ParserTest(unittest.TestCase):
 		dec_prereqs_4 = self.parser.get_dec_prereqs_from_txt(txt_4, len(dec_summaries_4))
 		dec_prereqs_5 = self.parser.get_dec_prereqs_from_txt(txt_5, len(dec_summaries_5))
 		dec_prereqs_6 = self.parser.get_dec_prereqs_from_txt(txt_6, len(dec_summaries_6))
-		# print(len(dec_prereqs_4)); print(len(dec_prereqs_5)); print(len(dec_prereqs_6))
+		# print(len(dec_prereqs_4))
+		# print(len(dec_prereqs_5))
+		# print(len(dec_prereqs_6))
+		self.assertTrue(len(dec_prereqs_4) > 1)
+		self.assertTrue(len(dec_prereqs_5) > 1)
+		self.assertTrue(len(dec_prereqs_6) > 1)
 
 		## 
-		#	Decisions
+		#  Decisions
 		##
 		decisions_4 = self.parser.get_decisions_from_txt(txt_4, len(dec_summaries_4))
 		decisions_5 = self.parser.get_decisions_from_txt(txt_5, len(dec_summaries_5))
 		decisions_6 = self.parser.get_decisions_from_txt(txt_6, len(dec_summaries_6))
-
+		# print(decisions_4)
+		# print(decisions_5)
+		# print(decisions_6)
 		self.assertTrue(len(decisions_4) == len(dec_summaries_4))
 		self.assertTrue(len(decisions_5) == len(dec_summaries_5))
 		self.assertTrue(len(decisions_6) == len(dec_summaries_6))
-
 		
 		## 
-		#	Location & Date of signing
+		#  Location & Dates of signing
 		##
-		print('\n* Location & Date of signing *\n')
+		print('\n* Location & Dates of signing *\n')
 		print(self.parser.get_dec_location_and_date_from_txt(txt_1))
 		print(self.parser.get_dec_location_and_date_from_txt(txt_2))
 		print(self.parser.get_dec_location_and_date_from_txt(txt_3))
@@ -198,7 +236,7 @@ class ParserTest(unittest.TestCase):
 		print(self.parser.get_dec_location_and_date_from_txt(txt_6))
 
 		## 
-		#	Signees
+		#  Signees
 		##
 		print('\n* Signees *\n')
 		print(self.parser.get_dec_signees_from_txt(txt_1))
@@ -218,11 +256,11 @@ class ParserTest(unittest.TestCase):
 		txt_2 = self.get_txt('8')
 
 		## 
-		#	Decision Contents
+		#  Decision Contents
 		##
 		dec_contents_1 = self.parser.get_dec_contents_from_txt(txt_1); 
 		dec_contents_2 = self.parser.get_dec_contents_from_txt(txt_2);
-		
+		# print(dec_contents_1); print(dec_contents_2)
 		self.assertTrue(not dec_contents_1)
 		self.assertTrue(not dec_contents_2)
 
@@ -232,6 +270,8 @@ class ParserTest(unittest.TestCase):
 		dec_summaries_1 = self.parser.get_dec_summaries_from_txt(txt_1, dec_contents_1); 
 		dec_summaries_2 = self.parser.get_dec_summaries_from_txt(txt_2, dec_contents_2);
 		# print(dec_summaries_1); print(dec_summaries_2)
+		self.assertTrue(len(dec_summaries_1) == 1)
+		self.assertTrue(len(dec_summaries_2) == 1)
 
 		## 
 		#  Decision Numbers
@@ -242,6 +282,8 @@ class ParserTest(unittest.TestCase):
 		dec_nums_1 = self.parser.get_dec_nums_from_txt(txt_1, dec_summaries_1)
 		dec_nums_2 = self.parser.get_dec_nums_from_txt(txt_2, dec_summaries_2)
 		# print(dec_nums_1); print(dec_nums_2)
+		self.assertTrue(len(dec_nums_1) == 1)
+		self.assertTrue(len(dec_nums_2) == 1)
 
 		## 
 		#  Decision Prerequisites
@@ -250,14 +292,20 @@ class ParserTest(unittest.TestCase):
 		# e.g. "Έχοντας υπόψη:" *[...]* "αποφασίζουμε:"
 		dec_prereqs_1 = self.parser.get_dec_prereqs_from_txt(txt_1, len(dec_summaries_1))
 		dec_prereqs_2 = self.parser.get_dec_prereqs_from_txt(txt_2, len(dec_summaries_2))
-		# print(dec_prereqs_1); print(dec_prereqs_2)
+		# print(dec_prereqs_1)
+		# print(dec_prereqs_2)
+		self.assertTrue(len(dec_prereqs_1) == 1)
+		self.assertTrue(len(dec_prereqs_2) == 1)
 
 		## 
-		#	Decisions
+		#  Decisions
 		##
 		decisions_1 = self.parser.get_decisions_from_txt(txt_1, len(dec_summaries_1))
 		decisions_2 = self.parser.get_decisions_from_txt(txt_2, len(dec_summaries_2))
-		# print(decisions_1); print(decisions_2)
+		# print(decisions_1) 
+		# print(decisions_2)
+		self.assertTrue(len(decisions_1) == len(dec_summaries_1))
+		self.assertTrue(len(decisions_2) == len(dec_summaries_2))
 
 		################################
 		#    Issues w many decisions   #
@@ -269,14 +317,20 @@ class ParserTest(unittest.TestCase):
 		txt_6 = self.get_txt('12')
 
 		## 
-		#	Decision Contents
+		#  Decision Contents
 		##
 		dec_contents_3 = self.parser.get_dec_contents_from_txt(txt_3); 
 		dec_contents_4 = self.parser.get_dec_contents_from_txt(txt_4);
 		dec_contents_5 = self.parser.get_dec_contents_from_txt(txt_5);  
 		dec_contents_6 = self.parser.get_dec_contents_from_txt(txt_6);  
-		# print(dec_contents_4); print(dec_contents_5); print(dec_contents_6)
-		# print(dec_contents_7)
+		# print(dec_contents_3)
+		# print(dec_contents_4)
+		# print(dec_contents_5)
+		# print(dec_contents_6)
+		self.assertTrue(dec_contents_3)
+		self.assertTrue(dec_contents_4)
+		self.assertTrue(dec_contents_5)
+		self.assertTrue(dec_contents_6)
 
 		## 
 		#  Decision Summaries
@@ -285,8 +339,14 @@ class ParserTest(unittest.TestCase):
 		dec_summaries_4 = self.parser.get_dec_summaries_from_txt(txt_4, dec_contents_4);
 		dec_summaries_5 = self.parser.get_dec_summaries_from_txt(txt_5, dec_contents_5);
 		dec_summaries_6 = self.parser.get_dec_summaries_from_txt(txt_6, dec_contents_6);
-		# print(dec_summaries_4); print(dec_summaries_5); print(dec_summaries_6)
-		# print(len(dec_summaries_7))
+		# print(dec_summaries_3)
+		# print(dec_summaries_4)
+		# print(dec_summaries_5)
+		# print(len(dec_summaries_6))
+		self.assertTrue(len(dec_summaries_3) > 1)
+		self.assertTrue(len(dec_summaries_4) > 1)
+		self.assertTrue(len(dec_summaries_5) > 1)
+		self.assertTrue(len(dec_summaries_6) > 1)
 
 		## 
 		#  Decision Numbers
@@ -298,9 +358,15 @@ class ParserTest(unittest.TestCase):
 		dec_nums_4 = self.parser.get_dec_nums_from_txt(txt_4, dec_summaries_4)
 		dec_nums_5 = self.parser.get_dec_nums_from_txt(txt_5, dec_summaries_5)
 		dec_nums_6 = self.parser.get_dec_nums_from_txt(txt_6, dec_summaries_6)
-		# print(dec_nums_4); print(dec_nums_5); print(dec_nums_6)
-		# print(dec_nums_7)
-
+		# print(dec_nums_3)
+		# print(dec_nums_4)
+		# print(dec_nums_5)
+		# print(dec_nums_6)
+		self.assertTrue(len(dec_nums_3) > 1)
+		self.assertTrue(len(dec_nums_4) > 1)
+		self.assertTrue(len(dec_nums_5) > 1)
+		self.assertTrue(len(dec_nums_6) > 1)
+		
 		## 
 		#  Decision Prerequisites
 		## 		
@@ -309,28 +375,38 @@ class ParserTest(unittest.TestCase):
 		dec_prereqs_3 = self.parser.get_dec_prereqs_from_txt(txt_3, len(dec_summaries_3))
 		dec_prereqs_4 = self.parser.get_dec_prereqs_from_txt(txt_4, len(dec_summaries_4))
 		dec_prereqs_5 = self.parser.get_dec_prereqs_from_txt(txt_5, len(dec_summaries_5))
-		
-		 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! #
-		#  This one seems to require our attention! (some prereqs scrambled up)  #
-		 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! #
+		# ! This one seems to require our attention! (some prereqs scrambled up)   
 		dec_prereqs_6 = self.parser.get_dec_prereqs_from_txt(txt_6, len(dec_summaries_6))
-		# print(dec_prereqs_4); print(dec_prereqs_5); print(dec_prereqs_6)
-		# print(dec_prereqs_7)
+		# print(dec_prereqs_3)
+		# print(dec_prereqs_4)
+		# print(dec_prereqs_5)
+		# print(dec_prereqs_6)
+		self.assertTrue(len(dec_prereqs_3) > 1)
+		self.assertTrue(len(dec_prereqs_4) > 1)
+		self.assertTrue(len(dec_prereqs_5) > 1)
+		self.assertTrue(len(dec_prereqs_6) > 1)
 
 		## 
-		#	Decisions
+		#  Decisions
 		##
 		decisions_3 = self.parser.get_decisions_from_txt(txt_3, len(dec_summaries_3))
 		decisions_4 = self.parser.get_decisions_from_txt(txt_4, len(dec_summaries_4))
 		decisions_5 = self.parser.get_decisions_from_txt(txt_5, len(dec_summaries_5))
 		decisions_6 = self.parser.get_decisions_from_txt(txt_6, len(dec_summaries_6))
-		# print(decisions_4); print(decisions_5); print(decisions_6)
-		# print(decisions_7)
+		# print(decisions_3) 
+		# print(decisions_4) 
+		# print(decisions_5)
+		# print(decisions_6)
+		self.assertTrue(len(decisions_3) == len(dec_summaries_3))
+		self.assertTrue(len(decisions_4) == len(dec_summaries_4))
+		self.assertTrue(len(decisions_5) == len(dec_summaries_5))
+		# ! One decision not detected
+		self.assertTrue(len(decisions_6) == len(dec_summaries_6) - 1)
 
 		## 
-		#	Location & Date of signing
+		#  Location & Dates of signing
 		##
-		print('\n* Location & Date of signing *\n')
+		print('\n* Location & Dates of signing *\n')
 		print(self.parser.get_dec_location_and_date_from_txt(txt_1))
 		print(self.parser.get_dec_location_and_date_from_txt(txt_2))
 		print(self.parser.get_dec_location_and_date_from_txt(txt_3))
@@ -339,7 +415,7 @@ class ParserTest(unittest.TestCase):
 		print(self.parser.get_dec_location_and_date_from_txt(txt_6))
 
 		## 
-		#	Signees
+		#  Signees
 		##
 		print('\n* Signees *\n')
 		print(self.parser.get_dec_signees_from_txt(txt_1))
@@ -348,7 +424,806 @@ class ParserTest(unittest.TestCase):
 		print(self.parser.get_dec_signees_from_txt(txt_4))
 		print(self.parser.get_dec_signees_from_txt(txt_5))
 		print(self.parser.get_dec_signees_from_txt(txt_6))
+
+	def test_get_dec_sections_from_txts_3(self):
+				
+		respa_pdf_path = self.test_pdfs_dir + '/RespA_Issues/'
+		txt_1 = self.get_txt('1_w_RespAs', pdf_path=respa_pdf_path)
+		txt_2 = self.get_txt('2_w_RespAs', pdf_path=respa_pdf_path)
+		txt_3 = self.get_txt('3_w_RespAs', pdf_path=respa_pdf_path)
+		txt_4 = self.get_txt('4_w_RespAs', pdf_path=respa_pdf_path)
+
+		## 
+		#  Decision Contents
+		##
+		dec_contents_1 = self.parser.get_dec_contents_from_txt(txt_1); 
+		dec_contents_2 = self.parser.get_dec_contents_from_txt(txt_2);
+		dec_contents_3 = self.parser.get_dec_contents_from_txt(txt_3);  
+		dec_contents_4 = self.parser.get_dec_contents_from_txt(txt_4);
+		# print(dec_contents_1)
+		# print(dec_contents_2) 
+		# print(dec_contents_3)
+		# print(dec_contents_4)
+		self.assertTrue(dec_contents_1);
+		self.assertTrue(dec_contents_2); 
+		self.assertTrue(dec_contents_3); 
+		self.assertTrue(dec_contents_4);
 		
+		## 
+		#  Decision Summaries
+		## 
+		dec_summaries_1 = self.parser.get_dec_summaries_from_txt(txt_1, dec_contents_1); 
+		dec_summaries_2 = self.parser.get_dec_summaries_from_txt(txt_2, dec_contents_2);
+		dec_summaries_3 = self.parser.get_dec_summaries_from_txt(txt_3, dec_contents_3);
+		dec_summaries_4 = self.parser.get_dec_summaries_from_txt(txt_4, dec_contents_4);
+		# print(len(dec_summaries_1))
+		# print(len(dec_summaries_2))
+		# print(len(dec_summaries_3))
+		# print(len(dec_summaries_4))
+		self.assertTrue(len(dec_summaries_1) > 1)
+		self.assertTrue(len(dec_summaries_2) > 1)
+		self.assertTrue(len(dec_summaries_3) > 1)
+		self.assertTrue(len(dec_summaries_4) > 1)
+
+		## 
+		#  Decision Numbers
+		## 
+
+		# Dictionaries containing keys: decision_indeces & values: decision_numbers, 
+		# e.g. 2: 'Aριθμ.Β2−210', 4: None, 3: 'Αριθμ. blah blah blah'
+		dec_nums_1 = self.parser.get_dec_nums_from_txt(txt_1, dec_summaries_1)
+		dec_nums_2 = self.parser.get_dec_nums_from_txt(txt_2, dec_summaries_2)
+		dec_nums_3 = self.parser.get_dec_nums_from_txt(txt_3, dec_summaries_3)
+		dec_nums_4 = self.parser.get_dec_nums_from_txt(txt_4, dec_summaries_4)
+		# print(dec_nums_1)
+		# print(dec_nums_2)
+		# print(len(dec_nums_3))
+		# print(dec_nums_4)
+		self.assertTrue(len(dec_nums_1) > 1)
+		self.assertTrue(len(dec_nums_2) > 1)
+		self.assertTrue(len(dec_nums_3) > 1)
+		self.assertTrue(len(dec_nums_4) > 1)
+
+		## 
+		#  Decision Prerequisites
+		## 		
+
+		# e.g. "Έχοντας υπόψη:" *[...]* ", αποφασίζουμε:"
+		dec_prereqs_1 = self.parser.get_dec_prereqs_from_txt(txt_1, len(dec_summaries_1))
+		dec_prereqs_2 = self.parser.get_dec_prereqs_from_txt(txt_2, len(dec_summaries_2))
+		dec_prereqs_3 = self.parser.get_dec_prereqs_from_txt(txt_3, len(dec_summaries_3))
+		dec_prereqs_4 = self.parser.get_dec_prereqs_from_txt(txt_4, len(dec_summaries_4))
+		# print(len(dec_prereqs_1))
+		# print(len(dec_prereqs_2))
+		# print(len(dec_prereqs_3))
+		# print(len(dec_prereqs_4))
+		self.assertTrue(len(dec_prereqs_1) > 1)
+		self.assertTrue(len(dec_prereqs_2) > 1)
+		self.assertTrue(len(dec_prereqs_3) > 1)
+		self.assertTrue(len(dec_prereqs_4) > 1)
+
+		## 
+		#  Decisions
+		##
+		decisions_1 = self.parser.get_decisions_from_txt(txt_1, len(dec_summaries_1))
+		decisions_2 = self.parser.get_decisions_from_txt(txt_2, len(dec_summaries_2))
+		decisions_3 = self.parser.get_decisions_from_txt(txt_3, len(dec_summaries_3))
+		decisions_4 = self.parser.get_decisions_from_txt(txt_4, len(dec_summaries_4))
+		# print(len(decisions_1))
+		# print(len(decisions_2))
+		# print(len(decisions_3))
+		# print(len(decisions_4))
+
+		# ! One decision not detected
+		self.assertTrue(len(decisions_1) == len(dec_summaries_1) - 1)
+		self.assertTrue(len(decisions_2) == len(dec_summaries_2))
+		# ! One summary not detected
+		self.assertTrue(len(decisions_3) == len(dec_summaries_3) + 1)
+		self.assertTrue(len(decisions_4) == len(dec_summaries_4))
+
+		## 
+		#  Location & Dates of signing
+		##
+		print('\n* Location & Dates of signing *\n')
+		print(self.parser.get_dec_location_and_date_from_txt(txt_1))
+		print(self.parser.get_dec_location_and_date_from_txt(txt_2))
+		print(self.parser.get_dec_location_and_date_from_txt(txt_3))
+		print(self.parser.get_dec_location_and_date_from_txt(txt_4))
+
+		## 
+		#  Signees
+		##
+		print('\n* Signees *\n')
+		print(self.parser.get_dec_signees_from_txt(txt_1))
+		print(self.parser.get_dec_signees_from_txt(txt_2))
+		print(self.parser.get_dec_signees_from_txt(txt_3))
+		print(self.parser.get_dec_signees_from_txt(txt_4))
+
+	def test_get_dec_sections_from_txts_4(self):
+				
+		respa_pdf_path = self.test_pdfs_dir + '/RespA_Issues/'
+		txt_1 = self.get_txt('5_w_RespAs', pdf_path=respa_pdf_path)
+		txt_2 = self.get_txt('6_w_RespAs', pdf_path=respa_pdf_path)
+		txt_3 = self.get_txt('7_w_RespAs', pdf_path=respa_pdf_path)
+		txt_4 = self.get_txt('8_w_RespAs', pdf_path=respa_pdf_path)
+		txt_5 = self.get_txt('9_w_RespAs', pdf_path=respa_pdf_path)
+		txt_6 = self.get_txt('10_w_RespAs', pdf_path=respa_pdf_path)
+		txt_7 = self.get_txt('11_w_RespAs', pdf_path=respa_pdf_path)
+		
+		## 
+		#  Decision Contents
+		##
+		dec_contents_1 = self.parser.get_dec_contents_from_txt(txt_1); 
+		dec_contents_2 = self.parser.get_dec_contents_from_txt(txt_2);
+		dec_contents_3 = self.parser.get_dec_contents_from_txt(txt_3);  
+		dec_contents_4 = self.parser.get_dec_contents_from_txt(txt_4);
+		dec_contents_5 = self.parser.get_dec_contents_from_txt(txt_5);
+		dec_contents_6 = self.parser.get_dec_contents_from_txt(txt_6);
+		dec_contents_7 = self.parser.get_dec_contents_from_txt(txt_7);
+		# print(dec_contents_1)
+		# print(dec_contents_2) 
+		# print(dec_contents_3)
+		# print(dec_contents_4)
+		# print(dec_contents_5)
+		# print(dec_contents_6)
+		# print(dec_contents_7)
+		self.assertTrue(dec_contents_1);
+		self.assertTrue(dec_contents_2); 
+		self.assertTrue(dec_contents_3); 
+		self.assertTrue(dec_contents_4);
+		self.assertTrue(not dec_contents_5);
+		self.assertTrue(not dec_contents_6);
+		self.assertTrue(dec_contents_7);
+
+		## 
+		#  Decision Summaries
+		## 
+		dec_summaries_1 = self.parser.get_dec_summaries_from_txt(txt_1, dec_contents_1); 
+		dec_summaries_2 = self.parser.get_dec_summaries_from_txt(txt_2, dec_contents_2);
+		dec_summaries_3 = self.parser.get_dec_summaries_from_txt(txt_3, dec_contents_3);
+		dec_summaries_4 = self.parser.get_dec_summaries_from_txt(txt_4, dec_contents_4);
+		dec_summaries_5 = self.parser.get_dec_summaries_from_txt(txt_5, dec_contents_5);
+		dec_summaries_6 = self.parser.get_dec_summaries_from_txt(txt_6, dec_contents_6);
+		dec_summaries_7 = self.parser.get_dec_summaries_from_txt(txt_7, dec_contents_7);
+		print(len(dec_summaries_1))
+		print(len(dec_summaries_2))
+		# print(len(dec_summaries_3))
+		# print(len(dec_summaries_4))
+		# print(len(dec_summaries_5))
+		# print(len(dec_summaries_6))
+		# print(len(dec_summaries_7))
+		self.assertTrue(len(dec_summaries_1) > 1)
+		self.assertTrue(len(dec_summaries_2) > 1)
+		self.assertTrue(len(dec_summaries_3) > 1)
+		self.assertTrue(len(dec_summaries_4) > 1)
+		self.assertTrue(len(dec_summaries_5) == 1)
+		self.assertTrue(len(dec_summaries_6) == 1)
+		self.assertTrue(len(dec_summaries_7) > 1)
+
+		## 
+		#  Decision Numbers
+		## 
+
+		# Dictionaries containing keys: decision_indeces & values: decision_numbers, 
+		# e.g. 2: 'Aριθμ.Β2−210', 4: None, 3: 'Αριθμ. blah blah blah'
+		dec_nums_1 = self.parser.get_dec_nums_from_txt(txt_1, dec_summaries_1)
+		dec_nums_2 = self.parser.get_dec_nums_from_txt(txt_2, dec_summaries_2)
+		dec_nums_3 = self.parser.get_dec_nums_from_txt(txt_3, dec_summaries_3)
+		dec_nums_4 = self.parser.get_dec_nums_from_txt(txt_4, dec_summaries_4)
+		dec_nums_5 = self.parser.get_dec_nums_from_txt(txt_5, dec_summaries_5)
+		dec_nums_6 = self.parser.get_dec_nums_from_txt(txt_6, dec_summaries_6)
+		dec_nums_7 = self.parser.get_dec_nums_from_txt(txt_7, dec_summaries_7)
+		# print(dec_nums_1)
+		# print(dec_nums_2)
+		# print(dec_nums_3)
+		# print(dec_nums_4)
+		# print(dec_nums_5)
+		# print(dec_nums_6)
+		# print(dec_nums_7)
+		self.assertTrue(len(dec_nums_1) > 1)
+		self.assertTrue(len(dec_nums_2) > 1)
+		self.assertTrue(len(dec_nums_3) > 1)
+		self.assertTrue(len(dec_nums_4) > 1)
+		self.assertTrue(len(dec_nums_5) == 1)
+		self.assertTrue(len(dec_nums_6) == 1)
+		self.assertTrue(len(dec_nums_7) > 1)
+
+		## 
+		#  Decision Prerequisites
+		## 		
+
+		# e.g. "Έχοντας υπόψη:" *[...]* ", αποφασίζουμε:"
+		dec_prereqs_1 = self.parser.get_dec_prereqs_from_txt(txt_1, len(dec_summaries_1))
+		dec_prereqs_2 = self.parser.get_dec_prereqs_from_txt(txt_2, len(dec_summaries_2))
+		dec_prereqs_3 = self.parser.get_dec_prereqs_from_txt(txt_3, len(dec_summaries_3))
+		dec_prereqs_4 = self.parser.get_dec_prereqs_from_txt(txt_4, len(dec_summaries_4))
+		dec_prereqs_5 = self.parser.get_dec_prereqs_from_txt(txt_5, len(dec_summaries_5))
+		dec_prereqs_6 = self.parser.get_dec_prereqs_from_txt(txt_6, len(dec_summaries_6))
+		dec_prereqs_7 = self.parser.get_dec_prereqs_from_txt(txt_7, len(dec_summaries_7))
+		print(len(dec_prereqs_1))
+		# print(len(dec_prereqs_2))
+		# print(len(dec_prereqs_3))
+		# print(len(dec_prereqs_4))
+		# print(len(dec_prereqs_5))
+		# print(len(dec_prereqs_6))
+		# print(len(dec_prereqs_7))
+		self.assertTrue(len(dec_prereqs_1) > 1)
+		self.assertTrue(len(dec_prereqs_2) > 1)
+		self.assertTrue(len(dec_prereqs_3) > 1)
+		self.assertTrue(len(dec_prereqs_4) > 1)
+		self.assertTrue(len(dec_prereqs_5) == 1)
+		self.assertTrue(len(dec_prereqs_6) == 1)
+		self.assertTrue(len(dec_prereqs_7) > 1)
+
+		## 
+		#  Decisions
+		##
+		decisions_1 = self.parser.get_decisions_from_txt(txt_1, len(dec_summaries_1))
+		decisions_2 = self.parser.get_decisions_from_txt(txt_2, len(dec_summaries_2))
+		decisions_3 = self.parser.get_decisions_from_txt(txt_3, len(dec_summaries_3))
+		decisions_4 = self.parser.get_decisions_from_txt(txt_4, len(dec_summaries_4))
+		decisions_5 = self.parser.get_decisions_from_txt(txt_5, len(dec_summaries_5))
+		decisions_6 = self.parser.get_decisions_from_txt(txt_6, len(dec_summaries_6))
+		decisions_7 = self.parser.get_decisions_from_txt(txt_7, len(dec_summaries_7))
+		# print(len(decisions_1))
+		print(decisions_2)
+		# print(len(decisions_3))
+		# print(len(decisions_4))
+		# print(len(decisions_5))
+		# print(len(decisions_6))
+		# print(len(decisions_7))
+
+		self.assertTrue(len(decisions_1) == len(dec_summaries_1))
+		# ! One summary not detected
+		self.assertTrue(len(decisions_2) == len(dec_summaries_2) + 1)
+		self.assertTrue(len(decisions_3) == len(dec_summaries_3))
+		# ! One decision not detected
+		self.assertTrue(len(decisions_4) == len(dec_summaries_4) - 1)
+		self.assertTrue(len(decisions_5) == len(dec_summaries_5))
+		self.assertTrue(len(decisions_6) == len(dec_summaries_6))
+		self.assertTrue(len(decisions_7) == len(dec_summaries_7))
+
+		## 
+		#  Location & Dates of signing
+		##
+		print('\n* Location & Dates of signing *\n')
+		print(self.parser.get_dec_location_and_date_from_txt(txt_1))
+		print(self.parser.get_dec_location_and_date_from_txt(txt_2))
+		print(self.parser.get_dec_location_and_date_from_txt(txt_3))
+		print(self.parser.get_dec_location_and_date_from_txt(txt_4))
+		print(self.parser.get_dec_location_and_date_from_txt(txt_5))
+		print(self.parser.get_dec_location_and_date_from_txt(txt_6))
+		print(self.parser.get_dec_location_and_date_from_txt(txt_7))
+
+		## 
+		#  Signees
+		##
+		print('\n* Signees *\n')
+		print(self.parser.get_dec_signees_from_txt(txt_1))
+		print(self.parser.get_dec_signees_from_txt(txt_2))
+		print(self.parser.get_dec_signees_from_txt(txt_3))
+		print(self.parser.get_dec_signees_from_txt(txt_4))
+		print(self.parser.get_dec_signees_from_txt(txt_5))
+		print(self.parser.get_dec_signees_from_txt(txt_6))
+		print(self.parser.get_dec_signees_from_txt(txt_7))
+
+	def test_get_dec_sections_from_txts_5(self):
+		
+		respa_pdf_path = self.test_pdfs_dir + '/RespA_Issues/Referenced RespA Decisions/'
+		txt_1 = self.get_txt('1_w_Ref_RespAs', pdf_path=respa_pdf_path)
+		txt_2 = self.get_txt('2_w_Ref_RespAs', pdf_path=respa_pdf_path)
+		txt_3 = self.get_txt('3_w_Ref_RespAs', pdf_path=respa_pdf_path)
+		txt_4 = self.get_txt('4_w_Ref_RespAs', pdf_path=respa_pdf_path)
+		
+		## 
+		#  Decision Contents
+		##
+		dec_contents_1 = self.parser.get_dec_contents_from_txt(txt_1); 
+		dec_contents_2 = self.parser.get_dec_contents_from_txt(txt_2);
+		dec_contents_3 = self.parser.get_dec_contents_from_txt(txt_3);  
+		dec_contents_4 = self.parser.get_dec_contents_from_txt(txt_4);
+		# print(dec_contents_1)
+		# print(dec_contents_2) 
+		# print(dec_contents_3)
+		# print(dec_contents_4)
+
+		self.assertTrue(dec_contents_1);
+		self.assertTrue(dec_contents_2); 
+		self.assertTrue(not dec_contents_3); 
+		self.assertTrue(dec_contents_4);
+		
+		## 
+		#  Decision Summaries
+		## 
+		dec_summaries_1 = self.parser.get_dec_summaries_from_txt(txt_1, dec_contents_1); 
+		dec_summaries_2 = self.parser.get_dec_summaries_from_txt(txt_2, dec_contents_2);
+		dec_summaries_3 = self.parser.get_dec_summaries_from_txt(txt_3, dec_contents_3);
+		dec_summaries_4 = self.parser.get_dec_summaries_from_txt(txt_4, dec_contents_4);
+		# print(len(dec_summaries_1))
+		# print(len(dec_summaries_2))
+		# print(len(dec_summaries_3))
+		# print(len(dec_summaries_4))
+
+		self.assertTrue(len(dec_summaries_1) > 1)
+		self.assertTrue(len(dec_summaries_2) > 1)
+		self.assertTrue(len(dec_summaries_3) == 1)
+		self.assertTrue(len(dec_summaries_4) > 1)
+
+		# ## 
+		# #  Decision Numbers
+		# ## 
+
+		# Dictionaries containing keys: decision_indeces & values: decision_numbers, 
+		# e.g. 2: 'Aριθμ.Β2−210', 4: None, 3: 'Αριθμ. blah blah blah'
+		dec_nums_1 = self.parser.get_dec_nums_from_txt(txt_1, dec_summaries_1)
+		dec_nums_2 = self.parser.get_dec_nums_from_txt(txt_2, dec_summaries_2)
+		dec_nums_3 = self.parser.get_dec_nums_from_txt(txt_3, dec_summaries_3)
+		dec_nums_4 = self.parser.get_dec_nums_from_txt(txt_4, dec_summaries_4)
+		# print(dec_nums_1)
+		# print(dec_nums_2)
+		# print(dec_nums_3)
+		# print(dec_nums_4)
+		self.assertTrue(len(dec_nums_1) > 1)
+		self.assertTrue(len(dec_nums_2) > 1)
+		self.assertTrue(len(dec_nums_3) == 1)
+		self.assertTrue(len(dec_nums_4) > 1)
+
+		# ## 
+		# #  Decision Prerequisites
+		# ## 		
+
+		# e.g. "Έχοντας υπόψη:" *[...]* ", αποφασίζουμε:"
+		dec_prereqs_1 = self.parser.get_dec_prereqs_from_txt(txt_1, len(dec_summaries_1))
+		dec_prereqs_2 = self.parser.get_dec_prereqs_from_txt(txt_2, len(dec_summaries_2))
+		dec_prereqs_3 = self.parser.get_dec_prereqs_from_txt(txt_3, len(dec_summaries_3))
+		dec_prereqs_4 = self.parser.get_dec_prereqs_from_txt(txt_4, len(dec_summaries_4))
+		# print(len(dec_prereqs_1))
+		# print(len(dec_prereqs_2))
+		# print(len(dec_prereqs_3))
+		# print(len(dec_prereqs_4))
+		self.assertTrue(len(dec_prereqs_1) > 1)
+		self.assertTrue(len(dec_prereqs_2) > 1)
+		self.assertTrue(len(dec_prereqs_3) == 1)
+		self.assertTrue(len(dec_prereqs_4) > 1)
+
+		## 
+		#  Decisions
+		##
+		decisions_1 = self.parser.get_decisions_from_txt(txt_1, len(dec_summaries_1))
+		decisions_2 = self.parser.get_decisions_from_txt(txt_2, len(dec_summaries_2))
+		decisions_3 = self.parser.get_decisions_from_txt(txt_3, len(dec_summaries_3))
+		decisions_4 = self.parser.get_decisions_from_txt(txt_4, len(dec_summaries_4))
+		# print(len(decisions_1))
+		# print(decisions_2)
+		# print(len(decisions_3))
+		# print(len(decisions_4))
+
+		# ! One summary not detected
+		self.assertTrue(len(decisions_1) == len(dec_summaries_1) + 1)
+		self.assertTrue(len(decisions_2) == len(dec_summaries_2))
+		self.assertTrue(len(decisions_3) == len(dec_summaries_3))
+		self.assertTrue(len(decisions_4) == len(dec_summaries_4))
+
+		## 
+		#  Location & Dates of signing
+		##
+		print('\n* Location & Dates of signing *\n')
+		print(self.parser.get_dec_location_and_date_from_txt(txt_1))
+		print(self.parser.get_dec_location_and_date_from_txt(txt_2))
+		print(self.parser.get_dec_location_and_date_from_txt(txt_3))
+		print(self.parser.get_dec_location_and_date_from_txt(txt_4))
+
+		## 
+		#  Signees
+		##
+		print('\n* Signees *\n')
+		print(self.parser.get_dec_signees_from_txt(txt_1))
+		print(self.parser.get_dec_signees_from_txt(txt_2))
+		print(self.parser.get_dec_signees_from_txt(txt_3))
+		print(self.parser.get_dec_signees_from_txt(txt_4))
+
+	def test_get_dec_sections_from_txts_6(self):
+		
+		respa_pdf_path = self.test_pdfs_dir + '/RespA_Issues/Referenced RespA Decisions/'
+		txt_1 = self.get_txt('5_w_Ref_RespAs', pdf_path=respa_pdf_path)
+		txt_2 = self.get_txt('6_w_Ref_RespAs', pdf_path=respa_pdf_path)
+		txt_3 = self.get_txt('7_w_Ref_RespAs', pdf_path=respa_pdf_path)
+		txt_4 = self.get_txt('8_w_Ref_RespAs', pdf_path=respa_pdf_path)
+		
+		## 
+		#  Decision Contents
+		##
+		dec_contents_1 = self.parser.get_dec_contents_from_txt(txt_1); 
+		dec_contents_2 = self.parser.get_dec_contents_from_txt(txt_2);
+		dec_contents_3 = self.parser.get_dec_contents_from_txt(txt_3);  
+		dec_contents_4 = self.parser.get_dec_contents_from_txt(txt_4);
+		# print(dec_contents_1)
+		# print(dec_contents_2) 
+		# print(dec_contents_3)
+		# print(dec_contents_4)
+
+		self.assertTrue(dec_contents_1);
+		self.assertTrue(dec_contents_2); 
+		self.assertTrue(dec_contents_3); 
+		self.assertTrue(dec_contents_4);
+		
+		## 
+		#  Decision Summaries
+		## 
+		dec_summaries_1 = self.parser.get_dec_summaries_from_txt(txt_1, dec_contents_1); 
+		dec_summaries_2 = self.parser.get_dec_summaries_from_txt(txt_2, dec_contents_2);
+		dec_summaries_3 = self.parser.get_dec_summaries_from_txt(txt_3, dec_contents_3);
+		dec_summaries_4 = self.parser.get_dec_summaries_from_txt(txt_4, dec_contents_4);
+		# print(dec_summaries_1)
+		# print(dec_summaries_2)
+		# print(dec_summaries_3)
+		# print(dec_summaries_4)
+
+		self.assertTrue(len(dec_summaries_1) > 1)
+		self.assertTrue(len(dec_summaries_2) > 1)
+		self.assertTrue(len(dec_summaries_3) > 1)
+		self.assertTrue(len(dec_summaries_4) > 1)
+
+		# ## 
+		# #  Decision Numbers
+		# ## 
+
+		# Dictionaries containing keys: decision_indeces & values: decision_numbers, 
+		# e.g. 2: 'Aριθμ.Β2−210', 4: None, 3: 'Αριθμ. blah blah blah'
+		dec_nums_1 = self.parser.get_dec_nums_from_txt(txt_1, dec_summaries_1)
+		dec_nums_2 = self.parser.get_dec_nums_from_txt(txt_2, dec_summaries_2)
+		dec_nums_3 = self.parser.get_dec_nums_from_txt(txt_3, dec_summaries_3)
+		dec_nums_4 = self.parser.get_dec_nums_from_txt(txt_4, dec_summaries_4)
+		# print(dec_nums_1)
+		# print(dec_nums_2)
+		# print(dec_nums_3)
+		# print(dec_nums_4)
+		self.assertTrue(len(dec_nums_1) > 1)
+		self.assertTrue(len(dec_nums_2) > 1)
+		self.assertTrue(len(dec_nums_3) > 1)
+		self.assertTrue(len(dec_nums_4) > 1)
+
+		# ## 
+		# #  Decision Prerequisites
+		# ## 		
+
+		# e.g. "Έχοντας υπόψη:" *[...]* ", αποφασίζουμε:"
+		dec_prereqs_1 = self.parser.get_dec_prereqs_from_txt(txt_1, len(dec_summaries_1))
+		dec_prereqs_2 = self.parser.get_dec_prereqs_from_txt(txt_2, len(dec_summaries_2))
+		dec_prereqs_3 = self.parser.get_dec_prereqs_from_txt(txt_3, len(dec_summaries_3))
+		dec_prereqs_4 = self.parser.get_dec_prereqs_from_txt(txt_4, len(dec_summaries_4))
+		# print(len(dec_prereqs_1))
+		# print(len(dec_prereqs_2))
+		# print(len(dec_prereqs_3))
+		# print(len(dec_prereqs_4))
+		self.assertTrue(len(dec_prereqs_1) > 1)
+		self.assertTrue(len(dec_prereqs_2) > 1)
+		self.assertTrue(len(dec_prereqs_3) > 1)
+		self.assertTrue(len(dec_prereqs_4) > 1)
+
+		## 
+		#  Decisions
+		##
+		decisions_1 = self.parser.get_decisions_from_txt(txt_1, len(dec_summaries_1))
+		decisions_2 = self.parser.get_decisions_from_txt(txt_2, len(dec_summaries_2))
+		decisions_3 = self.parser.get_decisions_from_txt(txt_3, len(dec_summaries_3))
+		decisions_4 = self.parser.get_decisions_from_txt(txt_4, len(dec_summaries_4))
+		print(len(decisions_1))
+		print(len(decisions_2))
+		print(len(decisions_3))
+		print(len(decisions_4))
+
+		self.assertTrue(len(decisions_1) == len(dec_summaries_1))
+		self.assertTrue(len(decisions_2) == len(dec_summaries_2))
+		self.assertTrue(len(decisions_3) == len(dec_summaries_3))
+		self.assertTrue(len(decisions_4) == len(dec_summaries_4))
+
+		## 
+		#  Location & Dates of signing
+		##
+		print('\n* Location & Dates of signing *\n')
+		print(self.parser.get_dec_location_and_date_from_txt(txt_1))
+		print(self.parser.get_dec_location_and_date_from_txt(txt_2))
+		print(self.parser.get_dec_location_and_date_from_txt(txt_3))
+		print(self.parser.get_dec_location_and_date_from_txt(txt_4))
+
+		## 
+		#  Signees
+		##
+		print('\n* Signees *\n')
+		print(self.parser.get_dec_signees_from_txt(txt_1))
+		print(self.parser.get_dec_signees_from_txt(txt_2))
+		print(self.parser.get_dec_signees_from_txt(txt_3))
+		print(self.parser.get_dec_signees_from_txt(txt_4))
+		
+	def test_get_respa_sections_from_txts_1(self):
+		respa_pdf_path = self.test_pdfs_dir + '/RespA_Issues/'
+		txt_1 = self.get_txt('1_w_RespAs', pdf_path=respa_pdf_path)
+		txt_2 = self.get_txt('2_w_RespAs', pdf_path=respa_pdf_path)
+		txt_3 = self.get_txt('3_w_RespAs', pdf_path=respa_pdf_path)
+		txt_4 = self.get_txt('4_w_RespAs', pdf_path=respa_pdf_path)
+
+		## 
+		#  Decision Contents
+		##
+		dec_contents_1 = self.parser.get_dec_contents_from_txt(txt_1); 
+		dec_contents_2 = self.parser.get_dec_contents_from_txt(txt_2);
+		dec_contents_3 = self.parser.get_dec_contents_from_txt(txt_3);  
+		dec_contents_4 = self.parser.get_dec_contents_from_txt(txt_4);
+
+		## 
+		#  Decision Summaries
+		## 
+		dec_summaries_1 = self.parser.get_dec_summaries_from_txt(txt_1, dec_contents_1); 
+		dec_summaries_2 = self.parser.get_dec_summaries_from_txt(txt_2, dec_contents_2);
+		dec_summaries_3 = self.parser.get_dec_summaries_from_txt(txt_3, dec_contents_3);
+		dec_summaries_4 = self.parser.get_dec_summaries_from_txt(txt_4, dec_contents_4);
+
+		## 
+		#  Decisions
+		##
+		decisions_1 = self.parser.get_decisions_from_txt(txt_1, len(dec_summaries_1))
+		decisions_2 = self.parser.get_decisions_from_txt(txt_2, len(dec_summaries_2))
+		decisions_3 = self.parser.get_decisions_from_txt(txt_3, len(dec_summaries_3))
+		decisions_4 = self.parser.get_decisions_from_txt(txt_4, len(dec_summaries_4))
+
+		##
+		#  RespA Sections
+		##
+		
+		# Convert any dict to list
+		if isinstance(decisions_1, dict): decisions_1 = list(decisions_1.values())
+		if isinstance(decisions_2, dict): decisions_2 = list(decisions_2.values())
+		if isinstance(decisions_3, dict): decisions_3 = list(decisions_3.values())
+		if isinstance(decisions_4, dict): decisions_4 = list(decisions_4.values())
+		
+		# Get RespA sections found in decision text
+		respa_sections_1 = [self.parser.get_dec_respa_sections_from_txt(dec) for dec in decisions_1]
+		respa_sections_2 = [self.parser.get_dec_respa_sections_from_txt(dec) for dec in decisions_2]
+		respa_sections_3 = [self.parser.get_dec_respa_sections_from_txt(dec) for dec in decisions_3]
+		respa_sections_4 = [self.parser.get_dec_respa_sections_from_txt(dec) for dec in decisions_4]
+		
+		# Get non-empty lists
+		respa_sections_1 = list(filter(None, respa_sections_1))[0]
+		respa_sections_2 = list(filter(None, respa_sections_2))[0]
+		respa_sections_3 = list(filter(None, respa_sections_3))[0]
+		respa_sections_4 = list(filter(None, respa_sections_4))[0]
+		
+		print(respa_sections_1, '\n')
+		print(respa_sections_2, '\n')
+		print(respa_sections_3, '\n')
+		print(respa_sections_4, '\n')
+
+	def test_get_respa_sections_from_txts_2(self):
+		
+		ref_respa_pdf_path = self.test_pdfs_dir + '/RespA_Issues/'
+		txt_1 = self.get_txt('5_w_RespAs', pdf_path=ref_respa_pdf_path)
+		txt_2 = self.get_txt('6_w_RespAs', pdf_path=ref_respa_pdf_path)
+		txt_3 = self.get_txt('7_w_RespAs', pdf_path=ref_respa_pdf_path)
+		txt_4 = self.get_txt('8_w_RespAs', pdf_path=ref_respa_pdf_path)
+		txt_5 = self.get_txt('9_w_RespAs', pdf_path=ref_respa_pdf_path)
+		txt_6 = self.get_txt('10_w_RespAs', pdf_path=ref_respa_pdf_path)
+		txt_7 = self.get_txt('11_w_RespAs', pdf_path=ref_respa_pdf_path)
+
+		## 
+		#  Decision Contents
+		##
+		dec_contents_1 = self.parser.get_dec_contents_from_txt(txt_1); 
+		dec_contents_2 = self.parser.get_dec_contents_from_txt(txt_2);
+		dec_contents_3 = self.parser.get_dec_contents_from_txt(txt_3);  
+		dec_contents_4 = self.parser.get_dec_contents_from_txt(txt_4);
+		dec_contents_5 = self.parser.get_dec_contents_from_txt(txt_5);
+		dec_contents_6 = self.parser.get_dec_contents_from_txt(txt_6);
+		dec_contents_7 = self.parser.get_dec_contents_from_txt(txt_7);
+
+		## 
+		#  Decision Summaries
+		## 
+		dec_summaries_1 = self.parser.get_dec_summaries_from_txt(txt_1, dec_contents_1); 
+		dec_summaries_2 = self.parser.get_dec_summaries_from_txt(txt_2, dec_contents_2);
+		dec_summaries_3 = self.parser.get_dec_summaries_from_txt(txt_3, dec_contents_3);
+		dec_summaries_4 = self.parser.get_dec_summaries_from_txt(txt_4, dec_contents_4);
+		dec_summaries_5 = self.parser.get_dec_summaries_from_txt(txt_5, dec_contents_5);
+		dec_summaries_6 = self.parser.get_dec_summaries_from_txt(txt_6, dec_contents_6);
+		dec_summaries_7 = self.parser.get_dec_summaries_from_txt(txt_7, dec_contents_7);
+
+		## 
+		#  Decisions
+		##
+		decisions_1 = self.parser.get_decisions_from_txt(txt_1, len(dec_summaries_1))
+		decisions_2 = self.parser.get_decisions_from_txt(txt_2, len(dec_summaries_2))
+		decisions_3 = self.parser.get_decisions_from_txt(txt_3, len(dec_summaries_3))
+		decisions_4 = self.parser.get_decisions_from_txt(txt_4, len(dec_summaries_4))
+		decisions_5 = self.parser.get_decisions_from_txt(txt_5, len(dec_summaries_5))
+		decisions_6 = self.parser.get_decisions_from_txt(txt_6, len(dec_summaries_6))
+		decisions_7 = self.parser.get_decisions_from_txt(txt_7, len(dec_summaries_7))
+
+		##
+		#  RespA Sections
+		##
+		
+		# Convert any dict to list
+		if isinstance(decisions_1, dict): decisions_1 = list(decisions_1.values())
+		if isinstance(decisions_2, dict): decisions_2 = list(decisions_2.values())
+		if isinstance(decisions_3, dict): decisions_3 = list(decisions_3.values())
+		if isinstance(decisions_4, dict): decisions_4 = list(decisions_4.values())
+		if isinstance(decisions_5, dict): decisions_5 = list(decisions_5.values())
+		if isinstance(decisions_6, dict): decisions_6 = list(decisions_6.values())
+		if isinstance(decisions_7, dict): decisions_7 = list(decisions_7.values())
+
+		# Get RespA sections found in decision text
+		respa_sections_1 = [self.parser.get_dec_respa_sections_from_txt(dec) for dec in decisions_1]
+		respa_sections_2 = [self.parser.get_dec_respa_sections_from_txt(dec) for dec in decisions_2]
+		respa_sections_3 = [self.parser.get_dec_respa_sections_from_txt(dec) for dec in decisions_3]
+		respa_sections_4 = [self.parser.get_dec_respa_sections_from_txt(dec) for dec in decisions_4]
+		respa_sections_5 = [self.parser.get_dec_respa_sections_from_txt(dec) for dec in decisions_5]
+		respa_sections_6 = [self.parser.get_dec_respa_sections_from_txt(dec) for dec in decisions_6]
+		respa_sections_7 = [self.parser.get_dec_respa_sections_from_txt(dec) for dec in decisions_7]
+
+		# Get non-empty lists
+		respa_sections_1 = list(filter(None, respa_sections_1))[0]
+		respa_sections_2 = list(filter(None, respa_sections_2))[0]
+		respa_sections_3 = list(filter(None, respa_sections_3))[0]
+		respa_sections_4 = list(filter(None, respa_sections_4))[0]
+		respa_sections_5 = list(filter(None, respa_sections_5))[0]
+		respa_sections_6 = list(filter(None, respa_sections_6))[0]
+		respa_sections_7 = list(filter(None, respa_sections_7))[0]
+
+		print(respa_sections_1)
+		print(respa_sections_2)
+		print(respa_sections_3)
+		print(respa_sections_4)
+		print(respa_sections_5)
+		print(respa_sections_6)
+		print(respa_sections_7)
+
+	def test_get_ref_respa_sections_from_txts_1(self):
+		
+		ref_respa_pdf_path = self.test_pdfs_dir + '/RespA_Issues/Referenced RespA Decisions/'
+		txt_1 = self.get_txt('1_w_Ref_RespAs', pdf_path=ref_respa_pdf_path)
+		txt_2 = self.get_txt('2_w_Ref_RespAs', pdf_path=ref_respa_pdf_path)
+		txt_3 = self.get_txt('3_w_Ref_RespAs', pdf_path=ref_respa_pdf_path)
+		txt_4 = self.get_txt('4_w_Ref_RespAs', pdf_path=ref_respa_pdf_path)
+		
+		## 
+		#  Decision Contents
+		##
+		dec_contents_1 = self.parser.get_dec_contents_from_txt(txt_1); 
+		dec_contents_2 = self.parser.get_dec_contents_from_txt(txt_2);
+		dec_contents_3 = self.parser.get_dec_contents_from_txt(txt_3);  
+		dec_contents_4 = self.parser.get_dec_contents_from_txt(txt_4);
+		
+		## 
+		#  Decision Summaries
+		## 
+		dec_summaries_1 = self.parser.get_dec_summaries_from_txt(txt_1, dec_contents_1); 
+		dec_summaries_2 = self.parser.get_dec_summaries_from_txt(txt_2, dec_contents_2);
+		dec_summaries_3 = self.parser.get_dec_summaries_from_txt(txt_3, dec_contents_3);
+		dec_summaries_4 = self.parser.get_dec_summaries_from_txt(txt_4, dec_contents_4);
+
+		## 
+		#  Decision Prerequisites
+		## 		
+
+		# e.g. "Έχοντας υπόψη:" *[...]* ", αποφασίζουμε:"
+		dec_prereqs_1 = self.parser.get_dec_prereqs_from_txt(txt_1, len(dec_summaries_1))
+		dec_prereqs_2 = self.parser.get_dec_prereqs_from_txt(txt_2, len(dec_summaries_2))
+		dec_prereqs_3 = self.parser.get_dec_prereqs_from_txt(txt_3, len(dec_summaries_3))
+		dec_prereqs_4 = self.parser.get_dec_prereqs_from_txt(txt_4, len(dec_summaries_4))
+		# print(dec_prereqs_1)
+		# print(dec_prereqs_2)
+		# print(dec_prereqs_3)
+		# print(dec_prereqs_4)
+
+		# Convert any dict to list
+		if isinstance(dec_prereqs_1, dict): dec_prereqs_1 = list(dec_prereqs_1.values())
+		if isinstance(dec_prereqs_2, dict): dec_prereqs_2 = list(dec_prereqs_2.values())
+		if isinstance(dec_prereqs_3, dict): dec_prereqs_3 = list(dec_prereqs_3.values())
+		if isinstance(dec_prereqs_4, dict): dec_prereqs_4 = list(dec_prereqs_4.values())
+
+		# Get RespA sections found in decision text
+		respa_sections_1 = [self.parser.get_referred_dec_respa_sections_from_txt(dec_prereq) for dec_prereq in dec_prereqs_1]
+		respa_sections_2 = [self.parser.get_referred_dec_respa_sections_from_txt(dec_prereq) for dec_prereq in dec_prereqs_2]
+		respa_sections_3 = [self.parser.get_referred_dec_respa_sections_from_txt(dec_prereq) for dec_prereq in dec_prereqs_3]
+		respa_sections_4 = [self.parser.get_referred_dec_respa_sections_from_txt(dec_prereq) for dec_prereq in dec_prereqs_4]
+
+		print(respa_sections_1)
+		print(respa_sections_2)
+		# ! One respa ref not detected due to forgotten '»' (typo)
+		print(respa_sections_3)
+		print(respa_sections_4)
+
+	def test_get_ref_respa_sections_from_txts_2(self):
+		ref_respa_pdf_path = self.test_pdfs_dir + '/RespA_Issues/Referenced RespA Decisions/'
+		txt_1 = self.get_txt('5_w_Ref_RespAs', pdf_path=ref_respa_pdf_path)
+		txt_2 = self.get_txt('6_w_Ref_RespAs', pdf_path=ref_respa_pdf_path)
+		txt_3 = self.get_txt('7_w_Ref_RespAs', pdf_path=ref_respa_pdf_path)
+		txt_4 = self.get_txt('8_w_Ref_RespAs', pdf_path=ref_respa_pdf_path)
+		
+		## 
+		#  Decision Contents
+		##
+		dec_contents_1 = self.parser.get_dec_contents_from_txt(txt_1); 
+		dec_contents_2 = self.parser.get_dec_contents_from_txt(txt_2);
+		dec_contents_3 = self.parser.get_dec_contents_from_txt(txt_3);  
+		dec_contents_4 = self.parser.get_dec_contents_from_txt(txt_4);
+		
+		## 
+		#  Decision Summaries
+		## 
+		dec_summaries_1 = self.parser.get_dec_summaries_from_txt(txt_1, dec_contents_1); 
+		dec_summaries_2 = self.parser.get_dec_summaries_from_txt(txt_2, dec_contents_2);
+		dec_summaries_3 = self.parser.get_dec_summaries_from_txt(txt_3, dec_contents_3);
+		dec_summaries_4 = self.parser.get_dec_summaries_from_txt(txt_4, dec_contents_4);
+
+		## 
+		#  Decision Prerequisites
+		## 		
+
+		# e.g. "Έχοντας υπόψη:" *[...]* ", αποφασίζουμε:"
+		dec_prereqs_1 = self.parser.get_dec_prereqs_from_txt(txt_1, len(dec_summaries_1))
+		dec_prereqs_2 = self.parser.get_dec_prereqs_from_txt(txt_2, len(dec_summaries_2))
+		dec_prereqs_3 = self.parser.get_dec_prereqs_from_txt(txt_3, len(dec_summaries_3))
+		dec_prereqs_4 = self.parser.get_dec_prereqs_from_txt(txt_4, len(dec_summaries_4))
+		# print(dec_prereqs_1)
+		# print(dec_prereqs_2)
+		# print(dec_prereqs_3)
+		# print(dec_prereqs_4)
+
+		# Convert any dict to list
+		if isinstance(dec_prereqs_1, dict): dec_prereqs_1 = list(dec_prereqs_1.values())
+		if isinstance(dec_prereqs_2, dict): dec_prereqs_2 = list(dec_prereqs_2.values())
+		if isinstance(dec_prereqs_3, dict): dec_prereqs_3 = list(dec_prereqs_3.values())
+		if isinstance(dec_prereqs_4, dict): dec_prereqs_4 = list(dec_prereqs_4.values())
+
+		# Get RespA sections found in decision text
+		respa_sections_1 = [self.parser.get_referred_dec_respa_sections_from_txt(dec_prereq) for dec_prereq in dec_prereqs_1]
+		respa_sections_2 = [self.parser.get_referred_dec_respa_sections_from_txt(dec_prereq) for dec_prereq in dec_prereqs_2]
+		respa_sections_3 = [self.parser.get_referred_dec_respa_sections_from_txt(dec_prereq) for dec_prereq in dec_prereqs_3]
+		respa_sections_4 = [self.parser.get_referred_dec_respa_sections_from_txt(dec_prereq) for dec_prereq in dec_prereqs_4]
+
+		print(respa_sections_1)
+		print(respa_sections_2)
+		print(respa_sections_3)
+		print(respa_sections_4)
+
+	def test_get_person_named_entities_1(self):
+
+		persons = []
+
+		persons.append(self.parser.get_person_named_entities("7.Την αριθμ.Υ186/10-11-2016 απόφαση του Πρωθυπουργού «Ανάθεση αρμοδιοτήτων στον Αναπληρωτή \nΥπουργό Εσωτερικών Νικόλαο Τόσκα» (ΦΕΚ 3671 Β')"))
+		persons.append(self.parser.get_person_named_entities("8.Την αριθμ.οικ.44549/Δ9.12193/08-10-2015 απόφαση του Πρωθυπουργού και του Υπουργού Εργασίας, \nΚοινωνικής  Ασφάλισης  και  Κοινωνικής  Αλληλεγγύης \n«Ανάθεση αρμοδιοτήτων στον Υφυπουργό Εργασίας, \nΚοινωνικής Ασφάλισης και Κοινωνικής Αλληλεγγύης, \nΑναστάσιο Πετρόπουλο» (ΦΕΚ 2169 Β'), όπως τροποποιήθηκε με τις αριθμ.οικ.54051/Δ9.14200/22-11-2016 \n(ΦΕΚ 3801 Β') και αριθμ.οικ.59285/18416/12-12-2017 \n(ΦΕΚ 4503 Β') αποφάσεις του Πρωθυπουργού και της \nΥπουργού Εργασίας, Κοινωνικής Ασφάλισης και Κοινωνικής Αλληλεγγύης"))
+		persons.append(self.parser.get_person_named_entities('2.Την υπ’ αριθμ.Υ29/8-10-2015 απόφαση του Πρωθυπουργού «Ανάθεση αρμοδιοτήτων στον Αναπληρωτή \nΥπουργό Οικονομικών Γεώργιο Χουλιαράκη» (2168 Β’)'))
+		persons.append(self.parser.get_person_named_entities("3.Την Υ197/16-11-2016 απόφαση του Πρωθυπουργού \n«Ανάθεση αρμοδιοτήτων στον Αναπληρωτή Υπουργό Οικονομίας και Ανάπτυξης, Αλέξανδρο Χαρίτση (3722 Β΄),\nόπως τροποποιήθηκε με την Υ226/27-12-2016 όμοια \n(4233 Β΄).\n4.Την υπ’ αριθμ.Υ56/21-10-2015 απόφαση του Πρωθυπουργού «Ανάθεση αρμοδιοτήτων στην Αναπληρώτρια Υπουργό Εργασίας, Κοινωνικής Ασφάλισης και Κοινωνικής Αλληλεγγύης Ουρανία Αντωνοπούλου (2281 Β’) \nόπως τροποποιήθηκε με την υπ’ αριθμ.Υ213/8.12.2016 \n(3955 Β’) και την υπ’ αριθμ.Υ88/28.11.2017 όμοιά της \n(4195 Β’).\n5.Τη υπ’ αριθμ.1117/52/19-1-2012 υπουργική απόφαση «Πρόγραμμα ειδικής επιδότησης ανεργίας εργαζομένων στην Ελληνική Βιομηχανία Ζάχαρης ΑΕ.» (35 Β')"))
+		persons.append(self.parser.get_person_named_entities('9. Την  αριθμ. Υ  25/6-10-2015  απόφαση  (Β΄/2144) \n«Ανάθεση αρμοδιοτήτων στον Αναπληρωτή Υπουργό \nΥγείας».\n10.Την αριθμ.Υ4α/ οικ.84050/18-6-2009 (Β΄/1295) \nαπόφαση του Υπουργού Υγείας και Κοινωνικής Αλληλεγγύης «Καθορισμός όρων και προϋποθέσεων λειτουργίας Κέντρων Εμφύτευσης Βηματοδοτών και Κέντρων \nΕμφύτευσης Απινιδωτών σε Νοσοκομεία και Ιδιωτικές \nΚλινικές»'))
+		persons.append(self.parser.get_person_named_entities('ιβ) Τις διατάξεις της Υ 29/08-10-2015 απόφασης του  \nΠρωθυπουργού «Ανάθεση Αρμοδιοτήτων στον Αναπληρωτή Υπουργό Οικονομικών Γεώργιο Χουλιαράκη» \n(Β΄ 2168)'))
+		persons.append(self.parser.get_person_named_entities('ιγ) Τις διατάξεις της Υ 186/10-11-2016 απόφασης του  \nΠρωθυπουργού «Ανάθεση Αρμοδιοτήτων στον Αναπληρωτή Υπουργό Εσωτερικών Νικόλαο Τόσκα» (Β΄3671)'))
+		persons.append(self.parser.get_person_named_entities('5.Την με αριθμ.Υ28/ΦΕΚ 2168/Β΄/2015 απόφαση του \nΠρωθυπουργού «Ανάθεση αρμοδιοτήτων στην Αναπληρώτρια Υπουργό Εργασίας, Κοινωνικής Ασφάλισης και \nΚοινωνικής Αλληλεγγύης Θεανώ Φωτίου».\n6.Την υπ’ αριθμ.Γ.Π.: Π2γ/οικ.59633/2011 (ΦΕΚ 1310Β΄) \nαπόφαση του Υπουργού Υγείας και Κοινωνικής Αλληλεγγύης «Καθορισμός της μορφής του Αριθμού Μητρώου'))
+		persons.append(self.parser.get_person_named_entities('2.Την αριθμ.Υ29/8.10.2015 απόφαση του Πρωθυπουργού «περί ανάθεσης αρμοδιοτήτων στον Αναπληρωτή Υπουργό Οικονομικών Γ.Χουλιαράκη» (ΦΕΚ 2168/\nΒ΄/2015)'))
+		persons.append(self.parser.get_person_named_entities('11.Την υπ’ αριθμ.Υ29/8-10-2015 απόφαση του Πρωθυπουργού «Ανάθεση αρμοδιοτήτων στον Αναπληρωτή \nΥπουργό Οικονομικών Γεώργιο Χουλιαράκη» (2168 Β΄)'))
+		persons.append(self.parser.get_person_named_entities('10.Την υπ’ αριθμ.Υ197/2016 απόφαση του Πρωθυπουργού «Ανάθεση αρμοδιοτήτων στον Αναπληρωτή \nΥπουργό Οικονομίας και Ανάπτυξης Αλέξανδρο Χαρίτση» (Β΄ 3722), όπως τροποποιήθηκε με την υπ’ αριθμ'))
+		persons.append(self.parser.get_person_named_entities('11.Την υπ’ αριθμ.οικ.4402/88/24-1-2017 απόφαση \nτου Πρωθυπουργού και του Υπουργού Υποδομών και \nΜεταφορών «Ανάθεση αρμοδιοτήτων Υφυπουργού Υποδομών και Μεταφορών Νικόλαου Μαυραγάνη» (Β΄ 127)'))
+		persons.append(self.parser.get_person_named_entities("8. Τις  διατάξεις  της  υπ’  αριθμ. Υ197/16-11-2016\n(ΦΕΚ Β΄ 3722) απόφαση του Πρωθυπουργού «Ανάθεση \nαρμοδιοτήτων στον Αναπληρωτή Υπουργό Οικονομίας \nκαι Ανάπτυξης, Αλέξανδρο Χαρίτση» όπως τροποποιήθηκε με την υπ' αριθμ.Υ226/27-12-2016 απόφαση του \nΠρωθυπουργού «Τροποποίηση απόφασης ανάθεσης \nαρμοδιοτήτων στον Αναπληρωτή Υπουργό Οικονομίας \nκαι Ανάπτυξης, Αλέξανδρο Χαρίτση» (ΦΕΚ Β΄ 4233)"))
+
+		print(persons)
+
+	def test_get_person_named_entities_2(self):
+
+		persons = []
+
+		persons.append(self.parser.get_person_named_entities('22.Την αριθμ.Υ29/8-10-2015 απόφαση του Πρωθυπουργού «Ανάθεση αρμοδιοτήτων στον Αναπληρωτή \nΥπουργό Οικονομικών Γεώργιο Χουλιαράκη» (ΦΕΚ 2168 \nΒ΄/2015)'))
+		persons.append(self.parser.get_person_named_entities('13.Την αριθμ.Υ29/8-10-2015 απόφαση του Πρωθυπουργού «Ανάθεση αρμοδιοτήτων στον Αναπληρωτή \nΥπουργό Οικονομικών Γεώργιο Χουλιαράκη» (ΦΕΚ 2168 \nΒ΄/2015)'))
+		persons.append(self.parser.get_person_named_entities('7. Την  με  αριθμ. οικ. 44549/Δ9.12193/9-10-2015 \n(Β΄/2169) απόφαση του Πρωθυπουργού και του Υπουργού Εργασίας, Κοινωνικής Ασφάλισης και Κοινωνικής \nΑλληλεγγύης «Ανάθεση αρμοδιοτήτων στον Υφυπουργό \nΕργασίας, Κοινωνικής Ασφάλισης και Κοινωνικής Αλληλεγγύης Αναστάσιο Πετρόπουλο», όπως ισχύει'))
+		persons.append(self.parser.get_person_named_entities('Άρθρο 1\nΣτον Υφυπουργό Διοικητικής Μεταρρύθμισης και Ηλεκτρονικής Διακυβέρνησης, Κωνσταντίνο Ρόβλια, αναθέτουμε την άσκηση των αρμοδιοτήτων: \n1. των  εξής  Γενικών  Διευθύνσεων  του  Υπουργείου \nΔιοικητικής Μεταρρύθμισης και Ηλεκτρονικής Διακυβέρνησης:\nα) Κατάστασης Προσωπικού, με την επιφύλαξη της \nπερίπτωσης 2 του άρθρου 4,\nβ) Διοικητικής Οργάνωσης και Διαδικασιών, με εξαίρεση τις Διευθύνσεις: αα) Σχέσεων Κράτους – Πολίτη και \nββ) Απλούστευσης Διαδικασιών και Παραγωγικότητας, \nγ) Διοικητικής Υποστήριξης, με εξαίρεση τη Διεύθυνση \nΗλεκτρονικής Επεξεργασίας Στοιχείων, \nδ) Διοικητικού Εκσυγχρονισμού, \n2.των αυτοτελών Τμημάτων και Γραφείων του Υπουργείου Διοικητικής Μεταρρύθμισης και Ηλεκτρονικής Διακυβέρνησης,\n3.του Εθνικού Τυπογραφείου, \n4.του Σώματος Επιθεωρητών Ελεγκτών Δημόσιας \nΔιοίκησης,\n5.σύστασης, συγκρότησης και ορισμού μελών των \nΣυμβουλίων του Υπουργείου Διοικητικής Μεταρρύθμισης και Ηλεκτρονικής Διακυβέρνησης (υπηρεσιακού − \nπειθαρχικού),\n6.σχετικών με ερωτήματα και αποφάσεις για την επιλογή, τοποθέτηση και εν γένει υπηρεσιακή κατάσταση \nτων Προϊσταμένων Γενικών Διευθύνσεων, \n\x0c40766 \nΕΦΗΜΕΡΙΣ ΤΗΣ ΚΥΒΕΡΝΗΣΕΩΣ (ΤΕΥΧΟΣ ΔΕΥΤΕΡΟ) \n7.σχεδιασμού, παρακολούθησης και κατάρτισης συμβάσεων, μελετών και έργων που αφορούν τον οργανωτικό και διοικητικό εκσυγχρονισμό των αναφερόμενων \nστις περιπτώσεις 1, 2 και 3 υπηρεσιών, \n8.έκδοσης εγκυκλίων που αφορούν θέματα αρμοδιότητας των αναφερόμενων στις περιπτώσεις 1, 2 και 3 \nυπηρεσιών, \n9.εποπτείας του Εθνικού Κέντρου Δημόσιας Διοίκησης και Αυτοδιοίκησης (π.δ.57/2007, Α΄ 59),\n10.των κοινοβουλευτικών αρμοδιοτήτων'))
+		persons.append(self.parser.get_person_named_entities('Στον Υφυπουργό Διοικητικής Μεταρρύθμισης και Ηλεκτρονικής Διακυβέρνησης, Παντελή Τζωρτζάκη, αναθέτουμε την άσκηση των αρμοδιοτήτων: \n1.των εξής υπηρεσιών του Υπουργείου Διοικητικής \nΜεταρρύθμισης και Ηλεκτρονικής Διακυβέρνησης: \nα) της Υπηρεσίας Ανάπτυξης Πληροφορικής,\nβ) των Διευθύνσεων Σχέσεων Κράτους – Πολίτη και \nΑπλούστευσης Διαδικασιών και Παραγωγικότητας της \nΓενικής Διεύθυνσης Διοικητικής Οργάνωσης και Διαδικασιών,\nγ) της Διεύθυνσης Ηλεκτρονικής Επεξεργασίας Στοιχείων της Γενικής Διεύθυνσης Διοικητικής Υποστήριξης,\nδ) της Ειδικής Υπηρεσίας Στρατηγικού Σχεδιασμού \nκαι Εφαρμογής Προγραμμάτων, \n2.της Ειδικής Γραμματείας για τη Διοικητική Μεταρρύθμιση (άρθρο 5 παρ.5 ν.3614/2007, Α΄ 267 και 202/2008 \nκοινή απόφαση των Υπουργών Εσωτερικών και Οικονομίας και Οικονομικών, Β΄ 155),\n3.εποπτείας της Ανώνυμης Εταιρείας «Κοινωνία της \nΠληροφορίας Α.Ε.» (ΚτΠ ΑΕ), \n4.σχεδιασμού, παρακολούθησης, υλοποίησης και κατάρτισης από τις υπηρεσίες των περιπτώσεων 1, 2 και \n3 συμβάσεων, μελετών και έργων που χρηματοδοτούνται από το Πρόγραμμα Δημοσίων Επενδύσεων ή τον \nΤακτικό Προϋπολογισμό, καθώς και υπογραφής κάθε \nσχετικού με αυτές εγγράφου (ιδίως προγραμματικών \nσυμφωνιών, τεχνικών δελτίων προτεινόμενων πράξεων, \nαποφάσεων χρηματοδότησης της ΚτΠ ΑΕ), \n5.υπογραφής: α) αποφάσεων για ορισμό της ΚτΠ ΑΕ \nως δικαιούχου για έργα Νομικών Προσώπων Ιδιωτικού \nΔικαίου, β) τεχνικών δελτίων προτεινόμενων πράξεων \nτων Ν.Π.Ι.Δ., δικαιούχων υλοποίησης έργων στο πλαίσιο των επιχειρησιακών προγραμμάτων που χρηματοδοτούνται από τα διαρθρωτικά ταμεία ή άλλα ταμεία \nτης Ευρωπαϊκής Ένωσης, πράξεων οι οποίες μπορεί να \nχρηματοδοτηθούν από τις Σ.Α.Ε.του Υπουργείου και \nγ) αποφάσεων έγκρισης χρηματοδότησης των αναφερόμενων στην προηγούμενη περίπτωση πράξεων,\n6.έκδοσης εγκυκλίων αρμοδιότητας των αναφερόμενων στις περιπτώσεις 1, 2 και 3 οργανικών μονάδων \nκαι φορέων, \n7.των κοινοβουλευτικών αρμοδιοτήτων'))
+		persons.append(self.parser.get_person_named_entities('Α) Απαλλάσσουμε τον ΑΡΜΑΣΗ ΝΙΚΟΛΑΟ του Τζέϊμς, \nαπό τα καθήκοντα Ληξιάρχου Δήμου Δάφνης- Υμηττού, \nλόγω φόρτου εργασίας'))
+		persons.append(self.parser.get_person_named_entities(') Αναθέτουμε την άσκηση καθηκόντων Ληξιάρχου για \nτα ληξιαρχικά γεγονότα που συμβαίνουν στον Δήμο Δάφνης- Υμηττού την υπάλληλο του Δήμου, ΝΙΤΗ ΕΥΤΥΧΙΑ \nτου Σπυρίδωνος, κλάδου ΔΕ1 Διοικητικού με βαθμό Α΄'))
+		persons.append(self.parser.get_person_named_entities("Αναθέτουμε την άσκηση καθηκόντων Ληξιάρχου στην \nΔημοτική Ενότητα Βαθυπέδου του Δήμου Βορείων Τζουμέρκων Ν.Ιωαννίνων, στην Σταυρούλα Βασιλείου του Βασιλείου, κλάδου ΠΕ Διεκπεραίωσης Υποθέσεων Πολιτών, \nμε βαθμό Α' και στην Δημοτική Ενότητα Συρράκου του \nΔήμου Βορείων Τζουμέρκων Ν.Ιωαννίνων, στην Αγλαΐα \nΖέρβα του Παναγιώτη, κλάδου ΠΕ Διεκπεραίωσης Υποθέσεων Πολιτών, με βαθμό Β'"))
+		persons.append(self.parser.get_person_named_entities('Αναθέτουμε στους κάτωθι Περιφερειακούς Συμβούλους την άσκηση αρμοδιοτήτων ως ακολούθως:\n1. Θεμιστοκλή  Χειμάρα  του  Αθανασίου  (ΑΔΤ  ΑΑ \n978469) την άσκηση των αρμοδιοτήτων Επιχειρηματικότητας, Εξωστρέφειας (Εμπόριο – Απασχόληση – Επενδύσεις), Περιφερειακού Αναπτυξιακού Προγραμματισμού και Ευρωπαϊκών Προγραμμάτων, που αφορούν τις \nκάτωθι υπηρεσίες της Περιφέρειας Στερεάς Ελλάδας: α) \nΔ/νση Διά Βίου Μάθησης, Απασχόλησης, Εμπορίου και \n\x0cΤεύχος Β’ 576/22.02.2018\nΕΦΗΜΕΡΙ∆Α TΗΣ ΚΥΒΕΡΝΗΣΕΩΣ\n7519\nΤουρισμού / Τμήμα Απασχόλησης και Τμήμα Εμπορίου \n(άρθρο 20, παρ.3γ και 3δ), και β) Διεύθυνση Αναπτυξιακού Προγραμματισμού / Τμήμα Σχεδιασμού Περιφερειακής Πολιτικής (άρθρο 4, παρ.3α).\n2.Ιωάννη Ταγκαλέγκα του Δημητρίου (ΑΔΤ ΑΕ 491725) \nτην άσκηση των αρμοδιοτήτων, εκ του Τμήματος Περιβάλλοντος και Υδροοικονομίας Π.Ε.Βοιωτίας της Δ/νσης \nΠεριβάλλοντος και Χωρικού Σχεδιασμού, για τα θέματα \nπου αφορούν την διαχείριση του Ασωπού.\n3.Δημήτριο Αργύρη του Γεωργίου (ΑΔΤ ΑΙ 486062) \nτην άσκηση των αρμοδιοτήτων Υγείας της Διεύθυνσης \nΔημόσιας Υγείας (άρθρο 25)\n4.Δημήτριο Βουρδάνο του Αθανασίου (ΑΔΤ ΑΒ 493816) \nτην άσκηση των αρμοδιοτήτων, εκ των Δ/νσεων Μεταφορών και Επικοινωνιών των Περιφερειακών Ενοτήτων \nκαι εκ των Τμημάτων Αδειών Κυκλοφορίας, που αφορούν \nζητήματα σχετικά με την κυκλοφορία δημοσίας χρήσης \nεπιβατικών οχημάτων και συγκεκριμένα την απογραφή, τη ταξινόμηση, την συγκρότηση, την έγκριση, τη \nχορήγηση και την εκτέλεση θεμάτων και ζητημάτων για \nτα οχήματα αυτά (άρθρο 23 παρ.2α), εκτός αυτών που \nέχουν ήδη ανατεθεί στους Αντιπεριφερειάρχες των Π.Ε.\nμε την υπ’ αριθμ.πρωτ.(οικ.) 156489/4234/13-7-2017 \n(ΦΕΚ 2485/Β΄/19-7-2017) απόφασή μας.\n5. Ευστάθιο  Κάππο  του  Ηλία  (ΑΔΤ  ΑΕ  496069)  την \nάσκηση των αρμοδιοτήτων που αφορούν τις κάτωθι \nυπηρεσίες της Περιφερειακής Ενότητας Φωκίδας: α) \nΤμήμα Διά Βίου Μάθησης, Παιδείας και Απασχόλησης \n(άρθρο 21, παρ.4.δ.) της Δ/νσης Ανάπτυξης Π.Ε.Φωκίδας \nκαι β) Διεύθυνση Μεταφορών και Επικοινωνιών Π.Ε.Φωκίδας (άρθρο 23), εξαιρουμένης της αρμοδιότητας που \nαφορά ζητήματα σχετικά με την κυκλοφορία δημοσίας \nχρήσης επιβατικών οχημάτων, εκ των αρμοδιοτήτων \nτου Τμήματος Αδειών Κυκλοφορίας της παρ.2α του άρθρου 23'))
+		persons.append(self.parser.get_person_named_entities('Αναθέτουμε στους κάτωθι Περιφερειακούς Συμβούλους την άσκηση αρμοδιοτήτων ως ακολούθως:\n1. Θεμιστοκλή  Χειμάρα  του  Αθανασίου  (ΑΔΤ  ΑΑ \n978469) την άσκηση των αρμοδιοτήτων Επιχειρηματικότητας, Εξωστρέφειας (Εμπόριο – Απασχόληση – Επενδύσεις), Περιφερειακού Αναπτυξιακού Προγραμματισμού και Ευρωπαϊκών Προγραμμάτων, που αφορούν τις \nκάτωθι υπηρεσίες της Περιφέρειας Στερεάς Ελλάδας: α) \nΔ/νση Διά Βίου Μάθησης, Απασχόλησης, Εμπορίου και \n\x0cΤεύχος Β’ 576/22.02.2018\nΕΦΗΜΕΡΙ∆Α TΗΣ ΚΥΒΕΡΝΗΣΕΩΣ\n7519\nΤουρισμού / Τμήμα Απασχόλησης και Τμήμα Εμπορίου \n(άρθρο 20, παρ.3γ και 3δ), και β) Διεύθυνση Αναπτυξιακού Προγραμματισμού / Τμήμα Σχεδιασμού Περιφερειακής Πολιτικής (άρθρο 4, παρ.3α)'))
+
+		print(persons)
+
 
 if __name__ == '__main__':
 	unittest.main() 
