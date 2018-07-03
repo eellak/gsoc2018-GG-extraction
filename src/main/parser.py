@@ -41,28 +41,16 @@ class Parser(object):
 		self.dec_contents_key = "ΠΕΡΙΕΧΟΜΕΝΑ\nΑΠΟΦΑΣΕΙΣ"
 		self.decs_key = "ΑΠΟΦΑΣΕΙΣ"
 		# Must be expanded (lots of variants)
-<<<<<<< HEAD
-		self.dec_prereq_keys = ["χοντας υποψη:", "χοντες υποψη:", "χουσα υποψη:", "χοντας υποψη του:", 
-								"χοντας υπ\' οψη:", "χοντας υπ\’ οψη:", "Αφου ελαβε υποψη:", "Λαμβανοντας υποψη:"]
-		self.dec_init_keys = ["αποφασιζουμε:", "αποφασιζουμε τα ακολουθα:", "αποφασιζουμε τα εξης:",
-=======
 		self.dec_prereq_keys = ["χοντας υποψη:", "χοντας υποψη", "χοντες υποψη:", "χουσα υποψη:", "χοντας υποψη του:", 
 								"χοντας υπ\' οψη:", "χοντας υπ\’ οψη:", "Αφου ελαβε υποψη:", "Λαμβανοντας υποψη:"]
 		self.dec_init_keys = ["αποφασιζουμε:", "αποφασιζουμε τα ακολουθα:", "αποφασιζουμε τα εξης:", "διαπιστωνεται:",
->>>>>>> parser-work
 							  "αποφασιζει:", "αποφασιζει τα ακολουθα:", "αποφασιζει τα εξης:", "αποφασιζει ομοφωνα:",
 							  "αποφασιζει ομοφωνα και εγκρινει:", "αποφασιζει τα κατωθι", "αποφασιζεται:",
 							  "με τα παρακατω στοιχεια:"]
 		self.dec_end_keys = {'start_group': ["Η αποφαση αυτη", "Ηαποφαση αυτη", "Η αποφαση", "Η περιληψη αυτη", "η παρουσα ισχυει", "Η παρουσα αποφαση"],	
 							 'finish_group': ["την δημοσιευση", "τη δημοσιευση", "να δημοσιευθει", "να δημοσιευτει", "να δημοσιευθουν",  "F\n"]}
-<<<<<<< HEAD
-		self.respa_keys = {'assignment_verbs':["Αναθετουμε", " αναθετουμε", "Ανατιθεται", " ανατιθεται", "Ανατιθενται", " ανατιθενται", 
-											   "Απαλλασσουμε", "Οριζουμε", " οριζουμε", "Μεταβιβαζουμε", " μεταβιβαζουμε"], 
-						   'assignment_types':["καθηκοντων", "αρμοδιοτητων", "καθηκοντα", "αρμοδιοτητα", "αρμοδιοτητες"]}
-=======
 		self.respa_keys = {'assignment_verbs':["ναθετουμε", "νατιθεται", "νατιθενται", "ναθεση", "ριζουμε", "παλλασσουμε", "εταβιβαζουμε"], 
 						   'assignment_types':["αθηκοντ", "ρμοδιοτητ"]}
->>>>>>> parser-work
 
 	# @TODO:
 	# - Fine-tune section getters (see specific @TODOs)
@@ -132,12 +120,9 @@ class Parser(object):
 
 		else: 
 			if dec_num == 1:
-<<<<<<< HEAD
-				dec_prereqs = findall(r"\.\n[Α-Ω](.+?)(?:{})".format(Helper.get_special_regex_disjunction(self.dec_init_keys)), 
-=======
+
 				dec_prereqs = findall(r"\.\n[Α-ΩA-Z](.+?)(?:{})".format(Helper.get_special_regex_disjunction(self.dec_init_keys)), 
->>>>>>> parser-work
-										   				 		    txt, flags=DOTALL)
+										   				 		        txt, flags=DOTALL)
 			elif dec_num > 1:
 			# For now 
 				pass				
@@ -175,13 +160,9 @@ class Parser(object):
 		# E.g. "Οι Υπουργοί", "Ο ΠΡΟΕΔΡΕΥΩΝ" etc.
 		dec_signees_general_occup_pattern = "{year}\s*\n\s*{by_order_of}?((?:{gen_occupation}))\s*\n"\
 											.format(year="\s\d{4}", 
-<<<<<<< HEAD
-										    		ordered_by= "(?:Με εντολη(?:[ ][Α-Ω][α-ωΑ-Ω]+)+\n)",
-										    		gen_occupation="[Α-Ω][α-ωΑ-Ω]?(?:[ ][Α-Ω][α-ωΑ-Ω]+)+")
-=======
 										    		by_order_of= "(?:Με εντολη(?:[ ][Α-ΩA-Z][α-ωa-zΑ-ΩA-Z]+)+\n)",
 										    		gen_occupation="[Α-ΩA-Z][α-ωa-zΑ-ΩA-Z]?(?:[ ][Α-ΩA-Z][α-ωa-zΑ-ΩA-Z]+)+")
->>>>>>> parser-work
+
 		regex_dec_signees_general_occup = compile(dec_signees_general_occup_pattern, flags=DOTALL)
 		dec_signees_general_occup = findall(regex_dec_signees_general_occup, txt)
 
@@ -191,11 +172,7 @@ class Parser(object):
 			for general_occup in dec_signees_general_occup:
 				dec_signees_pattern = "\n\s*{general_occup}\s*\n\s*({signees})\n"\
 									  .format(general_occup=general_occup,
-<<<<<<< HEAD
-											  signees="(?:[Α-Ωκ−-][α-ωΑ-Ω\.,−/\-]*\s*)+")
-=======
 											  signees="(?:[Α-ΩA-Zκ−-][α-ωa-zΑ-ΩA-Z\.,−/\-]*\s*)+")
->>>>>>> parser-work
 				regex_dec_signees = compile(dec_signees_pattern, flags=DOTALL)
 				dec_signees.append(findall(regex_dec_signees, txt))
 		
@@ -213,20 +190,12 @@ class Parser(object):
 		txt = Helper.clean_up_for_paorgs_getter(txt)
 		
 		# Match possible PAOrg acronyms 	
-<<<<<<< HEAD
-		possible_paorg_acronyms_regex = compile('([Α-Ω](?=\.[Α-Ω])(?:\.[Α-Ω])+)') 
-=======
 		possible_paorg_acronyms_regex = compile('([Α-ΩA-Z](?=\.[Α-ΩA-Z])(?:\.[Α-ΩA-Z])+)') 
->>>>>>> parser-work
 		possible_paorg_acronyms = findall(possible_paorg_acronyms_regex, txt)
 		# print(possible_paorg_acronyms)
 		
 		# Match consecutive capitalized words possibly signifying PAOrgs
-<<<<<<< HEAD
-		possible_paorgs_regex = compile('([Α-Ω][α-ωΑ-Ω]+(?=\s[Α-Ω])(?:\s[Α-Ω][α-ωΑ-Ω]+)+)')
-=======
 		possible_paorgs_regex = compile('([Α-ΩA-Z][α-ωa-zΑ-ΩA-Z]+(?=\s[Α-ΩA-Z])(?:\s[Α-ΩA-Z][α-ωa-zΑ-ΩA-Z]+)+)')
->>>>>>> parser-work
 		possible_paorgs = findall(possible_paorgs_regex, txt)
 		
 		possible_paorgs = list(set(possible_paorg_acronyms + possible_paorgs))
@@ -261,17 +230,10 @@ class Parser(object):
 			dec_respa_sections_in_articles = findall(r"\n" + main_respa_section_pattern + "Αρθρο", txt, flags=DOTALL)
 
 			# Attempt 1
-<<<<<<< HEAD
-			dec_respa_sections_not_in_articles_1 = findall(r"\n?" + main_respa_section_pattern + "[Α-Ω]", txt, flags=DOTALL)
-
-			# Attempt 2
-			dec_respa_sections_not_in_articles_2 = findall(r"\n?" + main_respa_section_pattern + "[Α-Ω]?", txt, flags=DOTALL)
-=======
 			dec_respa_sections_not_in_articles_1 = findall(r"\n?" + main_respa_section_pattern + "[Α-ΩA-Z]", txt, flags=DOTALL)
 
 			# Attempt 2
 			dec_respa_sections_not_in_articles_2 = findall(r"\n?" + main_respa_section_pattern + "[Α-ΩA-Z]?", txt, flags=DOTALL)
->>>>>>> parser-work
 
 		dec_respa_sections = dec_respa_sections_in_articles + \
 							 dec_respa_sections_not_in_articles_1 + \
@@ -324,11 +286,7 @@ class Parser(object):
 
 		try:
 			text = self.simple_pdf_to_text(file_name, txt_name)
-<<<<<<< HEAD
-			text = Helper.deintonate_txt(text)
-=======
 			text = clean_up_text(text, txt_name)
->>>>>>> parser-work
 		except OSError:
 			raise
 
