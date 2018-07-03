@@ -6,7 +6,7 @@ A module for NER and Metadata extraction (of responsibility assignments (RespA) 
 
 A [GFOSS – Open Technologies Alliance](https://gfoss.eu/) project as part of [Google's SoC 2018](https://summerofcode.withgoogle.com/).
 
-#### Examples of the most common Responsibility Assignments (RespAs) found in decisions:
+#### Examples of the most common Responsibility Assignments (RespAs) found in decisions and in their prerequisites:
 
 * Mentioned in a few paragraphs
 <p align="center">
