@@ -11,22 +11,8 @@ from subprocess import call
 from glob import glob
 from itertools import zip_longest
 from PIL import Image
-from pdfminer.pdfinterp import PDFResourceManager, PDFPageInterpreter
-from pdfminer.converter import PDFPageAggregator
-from pdfminer.converter import TextConverter
-from pdfminer.layout import LAParams
-from pdfminer.layout import LTContainer
-from pdfminer.layout import LTTextBox
-from pdfminer.layout import LTTextLine
-from pdfminer.layout import LTTextLineHorizontal
-from pdfminer.layout import LTAnno
-from pdfminer.layout import LTImage
-from pdfminer.layout import LTFigure
-from pdfminer.layout import LTTextBoxHorizontal
-from pdfminer.layout import LTChar
-from pdfminer.pdfpage import PDFPage
-
 from difflib import get_close_matches, SequenceMatcher
+from polyglot.text import Text
 
 from util.helper import Helper
 
@@ -56,7 +42,6 @@ class Parser(object):
 
 	# @TODO:
 	# - Fine-tune section getters (see specific @TODOs)
-	# - Manual annotation/extraction module of PAOrgs & RespAs, inputs: PAOrgs-assignment keys lists
 
 	def get_dec_contents_from_txt(self, txt):
 		txt = Helper.clean_up_for_dec_related_getter(txt)
@@ -275,9 +260,19 @@ class Parser(object):
 
 		return ref_dec_respa_sections
 
-	# Get a dictionary containing assignment: {'PAOrg': ..., 'Responsibility': ..., etc.}
-	def get_respa_association(self, respa):
-		pass
+	def get_person_named_entities(self, txt):
+		""" Ideally to be fed 'txt' containing RespA sections """
+		return list(filter(lambda entity: entity.tag == 'I-PER', Text(txt).entities))
+
+	# Get a dictionary containing assignment: {'PAOrg': ..., 'Persons': ..., 'Responsibilities': ..., etc.}
+	def get_respa_association(self, txt):
+		""" Ideally to be fed 'txt' containing RespA sections """
+		persons = get_person_named_entities(txt)
+		# paorgs = 
+		# responsibilities = 
+
+		return {}
+
 
 	def get_simple_pdf_text(self, file_name, txt_name):
 		
