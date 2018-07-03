@@ -16,8 +16,8 @@ class Helper:
 
     # Initialize empty dict for saving compiled regex objects
     date_patterns = {}
-    camel_case_patteren = re.compile("([α-ω])([Α-Ω])")
-    final_s_pattern = re.compile("(ς)([Α-Ωα-ωά-ώ])")
+    camel_case_patteren = re.compile("([α-ωά-ώ])([Α-ΩΆ-Ώ])")
+    final_s_pattern = re.compile("(ς)([Α-ΩΆ-Ώα-ωά-ώ])")
     upper_s_pattern = re.compile("(Σ)(ΚΑΙ)")
     u_pattern = re.compile("(ύ)(και)")
 
@@ -41,7 +41,7 @@ class Helper:
             name = name.replace(char, replace_chars[char])
 
         # Remove characters that should not belong in the name
-        name = re.sub("[^Α-ΩΪΫ\s]+", "", name)
+        name = re.sub("[^Α-ΩΆ-ΏΪΫ\s]+", "", name)
 
         return ' '.join(name.split())
 
@@ -156,9 +156,9 @@ class Helper:
     # @TODO: Add Attica Prefectures
     @staticmethod
     def get_dec_location_and_date_before_signees_regex():
-        greek_cities = [Helper.deintonate_txt(city) for city in Helper.get_greek_cities()]
+        greek_cities = Helper.get_greek_cities()
         days = range(1,31+1)        
-        greek_months = [Helper.deintonate_txt(month) for month in Helper.get_greek_months().keys()]
+        greek_months = Helper.get_greek_months()
         dec_loc_and_data_pattern = "\s*\n\s*((?:{city}),\s+(?:{day})\s+(?:{month})\s+(?:{year}))\s*\n"\
                                     .format(city=Helper.get_special_regex_disjunction(greek_cities),
                                             day=Helper.get_special_regex_disjunction(days),
@@ -220,7 +220,7 @@ class Helper:
                       'Δεκεμβρίου': 12, 'Μαίου': 5}
             text_month = False
             separator = " "
-            pattern = "Α-Ωα-ωά-ώ"
+            pattern = "Α-ΩΆ-Ώα-ωά-ώ"
 
         if re.match('[0-9]{1,2} [' + pattern + ']{1,} [0-9]{4,4}', date):
             separator = " "
