@@ -23,7 +23,7 @@ class ParserTest(unittest.TestCase):
 		# rmtree('..' + self.test_txts_dir)
 		pass
 	
-	def get_txt(self, file_name, pdf_path=test_pdfs_dir+"/General_Issues/", txt_path=test_txts_dir+"/"):
+	def get_txt(self, file_name, pdf_path=test_pdfs_dir+"/Decision_Issues/", txt_path=test_txts_dir+"/"):
 			return self.parser.get_simple_pdf_text('..' + pdf_path + file_name + '.pdf', 
 												   '..' + txt_path + file_name + '.txt')
 
@@ -427,7 +427,7 @@ class ParserTest(unittest.TestCase):
 
 	def test_get_dec_sections_from_txts_3(self):
 				
-		respa_pdf_path = self.test_pdfs_dir + '/RespA_Issues/w_RespA_Decisions/'
+		respa_pdf_path = self.test_pdfs_dir + '/RespA_Dec_Issues/w_RespA_Decisions/'
 		txt_1 = self.get_txt('1_w_RespA_Decisions', pdf_path=respa_pdf_path)
 		txt_2 = self.get_txt('2_w_RespA_Decisions', pdf_path=respa_pdf_path)
 		txt_3 = self.get_txt('3_w_RespA_Decisions', pdf_path=respa_pdf_path)
@@ -541,7 +541,7 @@ class ParserTest(unittest.TestCase):
 
 	def test_get_dec_sections_from_txts_4(self):
 				
-		respa_pdf_path = self.test_pdfs_dir + '/RespA_Issues/w_RespA_Decisions/'
+		respa_pdf_path = self.test_pdfs_dir + '/RespA_Dec_Issues/w_RespA_Decisions/'
 		txt_1 = self.get_txt('5_w_RespA_Decisions', pdf_path=respa_pdf_path)
 		txt_2 = self.get_txt('6_w_RespA_Decisions', pdf_path=respa_pdf_path)
 		txt_3 = self.get_txt('7_w_RespA_Decisions', pdf_path=respa_pdf_path)
@@ -709,7 +709,7 @@ class ParserTest(unittest.TestCase):
 
 	def test_get_dec_sections_from_txts_5(self):
 		
-		respa_pdf_path = self.test_pdfs_dir + '/RespA_Issues/w_Referenced_RespA_Decisions/'
+		respa_pdf_path = self.test_pdfs_dir + '/RespA_Dec_Issues/w_Referenced_RespA_Decisions/'
 		txt_1 = self.get_txt('1_w_Ref_RespA_Decisions', pdf_path=respa_pdf_path)
 		txt_2 = self.get_txt('2_w_Ref_RespA_Decisions', pdf_path=respa_pdf_path)
 		txt_3 = self.get_txt('3_w_Ref_RespA_Decisions', pdf_path=respa_pdf_path)
@@ -824,7 +824,7 @@ class ParserTest(unittest.TestCase):
 
 	def test_get_dec_sections_from_txts_6(self):
 		
-		respa_pdf_path = self.test_pdfs_dir + '/RespA_Issues/w_Referenced_RespA_Decisions/'
+		respa_pdf_path = self.test_pdfs_dir + '/RespA_Dec_Issues/w_Referenced_RespA_Decisions/'
 		txt_1 = self.get_txt('5_w_Ref_RespA_Decisions', pdf_path=respa_pdf_path)
 		txt_2 = self.get_txt('6_w_Ref_RespA_Decisions', pdf_path=respa_pdf_path)
 		txt_3 = self.get_txt('7_w_Ref_RespA_Decisions', pdf_path=respa_pdf_path)
@@ -937,7 +937,7 @@ class ParserTest(unittest.TestCase):
 		print(self.parser.get_dec_signees_from_txt(txt_4))
 		
 	def test_get_respa_sections_from_txts_1(self):
-		respa_pdf_path = self.test_pdfs_dir + '/RespA_Issues/w_RespA_Decisions/'
+		respa_pdf_path = self.test_pdfs_dir + '/RespA_Dec_Issues/w_RespA_Decisions/'
 		txt_1 = self.get_txt('1_w_RespA_Decisions', pdf_path=respa_pdf_path)
 		txt_2 = self.get_txt('2_w_RespA_Decisions', pdf_path=respa_pdf_path)
 		txt_3 = self.get_txt('3_w_RespA_Decisions', pdf_path=respa_pdf_path)
@@ -996,7 +996,7 @@ class ParserTest(unittest.TestCase):
 
 	def test_get_respa_sections_from_txts_2(self):
 		
-		ref_respa_pdf_path = self.test_pdfs_dir + '/RespA_Issues/w_RespA_Decisions/'
+		ref_respa_pdf_path = self.test_pdfs_dir + '/RespA_Dec_Issues/w_RespA_Decisions/'
 		txt_1 = self.get_txt('5_w_RespA_Decisions', pdf_path=ref_respa_pdf_path)
 		txt_2 = self.get_txt('6_w_RespA_Decisions', pdf_path=ref_respa_pdf_path)
 		txt_3 = self.get_txt('7_w_RespA_Decisions', pdf_path=ref_respa_pdf_path)
@@ -1079,7 +1079,7 @@ class ParserTest(unittest.TestCase):
 
 	def test_get_ref_respa_sections_from_txts_1(self):
 		
-		ref_respa_pdf_path = self.test_pdfs_dir + '/RespA_Issues/w_Referenced_RespA_Decisions/'
+		ref_respa_pdf_path = self.test_pdfs_dir + '/RespA_Dec_Issues/w_Referenced_RespA_Decisions/'
 		txt_1 = self.get_txt('1_w_Ref_RespA_Decisions', pdf_path=ref_respa_pdf_path)
 		txt_2 = self.get_txt('2_w_Ref_RespA_Decisions', pdf_path=ref_respa_pdf_path)
 		txt_3 = self.get_txt('3_w_Ref_RespA_Decisions', pdf_path=ref_respa_pdf_path)
@@ -1134,7 +1134,7 @@ class ParserTest(unittest.TestCase):
 		print(respa_sections_4)
 
 	def test_get_ref_respa_sections_from_txts_2(self):
-		ref_respa_pdf_path = self.test_pdfs_dir + '/RespA_Issues/w_Referenced_RespA_Decisions/'
+		ref_respa_pdf_path = self.test_pdfs_dir + '/RespA_Dec_Issues/w_Referenced_RespA_Decisions/'
 		txt_1 = self.get_txt('5_w_Ref_RespA_Decisions', pdf_path=ref_respa_pdf_path)
 		txt_2 = self.get_txt('6_w_Ref_RespA_Decisions', pdf_path=ref_respa_pdf_path)
 		txt_3 = self.get_txt('7_w_Ref_RespA_Decisions', pdf_path=ref_respa_pdf_path)
