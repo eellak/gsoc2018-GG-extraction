@@ -214,14 +214,16 @@ class Parser(object):
 		
 		return matching_paorgs
 
-	def get_dec_articles_from_txt(self, txt):
+	def get_pres_decree_articles_from_txt(self, txt):
 		""" Ideally to be fed 'txt' containing decision or part of it """
 		dec_articles = []
 		if txt: 
-			dec_articles = findall(r"{artcl}\s*\d+\s*\n(.+?)(?=(?:{artcl}\s*\d+\s*\n)|\.\s*\n)"\
+			dec_articles = findall(r"({artcl}\s*\d+\s*\n.+?)(?={artcl}\s*\d+\s*\n)"\
 							.format(artcl=self.article_keys[0]), txt, flags=DOTALL)
-			
-			return dict(zip(map(lambda idx: "Άρθρο "+str(idx), range(1, len(dec_articles) + 1)), dec_articles))
+			last_article = findall(r"({artcl}\s*\d+\s*\nΈναρξη.+?σχύος.+?\.\s*\n)"\
+							.format(artcl=self.article_keys[0]), txt, flags=DOTALL)
+			dec_articles.append(last_article)
+			return dict(zip(range(1, len(dec_articles) + 1), dec_articles))
 
 	# Get RespA sections contained in decision body 
 	def get_dec_respa_sections_from_txt(self, txt):
