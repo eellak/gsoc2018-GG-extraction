@@ -26,6 +26,7 @@ class Parser(object):
 		self.__illegal_chars = compile(r"\d+")
 		self.dec_contents_key = "ΠΕΡΙΕΧΟΜΕΝΑ\nΑΠΟΦΑΣΕΙΣ"
 		self.decs_key = "ΑΠΟΦΑΣΕΙΣ"
+		self.pres_decree_key = "ΠΡΟΕΔΡΙΚΟ ΔΙΑΤΑΓΜΑ ΥΠ\’ ΑΡΙΘΜ."
 		# Must be expanded (lots of variants)
 		self.dec_prereq_keys = ["χοντας υπόψη:", "χοντας υπόψη", "χοντες υπόψη:", "χουσα υπόψη:", "χοντας υπόψη του:", 
 								"χοντας υπ\' όψη:", "χοντας υπ\’ όψη:", "Αφού έλαβε υπόψη:", "Λαμβάνοντας υπόψη:"]
@@ -33,8 +34,8 @@ class Parser(object):
 							  "αποφασίζει:", "αποφασίζει τα ακόλουθα:", "αποφασίζει τα εξής:", "αποφασίζει ομόφωνα:",
 							  "αποφασίζει ομόφωνα και εγκρίνει:", "αποφασίζει τα κάτωθι", "αποφασίζεται:",
 							  "με τα παρακάτω στοιχεία:"]
-		self.dec_end_keys = {'start_group': ["Η απόφαση αυτή", "Ηαπόφαση αυτή", "Η απόφαση", "Η περίληψη αυτή", "η παρούσα ισχύει", "Η παρούσα απόφαση"],	
-							 'finish_group': ["την δημοσίευση", "τη δημοσίευση", "να δημοσιευθεί", "να δημοσιευτεί", "να δημοσιευθούν",  "F\n"]}
+		self.dec_end_keys = {'start_group': ["Η απόφαση αυτή", "Ηαπόφαση αυτή", "Η απόφαση", "Η περίληψη αυτή", "η παρούσα ισχύει", "Η παρούσα απόφαση", "Η ισχύς του παρόντος"],
+							 'finish_group': ["την δημοσίευση", "τη δημοσίευση", "τη δημοσίευσή", "να δημοσιευθεί", "να δημοσιευτεί", "να δημοσιευθούν",  "F\n"]}
 		self.respa_keys = {'assignment_verbs':["ναθέτουμε", "νατίθεται", "νατίθενται", "νάθεση", "ρίζουμε", "παλλάσσουμε", "εταβιβάζουμε"], 
 						   'assignment_types':["αθήκοντ", "ρμοδιότητ", "αθηκόντ", "ρμοδιοτήτ"]}
 		self.dec_correction_keys = ['Διόρθωση', 'ΔΙΌΡΘΩΣΗ']
@@ -68,8 +69,10 @@ class Parser(object):
 									     if self.dec_correction_keys[0] not in dec_sum \
 									     	and self.dec_correction_keys[1] not in dec_sum]
 		else:
+			if self.pres_decree_key in txt: print(txt)
 			# Will also contain number e.g. Αριθμ. ...
-			dec_summaries = findall(r"{}\n\s*(.+?)\.\n\s*[Α-ΩΆ-ΏA-Z()]".format(self.decs_key), txt, flags=DOTALL)
+			dec_summaries = findall(r"(?:{}|{}\s*\d+)\s*\n\s*(.+?)\.\n\s*[Α-ΩΆ-ΏA-Z()]"\
+							.format(self.decs_key, self.pres_decree_key), txt, flags=DOTALL)
 			assert(len(dec_summaries) == 1)
 		return dec_summaries
 
