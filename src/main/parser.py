@@ -13,7 +13,6 @@ from itertools import zip_longest
 from PIL import Image
 from difflib import get_close_matches, SequenceMatcher
 from polyglot.text import Text
-
 from util.helper import Helper
 
 class Parser(object):
@@ -71,7 +70,7 @@ class Parser(object):
 		else:
 			if self.pres_decree_key in txt: print(txt)
 			# Will also contain number e.g. Αριθμ. ...
-			dec_summaries = findall(r"(?:{}|{}\s*\d+)\s*\n\s*(.+?)\.\n\s*[Α-ΩΆ-ΏA-Z()]"\
+			dec_summaries = findall(r"(?:{}|{}\s*\d+)\s*\n\s*(.+?)\.\n\s*[α-ωά-ώΑ-ΩΆ-ΏA-Z()]"\
 							.format(self.decs_key, self.pres_decree_key), txt, flags=DOTALL)
 			assert(len(dec_summaries) == 1)
 		return dec_summaries
@@ -134,7 +133,7 @@ class Parser(object):
 		dec_end_keys_finish_group = self.dec_end_keys['finish_group']
 		dec_prereq_keys = self.dec_prereq_keys
 
-		dec_bodies = findall(r"(?:{})(.+?)(?:(?:(?:{}).+?(?:{}))|(?:{}))"\
+		dec_bodies = findall(r"(?:{}).+?(?:(?:(?:{}).+?(?:{}))|(?:{})).+?\.\s*\n"\
 								  .format(Helper.get_special_regex_disjunction(dec_init_keys),
 								  		  Helper.get_special_regex_disjunction(dec_end_keys_start_group),
 								  		  Helper.get_special_regex_disjunction(dec_end_keys_finish_group),
@@ -214,6 +213,15 @@ class Parser(object):
 				matching_paorgs.append({word:best_matches})
 		
 		return matching_paorgs
+
+	def get_dec_articles_from_txt(self, txt):
+		""" Ideally to be fed 'txt' containing decision or part of it """
+		dec_articles = []
+		if txt: 
+			dec_articles = findall(r"{artcl}\s*\d+\s*\n(.+?)(?=(?:{artcl}\s*\d+\s*\n)|\.\s*\n)"\
+							.format(artcl=self.article_keys[0]), txt, flags=DOTALL)
+			
+			return dict(zip(map(lambda idx: "Άρθρο "+str(idx), range(1, len(dec_articles) + 1)), dec_articles))
 
 	# Get RespA sections contained in decision body 
 	def get_dec_respa_sections_from_txt(self, txt):
