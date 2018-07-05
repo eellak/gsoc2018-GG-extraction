@@ -1224,6 +1224,83 @@ class ParserTest(unittest.TestCase):
 
 		print(persons)
 
+	def test_get_articles_from_pres_decree_txts_1(self):
+		ref_respa_pdf_path = self.test_pdfs_dir + '/Presidential_Decree_Issues/'
+		txt_1 = self.get_txt('1_Pres_Decree', pdf_path=ref_respa_pdf_path)
+		txt_2 = self.get_txt('2_Pres_Decree', pdf_path=ref_respa_pdf_path)
+		txt_3 = self.get_txt('3_Pres_Decree', pdf_path=ref_respa_pdf_path)
+		txt_4 = self.get_txt('4_Pres_Decree', pdf_path=ref_respa_pdf_path)
+		txt_5 = self.get_txt('5_Pres_Decree', pdf_path=ref_respa_pdf_path)
+
+		## 
+		#  Decision Contents
+		##
+		dec_contents_1 = self.parser.get_dec_contents_from_txt(txt_1);
+		dec_contents_2 = self.parser.get_dec_contents_from_txt(txt_2); 
+		dec_contents_3 = self.parser.get_dec_contents_from_txt(txt_3); 
+		dec_contents_4 = self.parser.get_dec_contents_from_txt(txt_4);
+		dec_contents_5 = self.parser.get_dec_contents_from_txt(txt_5);
+		
+		self.assertTrue(not dec_contents_1);
+		self.assertTrue(not dec_contents_2); 
+		self.assertTrue(not dec_contents_3); 
+		self.assertTrue(not dec_contents_4);
+		self.assertTrue(not dec_contents_5);
+		
+		## 
+		#  Decision Summaries
+		## 
+		dec_summaries_1 = self.parser.get_dec_summaries_from_txt(txt_1, dec_contents_1);
+		dec_summaries_2 = self.parser.get_dec_summaries_from_txt(txt_2, dec_contents_2);
+		dec_summaries_3 = self.parser.get_dec_summaries_from_txt(txt_3, dec_contents_3);
+		dec_summaries_4 = self.parser.get_dec_summaries_from_txt(txt_4, dec_contents_4);
+		dec_summaries_5 = self.parser.get_dec_summaries_from_txt(txt_5, dec_contents_5);
+		print(dec_summaries_1)
+		print(dec_summaries_2)
+		print(dec_summaries_3)
+		print(dec_summaries_4)
+		print(dec_summaries_5)
+
+		self.assertTrue(dec_summaries_1);
+		self.assertTrue(dec_summaries_2); 
+		self.assertTrue(dec_summaries_3); 
+		self.assertTrue(dec_summaries_4);
+		self.assertTrue(dec_summaries_5);
+
+		## 
+		#  Decisions
+		##
+		decisions_1 = self.parser.get_decisions_from_txt(txt_1, len(dec_summaries_1))
+		decisions_2 = self.parser.get_decisions_from_txt(txt_2, len(dec_summaries_2))
+		decisions_3 = self.parser.get_decisions_from_txt(txt_3, len(dec_summaries_3))
+		decisions_4 = self.parser.get_decisions_from_txt(txt_4, len(dec_summaries_4))
+		decisions_5 = self.parser.get_decisions_from_txt(txt_5, len(dec_summaries_5))
+
+		self.assertTrue(len(decisions_1) == 1);
+		self.assertTrue(len(decisions_2) == 1); 
+		self.assertTrue(len(decisions_3) == 1); 
+		self.assertTrue(len(decisions_4) == 1);
+		self.assertTrue(len(decisions_5) == 1);
+
+		# Convert any dict to list
+		if isinstance(decisions_1, dict): decisions_1 = list(decisions_1.values())
+		if isinstance(decisions_2, dict): decisions_2 = list(decisions_2.values())
+		if isinstance(decisions_3, dict): decisions_3 = list(decisions_3.values())
+		if isinstance(decisions_4, dict): decisions_4 = list(decisions_4.values())
+		if isinstance(decisions_5, dict): decisions_5 = list(decisions_5.values())
+
+		articles_1 = self.parser.get_dec_articles_from_txt(decisions_1[0])
+		articles_2 = self.parser.get_dec_articles_from_txt(decisions_2[0])
+		articles_3 = self.parser.get_dec_articles_from_txt(decisions_3[0])
+		articles_4 = self.parser.get_dec_articles_from_txt(decisions_4[0])
+		articles_5 = self.parser.get_dec_articles_from_txt(decisions_5[0])
+		print(len(articles_1))
+		print(len(articles_2))
+		print(len(articles_3))
+		print(len(articles_4))
+		print(len(articles_5))
+
+		
 
 if __name__ == '__main__':
 	unittest.main() 
