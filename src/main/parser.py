@@ -37,6 +37,7 @@ class Parser(object):
 							 'finish_group': ["την δημοσίευση", "τη δημοσίευση", "τη δημοσίευσή", "να δημοσιευθεί", "να δημοσιευτεί", "να δημοσιευθούν",  "F\n"]}
 		self.respa_keys = {'assignment_verbs':["ναθέτουμε", "νατίθεται", "νατίθενται", "νάθεση", "ρίζουμε", "παλλάσσουμε", "εταβιβάζουμε"], 
 						   'assignment_types':["αθήκοντ", "ρμοδιότητ", "αθηκόντ", "ρμοδιοτήτ"]}
+		self.paorg_issue_respa_keys = ["ρμόδι", "ρμοδι", "διότητες"]
 		self.dec_correction_keys = ['Διόρθωση', 'ΔΙΌΡΘΩΣΗ']
 		self.article_keys = ["Άρθρο"]
 
@@ -222,8 +223,27 @@ class Parser(object):
 							.format(artcl=self.article_keys[0]), txt, flags=DOTALL)
 			last_article = findall(r"({artcl}\s*\d+\s*\nΈναρξη.+?σχύος.+?\.\s*\n)"\
 							.format(artcl=self.article_keys[0]), txt, flags=DOTALL)
-			dec_articles.append(last_article)
+			assert(len(last_article) == 1)
+			dec_articles.append(last_article[0])
 			return dict(zip(range(1, len(dec_articles) + 1), dec_articles))
+
+	def get_rough_respas_of_organization_units_from_pres_decree_txt(self, txt):
+		""" Ideally to be fed 'txt' containing articles with assignments """
+		txt = Helper.clean_up_for_dec_related_getter(txt)
+		paorg_issue_respa_keys = self.paorg_issue_respa_keys
+		rough_paorg_respa_sections = []
+		if txt:
+			# Attempt 1
+			rough_paorg_respa_sections_1 = findall("((?:.*\n)?.+?(?:{resp_keys}).+?\:\s*\n[\s\S]+?(?:\.\s*\n\s*(?![α-ωά-ώ])|\,\s*\n\s*(?![\s\S]+?\.)))"\
+												 .format(resp_keys=Helper.get_special_regex_disjunction(paorg_issue_respa_keys)), txt)
+			
+			# Attempt 2
+			rough_paorg_respa_sections_2 = findall("((?:.*\n)?.+?(?:{resp_keys}).+?\s*για[^\:]+?\s*\n[\s\S]+?\.\s*\n)"\
+												 .format(resp_keys=Helper.get_special_regex_disjunction(paorg_issue_respa_keys)), txt)
+
+			rough_paorg_respa_sections = rough_paorg_respa_sections_1 + rough_paorg_respa_sections_2
+			
+		return rough_paorg_respa_sections
 
 	# Get RespA sections contained in decision body 
 	def get_dec_respa_sections_from_txt(self, txt):
@@ -236,10 +256,9 @@ class Parser(object):
 		respa_key_assignment_types = self.respa_keys['assignment_types']
 
 		if txt:
-			
 			main_respa_section_pattern = \
-			'(.+?(?:{assign_verb}).+?(?:{assign_type})?.+?)\.\s*\n\s*'.\
-			format(assign_verb=Helper.get_special_regex_disjunction(respa_key_assignment_verbs), 
+			'(.+?(?:{assign_verb}).+?(?:{assign_type})?.+?)\.\s*\n\s*'\
+			.format(assign_verb=Helper.get_special_regex_disjunction(respa_key_assignment_verbs), 
 	  		 	   assign_type=Helper.get_special_regex_disjunction(respa_key_assignment_types))
 
 			dec_respa_sections_in_articles = findall(r"\n" + main_respa_section_pattern + self.article_keys[0], txt, flags=DOTALL)
