@@ -1289,18 +1289,40 @@ class ParserTest(unittest.TestCase):
 		if isinstance(decisions_4, dict): decisions_4 = list(decisions_4.values())
 		if isinstance(decisions_5, dict): decisions_5 = list(decisions_5.values())
 
-		articles_1 = self.parser.get_dec_articles_from_txt(decisions_1[0])
-		articles_2 = self.parser.get_dec_articles_from_txt(decisions_2[0])
-		articles_3 = self.parser.get_dec_articles_from_txt(decisions_3[0])
-		articles_4 = self.parser.get_dec_articles_from_txt(decisions_4[0])
-		articles_5 = self.parser.get_dec_articles_from_txt(decisions_5[0])
+		articles_1 = self.parser.get_pres_decree_articles_from_txt(decisions_1[0])
+		articles_2 = self.parser.get_pres_decree_articles_from_txt(decisions_2[0])
+		articles_3 = self.parser.get_pres_decree_articles_from_txt(decisions_3[0])
+		articles_4 = self.parser.get_pres_decree_articles_from_txt(decisions_4[0])
+		articles_5 = self.parser.get_pres_decree_articles_from_txt(decisions_5[0])
 		print(len(articles_1))
 		print(len(articles_2))
 		print(len(articles_3))
 		print(len(articles_4))
 		print(len(articles_5))
 
+	def test_get_respas_of_organization_units_from_pres_decree_txts_1(self):
+		ref_respa_pdf_path = self.test_pdfs_dir + '/Presidential_Decree_Issues/'
+		txt_1 = self.get_txt('1_Pres_Decree', pdf_path=ref_respa_pdf_path)
+		txt_2 = self.get_txt('2_Pres_Decree', pdf_path=ref_respa_pdf_path)
+		txt_3 = self.get_txt('3_Pres_Decree', pdf_path=ref_respa_pdf_path)
+		txt_4 = self.get_txt('4_Pres_Decree', pdf_path=ref_respa_pdf_path)
+		txt_5 = self.get_txt('5_Pres_Decree', pdf_path=ref_respa_pdf_path)
+
+		rough_paorg_respa_sections_1 = self.parser.get_rough_respas_of_organization_units_from_pres_decree_txt(txt_1)
+		print(len(rough_paorg_respa_sections_1))
 		
+		rough_paorg_respa_sections_2 = self.parser.get_rough_respas_of_organization_units_from_pres_decree_txt(txt_2)
+		print(len(rough_paorg_respa_sections_2))
+
+		rough_paorg_respa_sections_3 = self.parser.get_rough_respas_of_organization_units_from_pres_decree_txt(txt_3)
+		print(len(rough_paorg_respa_sections_3))
+
+		rough_paorg_respa_sections_4 = self.parser.get_rough_respas_of_organization_units_from_pres_decree_txt(txt_4)
+		print(rough_paorg_respa_sections_4)
+
+		rough_paorg_respa_sections_5 = self.parser.get_rough_respas_of_organization_units_from_pres_decree_txt(txt_5)
+		print(rough_paorg_respa_sections_5)
+
 
 if __name__ == '__main__':
 	unittest.main() 
