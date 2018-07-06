@@ -12,7 +12,7 @@ from glob import glob
 from itertools import zip_longest
 from PIL import Image
 from difflib import get_close_matches, SequenceMatcher
-from polyglot.text import Text
+# from polyglot.text import Text
 from util.helper import Helper
 
 class Parser(object):
