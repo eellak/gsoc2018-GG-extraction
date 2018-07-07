@@ -13,6 +13,7 @@ from itertools import zip_longest
 from PIL import Image
 from difflib import get_close_matches, SequenceMatcher
 # from polyglot.text import Text
+from collections import OrderedDict
 from util.helper import Helper
 
 class Parser(object):
@@ -37,7 +38,7 @@ class Parser(object):
 							 'finish_group': ["την δημοσίευση", "τη δημοσίευση", "τη δημοσίευσή", "να δημοσιευθεί", "να δημοσιευτεί", "να δημοσιευθούν",  "F\n"]}
 		self.respa_keys = {'assignment_verbs':["ναθέτουμε", "νατίθεται", "νατίθενται", "νάθεση", "ρίζουμε", "παλλάσσουμε", "εταβιβάζουμε"], 
 						   'assignment_types':["αθήκοντ", "ρμοδιότητ", "αθηκόντ", "ρμοδιοτήτ"]}
-		self.paorg_issue_respa_keys = ["ρμόδι", "ρμοδι", "διότητες"]
+		self.paorg_issue_respa_keys = ["ρμόδι", "ρμοδι", "διότητες", "ευθύνη"]
 		self.dec_correction_keys = ['Διόρθωση', 'ΔΙΌΡΘΩΣΗ']
 		self.article_keys = ["Άρθρο"]
 
@@ -227,23 +228,36 @@ class Parser(object):
 			dec_articles.append(last_article[0])
 			return dict(zip(range(1, len(dec_articles) + 1), dec_articles))
 
+	
 	def get_rough_respas_of_organization_units_from_pres_decree_txt(self, txt):
-		""" Ideally to be fed 'txt' containing articles with assignments """
+		""" Ideally to be fed 'txt' containing an article with responsibilities """
 		txt = Helper.clean_up_for_dec_related_getter(txt)
 		paorg_issue_respa_keys = self.paorg_issue_respa_keys
 		rough_paorg_respa_sections = []
 		if txt:
 			# Attempt 1
-			rough_paorg_respa_sections_1 = findall("((?:.*\n)?.+?(?:{resp_keys}).+?\:\s*\n[\s\S]+?(?:\.\s*\n\s*(?![α-ωά-ώ])|\,\s*\n\s*(?![\s\S]+?\.)))"\
-												 .format(resp_keys=Helper.get_special_regex_disjunction(paorg_issue_respa_keys)), txt)
-			
-			# Attempt 2
-			rough_paorg_respa_sections_2 = findall("((?:.*\n)?.+?(?:{resp_keys}).+?\s*για[^\:]+?\s*\n[\s\S]+?\.\s*\n)"\
+			rough_paorg_respa_sections_1 = findall("((?:\d+.*)?(?:[^\.]*\n){1,3}" + ".+?(?:{resp_keys})[\s\S]+?\:\s*\n[\s\S]+?(?=\.\s*\n\s*(?![α-ωά-ώa-z]+)|\,\s*\n\s*(?![\s\S]+?\.)))"\
 												 .format(resp_keys=Helper.get_special_regex_disjunction(paorg_issue_respa_keys)), txt)
 
-			rough_paorg_respa_sections = rough_paorg_respa_sections_1 + rough_paorg_respa_sections_2
+			# Attempt 2
+			rough_paorg_respa_sections_2 = findall("((?:\d+.*)?(?:[^\.]*\n){1,3}" + ".+?(?:{resp_keys})[\s\S]+?\s*για[^\:]+?\s*[\s\S]+?(?=\.\s*\n\s*(?![α-ωά-ώa-z]+)))"\
+												 .format(resp_keys=Helper.get_special_regex_disjunction(paorg_issue_respa_keys)), txt)
+
+			if rough_paorg_respa_sections_1:
+				# Check if any of Attempt 2 in Attempt 1
+				for respa_2 in rough_paorg_respa_sections_2:
+					for respa_1 in rough_paorg_respa_sections_1:
+						if respa_2 and (':' not in respa_2) and\
+						   (respa_2.replace('\n', '').replace(' ', '') not in respa_1.replace('\n', '').replace(' ', '')) and\
+						   (not get_close_matches(respa_2, rough_paorg_respa_sections_1, cutoff=0.3)):
+
+						   		rough_paorg_respa_sections_1.append(respa_2)
+
+				rough_paorg_respa_sections = rough_paorg_respa_sections_1
+			else:
+				rough_paorg_respa_sections = rough_paorg_respa_sections_2
 			
-		return rough_paorg_respa_sections
+		return list(OrderedDict.fromkeys(rough_paorg_respa_sections))
 
 	# Get RespA sections contained in decision body 
 	def get_dec_respa_sections_from_txt(self, txt):
