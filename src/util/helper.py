@@ -114,6 +114,11 @@ class Helper:
                   .replace('  ', ' ').replace('   ', ' ')
 
     @staticmethod
+    def get_word_n_grams(text, n):
+        text = text.split(' ')
+        return [text[i:i+n] for i in range(len(text) - n + 1)]
+
+    @staticmethod
     def get_special_regex_disjunction(key_list):
             regex_disj_str = ''
             for key in key_list:
