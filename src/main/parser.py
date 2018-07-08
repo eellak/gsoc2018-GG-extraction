@@ -38,7 +38,10 @@ class Parser(object):
 							 'finish_group': ["την δημοσίευση", "τη δημοσίευση", "τη δημοσίευσή", "να δημοσιευθεί", "να δημοσιευτεί", "να δημοσιευθούν",  "F\n"]}
 		self.respa_keys = {'assignment_verbs':["ναθέτουμε", "νατίθεται", "νατίθενται", "νάθεση", "ρίζουμε", "παλλάσσουμε", "εταβιβάζουμε"], 
 						   'assignment_types':["αθήκοντ", "ρμοδιότητ", "αθηκόντ", "ρμοδιοτήτ"]}
-		self.paorg_issue_respa_keys = ["ρμόδι", "ρμοδι", "διότητες", "ευθύνη"]
+		self.paorg_issue_respa_keys = {'primary': ["αρμόδι", "αρμοδι", "αρμοδιότητ", "ευθύνη"].
+									   'secondary': ["για", "εξής", ":"]}
+
+		self.usual_paorg_unit_keys = ["Τμήμα", "Διεύθυνση", "Υπηρεσία"]
 		self.dec_correction_keys = ['Διόρθωση', 'ΔΙΌΡΘΩΣΗ']
 		self.article_keys = ["Άρθρο"]
 
@@ -232,16 +235,17 @@ class Parser(object):
 	def get_rough_respas_of_organization_units_from_pres_decree_txt(self, txt):
 		""" Ideally to be fed 'txt' containing an article with responsibilities """
 		txt = Helper.clean_up_for_dec_related_getter(txt)
-		paorg_issue_respa_keys = self.paorg_issue_respa_keys
+		primary_respa_keys = self.paorg_issue_respa_keys['primary']
+
 		rough_paorg_respa_sections = []
 		if txt:
 			# Attempt 1
-			rough_paorg_respa_sections_1 = findall("((?:\d+.*)?(?:[^\.]*\n){1,3}" + ".+?(?:{resp_keys})[\s\S]+?\:\s*\n[\s\S]+?(?=\.\s*\n\s*(?![α-ωά-ώa-z]+)|\,\s*\n\s*(?![\s\S]+?\.)))"\
-												 .format(resp_keys=Helper.get_special_regex_disjunction(paorg_issue_respa_keys)), txt)
+			rough_paorg_respa_sections_1 = findall("((?:\d+\.|[Α-ΩΆ-ΏA-Z](?:\)|\.).*)?(?:.*\n){1,3}" + ".+?(?:{resp_keys})[\s\S]+?\:\s*\n[\s\S]+?(?=\.\s*\n\s*(?![α-ωά-ώa-z])|\,\s*\n\s*(?![\s\S]+?\.)))"\
+												 .format(resp_keys=Helper.get_special_regex_disjunction(primary_respa_keys)), txt)
 
 			# Attempt 2
-			rough_paorg_respa_sections_2 = findall("((?:\d+.*)?(?:[^\.]*\n){1,3}" + ".+?(?:{resp_keys})[\s\S]+?\s*για[^\:]+?\s*[\s\S]+?(?=\.\s*\n\s*(?![α-ωά-ώa-z]+)))"\
-												 .format(resp_keys=Helper.get_special_regex_disjunction(paorg_issue_respa_keys)), txt)
+			rough_paorg_respa_sections_2 = findall("((?:\d+\.|[Α-ΩΆ-ΏA-Z](?:\)|\.).*)?(?:.*\n){1,3}" + ".+?(?:{resp_keys})[\s\S]+?\s*για[^\:]+?\s*[\s\S]+?(?=\.\s*\n\s*(?![α-ωά-ώa-z])))"\
+												 .format(resp_keys=Helper.get_special_regex_disjunction(primary_respa_keys)), txt)
 
 			if rough_paorg_respa_sections_1:
 				# Check if any of Attempt 2 in Attempt 1
