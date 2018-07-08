@@ -38,8 +38,12 @@ class Parser(object):
 							 'finish_group': ["την δημοσίευση", "τη δημοσίευση", "τη δημοσίευσή", "να δημοσιευθεί", "να δημοσιευτεί", "να δημοσιευθούν",  "F\n"]}
 		self.respa_keys = {'assignment_verbs':["ναθέτουμε", "νατίθεται", "νατίθενται", "νάθεση", "ρίζουμε", "παλλάσσουμε", "εταβιβάζουμε"], 
 						   'assignment_types':["αθήκοντ", "ρμοδιότητ", "αθηκόντ", "ρμοδιοτήτ"]}
-		self.paorg_issue_respa_keys = {'primary': ["αρμόδι", "αρμοδι", "αρμοδιότητ", "ευθύνη"].
-									   'secondary': ["για", "εξής", ":"]}
+		self.paorg_issue_respa_keys = {'primary': ["αρμόδι", "αρμοδι", "αρμοδιότητ", "ευθύνη", "εύθυν"],
+									   'secondary': ["για", "εξής"],
+									   'common_bigram_pairs': [("αρμόδι", "για"), ("ευθύνη", "για"), ("εύθυν", "για"), ("αρμοδιότητ", "ακόλουθ")],
+									   'common_gt2gram_pairs': [("αρμοδιότητ", "έχει"), ("αρμοδιότητ", "εξής"), 
+															  	    ("αρμοδιότητ", "είναι")]
+									   }
 
 		self.usual_paorg_unit_keys = ["Τμήμα", "Διεύθυνση", "Υπηρεσία"]
 		self.dec_correction_keys = ['Διόρθωση', 'ΔΙΌΡΘΩΣΗ']
@@ -70,8 +74,8 @@ class Parser(object):
 			dec_summaries = [sub("\.{3,}", "", dec_sum) for dec_sum in dec_summaries]
 			# Ignore possible "ΔΙΟΡΘΩΣΗ ΣΦΑΛΜΑΤΩΝ" section
 			dec_summaries = [dec_sum for dec_sum in dec_summaries \
-									     if self.dec_correction_keys[0] not in dec_sum \
-									     	and self.dec_correction_keys[1] not in dec_sum]
+										 if self.dec_correction_keys[0] not in dec_sum \
+											and self.dec_correction_keys[1] not in dec_sum]
 		else:
 			if self.pres_decree_key in txt: print(txt)
 			# Will also contain number e.g. Αριθμ. ...
@@ -107,8 +111,8 @@ class Parser(object):
 
 		dec_prereqs = {}
 		prereq_bodies = findall(r"(?:{})(.+?)(?:{})".format(Helper.get_special_regex_disjunction(dec_prereq_keys),
-										   	 	   		    Helper.get_special_regex_disjunction(dec_init_keys)),
-										 			   	   	txt, flags=DOTALL)
+															Helper.get_special_regex_disjunction(dec_init_keys)),
+															txt, flags=DOTALL)
 		if prereq_bodies:
 			if(len(prereq_bodies) >= dec_num):
 				for dec_idx in range(len(prereq_bodies)):
@@ -122,7 +126,7 @@ class Parser(object):
 			if dec_num == 1:
 
 				dec_prereqs = findall(r"\.\n[Α-ΩΆ-ΏA-Z](.+?)(?:{})".format(Helper.get_special_regex_disjunction(dec_init_keys)), 
-										   				 		        txt, flags=DOTALL)
+																		txt, flags=DOTALL)
 			elif dec_num > 1:
 			# For now 
 				pass				
@@ -140,18 +144,18 @@ class Parser(object):
 
 		dec_bodies = findall(r"(?:{}).+?(?:(?:(?:{}).+?(?:{}))|(?:{})).+?\.\s*\n"\
 								  .format(Helper.get_special_regex_disjunction(dec_init_keys),
-								  		  Helper.get_special_regex_disjunction(dec_end_keys_start_group),
-								  		  Helper.get_special_regex_disjunction(dec_end_keys_finish_group),
-								  		  Helper.get_special_regex_disjunction(dec_prereq_keys)), 
-								  		  txt, flags=DOTALL)
+										  Helper.get_special_regex_disjunction(dec_end_keys_start_group),
+										  Helper.get_special_regex_disjunction(dec_end_keys_finish_group),
+										  Helper.get_special_regex_disjunction(dec_prereq_keys)), 
+										  txt, flags=DOTALL)
 		
 		if(len(dec_bodies) < dec_num):
 			# Try to get possible leftovers (exceptions)
 			# By fetch txt between (remaining_dec_idx) and (remaining_dec_idx + 1)
 			for remaining_dec_idx in range(len(dec_bodies), dec_num):
 				leftover_dec_bodies = findall(r"(?:\n\({}\)\n).+?(?:\n\({}\)\n)"\
-									  		  .format(remaining_dec_idx + 1, remaining_dec_idx + 2), 
-									  	 	 txt, flags=DOTALL)
+											  .format(remaining_dec_idx + 1, remaining_dec_idx + 2), 
+											 txt, flags=DOTALL)
 
 				dec_bodies += leftover_dec_bodies
 		elif len(dec_bodies) >= dec_num:
@@ -166,8 +170,8 @@ class Parser(object):
 		# E.g. "Οι Υπουργοί", "Ο ΠΡΟΕΔΡΕΥΩΝ" etc.
 		dec_signees_general_occup_pattern = "{year}\s*\n\s*{by_order_of}?((?:{gen_occupation}))\s*\n"\
 											.format(year="\s\d{4}", 
-										    		by_order_of= "(?:Με εντολή(?:[ ][Α-ΩΆ-ΏA-Z][α-ωά-ώa-zΑ-ΩΆ-ΏA-Z]+)+\n)",
-										    		gen_occupation="[Α-ΩΆ-ΏA-Z][α-ωά-ώa-zΑ-ΩΆ-ΏA-Z]?(?:[ ][Α-ΩΆ-ΏA-Z][α-ωά-ώa-zΑ-ΩΆ-ΏA-Z]+)+")
+													by_order_of= "(?:Με εντολή(?:[ ][Α-ΩΆ-ΏA-Z][α-ωά-ώa-zΑ-ΩΆ-ΏA-Z]+)+\n)",
+													gen_occupation="[Α-ΩΆ-ΏA-Z][α-ωά-ώa-zΑ-ΩΆ-ΏA-Z]?(?:[ ][Α-ΩΆ-ΏA-Z][α-ωά-ώa-zΑ-ΩΆ-ΏA-Z]+)+")
 
 		regex_dec_signees_general_occup = compile(dec_signees_general_occup_pattern, flags=DOTALL)
 		dec_signees_general_occup = findall(regex_dec_signees_general_occup, txt)
@@ -220,7 +224,7 @@ class Parser(object):
 		return matching_paorgs
 
 	def get_pres_decree_articles_from_txt(self, txt):
-		""" Ideally to be fed 'txt' containing decision or part of it """
+		""" Ideally to be fed 'txt' containing a presidential decree with articles """
 		dec_articles = []
 		if txt: 
 			dec_articles = findall(r"({artcl}\s*\d+\s*\n.+?)(?={artcl}\s*\d+\s*\n)"\
@@ -231,7 +235,34 @@ class Parser(object):
 			dec_articles.append(last_article[0])
 			return dict(zip(range(1, len(dec_articles) + 1), dec_articles))
 
-	
+	def get_respa_occurences_in_paorg_pres_decree_txt(self, txt, prim_kw_similarity=0.6, sec_kw_similarity=0.5):
+		""" Ideally to be fed 'txt' containing an article with responsibilities """
+		is_respa = lambda n_gram, respa_kw_pair: not not (get_close_matches(respa_kw_pair[0], n_gram, cutoff=prim_kw_similarity) and\
+														  get_close_matches(respa_kw_pair[1], n_gram, cutoff=sec_kw_similarity))
+
+		txt = Helper.clean_up_for_dec_related_getter(txt)
+		respa_kw_pair_occurences = {}
+
+		word_quatro_grams = Helper.get_word_n_grams(txt, 4)
+		
+		# 4-gram analysis 
+		quatro_gram_analysis_data = {}
+		for pair in self.paorg_issue_respa_keys['common_gt2gram_pairs']:
+			occurences = sum([is_respa(n_gram, pair) for n_gram in word_quatro_grams])
+			quatro_gram_analysis_data[pair] = occurences
+		respa_kw_pair_occurences['quatrogram_analysis'] = quatro_gram_analysis_data
+		
+		word_bi_grams = Helper.get_word_n_grams(txt, 2)
+
+		# 2-gram analysis 
+		bi_gram_analysis_data = {}
+		for pair in self.paorg_issue_respa_keys['common_bigram_pairs']:
+			occurences = sum([is_respa(n_gram, pair) for n_gram in word_bi_grams])
+			bi_gram_analysis_data[pair] = occurences
+		respa_kw_pair_occurences['bigram_analysis'] =  bi_gram_analysis_data
+		
+		return respa_kw_pair_occurences
+
 	def get_rough_respas_of_organization_units_from_pres_decree_txt(self, txt):
 		""" Ideally to be fed 'txt' containing an article with responsibilities """
 		txt = Helper.clean_up_for_dec_related_getter(txt)
@@ -255,7 +286,7 @@ class Parser(object):
 						   (respa_2.replace('\n', '').replace(' ', '') not in respa_1.replace('\n', '').replace(' ', '')) and\
 						   (not get_close_matches(respa_2, rough_paorg_respa_sections_1, cutoff=0.3)):
 
-						   		rough_paorg_respa_sections_1.append(respa_2)
+								rough_paorg_respa_sections_1.append(respa_2)
 
 				rough_paorg_respa_sections = rough_paorg_respa_sections_1
 			else:
@@ -277,7 +308,7 @@ class Parser(object):
 			main_respa_section_pattern = \
 			'(.+?(?:{assign_verb}).+?(?:{assign_type})?.+?)\.\s*\n\s*'\
 			.format(assign_verb=Helper.get_special_regex_disjunction(respa_key_assignment_verbs), 
-	  		 	   assign_type=Helper.get_special_regex_disjunction(respa_key_assignment_types))
+				   assign_type=Helper.get_special_regex_disjunction(respa_key_assignment_types))
 
 			dec_respa_sections_in_articles = findall(r"\n" + main_respa_section_pattern + self.article_keys[0], txt, flags=DOTALL)
 
@@ -304,7 +335,7 @@ class Parser(object):
 		if txt:
 			ref_respa_section_pattern = '((?:[α-ωά-ώΑ-ΩΆ-Ώa-zA-Z]+(?:\)|\.)|\d+\.)[^»]+?«[^»]+?(?:{assign_verb})[^»]+?(?:{assign_type})[^»]+?».+?)(?:\.|,)\s*\n\s*'.\
 										 format(assign_verb=Helper.get_special_regex_disjunction(respa_key_assignment_verbs),
-								  		 	    assign_type=Helper.get_special_regex_disjunction(respa_key_assignment_types))
+												assign_type=Helper.get_special_regex_disjunction(respa_key_assignment_types))
 
 			ref_dec_respa_sections = findall(ref_respa_section_pattern, txt, flags=DOTALL)
 
