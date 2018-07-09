@@ -1,41 +1,18 @@
-from context import main, unittest, call, os, errno, shutil
+from context import main, unittest, call, os, errno, shutil, Context
 from shutil import rmtree
-from main.parser import Parser
-from main.fetcher import Fetcher
 from util.helper import Helper
 import sys
 
-class ParserTest(unittest.TestCase):
+class ParserTest(Context):
 	
-	test_pdfs_dir = '/data/test_PDFs'
-	test_txts_dir = '/data/test_TXTs'
-
-	def setUp(self):
-		self.parser = Parser()
-	
-		# Creates the folder if not exists
-		try:
-			os.makedirs('..' + self.test_txts_dir)
-		except OSError as e:
-			if e.errno != errno.EEXIST:
-				raise
-
-	def tearDown(self): 
-		# rmtree('..' + self.test_txts_dir)
-		pass
-	
-	def get_txt(self, file_name, pdf_path=test_pdfs_dir+"/Decision_Issues/", txt_path=test_txts_dir+"/"):
-			return self.parser.get_simple_pdf_text('..' + pdf_path + file_name + '.pdf', 
-												   '..' + txt_path + file_name + '.txt')
-
 	def test_get_paorgs_mentioned_in_txt(self):
 		# May take several minutes, depending on work load
 		
 		def paorgs_mentioned_in_txt(file_name):
 			text =	self.get_txt(file_name)
-			fetcher = Fetcher("http://www.et.gr/idocs-nph/search/fekForm.html")
+			fetcher = self.fetcher
 			paorgs = fetcher.fetch_paorgs(['DIAVGEIA_ORGS.xlsx', 
-												'20170615_organosi_mhtrooy_foreon_2017.xlsx'])
+										   '20170615_organosi_mhtrooy_foreon_2017.xlsx'])
 
 			return self.parser.get_paorgs_from_txt(text, paorgs)
 
@@ -66,7 +43,6 @@ class ParserTest(unittest.TestCase):
 		txt_1 = Helper.deintonate_txt(txt_1)
 
 		print(txt_1)
-
 
 	def test_get_dec_sections_from_txts_1(self):
 		
@@ -1402,7 +1378,7 @@ class ParserTest(unittest.TestCase):
 
 	def test_analysis_of_paorg_pres_decree_respa_occurences_of_articles_in_txts_1(self):
 
-		def analyze_articles(articles):
+		def analyze_GG_issue(articles):
 			analysis_data_sums = {
 								  'bigram_analysis_sum': {('αρμόδι', 'για'): 0, ('εύθυν', 'για'): 0, 
 														  ('ευθύνη', 'για'): 0, ('αρμοδιότητ', 'ακόλουθ'): 0},
@@ -1501,11 +1477,11 @@ class ParserTest(unittest.TestCase):
 		if isinstance(articles_5, dict): articles_5 = list(articles_5.values())
 
 		
-		analysis_data_sums_txt_1 = analyze_articles(articles_1)
-		analysis_data_sums_txt_2 = analyze_articles(articles_2)
-		analysis_data_sums_txt_3 = analyze_articles(articles_3)
-		analysis_data_sums_txt_4 = analyze_articles(articles_4)
-		analysis_data_sums_txt_5 = analyze_articles(articles_5)
+		analysis_data_sums_txt_1 = analyze_GG_issue(articles_1)
+		analysis_data_sums_txt_2 = analyze_GG_issue(articles_2)
+		analysis_data_sums_txt_3 = analyze_GG_issue(articles_3)
+		analysis_data_sums_txt_4 = analyze_GG_issue(articles_4)
+		analysis_data_sums_txt_5 = analyze_GG_issue(articles_5)
 
 		print(dec_summaries_1, "\n", analysis_data_sums_txt_1, "\n")
 		print(dec_summaries_2, "\n", analysis_data_sums_txt_2, "\n")
