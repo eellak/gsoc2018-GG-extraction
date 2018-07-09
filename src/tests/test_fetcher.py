@@ -1,15 +1,7 @@
-from context import main, unittest, call, os, shutil
+from context import main, unittest, call, os, shutil, Context
 from shutil import rmtree
-from main.fetcher import Fetcher
 
-class FetcherTest(unittest.TestCase):
-	
-	def setUp(self):
-		self.fetcher = Fetcher("http://www.et.gr/idocs-nph/search/fekForm.html")
-
-	def tearDown(self):
-		# rmtree(path/to/download_folder)
-		pass
+class FetcherTest(Context):
 
 	def test_fetching_all_pdf_issues(self):
 		# Fetch issues of 2018
