@@ -9,23 +9,29 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')
 # import main
 import main.parser
 import main.fetcher
+import main.analyzer
 
 class Context(unittest.TestCase):
 	
 	test_pdfs_dir = '/data/test_PDFs'
 	test_txts_dir = '/data/test_TXTs'
 
-	def setUp(self):
-		
-		self.parser = main.parser.Parser()
-		self.fetcher = main.fetcher.Fetcher("http://www.et.gr/idocs-nph/search/fekForm.html")
-
-		# Creates the folder if not exists
+	def make_test_txts_dir(self):
 		try:
 			os.makedirs('..' + self.test_txts_dir)
 		except OSError as e:
 			if e.errno != errno.EEXIST:
 				raise
+
+	def setUp(self):
+		
+		self.make_test_txts_dir()
+
+		self.parser = main.parser.Parser()
+		self.fetcher = main.fetcher.Fetcher("http://www.et.gr/idocs-nph/search/fekForm.html")
+		self.analyzer = main.analyzer.Analyzer()
+
+		
 
 	def tearDown(self): 
 		# rmtree('..' + self.test_txts_dir)
