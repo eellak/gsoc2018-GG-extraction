@@ -1400,8 +1400,28 @@ class ParserTest(unittest.TestCase):
 		
 		# ...
 
-	def test_n_gram_analysis_on_respa_of_organization_units_occurrences_from_pres_decree_txts_1(self):
-		def reset_dict(dict): return dict.fromkeys(dict, 0)
+	def test_analysis_of_paorg_pres_decree_respa_occurences_of_articles_in_txts_1(self):
+
+		def analyze_articles(articles):
+			analysis_data_sums = {
+								  'bigram_analysis_sum': {('αρμόδι', 'για'): 0, ('εύθυν', 'για'): 0, 
+														  ('ευθύνη', 'για'): 0, ('αρμοδιότητ', 'ακόλουθ'): 0},
+								  'quatrogram_analysis_sum': {('αρμοδιότητ', 'έχει'): 0, ('αρμοδιότητ', 'εξής'): 0, 
+								  								('αρμοδιότητ', 'είναι'): 0} 
+							 	  }
+
+			for artcl in articles:
+				respa_occurences_in_artcl = self.parser.get_analysis_of_paorg_pres_decree_respa_occurences_of_article(artcl)
+				# Bigram data
+				for key in analysis_data_sums['bigram_analysis_sum'].keys():
+					analysis_data_sums['bigram_analysis_sum'][key] +=\
+					respa_occurences_in_artcl['bigram_analysis'][key]
+				# Quatrogram data
+				for key in analysis_data_sums['quatrogram_analysis_sum'].keys():
+					analysis_data_sums['quatrogram_analysis_sum'][key] +=\
+					respa_occurences_in_artcl['quatrogram_analysis'][key]
+			
+			return analysis_data_sums
 
 		ref_respa_pdf_path = self.test_pdfs_dir + '/Presidential_Decree_Issues/'
 		txt_1 = self.get_txt('1_Pres_Decree', pdf_path=ref_respa_pdf_path)
@@ -1480,105 +1500,18 @@ class ParserTest(unittest.TestCase):
 		if isinstance(articles_4, dict): articles_4 = list(articles_4.values())
 		if isinstance(articles_5, dict): articles_5 = list(articles_5.values())
 
-		analysis_data_sums = {
-							  'bigram_analysis_sum': {('αρμόδι', 'για'): 0, ('εύθυν', 'για'): 0, 
-													  ('ευθύνη', 'για'): 0, ('αρμοδιότητ', 'ακόλουθ'): 0},
-							  'quatrogram_analysis_sum': {('αρμοδιότητ', 'έχει'): 0, ('αρμοδιότητ', 'εξής'): 0, 
-							  								('αρμοδιότητ', 'είναι'): 0} 
-							 }
-
 		
-		# Articles 1
-		for artcl in articles_1:
-			respa_occurences_in_artcl = self.parser.get_respa_occurences_in_paorg_pres_decree_txt(artcl)
-			# Bigram data
-			for key in analysis_data_sums['bigram_analysis_sum'].keys():
-				analysis_data_sums['bigram_analysis_sum'][key] +=\
-				respa_occurences_in_artcl['bigram_analysis'][key]
-			# Quatrogram data
-			for key in analysis_data_sums['quatrogram_analysis_sum'].keys():
-				analysis_data_sums['quatrogram_analysis_sum'][key] +=\
-				respa_occurences_in_artcl['quatrogram_analysis'][key]
-		
-		print(dec_summaries_1, "\n", analysis_data_sums, "\n")
+		analysis_data_sums_txt_1 = analyze_articles(articles_1)
+		analysis_data_sums_txt_2 = analyze_articles(articles_2)
+		analysis_data_sums_txt_3 = analyze_articles(articles_3)
+		analysis_data_sums_txt_4 = analyze_articles(articles_4)
+		analysis_data_sums_txt_5 = analyze_articles(articles_5)
 
-		# Reset 
-		analysis_data_sums['bigram_analysis_sum'] = reset_dict(analysis_data_sums['bigram_analysis_sum'])
-		analysis_data_sums['quatrogram_analysis_sum'] = reset_dict(analysis_data_sums['quatrogram_analysis_sum'])
-
-		# Articles 2
-		for artcl in articles_2:
-			respa_occurences_in_artcl = self.parser.get_respa_occurences_in_paorg_pres_decree_txt(artcl)
-			# Bigram data
-			for key in analysis_data_sums['bigram_analysis_sum'].keys():
-				analysis_data_sums['bigram_analysis_sum'][key] +=\
-				respa_occurences_in_artcl['bigram_analysis'][key]
-			# Quatrogram data
-			for key in analysis_data_sums['quatrogram_analysis_sum'].keys():
-				analysis_data_sums['quatrogram_analysis_sum'][key] +=\
-				respa_occurences_in_artcl['quatrogram_analysis'][key]
-		
-		print(dec_summaries_2, "\n", analysis_data_sums, "\n")
-
-		# Reset 
-		analysis_data_sums['bigram_analysis_sum'] = reset_dict(analysis_data_sums['bigram_analysis_sum'])
-		analysis_data_sums['quatrogram_analysis_sum'] = reset_dict(analysis_data_sums['quatrogram_analysis_sum'])
-
-		# Articles 3
-		for artcl in articles_3:
-			respa_occurences_in_artcl = self.parser.get_respa_occurences_in_paorg_pres_decree_txt(artcl)
-			# Bigram data
-			for key in analysis_data_sums['bigram_analysis_sum'].keys():
-				analysis_data_sums['bigram_analysis_sum'][key] +=\
-				respa_occurences_in_artcl['bigram_analysis'][key]
-			# Quatrogram data
-			for key in analysis_data_sums['quatrogram_analysis_sum'].keys():
-				analysis_data_sums['quatrogram_analysis_sum'][key] +=\
-				respa_occurences_in_artcl['quatrogram_analysis'][key]
-		
-		print(dec_summaries_3, "\n", analysis_data_sums, "\n")
-
-		# Reset 
-		analysis_data_sums['bigram_analysis_sum'] = reset_dict(analysis_data_sums['bigram_analysis_sum'])
-		analysis_data_sums['quatrogram_analysis_sum'] = reset_dict(analysis_data_sums['quatrogram_analysis_sum'])
-
-		# Articles 4
-		for artcl in articles_4:
-			respa_occurences_in_artcl = self.parser.get_respa_occurences_in_paorg_pres_decree_txt(artcl)
-			# Bigram data
-			for key in analysis_data_sums['bigram_analysis_sum'].keys():
-				analysis_data_sums['bigram_analysis_sum'][key] +=\
-				respa_occurences_in_artcl['bigram_analysis'][key]
-			# Quatrogram data
-			for key in analysis_data_sums['quatrogram_analysis_sum'].keys():
-				analysis_data_sums['quatrogram_analysis_sum'][key] +=\
-				respa_occurences_in_artcl['quatrogram_analysis'][key]
-		
-		print(dec_summaries_4, "\n", analysis_data_sums, "\n")
-
-		# Reset 
-		analysis_data_sums['bigram_analysis_sum'] = reset_dict(analysis_data_sums['bigram_analysis_sum'])
-		analysis_data_sums['quatrogram_analysis_sum'] = reset_dict(analysis_data_sums['quatrogram_analysis_sum'])
-
-		# Articles 5
-		for artcl in articles_5:
-			respa_occurences_in_artcl = self.parser.get_respa_occurences_in_paorg_pres_decree_txt(artcl)
-			# Bigram data
-			for key in analysis_data_sums['bigram_analysis_sum'].keys():
-				analysis_data_sums['bigram_analysis_sum'][key] +=\
-				respa_occurences_in_artcl['bigram_analysis'][key]
-			# Quatrogram data
-			for key in analysis_data_sums['quatrogram_analysis_sum'].keys():
-				analysis_data_sums['quatrogram_analysis_sum'][key] +=\
-				respa_occurences_in_artcl['quatrogram_analysis'][key]
-		
-		print(dec_summaries_5, "\n", analysis_data_sums, "\n")
-
-		# Reset 
-		analysis_data_sums['bigram_analysis_sum'] = reset_dict(analysis_data_sums['bigram_analysis_sum'])
-		analysis_data_sums['quatrogram_analysis_sum'] = reset_dict(analysis_data_sums['quatrogram_analysis_sum'])
-
-
+		print(dec_summaries_1, "\n", analysis_data_sums_txt_1, "\n")
+		print(dec_summaries_2, "\n", analysis_data_sums_txt_2, "\n")
+		print(dec_summaries_3, "\n", analysis_data_sums_txt_3, "\n")
+		print(dec_summaries_4, "\n", analysis_data_sums_txt_4, "\n")
+		print(dec_summaries_5, "\n", analysis_data_sums_txt_5, "\n")
 
 if __name__ == '__main__':
 	unittest.main() 
