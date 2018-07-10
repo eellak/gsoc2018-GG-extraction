@@ -5,26 +5,26 @@ import sys
 
 class AnalyzerTest(Context):
 
-	def test_analysis_of_paorg_pres_decree_respa_occurences_of_articles_in_txts_1(self):
+	def test_get_respa_kw_analysis_of_paorg_pres_decree_articles_in_txts_1(self):
 
 			def analyze_GG_issue(articles):
 				analysis_data_sums = {
 									  'bigram_analysis_sum': {('αρμόδι', 'για'): 0, ('εύθυν', 'για'): 0, 
 															  ('ευθύνη', 'για'): 0, ('αρμοδιότητ', 'ακόλουθ'): 0},
-									  'quatrogram_analysis_sum': {('αρμοδιότητ', 'έχει'): 0, ('αρμοδιότητ', 'εξής'): 0, 
+									  'quadgram_analysis_sum': {('αρμοδιότητ', 'έχει'): 0, ('αρμοδιότητ', 'εξής'): 0, 
 									  								('αρμοδιότητ', 'είναι'): 0} 
 								 	  }
 
 				for artcl in articles:
-					respa_occurences_in_artcl = self.analyzer.get_analysis_of_paorg_pres_decree_respa_occurences_of_article(artcl)
+					respa_occurences_in_artcl = self.analyzer.get_respa_kw_analysis_of_paorg_pres_decree_article(artcl)
 					# Bigram data
 					for key in analysis_data_sums['bigram_analysis_sum'].keys():
 						analysis_data_sums['bigram_analysis_sum'][key] +=\
 						respa_occurences_in_artcl['bigram_analysis'][key]
 					# Quatrogram data
-					for key in analysis_data_sums['quatrogram_analysis_sum'].keys():
-						analysis_data_sums['quatrogram_analysis_sum'][key] +=\
-						respa_occurences_in_artcl['quatrogram_analysis'][key]
+					for key in analysis_data_sums['quadgram_analysis_sum'].keys():
+						analysis_data_sums['quadgram_analysis_sum'][key] +=\
+						respa_occurences_in_artcl['quadgram_analysis'][key]
 				
 				return analysis_data_sums
 
