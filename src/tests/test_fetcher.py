@@ -20,10 +20,5 @@ class FetcherTest(Context):
 		print(PAOrgs)
 		self.assertTrue(PAOrgs)
 
-	def test_fetching_respa_keys(self):
-		# Fetch RespA keys from local file
-		RespA_keys = self.fetcher.fetch_respa_keys('RespA_keys')
-		print(RespA_keys)
-
 if __name__ == '__main__':
 	unittest.main()
