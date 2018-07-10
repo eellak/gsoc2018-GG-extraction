@@ -313,12 +313,3 @@ class Fetcher:
             raise
 
         return PAOrgs
-
-    # Fetch responsibility assignments key - signifiers
-    def fetch_respa_keys(self, local_file):
-        files_location = '../data/NE_resources' 
-        file_path = files_location + '/' + local_file
-        with open(file_path, 'r') as RespA_verbs_file:
-            RespA_keys = RespA_verbs_file.read().splitlines()
-
-        return  RespA_keys
