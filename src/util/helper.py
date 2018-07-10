@@ -104,7 +104,7 @@ class Helper:
 
     @staticmethod
     def clean_up_for_dec_related_getter(txt):
-        return txt.replace('-\n', '').replace('−\n', '').replace('. ', '.')
+        return txt.replace('-\n', '').replace('−\n', '').replace('. ', '.').replace('  ', ' ')
 
     @staticmethod
     def clean_up_for_paorgs_getter(txt):
@@ -112,6 +112,10 @@ class Helper:
                   .replace('−', '').replace('-', '').replace('\n', ' ')\
                   .replace(' και ', ' ').replace(' της ', ' ').replace(' του ', ' ').replace(' των ', ' ')\
                   .replace('  ', ' ').replace('   ', ' ')
+
+    @staticmethod
+    def insert_list_into_csv_row(list):
+        pass
 
     @staticmethod
     def get_word_n_grams(text, n):
