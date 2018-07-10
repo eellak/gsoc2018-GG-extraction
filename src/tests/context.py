@@ -10,6 +10,7 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')
 import main.parser
 import main.fetcher
 import main.analyzer
+import util.helper
 
 class Context(unittest.TestCase):
 	
@@ -30,8 +31,9 @@ class Context(unittest.TestCase):
 		self.parser = main.parser.Parser()
 		self.fetcher = main.fetcher.Fetcher("http://www.et.gr/idocs-nph/search/fekForm.html")
 		self.analyzer = main.analyzer.Analyzer()
+		self.helper = util.helper.Helper()
 
-		
+		print("all ok")
 
 	def tearDown(self): 
 		# rmtree('..' + self.test_txts_dir)
