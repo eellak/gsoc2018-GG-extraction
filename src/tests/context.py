@@ -62,11 +62,13 @@ class Context(unittest.TestCase):
 		articles_custom_data_vectors = []
 		for artcl in articles: 
 			artcl_analysis_data = self.analyze_article(artcl)
-			
-			custom_condition = artcl_analysis_data['bigram_analysis'][('αρμόδι', 'για')] == 0 and\
-							   artcl_analysis_data['bigram_analysis'][('ρμοδιότητες', 'τ')] == 0 and\
-							   (sum(artcl_analysis_data['bigram_analysis'].values()) == 1 or\
-							   	sum(artcl_analysis_data['quadgram_analysis'].values()) == 1)
+
+			custom_condition = ( artcl_analysis_data['bigram_analysis'][("αρμόδι", "για")] > 0 or\
+								 artcl_analysis_data['bigram_analysis'][("αρμοδιότητ", "ακόλουθ")] > 0 or\
+								 artcl_analysis_data['bigram_analysis'][("ρμοδιότητες", "τ")] > 0 or\
+								 artcl_analysis_data['quadgram_analysis'][("αρμοδιότητ", "έχει")] > 0 or\
+								 artcl_analysis_data['quadgram_analysis'][("αρμοδιότητ", "εξής")] > 0
+							   	 )
 
 			if custom_condition:
 				print(artcl.partition('\n')[0], ':', artcl_analysis_data)

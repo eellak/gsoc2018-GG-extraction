@@ -59,10 +59,15 @@ class HelperTest(Context):
 		if isinstance(articles_4, dict): articles_4 = list(articles_4.values())
 		if isinstance(articles_5, dict): articles_5 = list(articles_5.values())
 
+		print("articles_1")
 		custom_training_data_1 = self.get_custom_n_gram_analysis_data_vector(articles_1)
+		print("articles_2")
 		custom_training_data_2 = self.get_custom_n_gram_analysis_data_vector(articles_2)
+		print("articles_3")
 		custom_training_data_3 = self.get_custom_n_gram_analysis_data_vector(articles_3)
+		print("articles_4")
 		custom_training_data_4 = self.get_custom_n_gram_analysis_data_vector(articles_4)
+		print("articles_5")
 		custom_training_data_5 = self.get_custom_n_gram_analysis_data_vector(articles_5)
 
 		# Filter out all-zero vectors
@@ -73,11 +78,11 @@ class HelperTest(Context):
 		# custom_training_data_5 = list(filter(lambda vector: sum(vector) > 0, custom_training_data_5))
 
 		# Append '0' ('non-respa') value to Respa column 
-		custom_training_data_1 = list(map(lambda vector: vector + [0], custom_training_data_1))
-		custom_training_data_2 = list(map(lambda vector: vector + [0], custom_training_data_2))
-		custom_training_data_3 = list(map(lambda vector: vector + [0], custom_training_data_3))
-		custom_training_data_4 = list(map(lambda vector: vector + [0], custom_training_data_4))
-		custom_training_data_5 = list(map(lambda vector: vector + [0], custom_training_data_5))
+		custom_training_data_1 = list(map(lambda vector: vector + [1], custom_training_data_1))
+		custom_training_data_2 = list(map(lambda vector: vector + [1], custom_training_data_2))
+		custom_training_data_3 = list(map(lambda vector: vector + [1], custom_training_data_3))
+		custom_training_data_4 = list(map(lambda vector: vector + [1], custom_training_data_4))
+		custom_training_data_5 = list(map(lambda vector: vector + [1], custom_training_data_5))
 
 		print(custom_training_data_1)
 		print(custom_training_data_2)
@@ -87,9 +92,11 @@ class HelperTest(Context):
 
 		csvfile = getcwd() + "/../data/PAOrg_issue_RespA_classifier_resources/dummy.csv"
 		
-		# self.helper.append_rows_into_csv(custom_training_data_1, csvfile)
-		# self.helper.append_rows_into_csv(custom_training_data_2, csvfile)
-		# self.helper.append_rows_into_csv(custom_training_data_5, csvfile)
+		self.helper.append_rows_into_csv(custom_training_data_1, csvfile)
+		self.helper.append_rows_into_csv(custom_training_data_2, csvfile)
+		self.helper.append_rows_into_csv(custom_training_data_3, csvfile)
+		self.helper.append_rows_into_csv(custom_training_data_4, csvfile)
+		self.helper.append_rows_into_csv(custom_training_data_5, csvfile)
 
 	def test_insert_training_data_into_csv_2(self):
 
@@ -132,8 +139,11 @@ class HelperTest(Context):
 		if isinstance(articles_2, dict): articles_2 = list(articles_2.values())
 		if isinstance(articles_3, dict): articles_3 = list(articles_3.values())
 
+		print("articles_1")
 		custom_training_data_1 = self.get_custom_n_gram_analysis_data_vector(articles_1)
+		print("articles_2")
 		custom_training_data_2 = self.get_custom_n_gram_analysis_data_vector(articles_2)
+		print("articles_3")
 		custom_training_data_3 = self.get_custom_n_gram_analysis_data_vector(articles_3)
 
 		# Filter out all-zero vectors
@@ -142,9 +152,9 @@ class HelperTest(Context):
 		# custom_training_data_3 = list(filter(lambda vector: sum(vector) > 0, custom_training_data_3))
 
 		# Append '0' ('non-respa') value to Respa column 
-		custom_training_data_1 = list(map(lambda vector: vector + [0], custom_training_data_1))
-		custom_training_data_2 = list(map(lambda vector: vector + [0], custom_training_data_2))
-		custom_training_data_3 = list(map(lambda vector: vector + [0], custom_training_data_3))
+		custom_training_data_1 = list(map(lambda vector: vector + [1], custom_training_data_1))
+		custom_training_data_2 = list(map(lambda vector: vector + [1], custom_training_data_2))
+		custom_training_data_3 = list(map(lambda vector: vector + [1], custom_training_data_3))
 
 		print(custom_training_data_1)
 		print(custom_training_data_2)
@@ -152,8 +162,9 @@ class HelperTest(Context):
 
 		csvfile = getcwd() + "/../data/PAOrg_issue_RespA_classifier_resources/dummy.csv"
 		
-		# self.helper.append_rows_into_csv(custom_training_data_1, csvfile)
-		# self.helper.append_rows_into_csv(custom_training_data_3, csvfile)
+		self.helper.append_rows_into_csv(custom_training_data_1, csvfile)
+		self.helper.append_rows_into_csv(custom_training_data_2, csvfile)
+		self.helper.append_rows_into_csv(custom_training_data_3, csvfile)
 
 if __name__ == '__main__':
 	unittest.main()
