@@ -41,6 +41,7 @@ class Parser(object):
 		self.usual_paorg_unit_keys = ["Τμήμα", "Διεύθυνση", "Υπηρεσία"]
 		self.dec_correction_keys = ['Διόρθωση', 'ΔΙΌΡΘΩΣΗ']
 		self.article_keys = ["Άρθρο"]
+		self.last_article_keys = ["Έναρξη Ισχύος", "Έναρξη ισχύος", "Η ισχύς του παρόντος", "EΝΑΡΞΗ ΙΣΧΥΟΣ"]
 
 	# @TODO:
 	# - Fine-tune section getters (see specific @TODOs)
@@ -70,7 +71,7 @@ class Parser(object):
 										 if self.dec_correction_keys[0] not in dec_sum \
 											and self.dec_correction_keys[1] not in dec_sum]
 		else:
-			if self.pres_decree_key in txt: print(txt)
+			
 			# Will also contain number e.g. Αριθμ. ...
 			dec_summaries = findall(r"(?:{}|{}\s*\d+)\s*\n\s*(.+?)\.\n\s*[α-ωά-ώΑ-ΩΆ-ΏA-Z()]"\
 							.format(self.decs_key, self.pres_decree_key), txt, flags=DOTALL)
@@ -222,10 +223,14 @@ class Parser(object):
 		if txt: 
 			dec_articles = findall(r"({artcl}\s*\d+\s*\n.+?)(?={artcl}\s*\d+\s*\n)"\
 							.format(artcl=self.article_keys[0]), txt, flags=DOTALL)
-			last_article = findall(r"({artcl}\s*\d+\s*\nΈναρξη.+?σχύος.+?\.\s*\n)"\
-							.format(artcl=self.article_keys[0]), txt, flags=DOTALL)
-			assert(len(last_article) == 1)
-			dec_articles.append(last_article[0])
+			last_article = findall(r"({artcl}\s*\d+\s*\n(?:{last_article}).+?\.\s*\n)"\
+							.format(artcl=self.article_keys[0], 
+								    last_article=Helper.get_special_regex_disjunction(self.last_article_keys)), 
+							txt, flags=DOTALL)
+			
+			if last_article:
+				assert(len(last_article) == 1)
+				dec_articles.append(last_article[0])
 			return dict(zip(range(1, len(dec_articles) + 1), dec_articles))
 
 	def get_rough_respas_of_organization_units_from_pres_decree_txt(self, txt):
