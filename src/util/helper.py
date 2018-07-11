@@ -10,6 +10,7 @@ import json
 import collections
 import datetime
 import re
+import csv
 
 # Helper class that defines useful formatting and file handling functions
 class Helper:
@@ -114,8 +115,11 @@ class Helper:
                   .replace('  ', ' ').replace('   ', ' ')
 
     @staticmethod
-    def insert_list_into_csv_row(list):
-        pass
+    def append_rows_into_csv(rows, csvfile):
+        """ 'rows': list of lists """
+        with open(csvfile, "a") as output:
+            writer = csv.writer(output, lineterminator='\n')
+            writer.writerows(rows)
 
     @staticmethod
     def get_word_n_grams(text, n):
