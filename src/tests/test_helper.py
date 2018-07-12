@@ -3,7 +3,7 @@ from os import getcwd
 
 class HelperTest(Context):
 
-	def test_insert_training_data_into_csv_1(self):
+	def test_insert_training_data_into_csv_3(self):
 
 		ref_respa_pdf_path = self.test_pdfs_dir + '/Presidential_Decree_Issues/'
 		txt_1 = self.get_txt('1_Pres_Decree', pdf_path=ref_respa_pdf_path)
@@ -165,6 +165,40 @@ class HelperTest(Context):
 		self.helper.append_rows_into_csv(custom_training_data_1, csvfile)
 		self.helper.append_rows_into_csv(custom_training_data_2, csvfile)
 		self.helper.append_rows_into_csv(custom_training_data_3, csvfile)
+
+	# def test_insert_training_data_into_csv_3(self):
+	# 		pdf_path = self.test_pdfs_dir + '/Presidential_Decree_Issues/for_training_data/Non-RespAs/'
+	# 		txt_path = self.test_txts_dir + '/for_training_data/Non-RespAs/'
+	# 		get_txt = self.get_txt
+	# 		txts = [get_txt(str(file), pdf_path=pdf_path, txt_path=txt_path)
+	# 		        for file in range(1, 23+1)]
+
+	# 		get_articles = self.parser.get_pres_decree_articles_from_txt
+
+	# 		articles = [get_articles(txts[i]) for i in range(len(txts))]
+
+	# 		# Convert any dict to list
+	# 		for i in range(len(articles)):
+	# 			if isinstance(articles[i], dict): articles[i] = list(articles[i].values())
+			
+	# 		analyze_issue = self.analyzer.analyze_issue
+	# 		analysis_data_sums_of_txts = [analyze_issue(articles[i])
+	# 		 							  for i in range(len(articles))]
+			
+	# 		get_n_gram_analysis_data_sums_vector = self.analyzer.get_n_gram_analysis_data_sums_vector
+			
+	# 		analysis_data_sums_vectors = [get_n_gram_analysis_data_sums_vector(analysis_data_sums_of_txts[i])
+	# 									  for i in range(len(analysis_data_sums_of_txts))]
+
+	# 		# Append value to Respa column 
+	# 		analysis_data_sums_vectors = list(map(lambda vector: vector + [0], analysis_data_sums_vectors))
+			
+	# 		print(analysis_data_sums_vectors)
+
+	# 		csvfile = getcwd() + "/../data/PAOrg_issue_RespA_classifier_resources/dummy.csv"
+		
+	# 		self.helper.append_rows_into_csv(analysis_data_sums_vectors, csvfile)
+			
 
 if __name__ == '__main__':
 	unittest.main()
