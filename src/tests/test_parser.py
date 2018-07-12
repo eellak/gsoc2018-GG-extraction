@@ -1309,7 +1309,6 @@ class ParserTest(Context):
 		self.assertTrue(dec_summaries_2); 
 		self.assertTrue(dec_summaries_3); 
 
-
 		## 
 		#  Decisions
 		##
@@ -1335,6 +1334,34 @@ class ParserTest(Context):
 		print(len(articles_1))
 		print(len(articles_2))
 		print(len(articles_3))
+
+	# def test_get_articles_from_txts_1(self):
+	# 		pdf_path = self.test_pdfs_dir + '/Presidential_Decree_Issues/for_training_data/Non-RespAs/'
+	# 		txt_path = self.test_txts_dir + '/for_training_data/Non-RespAs/'
+	# 		get_txt = self.get_txt
+	# 		txts = [get_txt(str(file), pdf_path=pdf_path, txt_path=txt_path)
+	# 		        for file in range(1, 23+1)]
+
+	# 		get_articles = self.parser.get_pres_decree_articles_from_txt
+
+	# 		articles = [get_articles(txts[i])
+	# 		              for i in range(len(txts))]
+			
+	# 		for i in range(len(articles)): print(len(articles[i]))
+
+	# def test_get_articles_from_txts_2(self):
+	# 		pdf_path = self.test_pdfs_dir + '/Presidential_Decree_Issues/for_training_data/RespAs/'
+	# 		txt_path = self.test_txts_dir + '/for_training_data/RespAs/'
+	# 		get_txt = self.get_txt
+	# 		txts = [get_txt(str(file), pdf_path=pdf_path, txt_path=txt_path)
+	# 		        for file in range(1, 50+1)]
+
+	# 		get_articles = self.parser.get_pres_decree_articles_from_txt
+
+	# 		articles = [get_articles(txts[i])
+	# 		              for i in range(len(txts))]
+			
+	# 		for i in range(len(articles)): print(len(articles[i]))
 
 
 	def test_get_respas_of_organization_units_from_pres_decree_txts_1(self):
