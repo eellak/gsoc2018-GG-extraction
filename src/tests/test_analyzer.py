@@ -77,6 +77,7 @@ class AnalyzerTest(Context):
 			print(dec_summaries_4, "\n", analysis_data_sums_txt_4, "\n")
 			print(dec_summaries_5, "\n", analysis_data_sums_txt_5, "\n")
 
+
 	def test_get_respa_kw_analysis_of_paorg_pres_decree_txts_2(self):
 
 			ref_respa_pdf_path = self.test_pdfs_dir + '/Presidential_Decree_Issues/'
@@ -126,7 +127,7 @@ class AnalyzerTest(Context):
 			analysis_data_sums_txt_1 = self.analyzer.analyze_issue(articles_1)
 			analysis_data_sums_txt_2 = self.analyzer.analyze_issue(articles_2)
 			analysis_data_sums_txt_3 = self.analyzer.analyze_issue(articles_3)
-
+			
 			print(dec_summaries_1, "\n", analysis_data_sums_txt_1, "\n")
 			print(dec_summaries_2, "\n", analysis_data_sums_txt_2, "\n")
 			print(dec_summaries_3, "\n", analysis_data_sums_txt_3, "\n")
@@ -188,11 +189,11 @@ class AnalyzerTest(Context):
 		if isinstance(articles_4, dict): articles_4 = list(articles_4.values())
 		if isinstance(articles_5, dict): articles_5 = list(articles_5.values())
 
-		print(self.analyzer.get_custom_n_gram_analysis_data_vector(articles_1))
-		print(self.analyzer.get_custom_n_gram_analysis_data_vector(articles_2))
-		print(self.analyzer.get_custom_n_gram_analysis_data_vector(articles_3))
-		print(self.analyzer.get_custom_n_gram_analysis_data_vector(articles_4))
-		print(self.analyzer.get_custom_n_gram_analysis_data_vector(articles_5))
+		print(self.analyzer.get_custom_n_gram_analysis_data_vectors(articles_1))
+		print(self.analyzer.get_custom_n_gram_analysis_data_vectors(articles_2))
+		print(self.analyzer.get_custom_n_gram_analysis_data_vectors(articles_3))
+		print(self.analyzer.get_custom_n_gram_analysis_data_vectors(articles_4))
+		print(self.analyzer.get_custom_n_gram_analysis_data_vectors(articles_5))
 
 	def test_respa_kw_analysis_of_paorg_pres_decree_articles_2(self):
 
@@ -237,9 +238,9 @@ class AnalyzerTest(Context):
 		if isinstance(articles_2, dict): articles_2 = list(articles_2.values())
 		if isinstance(articles_3, dict): articles_3 = list(articles_3.values())
 
-		print(self.analyzer.get_custom_n_gram_analysis_data_vector(articles_1))
-		print(self.analyzer.get_custom_n_gram_analysis_data_vector(articles_2))
-		print(self.analyzer.get_custom_n_gram_analysis_data_vector(articles_3))
+		print(self.analyzer.get_custom_n_gram_analysis_data_vectors(articles_1))
+		print(self.analyzer.get_custom_n_gram_analysis_data_vectors(articles_2))
+		print(self.analyzer.get_custom_n_gram_analysis_data_vectors(articles_3))
 
 if __name__ == '__main__':
 	unittest.main()

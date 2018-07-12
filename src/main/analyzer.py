@@ -69,7 +69,7 @@ class Analyzer(object):
 			
 		return articles_data_vectors
 
-	def get_custom_n_gram_analysis_data_vector(self, articles):
+	def get_custom_n_gram_analysis_data_vectors(self, articles):
 		articles_custom_data_vectors = []
 		for artcl in articles: 
 			artcl_analysis_data = self.analyze_article(artcl)
@@ -96,7 +96,7 @@ class Analyzer(object):
 		return articles_custom_data_vectors
 
 	def analyze_issue(self, issue_articles):
-				analysis_data_sums = {'bigram_analysis_sum': {('αρμόδι', 'για'): 0, ('εύθυν', 'για'): 0, ('ευθύνη', 'για'): 0, 
+				analysis_data_sums = {'bigram_analysis_sum': {('αρμόδι', 'για'): 0, ('ευθύνη', 'για'): 0, ('εύθυν', 'για'): 0,
 															  ('αρμοδιότητ', 'ακόλουθ'): 0, ("αρμοδιότητ", "ακόλουθ"): 0, 
 															  ("αρμοδιότητ", "μεταξύ"): 0, ("ρμοδιότητες", "τ"): 0},
 									  'quadgram_analysis_sum': {('αρμοδιότητ', 'έχει'): 0, ('αρμοδιότητ', 'εξής'): 0, 
