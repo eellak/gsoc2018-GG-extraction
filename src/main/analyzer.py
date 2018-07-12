@@ -54,6 +54,14 @@ class Analyzer(object):
 	def analyze_article(self, artcl):
 			return self.get_respa_kw_analysis_of_paorg_pres_decree_article(artcl)
 
+	def get_n_gram_analysis_data(self, articles):
+		articles_data = []
+		for artcl in articles: 
+			artcl_data = self.analyze_article(artcl)
+			print(artcl.partition('\n')[0], ':', artcl_data)
+			articles_data.append(artcl_data)
+		return articles_data
+
 	def get_n_gram_analysis_data_vectors(self, articles):
 		articles_data_vectors = []
 		for artcl in articles: 
@@ -64,8 +72,8 @@ class Analyzer(object):
 			bigram_data_vector, quadgram_data_vector = [bigram_data_dict[kw_pair] for kw_pair in bigram_data_dict.keys()],\
 			 										   [quadgram_data_dict[kw_pair] for kw_pair in quadgram_data_dict.keys()]
 
-			custom_n_gram_data_vector = bigram_data_vector + quadgram_data_vector
-			articles_data_vectors.append(custom_n_gram_data_vector)
+			n_gram_data_vector = bigram_data_vector + quadgram_data_vector
+			articles_data_vectors.append(n_gram_data_vector)
 			
 		return articles_data_vectors
 
@@ -96,22 +104,32 @@ class Analyzer(object):
 		return articles_custom_data_vectors
 
 	def analyze_issue(self, issue_articles):
-				analysis_data_sums = {'bigram_analysis_sum': {('αρμόδι', 'για'): 0, ('ευθύνη', 'για'): 0, ('εύθυν', 'για'): 0,
-															  ('αρμοδιότητ', 'ακόλουθ'): 0, ("αρμοδιότητ", "ακόλουθ"): 0, 
-															  ("αρμοδιότητ", "μεταξύ"): 0, ("ρμοδιότητες", "τ"): 0},
-									  'quadgram_analysis_sum': {('αρμοδιότητ', 'έχει'): 0, ('αρμοδιότητ', 'εξής'): 0, 
-									  								('αρμοδιότητ', 'είναι'): 0} 
-								 	  }
+		analysis_data_sums = {'bigram_analysis_sum': OrderedDict([(('αρμόδι', 'για'), 0), (('ευθύνη', 'για'), 0), (('εύθυν', 'για'), 0),
+													  (('αρμοδιότητ', 'ακόλουθ'), 0), (("αρμοδιότητ", "ακόλουθ"), 0), 
+													  (("αρμοδιότητ", "μεταξύ"), 0), (("ρμοδιότητες", "τ"), 0)]),
+							  
+							  'quadgram_analysis_sum': OrderedDict([(('αρμοδιότητ', 'έχει'), 0), (('αρμοδιότητ', 'εξής'), 0), 
+							  										(('αρμοδιότητ', 'είναι'), 0)])
+						 	  }
 
-				for artcl in issue_articles:
-					respa_occurences_in_artcl = self.get_respa_kw_analysis_of_paorg_pres_decree_article(artcl)
-					# Bigram data
-					for key in analysis_data_sums['bigram_analysis_sum'].keys():
-						analysis_data_sums['bigram_analysis_sum'][key] +=\
-						respa_occurences_in_artcl['bigram_analysis'][key]
-					# Quatrogram data
-					for key in analysis_data_sums['quadgram_analysis_sum'].keys():
-						analysis_data_sums['quadgram_analysis_sum'][key] +=\
-						respa_occurences_in_artcl['quadgram_analysis'][key]
-				
-				return analysis_data_sums	
+		for artcl in issue_articles:
+			respa_occurences_in_artcl = self.get_respa_kw_analysis_of_paorg_pres_decree_article(artcl)
+			# Bigram data
+			for key in analysis_data_sums['bigram_analysis_sum'].keys():
+				analysis_data_sums['bigram_analysis_sum'][key] +=\
+				respa_occurences_in_artcl['bigram_analysis'][key]
+			# Quatrogram data
+			for key in analysis_data_sums['quadgram_analysis_sum'].keys():
+				analysis_data_sums['quadgram_analysis_sum'][key] +=\
+				respa_occurences_in_artcl['quadgram_analysis'][key]
+		
+		return analysis_data_sums
+
+	def get_n_gram_analysis_data_sums_vector(self, analysis_data_sums):
+		bigram_data_dict, quadgram_data_dict = analysis_data_sums['bigram_analysis_sum'],\
+													   analysis_data_sums['quadgram_analysis_sum']
+		bigram_data_vector, quadgram_data_vector = [bigram_data_dict[kw_pair] for kw_pair in bigram_data_dict.keys()],\
+		 										   [quadgram_data_dict[kw_pair] for kw_pair in quadgram_data_dict.keys()]
+
+		n_gram_data_sums_vector = bigram_data_vector + quadgram_data_vector
+		return n_gram_data_sums_vector
