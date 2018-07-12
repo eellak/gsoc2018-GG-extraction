@@ -26,18 +26,23 @@ class Parser(object):
 		self.__illegal_chars = compile(r"\d+")
 		self.dec_contents_key = "ΠΕΡΙΕΧΟΜΕΝΑ\nΑΠΟΦΑΣΕΙΣ"
 		self.decs_key = "ΑΠΟΦΑΣΕΙΣ"
-		self.pres_decree_key = "ΠΡΟΕΔΡΙΚΟ ΔΙΑΤΑΓΜΑ ΥΠ\’ ΑΡΙΘΜ."
+		self.summaries_start_keys = ["ΑΠΟΦΑΣΕΙΣ", "ΠΡΟΕΔΡΙΚΟ ΔΙΑΤΑΓΜΑ ΥΠ\’ ΑΡΙΘ", "KANOΝΙΣΜΟΣ ΥΠ\’ ΑΡΙΘ", "ΝΟΜΟΣ ΥΠ\’ ΑΡΙΘ", 
+									 "[^«]ΠΡΑΞΗ ΝΟΜΟΘΕΤΙΚΟΥ ΠΕΡΙΕΧΟΜΕΝΟΥ" ]
 		# Must be expanded (lots of variants)
-		self.dec_prereq_keys = ["χοντας υπόψη:", "χοντας υπόψη", "χοντες υπόψη:", "χουσα υπόψη:", "χοντας υπόψη του:", 
+		self.dec_prereq_keys = ["χοντας υπόψη:", "χοντας υπόψη", "χοντες υπόψη:", "χουσα υπόψη:", "χουσα υπ’ όψει:", "χοντας υπόψη του:", 
 								"χοντας υπ\' όψη:", "χοντας υπ\’ όψη:", "Αφού έλαβε υπόψη:", "Λαμβάνοντας υπόψη:"]
 		self.dec_init_keys = ["αποφασίζουμε:", "αποφασίζουμε τα ακόλουθα:", "αποφασίζουμε τα εξής:", "διαπιστώνεται:",
 							  "αποφασίζει:", "αποφασίζει τα ακόλουθα:", "αποφασίζει τα εξής:", "αποφασίζει ομόφωνα:",
-							  "αποφασίζει ομόφωνα και εγκρίνει:", "αποφασίζει τα κάτωθι", "αποφασίζεται:",
+							  "αποφασίζει ομόφωνα και εγκρίνει:", "αποφασίζει τα κάτωθι", "αποφασίζεται:", "ψηφίζει:",
 							  "με τα παρακάτω στοιχεία:"]
-		self.dec_end_keys = {'start_group': ["Η απόφαση αυτή", "Ηαπόφαση αυτή", "Η απόφαση", "Η περίληψη αυτή", "η παρούσα ισχύει", "Η παρούσα απόφαση", "Η ισχύς του παρόντος"],
-							 'finish_group': ["την δημοσίευση", "τη δημοσίευση", "τη δημοσίευσή", "να δημοσιευθεί", "να δημοσιευτεί", "να δημοσιευθούν",  "F\n"]}
+		self.dec_end_keys = {'start_group': ["Η απόφαση αυτή", "Ηαπόφαση αυτή", "Η απόφαση", "Η περίληψη αυτή", 
+											 "η παρούσα ισχύει", "Η παρούσα απόφαση", "Η ισχύς του παρόντος", 
+											 "Ο παρών Κανονισμός", "Η ισχύς της παρούσας", "Η ισχύς των διατάξεων"],
+							 'finish_group': ["την δημοσίευση", "τη δημοσίευση", "τη δημοσίευσή", "να δημοσιευθεί", "να δημοσιευτεί", "να δημοσιευθούν",  
+							 				 "F\n", "της δημοσιεύσεώς", "δημοσίευση", "θα κυρωθεί"]}
 		self.respa_keys = {'assignment_verbs':["ναθέτουμε", "νατίθεται", "νατίθενται", "νάθεση", "ρίζουμε", "παλλάσσουμε", "εταβιβάζουμε"], 
 						   'assignment_types':["αθήκοντ", "ρμοδιότητ", "αθηκόντ", "ρμοδιοτήτ"]}
+
 		self.usual_paorg_unit_keys = ["Τμήμα", "Διεύθυνση", "Υπηρεσία"]
 		self.dec_correction_keys = ['Διόρθωση', 'ΔΙΌΡΘΩΣΗ']
 		self.article_keys = ["Άρθρο"]
@@ -71,10 +76,11 @@ class Parser(object):
 										 if self.dec_correction_keys[0] not in dec_sum \
 											and self.dec_correction_keys[1] not in dec_sum]
 		else:
-			
+			print(txt)
 			# Will also contain number e.g. Αριθμ. ...
-			dec_summaries = findall(r"(?:{}|{}\s*\d+)\s*\n\s*(.+?)\.\n\s*[α-ωά-ώΑ-ΩΆ-ΏA-Z()]"\
-							.format(self.decs_key, self.pres_decree_key), txt, flags=DOTALL)
+			dec_summaries = findall(r"(?:{start_keys}).+?\s*\n\s*(.+?)\.\s*\n\s*[α-ωά-ώΑ-ΩΆ-ΏA-Z()]"\
+							.format(start_keys=Helper.get_special_regex_disjunction(self.summaries_start_keys)), 
+							txt, flags=DOTALL)
 			assert(len(dec_summaries) == 1)
 		return dec_summaries
 
@@ -229,7 +235,7 @@ class Parser(object):
 							txt, flags=DOTALL)
 			
 			if last_article:
-				assert(len(last_article) == 1)
+				assert(len(last_article) >= 1)
 				dec_articles.append(last_article[0])
 			return dict(zip(range(1, len(dec_articles) + 1), dec_articles))
 
