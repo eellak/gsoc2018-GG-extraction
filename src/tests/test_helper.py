@@ -60,15 +60,15 @@ class HelperTest(Context):
 		if isinstance(articles_5, dict): articles_5 = list(articles_5.values())
 
 		print("articles_1")
-		custom_training_data_1 = self.get_custom_n_gram_analysis_data_vector(articles_1)
+		custom_training_data_1 = self.analyzer.get_custom_n_gram_analysis_data_vector(articles_1)
 		print("articles_2")
-		custom_training_data_2 = self.get_custom_n_gram_analysis_data_vector(articles_2)
+		custom_training_data_2 = self.analyzer.get_custom_n_gram_analysis_data_vector(articles_2)
 		print("articles_3")
-		custom_training_data_3 = self.get_custom_n_gram_analysis_data_vector(articles_3)
+		custom_training_data_3 = self.analyzer.get_custom_n_gram_analysis_data_vector(articles_3)
 		print("articles_4")
-		custom_training_data_4 = self.get_custom_n_gram_analysis_data_vector(articles_4)
+		custom_training_data_4 = self.analyzer.get_custom_n_gram_analysis_data_vector(articles_4)
 		print("articles_5")
-		custom_training_data_5 = self.get_custom_n_gram_analysis_data_vector(articles_5)
+		custom_training_data_5 = self.analyzer.get_custom_n_gram_analysis_data_vector(articles_5)
 
 		# Filter out all-zero vectors
 		# custom_training_data_1 = list(filter(lambda vector: sum(vector) > 0, custom_training_data_1))
@@ -140,11 +140,11 @@ class HelperTest(Context):
 		if isinstance(articles_3, dict): articles_3 = list(articles_3.values())
 
 		print("articles_1")
-		custom_training_data_1 = self.get_custom_n_gram_analysis_data_vector(articles_1)
+		custom_training_data_1 = self.analyzer.get_custom_n_gram_analysis_data_vector(articles_1)
 		print("articles_2")
-		custom_training_data_2 = self.get_custom_n_gram_analysis_data_vector(articles_2)
+		custom_training_data_2 = self.analyzer.get_custom_n_gram_analysis_data_vector(articles_2)
 		print("articles_3")
-		custom_training_data_3 = self.get_custom_n_gram_analysis_data_vector(articles_3)
+		custom_training_data_3 = self.analyzer.get_custom_n_gram_analysis_data_vector(articles_3)
 
 		# Filter out all-zero vectors
 		# custom_training_data_1 = list(filter(lambda vector: sum(vector) > 0, custom_training_data_1))
