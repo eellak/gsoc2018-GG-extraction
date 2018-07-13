@@ -105,7 +105,8 @@ class Helper:
 
     @staticmethod
     def clean_up_for_dec_related_getter(txt):
-        return txt.replace('-\n', '').replace('−\n', '').replace('. ', '.').replace('  ', ' ')
+        txt = re.sub('[\t ]+', ' ', txt)
+        return txt.replace('-\n', '').replace('−\n', '').replace('. ', '.')
 
     @staticmethod
     def clean_up_for_paorgs_getter(txt):
