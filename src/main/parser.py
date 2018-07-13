@@ -223,7 +223,7 @@ class Parser(object):
 		
 		return matching_paorgs
 
-	def get_pres_decree_articles_from_txt(self, txt):
+	def get_articles_from_txt(self, txt):
 		""" Ideally to be fed 'txt' containing a presidential decree with articles """
 		dec_articles = []
 		if txt: 

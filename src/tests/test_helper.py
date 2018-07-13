@@ -46,11 +46,11 @@ class HelperTest(Context):
 		if isinstance(decisions_4, dict): decisions_4 = list(decisions_4.values())
 		if isinstance(decisions_5, dict): decisions_5 = list(decisions_5.values())
 
-		articles_1 = self.parser.get_pres_decree_articles_from_txt(decisions_1[0])
-		articles_2 = self.parser.get_pres_decree_articles_from_txt(decisions_2[0])
-		articles_3 = self.parser.get_pres_decree_articles_from_txt(decisions_3[0])
-		articles_4 = self.parser.get_pres_decree_articles_from_txt(decisions_4[0])
-		articles_5 = self.parser.get_pres_decree_articles_from_txt(decisions_5[0])
+		articles_1 = self.parser.get_articles_from_txt(decisions_1[0])
+		articles_2 = self.parser.get_articles_from_txt(decisions_2[0])
+		articles_3 = self.parser.get_articles_from_txt(decisions_3[0])
+		articles_4 = self.parser.get_articles_from_txt(decisions_4[0])
+		articles_5 = self.parser.get_articles_from_txt(decisions_5[0])
 
 		# Convert any dict to list
 		if isinstance(articles_1, dict): articles_1 = list(articles_1.values())
@@ -130,9 +130,9 @@ class HelperTest(Context):
 		if isinstance(decisions_1, dict): decisions_1 = list(decisions_1.values())
 		if isinstance(decisions_2, dict): decisions_2 = list(decisions_2.values())
 		if isinstance(decisions_3, dict): decisions_3 = list(decisions_3.values())
-		articles_1 = self.parser.get_pres_decree_articles_from_txt(decisions_1[0])
-		articles_2 = self.parser.get_pres_decree_articles_from_txt(decisions_2[0])
-		articles_3 = self.parser.get_pres_decree_articles_from_txt(decisions_3[0])
+		articles_1 = self.parser.get_articles_from_txt(decisions_1[0])
+		articles_2 = self.parser.get_articles_from_txt(decisions_2[0])
+		articles_3 = self.parser.get_articles_from_txt(decisions_3[0])
 
 		# Convert any dict to list
 		if isinstance(articles_1, dict): articles_1 = list(articles_1.values())
@@ -166,5 +166,42 @@ class HelperTest(Context):
 		self.helper.append_rows_into_csv(custom_training_data_2, csvfile)
 		self.helper.append_rows_into_csv(custom_training_data_3, csvfile)
 
+<<<<<<< Updated upstream
+=======
+	# def test_insert_training_data_into_csv_3(self):
+	# 		pdf_path = self.test_pdfs_dir + '/Presidential_Decree_Issues/for_training_data/Non-RespAs/'
+	# 		txt_path = self.test_txts_dir + '/for_training_data/Non-RespAs/'
+	# 		get_txt = self.get_txt
+	# 		txts = [get_txt(str(file), pdf_path=pdf_path, txt_path=txt_path)
+	# 		        for file in range(1, 23+1)]
+
+	# 		get_articles = self.parser.get_articles_from_txt
+
+	# 		articles = [get_articles(txts[i]) for i in range(len(txts))]
+
+	# 		# Convert any dict to list
+	# 		for i in range(len(articles)):
+	# 			if isinstance(articles[i], dict): articles[i] = list(articles[i].values())
+			
+	# 		analyze_issue = self.analyzer.analyze_issue
+	# 		analysis_data_sums_of_txts = [analyze_issue(articles[i])
+	# 		 							  for i in range(len(articles))]
+			
+	# 		get_n_gram_analysis_data_sums_vector = self.analyzer.get_n_gram_analysis_data_sums_vector
+			
+	# 		analysis_data_sums_vectors = [get_n_gram_analysis_data_sums_vector(analysis_data_sums_of_txts[i])
+	# 									  for i in range(len(analysis_data_sums_of_txts))]
+
+	# 		# Append value to Respa column 
+	# 		analysis_data_sums_vectors = list(map(lambda vector: vector + [0], analysis_data_sums_vectors))
+			
+	# 		print(analysis_data_sums_vectors)
+
+	# 		csvfile = getcwd() + "/../data/PAOrg_issue_RespA_classifier_resources/dummy.csv"
+		
+	# 		self.helper.append_rows_into_csv(analysis_data_sums_vectors, csvfile)
+			
+
+>>>>>>> Stashed changes
 if __name__ == '__main__':
 	unittest.main()

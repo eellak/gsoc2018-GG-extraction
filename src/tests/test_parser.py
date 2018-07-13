@@ -1264,11 +1264,11 @@ class ParserTest(Context):
 		if isinstance(decisions_4, dict): decisions_4 = list(decisions_4.values())
 		if isinstance(decisions_5, dict): decisions_5 = list(decisions_5.values())
 
-		articles_1 = self.parser.get_pres_decree_articles_from_txt(decisions_1[0])
-		articles_2 = self.parser.get_pres_decree_articles_from_txt(decisions_2[0])
-		articles_3 = self.parser.get_pres_decree_articles_from_txt(decisions_3[0])
-		articles_4 = self.parser.get_pres_decree_articles_from_txt(decisions_4[0])
-		articles_5 = self.parser.get_pres_decree_articles_from_txt(decisions_5[0])
+		articles_1 = self.parser.get_articles_from_txt(decisions_1[0])
+		articles_2 = self.parser.get_articles_from_txt(decisions_2[0])
+		articles_3 = self.parser.get_articles_from_txt(decisions_3[0])
+		articles_4 = self.parser.get_articles_from_txt(decisions_4[0])
+		articles_5 = self.parser.get_articles_from_txt(decisions_5[0])
 		print(len(articles_1))
 		print(len(articles_2))
 		print(len(articles_3))
@@ -1327,9 +1327,9 @@ class ParserTest(Context):
 		if isinstance(decisions_3, dict): decisions_3 = list(decisions_3.values())
 
 
-		articles_1 = self.parser.get_pres_decree_articles_from_txt(decisions_1[0])
-		articles_2 = self.parser.get_pres_decree_articles_from_txt(decisions_2[0])
-		articles_3 = self.parser.get_pres_decree_articles_from_txt(decisions_3[0])
+		articles_1 = self.parser.get_articles_from_txt(decisions_1[0])
+		articles_2 = self.parser.get_articles_from_txt(decisions_2[0])
+		articles_3 = self.parser.get_articles_from_txt(decisions_3[0])
 
 		print(len(articles_1))
 		print(len(articles_2))
@@ -1342,7 +1342,7 @@ class ParserTest(Context):
 	# 		txts = [get_txt(str(file), pdf_path=pdf_path, txt_path=txt_path)
 	# 		        for file in range(1, 23+1)]
 
-	# 		get_articles = self.parser.get_pres_decree_articles_from_txt
+	# 		get_articles = self.parser.get_articles_from_txt
 
 	# 		articles = [get_articles(txts[i])
 	# 		              for i in range(len(txts))]
@@ -1356,7 +1356,7 @@ class ParserTest(Context):
 	# 		txts = [get_txt(str(file), pdf_path=pdf_path, txt_path=txt_path)
 	# 		        for file in range(1, 50+1)]
 
-	# 		get_articles = self.parser.get_pres_decree_articles_from_txt
+	# 		get_articles = self.parser.get_articles_from_txt
 
 	# 		articles = [get_articles(txts[i])
 	# 		              for i in range(len(txts))]
@@ -1429,11 +1429,11 @@ class ParserTest(Context):
 		if isinstance(decisions_4, dict): decisions_4 = list(decisions_4.values())
 		if isinstance(decisions_5, dict): decisions_5 = list(decisions_5.values())
 
-		articles_1 = self.parser.get_pres_decree_articles_from_txt(decisions_1[0])
-		articles_2 = self.parser.get_pres_decree_articles_from_txt(decisions_2[0])
-		articles_3 = self.parser.get_pres_decree_articles_from_txt(decisions_3[0])
-		articles_4 = self.parser.get_pres_decree_articles_from_txt(decisions_4[0])
-		articles_5 = self.parser.get_pres_decree_articles_from_txt(decisions_5[0])
+		articles_1 = self.parser.get_articles_from_txt(decisions_1[0])
+		articles_2 = self.parser.get_articles_from_txt(decisions_2[0])
+		articles_3 = self.parser.get_articles_from_txt(decisions_3[0])
+		articles_4 = self.parser.get_articles_from_txt(decisions_4[0])
+		articles_5 = self.parser.get_articles_from_txt(decisions_5[0])
 
 		# Convert any dict to list
 		if isinstance(articles_1, dict): articles_1 = list(articles_1.values())

@@ -51,11 +51,11 @@ class AnalyzerTest(Context):
 			if isinstance(decisions_4, dict): decisions_4 = list(decisions_4.values())
 			if isinstance(decisions_5, dict): decisions_5 = list(decisions_5.values())
 
-			articles_1 = self.parser.get_pres_decree_articles_from_txt(decisions_1[0])
-			articles_2 = self.parser.get_pres_decree_articles_from_txt(decisions_2[0])
-			articles_3 = self.parser.get_pres_decree_articles_from_txt(decisions_3[0])
-			articles_4 = self.parser.get_pres_decree_articles_from_txt(decisions_4[0])
-			articles_5 = self.parser.get_pres_decree_articles_from_txt(decisions_5[0])
+			articles_1 = self.parser.get_articles_from_txt(decisions_1[0])
+			articles_2 = self.parser.get_articles_from_txt(decisions_2[0])
+			articles_3 = self.parser.get_articles_from_txt(decisions_3[0])
+			articles_4 = self.parser.get_articles_from_txt(decisions_4[0])
+			articles_5 = self.parser.get_articles_from_txt(decisions_5[0])
 
 			# Convert any dict to list
 			if isinstance(articles_1, dict): articles_1 = list(articles_1.values())
@@ -121,9 +121,9 @@ class AnalyzerTest(Context):
 			if isinstance(decisions_2, dict): decisions_2 = list(decisions_2.values())
 			if isinstance(decisions_3, dict): decisions_3 = list(decisions_3.values())
 
-			articles_1 = self.parser.get_pres_decree_articles_from_txt(decisions_1[0])
-			articles_2 = self.parser.get_pres_decree_articles_from_txt(decisions_2[0])
-			articles_3 = self.parser.get_pres_decree_articles_from_txt(decisions_3[0])
+			articles_1 = self.parser.get_articles_from_txt(decisions_1[0])
+			articles_2 = self.parser.get_articles_from_txt(decisions_2[0])
+			articles_3 = self.parser.get_articles_from_txt(decisions_3[0])
 
 			# Convert any dict to list
 			if isinstance(articles_1, dict): articles_1 = list(articles_1.values())
@@ -186,11 +186,11 @@ class AnalyzerTest(Context):
 		if isinstance(decisions_4, dict): decisions_4 = list(decisions_4.values())
 		if isinstance(decisions_5, dict): decisions_5 = list(decisions_5.values())
 
-		articles_1 = self.parser.get_pres_decree_articles_from_txt(decisions_1[0])
-		articles_2 = self.parser.get_pres_decree_articles_from_txt(decisions_2[0])
-		articles_3 = self.parser.get_pres_decree_articles_from_txt(decisions_3[0])
-		articles_4 = self.parser.get_pres_decree_articles_from_txt(decisions_4[0])
-		articles_5 = self.parser.get_pres_decree_articles_from_txt(decisions_5[0])
+		articles_1 = self.parser.get_articles_from_txt(decisions_1[0])
+		articles_2 = self.parser.get_articles_from_txt(decisions_2[0])
+		articles_3 = self.parser.get_articles_from_txt(decisions_3[0])
+		articles_4 = self.parser.get_articles_from_txt(decisions_4[0])
+		articles_5 = self.parser.get_articles_from_txt(decisions_5[0])
 
 		# Convert any dict to list
 		if isinstance(articles_1, dict): articles_1 = list(articles_1.values())
@@ -239,9 +239,9 @@ class AnalyzerTest(Context):
 		if isinstance(decisions_2, dict): decisions_2 = list(decisions_2.values())
 		if isinstance(decisions_3, dict): decisions_3 = list(decisions_3.values())
 
-		articles_1 = self.parser.get_pres_decree_articles_from_txt(decisions_1[0])
-		articles_2 = self.parser.get_pres_decree_articles_from_txt(decisions_2[0])
-		articles_3 = self.parser.get_pres_decree_articles_from_txt(decisions_3[0])
+		articles_1 = self.parser.get_articles_from_txt(decisions_1[0])
+		articles_2 = self.parser.get_articles_from_txt(decisions_2[0])
+		articles_3 = self.parser.get_articles_from_txt(decisions_3[0])
 
 		# Convert any dict to list
 		if isinstance(articles_1, dict): articles_1 = list(articles_1.values())
