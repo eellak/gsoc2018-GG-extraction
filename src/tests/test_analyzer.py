@@ -253,11 +253,19 @@ class AnalyzerTest(Context):
 		print(self.analyzer.get_custom_n_gram_analysis_data_vectors(articles_3))
 
 	def test_cross_validate_respa_clfs(self):
-		issue_clf_data_csv = getcwd() + "/../data/PAOrg_issue_RespA_classifier_resources/issue_respa_classifier_data.csv"
-		artcl_clf_data_csv = getcwd() + "/../data/PAOrg_issue_RespA_classifier_resources/article_respa_classifier_data.csv"
+		print("Issue clf data:")
+		self.analyzer.cross_validate(self.issue_clf_data_csv, test_size=0.4)
+		print("Article clf data:")
+		self.analyzer.cross_validate(self.artcl_clf_data_csv, test_size=0.4)
 
-		self.analyzer.cross_validate(issue_clf_data_csv, test_size=0.4)
-		self.analyzer.cross_validate(artcl_clf_data_csv, test_size=0.4)
+	def test_KFold_cross_validate_respa_clfs(self):
+		print("Issue clf data:")
+		self.analyzer.KFold_cross_validate(self.issue_clf_data_csv)
+		print("Article clf data:")
+		self.analyzer.KFold_cross_validate(self.artcl_clf_data_csv)
+
+
+
 
 
 
