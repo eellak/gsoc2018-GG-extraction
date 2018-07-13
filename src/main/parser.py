@@ -26,8 +26,8 @@ class Parser(object):
 		self.__illegal_chars = compile(r"\d+")
 		self.dec_contents_key = "ΠΕΡΙΕΧΟΜΕΝΑ\nΑΠΟΦΑΣΕΙΣ"
 		self.decs_key = "ΑΠΟΦΑΣΕΙΣ"
-		self.summaries_start_keys = ["ΑΠΟΦΑΣΕΙΣ", "ΠΡΟΕΔΡΙΚΟ ΔΙΑΤΑΓΜΑ ΥΠ\’ ΑΡΙΘ", "KANOΝΙΣΜΟΣ ΥΠ\’ ΑΡΙΘ", "ΝΟΜΟΣ ΥΠ\’ ΑΡΙΘ", 
-									 "[^«]ΠΡΑΞΗ ΝΟΜΟΘΕΤΙΚΟΥ ΠΕΡΙΕΧΟΜΕΝΟΥ" ]
+		self.summaries_start_keys = ["ΠΡΟΕΔΡΙΚΟ ΔΙΑΤΑΓΜΑ ΥΠ\’ ΑΡΙΘ[^\n]+", "KANOΝΙΣΜΟΣ ΥΠ\’ ΑΡΙΘ[^\n]+", "ΝΟΜΟΣ ΥΠ\’ ΑΡΙΘ[^\n]+", 
+									 "[^«]ΠΡΑΞΗ ΝΟΜΟΘΕΤΙΚΟΥ ΠΕΡΙΕΧΟΜΕΝΟΥ[^\n]+"]
 		# Must be expanded (lots of variants)
 		self.dec_prereq_keys = ["χοντας υπόψη:", "χοντας υπόψη", "χοντες υπόψη:", "χουσα υπόψη:", "χουσα υπ’ όψει:", "χοντας υπόψη του:", 
 								"χοντας υπ\' όψη:", "χοντας υπ\’ όψη:", "Αφού έλαβε υπόψη:", "Λαμβάνοντας υπόψη:"]
@@ -78,8 +78,9 @@ class Parser(object):
 		else:
 			print(txt)
 			# Will also contain number e.g. Αριθμ. ...
-			dec_summaries = findall(r"(?:{start_keys}).+?\s*\n\s*(.+?)\.\s*\n\s*[α-ωά-ώΑ-ΩΆ-ΏA-Z()]"\
-							.format(start_keys=Helper.get_special_regex_disjunction(self.summaries_start_keys)), 
+			dec_summaries = findall(r"(?:{dec_key}|(?:{start_keys}))\s*\n\s*(.+?)\.\s*\n\s*[α-ωά-ώΑ-ΩΆ-ΏA-Z()]"\
+							.format(dec_key = self.decs_key,
+							start_keys=Helper.get_special_regex_disjunction(self.summaries_start_keys)), 
 							txt, flags=DOTALL)
 			assert(len(dec_summaries) == 1)
 		return dec_summaries
@@ -320,6 +321,10 @@ class Parser(object):
 	def get_person_named_entities(self, txt):
 		""" Ideally to be fed 'txt' containing RespA sections """
 		return list(filter(lambda entity: entity.tag == 'I-PER', Text(txt).entities))
+
+	def get_sentences(self, txt):
+		""" Ideally to be fed 'txt' containing '.' separated sentences """
+		return Text(txt).sentences
 
 	# Get a dictionary containing assignment: {'PAOrg': ..., 'Persons': ..., 'Responsibilities': ..., etc.}
 	def get_respa_association(self, txt):
