@@ -1,5 +1,12 @@
 from util.helper import Helper
 from collections import OrderedDict
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn import svm
+from sklearn.model_selection import KFold
+from sklearn.model_selection import cross_val_score
+from sklearn.tree import DecisionTreeClassifier
+from numpy import mean
 
 class Analyzer(object):
 	
@@ -133,3 +140,24 @@ class Analyzer(object):
 
 		n_gram_data_sums_vector = bigram_data_vector + quadgram_data_vector
 		return n_gram_data_sums_vector
+
+	def cross_validate(self, data_csv_file, test_size):
+		df=pd.read_csv(data_csv_file, sep=',', skiprows=1, names=['A','B', 'C','D','E','F','G','H','I','RESPA'])
+		X_train, X_test, y_train, y_test = train_test_split(df[['A','B', 'C','D','E','F','G','H','I']], df['RESPA'], test_size=test_size)
+		clf = svm.SVC(kernel='linear', C=1).fit(X_train, y_train)
+		print(clf.score(X_test, y_test))
+
+	def KFold_cross_validate(self, data_csv_file):
+		df=pd.read_csv(data_csv_file, sep=',', skiprows=1, names=['A','B', 'C','D','E','F','G','H','I','RESPA'])
+
+		X = df[['A','B', 'C','D','E','F','G','H','I']]
+		y = df[['RESPA']]
+		
+		kf = KFold(n_splits=10)
+		kf.get_n_splits(X)
+		print(kf)  
+		kf = KFold(n_splits=10)
+		clf_tree=DecisionTreeClassifier()
+		scores = cross_val_score(clf_tree, X, y, cv=kf)
+		avg_score = mean(scores)
+		print(avg_score)

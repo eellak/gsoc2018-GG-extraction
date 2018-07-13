@@ -4,6 +4,7 @@ import shutil
 import os
 import sys
 from subprocess import call
+from os import getcwd
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 # import main
@@ -16,6 +17,9 @@ class Context(unittest.TestCase):
 	
 	test_pdfs_dir = '/data/test_PDFs'
 	test_txts_dir = '/data/test_TXTs'
+
+	issue_clf_data_csv = getcwd() + "/../data/PAOrg_issue_RespA_classifier_resources/issue_respa_classifier_data.csv"
+	artcl_clf_data_csv = getcwd() + "/../data/PAOrg_issue_RespA_classifier_resources/article_respa_classifier_data.csv"
 
 	def make_test_txts_dir(self):
 		try:

@@ -1,9 +1,8 @@
-from context import main, unittest, call, os, errno, shutil, Context
-from os import getcwd
+from context import main, unittest, getcwd, call, os, errno, shutil, Context
 
 class HelperTest(Context):
 
-	def test_insert_training_data_into_csv_1(self):
+	def test_insert_training_data_into_csv_3(self):
 
 		ref_respa_pdf_path = self.test_pdfs_dir + '/Presidential_Decree_Issues/'
 		txt_1 = self.get_txt('1_Pres_Decree', pdf_path=ref_respa_pdf_path)
@@ -166,8 +165,6 @@ class HelperTest(Context):
 		self.helper.append_rows_into_csv(custom_training_data_2, csvfile)
 		self.helper.append_rows_into_csv(custom_training_data_3, csvfile)
 
-<<<<<<< Updated upstream
-=======
 	# def test_insert_training_data_into_csv_3(self):
 	# 		pdf_path = self.test_pdfs_dir + '/Presidential_Decree_Issues/for_training_data/Non-RespAs/'
 	# 		txt_path = self.test_txts_dir + '/for_training_data/Non-RespAs/'
@@ -201,7 +198,5 @@ class HelperTest(Context):
 		
 	# 		self.helper.append_rows_into_csv(analysis_data_sums_vectors, csvfile)
 			
-
->>>>>>> Stashed changes
 if __name__ == '__main__':
 	unittest.main()

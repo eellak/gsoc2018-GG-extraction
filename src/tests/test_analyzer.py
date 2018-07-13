@@ -1,4 +1,4 @@
-from context import main, unittest, call, os, errno, shutil, Context
+from context import main, unittest, call, getcwd, os, errno, shutil, Context
 
 class AnalyzerTest(Context):
 
@@ -251,6 +251,23 @@ class AnalyzerTest(Context):
 		print(self.analyzer.get_custom_n_gram_analysis_data_vectors(articles_1))
 		print(self.analyzer.get_custom_n_gram_analysis_data_vectors(articles_2))
 		print(self.analyzer.get_custom_n_gram_analysis_data_vectors(articles_3))
+
+	def test_cross_validate_respa_clfs(self):
+		print("Issue clf data:")
+		self.analyzer.cross_validate(self.issue_clf_data_csv, test_size=0.4)
+		print("Article clf data:")
+		self.analyzer.cross_validate(self.artcl_clf_data_csv, test_size=0.4)
+
+	def test_KFold_cross_validate_respa_clfs(self):
+		print("Issue clf data:")
+		self.analyzer.KFold_cross_validate(self.issue_clf_data_csv)
+		print("Article clf data:")
+		self.analyzer.KFold_cross_validate(self.artcl_clf_data_csv)
+
+
+
+
+
 
 if __name__ == '__main__':
 	unittest.main()
