@@ -4,6 +4,7 @@ import shutil
 import os
 import sys
 from subprocess import call
+from os import getcwd
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 # import main

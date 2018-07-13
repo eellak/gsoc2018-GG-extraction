@@ -1,5 +1,4 @@
-from context import main, unittest, call, os, errno, shutil, Context
-from os import getcwd
+from context import main, unittest, getcwd, call, os, errno, shutil, Context
 
 class HelperTest(Context):
 
