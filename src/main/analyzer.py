@@ -59,7 +59,29 @@ class Analyzer(object):
 		return respa_kw_pair_occurences
 
 	def analyze_article(self, artcl):
-			return self.get_respa_kw_analysis_of_paorg_pres_decree_article(artcl)
+			return self.get_respa_kw_analysis_of_paorg_pres_decree_txt(artcl)
+
+	def analyze_issue(self, issue_articles):
+		analysis_data_sums = {'bigram_analysis_sum': OrderedDict([(('αρμόδι', 'για'), 0), (('ευθύνη', 'για'), 0), (('εύθυν', 'για'), 0),
+													  (('αρμοδιότητ', 'ακόλουθ'), 0), (("αρμοδιότητ", "ακόλουθ"), 0), 
+													  (("αρμοδιότητ", "μεταξύ"), 0), (("ρμοδιότητες", "τ"), 0)]),
+							  
+							  'quadgram_analysis_sum': OrderedDict([(('αρμοδιότητ', 'έχει'), 0), (('αρμοδιότητ', 'εξής'), 0), 
+							  										(('αρμοδιότητ', 'είναι'), 0)])
+						 	  }
+
+		for artcl in issue_articles:
+			respa_occurences_in_artcl = self.get_respa_kw_analysis_of_paorg_pres_decree_txt(artcl)
+			# Bigram data
+			for key in analysis_data_sums['bigram_analysis_sum'].keys():
+				analysis_data_sums['bigram_analysis_sum'][key] +=\
+				respa_occurences_in_artcl['bigram_analysis'][key]
+			# Quatrogram data
+			for key in analysis_data_sums['quadgram_analysis_sum'].keys():
+				analysis_data_sums['quadgram_analysis_sum'][key] +=\
+				respa_occurences_in_artcl['quadgram_analysis'][key]
+		
+		return analysis_data_sums
 
 	def get_n_gram_analysis_data(self, articles):
 		articles_data = []
@@ -110,29 +132,8 @@ class Analyzer(object):
 				
 		return articles_custom_data_vectors
 
-	def analyze_issue(self, issue_articles):
-		analysis_data_sums = {'bigram_analysis_sum': OrderedDict([(('αρμόδι', 'για'), 0), (('ευθύνη', 'για'), 0), (('εύθυν', 'για'), 0),
-													  (('αρμοδιότητ', 'ακόλουθ'), 0), (("αρμοδιότητ", "ακόλουθ"), 0), 
-													  (("αρμοδιότητ", "μεταξύ"), 0), (("ρμοδιότητες", "τ"), 0)]),
-							  
-							  'quadgram_analysis_sum': OrderedDict([(('αρμοδιότητ', 'έχει'), 0), (('αρμοδιότητ', 'εξής'), 0), 
-							  										(('αρμοδιότητ', 'είναι'), 0)])
-						 	  }
-
-		for artcl in issue_articles:
-			respa_occurences_in_artcl = self.get_respa_kw_analysis_of_paorg_pres_decree_article(artcl)
-			# Bigram data
-			for key in analysis_data_sums['bigram_analysis_sum'].keys():
-				analysis_data_sums['bigram_analysis_sum'][key] +=\
-				respa_occurences_in_artcl['bigram_analysis'][key]
-			# Quatrogram data
-			for key in analysis_data_sums['quadgram_analysis_sum'].keys():
-				analysis_data_sums['quadgram_analysis_sum'][key] +=\
-				respa_occurences_in_artcl['quadgram_analysis'][key]
-		
-		return analysis_data_sums
-
-	def get_n_gram_analysis_data_sums_vector(self, analysis_data_sums):
+	def get_n_gram_analysis_data_sums_vector(self, issue_articles):
+		analysis_data_sums = self.analyze_issue(issue_articles)
 		bigram_data_dict, quadgram_data_dict = analysis_data_sums['bigram_analysis_sum'],\
 													   analysis_data_sums['quadgram_analysis_sum']
 		bigram_data_vector, quadgram_data_vector = [bigram_data_dict[kw_pair] for kw_pair in bigram_data_dict.keys()],\
@@ -142,13 +143,13 @@ class Analyzer(object):
 		return n_gram_data_sums_vector
 
 	def cross_validate(self, data_csv_file, test_size):
-		df=pd.read_csv(data_csv_file, sep=',', skiprows=1, names=['A','B', 'C','D','E','F','G','H','I','RESPA'])
+		df = pd.read_csv(data_csv_file, sep=',', skiprows=1, names=['A','B', 'C','D','E','F','G','H','I','RESPA'])
 		X_train, X_test, y_train, y_test = train_test_split(df[['A','B', 'C','D','E','F','G','H','I']], df['RESPA'], test_size=test_size)
 		clf = svm.SVC(kernel='linear', C=1).fit(X_train, y_train)
 		print(clf.score(X_test, y_test))
 
 	def KFold_cross_validate(self, data_csv_file):
-		df=pd.read_csv(data_csv_file, sep=',', skiprows=1, names=['A','B', 'C','D','E','F','G','H','I','RESPA'])
+		df = pd.read_csv(data_csv_file, sep=',', skiprows=1, names=['A','B', 'C','D','E','F','G','H','I','RESPA'])
 
 		X = df[['A','B', 'C','D','E','F','G','H','I']]
 		y = df[['RESPA']]
@@ -161,3 +162,15 @@ class Analyzer(object):
 		scores = cross_val_score(clf_tree, X, y, cv=kf)
 		avg_score = mean(scores)
 		print(avg_score)
+
+	def train_clf(self, data_csv_file):
+		df = pd.read_csv(data_csv_file, sep=',', skiprows=1, names=['A','B', 'C','D','E','F','G','H','I','RESPA'])
+		Features = df[['A','B', 'C','D','E','F','G','H','I']]
+		is_respa = df['RESPA']
+		clf = svm.SVC(kernel='linear', C=1).fit(Features, is_respa)
+		return clf
+
+	# GG issue, article classifier
+	# Predicts whether or not 'issue' contains RespA
+	def has_respa(self, type_clf, data_vector):
+		return type_clf.predict([data_vector])
