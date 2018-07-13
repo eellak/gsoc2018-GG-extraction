@@ -1199,6 +1199,13 @@ class ParserTest(Context):
 
 	# 	print(persons)
 
+	# def test_breaking_txt_into_sentences(self):
+	# 	txt_1 = self.get_txt('1')
+
+	# 	txt_1 = self.helper.clean_up_for_dec_related_getter(txt_1)
+	# 	print([txt_1])
+	# 	print(self.parser.get_sentences(txt_1))
+
 	def test_get_articles_from_pres_decree_txts_1(self):
 		ref_respa_pdf_path = self.test_pdfs_dir + '/Presidential_Decree_Issues/'
 		txt_1 = self.get_txt('1_Pres_Decree', pdf_path=ref_respa_pdf_path)
