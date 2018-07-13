@@ -20,7 +20,7 @@ class Analyzer(object):
 																				  	    ("αρμοδιότητ", "είναι")]
 														   }
 
-	def get_respa_kw_analysis_of_paorg_pres_decree_article(self, artcl):
+	def get_respa_kw_analysis_of_paorg_pres_decree_txt(self, txt):
 		""" Ideally to be fed 'txt' containing an article with responsibilities """
 		def n_gram_is_respa(n_gram, respa_kw_pair): 
 			return ( any([(respa_kw_pair[0] in word) for word in n_gram]) and 
@@ -31,11 +31,11 @@ class Analyzer(object):
 				   	 ## 'τ' == 'τ'ου/ης/ων 
 				   	 special_respa_kw_pair[1][0] == bi_gram[1][0] )
 
-		artcl = Helper.clean_up_for_dec_related_getter(artcl)
+		txt = Helper.clean_up_for_dec_related_getter(txt)
 		respa_kw_pair_occurences = {}
 
 		# 4-gram analysis 
-		word_quad_grams = Helper.get_word_n_grams(artcl, 4)
+		word_quad_grams = Helper.get_word_n_grams(txt, 4)
 		quad_gram_analysis_data = OrderedDict()
 		for respa_kw_pair in self.organization_pres_decree_issue_respa_keys['common_quadgram_pairs']:
 			occurences = sum([n_gram_is_respa(quadgram, respa_kw_pair) for quadgram in word_quad_grams])
@@ -43,7 +43,7 @@ class Analyzer(object):
 		respa_kw_pair_occurences['quadgram_analysis'] = quad_gram_analysis_data
 	
 		# 2-gram analysis 
-		word_bi_grams = Helper.get_word_n_grams(artcl, 2)
+		word_bi_grams = Helper.get_word_n_grams(txt, 2)
 		bi_gram_analysis_data = OrderedDict()
 		for respa_kw_pair in self.organization_pres_decree_issue_respa_keys['common_bigram_pairs'][:-1]:
 			occurences = sum([n_gram_is_respa(bigram, respa_kw_pair) for bigram in word_bi_grams])
