@@ -65,11 +65,11 @@ class AnalyzerTest(Context):
 			if isinstance(articles_5, dict): articles_5 = list(articles_5.values())
 
 			
-			analysis_txt_1_data_sums = self.analyzer.analyze_issue(articles_1)
-			analysis_txt_2_data_sums = self.analyzer.analyze_issue(articles_2)
-			analysis_txt_3_data_sums = self.analyzer.analyze_issue(articles_3)
-			analysis_txt_4_data_sums = self.analyzer.analyze_issue(articles_4)
-			analysis_txt_5_data_sums = self.analyzer.analyze_issue(articles_5)
+			analysis_txt_1_data_sums = self.analyzer.analyze_issue_from_articles(articles_1)
+			analysis_txt_2_data_sums = self.analyzer.analyze_issue_from_articles(articles_2)
+			analysis_txt_3_data_sums = self.analyzer.analyze_issue_from_articles(articles_3)
+			analysis_txt_4_data_sums = self.analyzer.analyze_issue_from_articles(articles_4)
+			analysis_txt_5_data_sums = self.analyzer.analyze_issue_from_articles(articles_5)
 
 			print(dec_summaries_1, "\n", analysis_txt_1_data_sums, "\n")
 			print(dec_summaries_2, "\n", analysis_txt_2_data_sums, "\n")
@@ -130,9 +130,9 @@ class AnalyzerTest(Context):
 			if isinstance(articles_2, dict): articles_2 = list(articles_2.values())
 			if isinstance(articles_3, dict): articles_3 = list(articles_3.values())
 			
-			analysis_txt_1_data_sums = self.analyzer.analyze_issue(articles_1)
-			analysis_txt_2_data_sums = self.analyzer.analyze_issue(articles_2)
-			analysis_txt_3_data_sums = self.analyzer.analyze_issue(articles_3)
+			analysis_txt_1_data_sums = self.analyzer.analyze_issue_from_articles(articles_1)
+			analysis_txt_2_data_sums = self.analyzer.analyze_issue_from_articles(articles_2)
+			analysis_txt_3_data_sums = self.analyzer.analyze_issue_from_articles(articles_3)
 			
 			print(dec_summaries_1, "\n", analysis_txt_1_data_sums, "\n")
 			print(dec_summaries_2, "\n", analysis_txt_2_data_sums, "\n")
@@ -251,6 +251,69 @@ class AnalyzerTest(Context):
 		print(self.analyzer.get_custom_n_gram_analysis_data_vectors(articles_1))
 		print(self.analyzer.get_custom_n_gram_analysis_data_vectors(articles_2))
 		print(self.analyzer.get_custom_n_gram_analysis_data_vectors(articles_3))
+
+	def test_respa_kw_analysis_of_paorg_pres_decree_paragraphs_1(self):
+		pdf_path = self.test_pdfs_dir + '/Presidential_Decree_Issues/'
+		get_txt = self.get_txt
+		txt_1 = get_txt('1_Pres_Decree', pdf_path=pdf_path)
+		txt_2 = get_txt('2_Pres_Decree', pdf_path=pdf_path)
+		txt_3 = get_txt('3_Pres_Decree', pdf_path=pdf_path)
+		txt_4 = get_txt('4_Pres_Decree', pdf_path=pdf_path)
+		txt_5 = get_txt('5_Pres_Decree', pdf_path=pdf_path)
+		txt_6 = get_txt('6_Pres_Decree', pdf_path=pdf_path)
+		txt_7 = get_txt('7_Pres_Decree', pdf_path=pdf_path)
+		txt_8 = get_txt('8_Pres_Decree', pdf_path=pdf_path)
+
+		get_paragraphs = self.parser.get_paragraphs
+		paragraphs_1 = get_paragraphs(txt_1)
+		paragraphs_2 = get_paragraphs(txt_2)
+		paragraphs_3 = get_paragraphs(txt_3)
+		paragraphs_4 = get_paragraphs(txt_4)
+		paragraphs_5 = get_paragraphs(txt_5)
+		paragraphs_6 = get_paragraphs(txt_6)
+		paragraphs_7 = get_paragraphs(txt_7)
+		paragraphs_8 = get_paragraphs(txt_8)
+
+		print(self.analyzer.get_n_gram_analysis_data_vectors(paragraphs_1))
+		print(self.analyzer.get_n_gram_analysis_data_vectors(paragraphs_2))
+		print(self.analyzer.get_n_gram_analysis_data_vectors(paragraphs_3))
+		print(self.analyzer.get_n_gram_analysis_data_vectors(paragraphs_4))
+		print(self.analyzer.get_n_gram_analysis_data_vectors(paragraphs_5))
+		print(self.analyzer.get_n_gram_analysis_data_vectors(paragraphs_6))
+		print(self.analyzer.get_n_gram_analysis_data_vectors(paragraphs_7))
+		print(self.analyzer.get_n_gram_analysis_data_vectors(paragraphs_8))
+		
+	def test_respa_kw_analysis_of_paorg_pres_decree_paragraphs_2(self):
+		pdf_path = self.test_pdfs_dir + '/Presidential_Decree_Issues/for_training_data/Non-RespAs/'
+		txt_path = self.test_txts_dir + '/for_training_data/Non-RespAs/'
+		get_txt = self.get_txt
+		txts = [get_txt(str(file), pdf_path=pdf_path, txt_path=txt_path)
+		        for file in range(1, 23+1)]
+
+		get_paragraphs = self.parser.get_paragraphs
+
+		paragraphs_of_txts = [get_paragraphs(txt)
+		              		  for txt in txts]
+	
+		for paragraphs in paragraphs_of_txts:
+			print(len(self.analyzer.get_n_gram_analysis_data_vectors(paragraphs)))
+
+	def test_respa_kw_analysis_of_paorg_pres_decree_paragraphs_3(self):
+		pdf_path = self.test_pdfs_dir + '/Presidential_Decree_Issues/for_training_data/RespAs/'
+		txt_path = self.test_txts_dir + '/for_training_data/RespAs/'
+		get_txt = self.get_txt
+		txts = [get_txt(str(file), pdf_path=pdf_path, txt_path=txt_path)
+		        for file in range(1, 50+1)]
+
+		get_paragraphs = self.parser.get_paragraphs
+
+		paragraphs_of_txts = [get_paragraphs(txts[i])
+		              		  for i in range(len(txts))]
+		
+		print(len(paragraphs_of_txts))
+		
+		for paragraphs in paragraphs_of_txts:
+			print(len(self.analyzer.get_n_gram_analysis_data_vectors(paragraphs)))
 
 	def test_cross_validate_respa_clfs(self):
 		print("Issue clf data:")
