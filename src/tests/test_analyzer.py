@@ -320,12 +320,16 @@ class AnalyzerTest(Context):
 		self.analyzer.cross_validate(self.issue_clf_data_csv, test_size=0.4)
 		print("Article clf data:")
 		self.analyzer.cross_validate(self.artcl_clf_data_csv, test_size=0.4)
+		print("Paragraph clf data:")
+		self.analyzer.cross_validate(self.paragraph_clf_data_csv, test_size=0.4)
 
 	def test_KFold_cross_validate_respa_clfs(self):
 		print("Issue clf data:")
 		self.analyzer.KFold_cross_validate(self.issue_clf_data_csv)
 		print("Article clf data:")
 		self.analyzer.KFold_cross_validate(self.artcl_clf_data_csv)
+		print("Paragraph clf data:")
+		self.analyzer.KFold_cross_validate(self.paragraph_clf_data_csv)
 
 	# def test_respa_classifiers(self):
 		
