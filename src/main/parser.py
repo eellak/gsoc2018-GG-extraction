@@ -324,7 +324,15 @@ class Parser(object):
 
 	def get_sentences(self, txt):
 		""" Ideally to be fed 'txt' containing '.' separated sentences """
+		txt = Helper.clean_up_for_dec_related_getter(txt)
 		return Text(txt).sentences
+
+	def get_paragraphs(self, txt):
+		txt = Helper.clean_up_for_dec_related_getter(txt)
+		paragraphs = []
+		if txt:
+			paragraphs = findall(r"\n\s*[Ά-ΏΑ-Ωα-ωά-ώ\d+\(•\-]+[\.\)α-ω]([\s\S]+?)[\.\:](?=\n)", txt)
+		return paragraphs 
 
 	# Get a dictionary containing assignment: {'PAOrg': ..., 'Persons': ..., 'Responsibilities': ..., etc.}
 	def get_respa_association(self, txt):
@@ -334,7 +342,6 @@ class Parser(object):
 		# responsibilities = 
 
 		return {}
-
 
 	def get_simple_pdf_text(self, file_name, txt_name):
 		
