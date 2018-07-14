@@ -197,6 +197,99 @@ class HelperTest(Context):
 	# 		csvfile = getcwd() + "/../data/PAOrg_issue_RespA_classifier_resources/dummy.csv"
 		
 	# 		self.helper.append_rows_into_csv(analysis_data_sums_vectors, csvfile)
+
+	def test_insert_training_data_into_csv_3(self):
+		pdf_path = self.test_pdfs_dir + '/Presidential_Decree_Issues/'
+		get_txt = self.get_txt
+		txt_1 = get_txt('1_Pres_Decree', pdf_path=pdf_path)
+		txt_2 = get_txt('2_Pres_Decree', pdf_path=pdf_path)
+		txt_3 = get_txt('3_Pres_Decree', pdf_path=pdf_path)
+		txt_4 = get_txt('4_Pres_Decree', pdf_path=pdf_path)
+		txt_5 = get_txt('5_Pres_Decree', pdf_path=pdf_path)
+		txt_6 = get_txt('6_Pres_Decree', pdf_path=pdf_path)
+		txt_7 = get_txt('7_Pres_Decree', pdf_path=pdf_path)
+		txt_8 = get_txt('8_Pres_Decree', pdf_path=pdf_path)
+
+		get_paragraphs = self.parser.get_paragraphs
+		paragraphs_1 = get_paragraphs(txt_1)
+		paragraphs_2 = get_paragraphs(txt_2)
+		paragraphs_3 = get_paragraphs(txt_3)
+		paragraphs_4 = get_paragraphs(txt_4)
+		paragraphs_5 = get_paragraphs(txt_5)
+		paragraphs_6 = get_paragraphs(txt_6)
+		paragraphs_7 = get_paragraphs(txt_7)
+		paragraphs_8 = get_paragraphs(txt_8)
+
+		custom_training_data_1 = self.analyzer.get_custom_n_gram_analysis_data_vectors(paragraphs_1)
+		custom_training_data_2 = self.analyzer.get_custom_n_gram_analysis_data_vectors(paragraphs_2)
+		custom_training_data_3 = self.analyzer.get_custom_n_gram_analysis_data_vectors(paragraphs_3)
+		custom_training_data_4 = self.analyzer.get_custom_n_gram_analysis_data_vectors(paragraphs_4)
+		custom_training_data_5 = self.analyzer.get_custom_n_gram_analysis_data_vectors(paragraphs_5)
+		custom_training_data_6 = self.analyzer.get_custom_n_gram_analysis_data_vectors(paragraphs_6)
+		custom_training_data_7 = self.analyzer.get_custom_n_gram_analysis_data_vectors(paragraphs_7)
+		custom_training_data_8 = self.analyzer.get_custom_n_gram_analysis_data_vectors(paragraphs_8)
+
+		# Append '0' ('non-respa') value to Respa column 
+		custom_training_data_1 = list(map(lambda vector: vector + [1], custom_training_data_1))
+		custom_training_data_2 = list(map(lambda vector: vector + [1], custom_training_data_2))
+		custom_training_data_3 = list(map(lambda vector: vector + [1], custom_training_data_3))
+		custom_training_data_4 = list(map(lambda vector: vector + [1], custom_training_data_4))
+		custom_training_data_5 = list(map(lambda vector: vector + [1], custom_training_data_5))
+		custom_training_data_6 = list(map(lambda vector: vector + [1], custom_training_data_6))
+		custom_training_data_7 = list(map(lambda vector: vector + [1], custom_training_data_7))
+		custom_training_data_8 = list(map(lambda vector: vector + [1], custom_training_data_8))
+
+		self.helper.append_rows_into_csv(custom_training_data_1, self.dummy_csv)
+		self.helper.append_rows_into_csv(custom_training_data_2, self.dummy_csv)
+		self.helper.append_rows_into_csv(custom_training_data_3, self.dummy_csv)
+		self.helper.append_rows_into_csv(custom_training_data_4, self.dummy_csv)
+		self.helper.append_rows_into_csv(custom_training_data_5, self.dummy_csv)
+		self.helper.append_rows_into_csv(custom_training_data_6, self.dummy_csv)
+		self.helper.append_rows_into_csv(custom_training_data_7, self.dummy_csv)
+		self.helper.append_rows_into_csv(custom_training_data_8, self.dummy_csv)
+
+
+	def test_insert_training_data_into_csv_4(self):
+		pdf_path = self.test_pdfs_dir + '/Presidential_Decree_Issues/for_training_data/Non-RespAs/'
+		txt_path = self.test_txts_dir + '/for_training_data/Non-RespAs/'
+		get_txt = self.get_txt
+		txts = [get_txt(str(file), pdf_path=pdf_path, txt_path=txt_path)
+		        for file in range(1, 23+1)]
+
+		get_paragraphs = self.parser.get_paragraphs
+
+		paragraphs_of_txts = [get_paragraphs(txt) for txt in txts]
+
+		get_custom_n_gram_analysis_data_vectors = self.analyzer.get_custom_n_gram_analysis_data_vectors
+		custom_training_data_of_txts = [get_custom_n_gram_analysis_data_vectors(paragraphs)
+										for paragraphs in paragraphs_of_txts]
+ 
+		custom_training_data_of_txts = [list(map(lambda vector: vector + [1], custom_training_data))
+										for custom_training_data in custom_training_data_of_txts]
+
+		for custom_training_data in custom_training_data_of_txts:
+			self.helper.append_rows_into_csv(custom_training_data, self.dummy_csv)
+
+	def test_insert_training_data_into_csv_5(self):
+		pdf_path = self.test_pdfs_dir + '/Presidential_Decree_Issues/for_training_data/RespAs/'
+		txt_path = self.test_txts_dir + '/for_training_data/RespAs/'
+		get_txt = self.get_txt
+		txts = [get_txt(str(file), pdf_path=pdf_path, txt_path=txt_path)
+		        for file in range(1, 50+1)]
+
+		get_paragraphs = self.parser.get_paragraphs
+
+		paragraphs_of_txts = [get_paragraphs(txt) for txt in txts]
+
+		get_custom_n_gram_analysis_data_vectors = self.analyzer.get_custom_n_gram_analysis_data_vectors
+		custom_training_data_of_txts = [get_custom_n_gram_analysis_data_vectors(paragraphs)
+										for paragraphs in paragraphs_of_txts]
+ 
+		custom_training_data_of_txts = [list(map(lambda vector: vector + [1], custom_training_data))
+										for custom_training_data in custom_training_data_of_txts]
+
+		for custom_training_data in custom_training_data_of_txts:
+			self.helper.append_rows_into_csv(custom_training_data, self.dummy_csv)
 			
 if __name__ == '__main__':
 	unittest.main()
