@@ -376,7 +376,7 @@ class Parser(object):
 
 	def simple_pdf_to_text(self, file_name, txt_name):
 		if not os.path.exists(file_name):
-			raise OSError("'{}' does not exist!".format(file_name))
+			print("'{}' does not exist!".format(file_name))
 		
 		if os.path.exists(txt_name):
 			print("'{}' already exists! Fetching text anyway...".format(txt_name))
