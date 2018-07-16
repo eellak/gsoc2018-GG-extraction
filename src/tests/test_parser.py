@@ -1264,6 +1264,36 @@ class ParserTest(Context):
 		
 		for i in range(len(txts)): print(len(paragraphs_of_txts[i]))
 
+	def test_get_clean_words_1(self):
+		pdf_path = self.test_pdfs_dir + '/Presidential_Decree_Issues/'
+		get_txt = self.get_txt
+		txt_1 = get_txt('1_Pres_Decree', pdf_path=pdf_path)
+		txt_2 = get_txt('2_Pres_Decree', pdf_path=pdf_path)
+		txt_3 = get_txt('3_Pres_Decree', pdf_path=pdf_path)
+		txt_4 = get_txt('4_Pres_Decree', pdf_path=pdf_path)
+		txt_5 = get_txt('5_Pres_Decree', pdf_path=pdf_path)
+		txt_6 = get_txt('6_Pres_Decree', pdf_path=pdf_path)
+		txt_7 = get_txt('7_Pres_Decree', pdf_path=pdf_path)
+		txt_8 = get_txt('8_Pres_Decree', pdf_path=pdf_path)
+
+		get_paragraphs = self.parser.get_paragraphs
+		paragraphs_1 = get_paragraphs(txt_1)
+		paragraphs_2 = get_paragraphs(txt_2)
+		paragraphs_3 = get_paragraphs(txt_3)
+		paragraphs_4 = get_paragraphs(txt_4)
+		paragraphs_5 = get_paragraphs(txt_5)
+		paragraphs_6 = get_paragraphs(txt_6)
+		paragraphs_7 = get_paragraphs(txt_7)
+		paragraphs_8 = get_paragraphs(txt_8)
+
+		get_clean_words = self.parser.get_clean_words 
+	
+		words_of_paragraphs_1 = [get_clean_words(prgrph)
+								 for prgrph in paragraphs_1]
+
+		print(words_of_paragraphs_1)
+
+
 	def test_get_articles_from_pres_decree_txts_1(self):
 		ref_respa_pdf_path = self.test_pdfs_dir + '/Presidential_Decree_Issues/'
 		txt_1 = self.get_txt('1_Pres_Decree', pdf_path=ref_respa_pdf_path)
