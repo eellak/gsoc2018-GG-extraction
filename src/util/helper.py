@@ -106,7 +106,7 @@ class Helper:
     @staticmethod
     def clean_up_for_dec_related_getter(txt):
         txt = re.sub('[\t ]+', ' ', txt)
-        return txt.replace('-\n', '').replace('−\n', '').replace('. ', '.')
+        return txt.replace('-\n', '').replace('−\n', '').replace('−', '').replace('-', '').replace('. ', '.')
 
     @staticmethod
     def clean_up_for_paorgs_getter(txt):
@@ -123,9 +123,10 @@ class Helper:
             writer.writerows(rows)
 
     @staticmethod
-    def get_word_n_grams(text, n):
-        text = text.split(' ')
-        return [text[i:i+n] for i in range(len(text) - n + 1)]
+    def get_word_n_grams(inpt, n):
+        if (type(inpt) is str):
+            inpt = inpt.split(' ')
+        return [inpt[i:i+n] for i in range(len(inpt) - n + 1)]
 
     @staticmethod
     def get_greek_stopwords():
