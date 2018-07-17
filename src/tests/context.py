@@ -21,7 +21,10 @@ class Context(unittest.TestCase):
 	# dummy_csv = getcwd() + "/../data/PAOrg_issue_RespA_classifier_resources/dummy.csv"
 	issue_clf_data_csv = getcwd() + "/../data/PAOrg_issue_RespA_classifier_resources/issue_respa_classifier_data.csv"
 	artcl_clf_data_csv = getcwd() + "/../data/PAOrg_issue_RespA_classifier_resources/article_respa_classifier_data.csv"
-	paragraph_clf_data_csv = getcwd() + "/../data/PAOrg_issue_RespA_classifier_resources/paragraph_respa_classifier_data.csv"
+	paragraph_clf_data = {
+						  'respa': getcwd() + "/../data/PAOrg_issue_RespA_classifier_resources/paragraph_respa_classifier_data/respa_paragraphs_dict.pkl",
+						  'non_respa' : getcwd() + "/../data/PAOrg_issue_RespA_classifier_resources/paragraph_respa_classifier_data/non_respa_paragraphs_dict.pkl"
+						 }
 
 	def make_test_txts_dir(self):
 		try:

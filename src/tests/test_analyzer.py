@@ -1,5 +1,6 @@
 from context import main, unittest, call, getcwd, os, errno, shutil, Context
 from collections import defaultdict
+from pickle import dump, HIGHEST_PROTOCOL
 
 class AnalyzerTest(Context):
 
@@ -316,10 +317,13 @@ class AnalyzerTest(Context):
 		for paragraphs in paragraphs_of_txts:
 			print(len(self.analyzer.get_n_gram_analysis_data_vectors(paragraphs)))
 
-	def test_merged_non_respa_paragraphs_dict(self):
+	def test_pickle_merged_non_respa_paragraphs_dict(self):
 		txt_path = self.test_txts_dir + '/for_training_data/Non-RespAs/paragraphs/'
+		pickle_file = 'non_respa_paragraphs_dict.pkl'
+
 		rel_non_respa_paragraphs_path = '..' + txt_path
-		
+		rel_pickle_file_path = '..' + '/data/PAOrg_issue_RespA_classifier_resources/paragraph_respa_classifier_data/' + pickle_file
+
 		non_respa_paragraphs = []
 		for i in range(1, 669+1):
 			with open(rel_non_respa_paragraphs_path + str(i) + '.txt') as txt:
@@ -341,17 +345,27 @@ class AnalyzerTest(Context):
 		
 		# Bigrams before merge
 		print(sum([len(prgrph_bigrams) for prgrph_bigrams in non_respa_paragraph_bigram_dicts]))
+
 		# Merge possible keys
 		merged_non_respa_prgrh_bigrams_dict = defaultdict(int)
 		for prgrh_bigrams in non_respa_paragraph_bigram_dicts:
 			for bigram in prgrh_bigrams:
 				merged_non_respa_prgrh_bigrams_dict[bigram[0]] += bigram[1]
 
-		print(len(merged_non_respa_prgrh_bigrams_dict))
+		# Bigrams after merge
+		print(len(merged_non_respa_prgrh_bigrams_dict))		
 
-	def test_merged_respa_paragraphs_dict(self):
+		# Dump to pickle file
+		with open(rel_pickle_file_path, 'wb') as handle:
+			dump(dict(merged_non_respa_prgrh_bigrams_dict),
+				handle, protocol=HIGHEST_PROTOCOL)		
+
+	def test_pickle_merged_respa_paragraphs_dict(self):
 		txt_path = self.test_txts_dir + '/for_training_data/RespAs/paragraphs/'
+		pickle_file = 'respa_paragraphs_dict.pkl'
+
 		rel_respa_paragraphs_path = '..' + txt_path
+		rel_pickle_file_path = '..' + '/data/PAOrg_issue_RespA_classifier_resources/paragraph_respa_classifier_data/' + pickle_file
 		
 		respa_paragraphs = []
 		for i in range(1, 569+1):
@@ -374,29 +388,33 @@ class AnalyzerTest(Context):
 		
 		# Bigrams before merge
 		print(sum([len(prgrph_bigrams) for prgrph_bigrams in respa_paragraph_bigram_dicts]))
+
 		# Merge possible keys
 		merged_respa_prgrh_bigrams_dict = defaultdict(int)
 		for prgrh_bigrams in respa_paragraph_bigram_dicts:
 			for bigram in prgrh_bigrams:
 				merged_respa_prgrh_bigrams_dict[bigram[0]] += bigram[1]
 
+		# Bigrams after merge
 		print(len(merged_respa_prgrh_bigrams_dict))
+
+		# Dump to pickle file
+		with open(rel_pickle_file_path, 'wb') as handle:
+			dump(dict(merged_respa_prgrh_bigrams_dict),
+				handle, protocol=HIGHEST_PROTOCOL)
+	
 
 	def test_cross_validate_respa_clfs(self):
 		print("Issue clf data:")
 		self.analyzer.cross_validate(self.issue_clf_data_csv, test_size=0.4)
 		print("Article clf data:")
 		self.analyzer.cross_validate(self.artcl_clf_data_csv, test_size=0.4)
-		print("Paragraph clf data:")
-		self.analyzer.cross_validate(self.paragraph_clf_data_csv, test_size=0.4)
-
+		
 	def test_KFold_cross_validate_respa_clfs(self):
 		print("Issue clf data:")
 		self.analyzer.KFold_cross_validate(self.issue_clf_data_csv)
 		print("Article clf data:")
 		self.analyzer.KFold_cross_validate(self.artcl_clf_data_csv)
-		print("Paragraph clf data:")
-		self.analyzer.KFold_cross_validate(self.paragraph_clf_data_csv)
 
 	# def test_respa_classifiers(self):
 		
