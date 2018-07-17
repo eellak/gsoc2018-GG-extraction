@@ -1,16 +1,10 @@
 from util.helper import Helper
 from collections import OrderedDict
-import pandas as pd
-from sklearn.model_selection import train_test_split
-from sklearn import svm
-from sklearn.model_selection import KFold
-from sklearn.model_selection import cross_val_score
-from sklearn.tree import DecisionTreeClassifier
-from numpy import mean
 
 class Analyzer(object):
 	
 	def __init__(self):
+		
 		self.organization_pres_decree_issue_respa_keys = {'primary': ["αρμόδι", "αρμοδι", "αρμοδιότητ", "ευθύνη", "εύθυν"],
 														   'secondary': ["για", "εξής"],
 														   'common_bigram_pairs': [("αρμόδι", "για"), ("ευθύνη", "για"), ("εύθυν", "για"), 
@@ -140,44 +134,4 @@ class Analyzer(object):
 				respa_occurences_in_txt['quadgram_analysis'][key]
 		
 		return analysis_data_sums
-
-	class IssueOrArticleRespAClassifier(object):
-	
-		def __init__(self, csv_data_file):
-			self.csv_data_file = csv_data_file
-			self.trained_model = self.train()
-
-		# GG Issue & Article classifier
-		# Predicts whether or not 'issue' contains RespA
-		def train(self):
-			df = pd.read_csv(self.csv_data_file, sep=',', skiprows=1, names=['A','B', 'C','D','E','F','G','H','I','RESPA'])
-			Features = df[['A','B', 'C','D','E','F','G','H','I']]
-			is_respa = df['RESPA']
-			clf = svm.SVC(kernel='linear', C=1).fit(Features, is_respa)
-			return clf
-
-		def cross_validate(self, test_size):
-			df = pd.read_csv(self.csv_data_file, sep=',', skiprows=1, names=['A','B','C','D','E','F','G','H','I','RESPA'])
-			X_train, X_test, y_train, y_test = train_test_split(df[['A','B', 'C','D','E','F','G','H','I']], df['RESPA'], test_size=test_size)
-			clf = svm.SVC(kernel='linear', C=1).fit(X_train, y_train)
-			print(clf.score(X_test, y_test))
-
-		def KFold_cross_validate(self):
-			df = pd.read_csv(self.csv_data_file, sep=',', skiprows=1, names=['A','B', 'C','D','E','F','G','H','I','RESPA'])
-
-			X = df[['A','B', 'C','D','E','F','G','H','I']]
-			y = df[['RESPA']]
 			
-			kf = KFold(n_splits=10)
-			kf.get_n_splits(X)
-			print(kf)  
-			kf = KFold(n_splits=10)
-			clf_tree=DecisionTreeClassifier()
-			scores = cross_val_score(clf_tree, X, y, cv=kf)
-			avg_score = mean(scores)
-			print(avg_score)
-
-		# GG Issue & Article classifier
-		# Predicts whether or not 'issue' contains RespA
-		def has_respas(self, data_vector):
-			return self.trained_model.predict([data_vector])
