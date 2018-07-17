@@ -1,4 +1,5 @@
 from context import main, unittest, call, getcwd, os, errno, shutil, Context
+from collections import defaultdict
 
 class AnalyzerTest(Context):
 
@@ -288,12 +289,12 @@ class AnalyzerTest(Context):
 		txt_path = self.test_txts_dir + '/for_training_data/Non-RespAs/'
 		get_txt = self.get_txt
 		txts = [get_txt(str(file), pdf_path=pdf_path, txt_path=txt_path)
-		        for file in range(1, 23+1)]
+				for file in range(1, 23+1)]
 
 		get_paragraphs = self.parser.get_paragraphs
 
 		paragraphs_of_txts = [get_paragraphs(txt)
-		              		  for txt in txts]
+							  for txt in txts]
 	
 		for paragraphs in paragraphs_of_txts:
 			print(len(self.analyzer.get_n_gram_analysis_data_vectors(paragraphs)))
@@ -303,17 +304,83 @@ class AnalyzerTest(Context):
 		txt_path = self.test_txts_dir + '/for_training_data/RespAs/'
 		get_txt = self.get_txt
 		txts = [get_txt(str(file), pdf_path=pdf_path, txt_path=txt_path)
-		        for file in range(1, 50+1)]
+				for file in range(1, 50+1)]
 
 		get_paragraphs = self.parser.get_paragraphs
 
 		paragraphs_of_txts = [get_paragraphs(txts[i])
-		              		  for i in range(len(txts))]
+							  for i in range(len(txts))]
 		
 		print(len(paragraphs_of_txts))
 		
 		for paragraphs in paragraphs_of_txts:
 			print(len(self.analyzer.get_n_gram_analysis_data_vectors(paragraphs)))
+
+	def test_merged_non_respa_paragraphs_dict(self):
+		txt_path = self.test_txts_dir + '/for_training_data/Non-RespAs/paragraphs/'
+		rel_non_respa_paragraphs_path = '..' + txt_path
+		
+		non_respa_paragraphs = []
+		for i in range(1, 669+1):
+			with open(rel_non_respa_paragraphs_path + str(i) + '.txt') as txt:
+				non_respa_paragraphs.append(txt.read())
+
+		get_clean_words = self.parser.get_clean_words
+
+		non_respa_paragraph_words_list = [get_clean_words(prgrph)[:20] for prgrph in non_respa_paragraphs]
+
+		get_word_n_grams = self.helper.get_word_n_grams
+		
+		non_respa_paragraph_bigrams_list = [get_word_n_grams(prgrh_words, 2) 
+											for prgrh_words in non_respa_paragraph_words_list]
+
+		
+		non_respa_paragraph_bigram_dicts = []
+		for bigrams in non_respa_paragraph_bigrams_list:
+			non_respa_paragraph_bigram_dicts.append([((bigram[0], bigram[1]), 1) for bigram in bigrams])
+		
+		# Bigrams before merge
+		print(sum([len(prgrph_bigrams) for prgrph_bigrams in non_respa_paragraph_bigram_dicts]))
+		# Merge possible keys
+		merged_non_respa_prgrh_bigrams_dict = defaultdict(int)
+		for prgrh_bigrams in non_respa_paragraph_bigram_dicts:
+			for bigram in prgrh_bigrams:
+				merged_non_respa_prgrh_bigrams_dict[bigram[0]] += bigram[1]
+
+		print(len(merged_non_respa_prgrh_bigrams_dict))
+
+	def test_merged_respa_paragraphs_dict(self):
+		txt_path = self.test_txts_dir + '/for_training_data/RespAs/paragraphs/'
+		rel_respa_paragraphs_path = '..' + txt_path
+		
+		respa_paragraphs = []
+		for i in range(1, 569+1):
+			with open(rel_respa_paragraphs_path + str(i) + '.txt') as txt:
+				respa_paragraphs.append(txt.read())
+
+		get_clean_words = self.parser.get_clean_words
+
+		respa_paragraph_words_list = [get_clean_words(prgrph)[:20] for prgrph in respa_paragraphs]
+
+		get_word_n_grams = self.helper.get_word_n_grams
+		
+		respa_paragraph_bigrams_list = [get_word_n_grams(prgrh_words, 2) 
+											for prgrh_words in respa_paragraph_words_list]
+
+		
+		respa_paragraph_bigram_dicts = []
+		for bigrams in respa_paragraph_bigrams_list:
+			respa_paragraph_bigram_dicts.append([((bigram[0], bigram[1]), 1) for bigram in bigrams])
+		
+		# Bigrams before merge
+		print(sum([len(prgrph_bigrams) for prgrph_bigrams in respa_paragraph_bigram_dicts]))
+		# Merge possible keys
+		merged_respa_prgrh_bigrams_dict = defaultdict(int)
+		for prgrh_bigrams in respa_paragraph_bigram_dicts:
+			for bigram in prgrh_bigrams:
+				merged_respa_prgrh_bigrams_dict[bigram[0]] += bigram[1]
+
+		print(len(merged_respa_prgrh_bigrams_dict))
 
 	def test_cross_validate_respa_clfs(self):
 		print("Issue clf data:")
