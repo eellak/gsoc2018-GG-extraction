@@ -8,10 +8,11 @@ from os import getcwd
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 # import main
-import main.parser
-import main.fetcher
-import main.analyzer
-import util.helper
+from main.parser 	import Parser 
+from main.fetcher 	import Fetcher
+from main.analyzer 	import Analyzer
+from main.classifier import IssueOrArticleRespAClassifier
+from util.helper 	import Helper
 
 class Context(unittest.TestCase):
 	
@@ -34,13 +35,15 @@ class Context(unittest.TestCase):
 				raise
 
 	def setUp(self):
-		
+		print('HELLO@@@@@@@@@@@@@@@@@@@@@@@@@@@@')
 		self.make_test_txts_dir()
 
-		self.parser = main.parser.Parser()
-		self.fetcher = main.fetcher.Fetcher("http://www.et.gr/idocs-nph/search/fekForm.html")
-		self.analyzer = main.analyzer.Analyzer()
-		self.helper = util.helper.Helper()
+		self.parser = Parser()
+		self.fetcher = Fetcher("http://www.et.gr/idocs-nph/search/fekForm.html")
+		self.analyzer = Analyzer()
+		self.issue_clf = IssueOrArticleRespAClassifier(self.issue_clf_data_csv)
+		self.article_clf = IssueOrArticleRespAClassifier(self.artcl_clf_data_csv)
+		self.helper = Helper()
 
 	def tearDown(self): 
 		# rmtree('..' + self.test_txts_dir)
