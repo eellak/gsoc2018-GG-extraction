@@ -1202,7 +1202,7 @@ class ParserTest(Context):
 	# def test_breaking_txt_into_sentences(self):
 	# 	txt_1 = self.get_txt('1')
 
-	# 	txt_1 = self.helper.clean_up_for_dec_related_getter(txt_1)
+	# 	txt_1 = self.helper.clean_up_txt(txt_1)
 	# 	print([txt_1])
 	# 	print(self.parser.get_sentences(txt_1))
 

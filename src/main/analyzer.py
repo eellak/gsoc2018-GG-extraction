@@ -51,7 +51,7 @@ class Analyzer(object):
 
 			return bi_gram_analysis_data
 
-		txt = Helper.clean_up_for_dec_related_getter(txt)
+		txt = Helper.clean_up_txt(txt)
 		respa_kw_pair_occurences = {}
 		
 		respa_kw_pair_occurences['quadgram_analysis'] = quad_qram_analysis()

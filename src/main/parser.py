@@ -52,7 +52,7 @@ class Parser(object):
 	# - Fine-tune section getters (see specific @TODOs)
 
 	def get_dec_contents_from_txt(self, txt):
-		txt = Helper.clean_up_for_dec_related_getter(txt)
+		txt = Helper.clean_up_txt(txt)
 		dec_contents = findall(r"{}(.+?){}".format(self.dec_contents_key, self.decs_key), txt, flags=DOTALL)
 		if dec_contents:
 			assert(len(dec_contents) == 1)
@@ -66,7 +66,7 @@ class Parser(object):
 	# 		 2. Manage "ΔΙΟΡΘΩΣΗ ΣΦΑΛΜΑΤΩΝ" section
 	def get_dec_summaries_from_txt(self, txt, dec_contents):
 		""" Must be fed 'dec_contents' as returned by get_dec_contents() """
-		txt = Helper.clean_up_for_dec_related_getter(txt)
+		txt = Helper.clean_up_txt(txt)
 		if dec_contents:
 			dec_summaries = findall(r"([Α-ΩΆ-ΏA-Z].+?(?:(?![Β-ΔΖΘΚΜΝΞΠΡΤΦ-Ψβ-δζθκμνξπρτφ-ψ]\.\s?\n).)+?\.\s?\n)\d?\n?", dec_contents, flags=DOTALL)
 			# Strip of redundant dots
@@ -88,7 +88,7 @@ class Parser(object):
 	# Nums, meaning e.g. "Αριθμ. [...]"
 	def get_dec_nums_from_txt(self, txt, dec_summaries):
 		""" Must be fed 'dec_summaries' as returned by get_dec_summaries() """
-		txt = Helper.clean_up_for_dec_related_getter(txt)
+		txt = Helper.clean_up_txt(txt)
 		dec_nums = []
 		if dec_summaries:
 			if len(dec_summaries) == 1:
@@ -105,7 +105,7 @@ class Parser(object):
 
 	def get_dec_prereqs_from_txt(self, txt, dec_num):
 		""" Must be fed 'dec_num', currently: len(dec_summaries) """
-		txt = Helper.clean_up_for_dec_related_getter(txt)
+		txt = Helper.clean_up_txt(txt)
 		
 		dec_prereq_keys = self.dec_prereq_keys
 		dec_init_keys = self.dec_init_keys
@@ -136,7 +136,7 @@ class Parser(object):
 
 	def get_decisions_from_txt(self, txt, dec_num):
 		""" Must be fed 'dec_num', currently: len(dec_summaries) """
-		txt = Helper.clean_up_for_dec_related_getter(txt)
+		txt = Helper.clean_up_txt(txt)
 		
 		dec_init_keys = self.dec_init_keys
 		dec_end_keys_start_group = self.dec_end_keys['start_group']
@@ -242,7 +242,7 @@ class Parser(object):
 
 	def get_rough_respas_of_organization_units_from_pres_decree_txt(self, txt):
 		""" Ideally to be fed 'txt' containing an article with responsibilities """
-		txt = Helper.clean_up_for_dec_related_getter(txt)
+		txt = Helper.clean_up_txt(txt)
 		primary_respa_keys = self.paorg_issue_respa_keys['primary']
 
 		rough_paorg_respa_sections = []
@@ -324,16 +324,17 @@ class Parser(object):
 
 	def get_sentences(self, txt):
 		""" Ideally to be fed 'txt' containing '.' separated sentences """
-		txt = Helper.clean_up_for_dec_related_getter(txt)
+		txt = Helper.clean_up_txt(txt)
 		return Text(txt).sentences
 
 	def get_clean_words(self, txt, n=0):
+		txt = Helper.clean_up_txt(txt)
 		words = sub("[^\w]", " ",  txt).split()
 		clean_words = Helper.clean_up_word_list(words)
 		return clean_words if n<=0 else clean_words[:n]
 
 	def get_paragraphs(self, txt):
-		txt = Helper.clean_up_for_dec_related_getter(txt)
+		txt = Helper.clean_up_txt(txt)
 		paragraphs = []
 		if txt:
 			paragraphs = findall(r"\n\s*[Ά-ΏΑ-Ωα-ωά-ώ\d+\(•\-]+[\.\)α-ω]([\s\S]+?)[\.\:](?=\n)", txt)
