@@ -11,7 +11,7 @@ import collections
 import datetime
 import re
 import csv
-from pickle import dump, HIGHEST_PROTOCOL
+from pickle import dump, load, HIGHEST_PROTOCOL
 
 # Helper class that defines useful formatting and file handling functions
 class Helper:
@@ -103,11 +103,11 @@ class Helper:
     def write_to_pickle_file(data, pickle_file):
         with open(pickle_file, 'wb') as handle:
                 dump(data, handle, protocol=HIGHEST_PROTOCOL)    
-          
+
     @staticmethod
     def load_pickle_file(filename):
         with open(filename, 'rb') as handle:
-            data = pickle.load(handle)
+            data = load(handle)
         return data
 
     # Clears wikipedia annotations from a string
