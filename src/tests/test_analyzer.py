@@ -1,6 +1,5 @@
 from context import unittest, call, getcwd, os, errno, shutil, Context
 from collections import defaultdict
-from pickle import dump, HIGHEST_PROTOCOL
 
 class AnalyzerTest(Context):
 
@@ -356,9 +355,8 @@ class AnalyzerTest(Context):
 		print(len(merged_non_respa_prgrh_bigrams_dict))		
 
 		# Dump to pickle file
-		with open(rel_pickle_file_path, 'wb') as handle:
-			dump(dict(merged_non_respa_prgrh_bigrams_dict),
-				handle, protocol=HIGHEST_PROTOCOL)		
+		data = dict(merged_non_respa_prgrh_bigrams_dict)
+		self.helper.write_to_pickle_file(data, rel_pickle_file_path)
 
 	def test_pickle_merged_respa_paragraphs_dict(self):
 		txt_path = self.test_txts_dir + '/for_training_data/RespAs/paragraphs/'
@@ -399,9 +397,8 @@ class AnalyzerTest(Context):
 		print(len(merged_respa_prgrh_bigrams_dict))
 
 		# Dump to pickle file
-		with open(rel_pickle_file_path, 'wb') as handle:
-			dump(dict(merged_respa_prgrh_bigrams_dict),
-				handle, protocol=HIGHEST_PROTOCOL)
+		data = dict(merged_respa_prgrh_bigrams_dict)
+		self.helper.write_to_pickle_file(data, rel_pickle_file_path)
 
 if __name__ == '__main__':
 	unittest.main()
