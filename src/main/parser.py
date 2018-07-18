@@ -327,12 +327,6 @@ class Parser(object):
 		txt = Helper.clean_up_txt(txt)
 		return Text(txt).sentences
 
-	def get_clean_words(self, txt, n=0):
-		txt = Helper.clean_up_txt(txt)
-		words = sub("[^\w]", " ",  txt).split()
-		clean_words = Helper.clean_up_word_list(words)
-		return clean_words if n<=0 else clean_words[:n]
-
 	def get_paragraphs(self, txt):
 		txt = Helper.clean_up_txt(txt)
 		paragraphs = []

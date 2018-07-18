@@ -328,7 +328,7 @@ class AnalyzerTest(Context):
 			with open(rel_non_respa_paragraphs_path + str(i) + '.txt') as txt:
 				non_respa_paragraphs.append(txt.read())
 
-		get_clean_words = self.parser.get_clean_words
+		get_clean_words = self.helper.get_clean_words
 
 		non_respa_paragraph_words_list = [get_clean_words(prgrph)[:20] for prgrph in non_respa_paragraphs]
 
@@ -370,7 +370,7 @@ class AnalyzerTest(Context):
 			with open(rel_respa_paragraphs_path + str(i) + '.txt') as txt:
 				respa_paragraphs.append(txt.read())
 
-		get_clean_words = self.parser.get_clean_words
+		get_clean_words = self.helper.get_clean_words
 
 		respa_paragraph_words_list = [get_clean_words(prgrph)[:20] for prgrph in respa_paragraphs]
 

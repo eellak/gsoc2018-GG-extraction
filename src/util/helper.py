@@ -105,8 +105,8 @@ class Helper:
                 dump(data, handle, protocol=HIGHEST_PROTOCOL)    
 
     @staticmethod
-    def load_pickle_file(filename):
-        with open(filename, 'rb') as handle:
+    def load_pickle_file(pickle_file):
+        with open(pickle_file, 'rb') as handle:
             data = load(handle)
         return data
 
@@ -141,6 +141,13 @@ class Helper:
         if (type(inpt) is str):
             inpt = inpt.split(' ')
         return [inpt[i:i+n] for i in range(len(inpt) - n + 1)]
+
+    @staticmethod
+    def get_clean_words(txt, n=0):
+        txt = Helper.clean_up_txt(txt)
+        words = re.sub("[^\w]", " ",  txt).split()
+        clean_words = Helper.clean_up_word_list(words)
+        return clean_words if n<=0 else clean_words[:n]
 
     @staticmethod
     def get_greek_stopwords():

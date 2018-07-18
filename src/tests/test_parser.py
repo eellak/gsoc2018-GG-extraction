@@ -1283,7 +1283,7 @@ class ParserTest(Context):
 		paragraphs_7 = get_paragraphs(txt_7)
 		paragraphs_8 = get_paragraphs(txt_8)
 
-		get_clean_words = self.parser.get_clean_words 
+		get_clean_words = self.helper.get_clean_words 
 	
 		words_of_paragraphs_1 = [get_clean_words(prgrph)
 								 for prgrph in paragraphs_1]
