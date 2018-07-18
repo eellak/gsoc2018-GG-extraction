@@ -52,4 +52,10 @@ class ParagraphRespAClassifier(object):
 	
 	def __init__(self, arg):
 		super(ParagraphRespAClassifier, self).__init__()
-		self.arg = arg
+		# self.training_data_file =  
+
+	def fit(self, paragraph, is_respa):
+		pass
+
+	def test(self, paragraph):
+		pass
