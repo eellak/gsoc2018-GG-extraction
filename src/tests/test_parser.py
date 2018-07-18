@@ -1,15 +1,13 @@
-from context import main, unittest, call, os, errno, shutil, Context
+from context import unittest, call, os, errno, shutil, Context
 from shutil import rmtree
 
 class ParserTest(Context):
-	
+
 	def test_get_paorgs_mentioned_in_txt(self):
-		# May take several minutes, depending on work load
 		
 		def paorgs_mentioned_in_txt(file_name):
 			text =	self.get_txt(file_name)
-			fetcher = self.fetcher
-			paorgs = fetcher.fetch_paorgs(['DIAVGEIA_ORGS.xlsx', 
+			paorgs = self.fetcher.fetch_paorgs(['DIAVGEIA_ORGS.xlsx', 
 										   '20170615_organosi_mhtrooy_foreon_2017.xlsx'])
 
 			return self.parser.get_paorgs_from_txt(text, paorgs)
@@ -22,7 +20,6 @@ class ParserTest(Context):
 		print(text_1, ':\n', paorgs_mentioned_in_text_1)
 
 	def test_simple_pdf_to_txt(self): 
-		# May take several minutes, depending on work load
 		texts = []
 	
 		texts.append(self.get_txt('1'))

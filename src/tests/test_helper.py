@@ -1,4 +1,4 @@
-from context import main, unittest, getcwd, call, os, errno, shutil, Context
+from context import unittest, getcwd, call, os, errno, shutil, Context
 
 class HelperTest(Context):
 
@@ -88,14 +88,12 @@ class HelperTest(Context):
 		print(custom_training_data_3)
 		print(custom_training_data_4)
 		print(custom_training_data_5)
-
-		csvfile = getcwd() + "/../data/PAOrg_issue_RespA_classifier_resources/dummy.csv"
 		
-		self.helper.append_rows_into_csv(custom_training_data_1, csvfile)
-		self.helper.append_rows_into_csv(custom_training_data_2, csvfile)
-		self.helper.append_rows_into_csv(custom_training_data_3, csvfile)
-		self.helper.append_rows_into_csv(custom_training_data_4, csvfile)
-		self.helper.append_rows_into_csv(custom_training_data_5, csvfile)
+		self.helper.append_rows_into_csv(custom_training_data_1, self.dummy_csv)
+		self.helper.append_rows_into_csv(custom_training_data_2, self.dummy_csv)
+		self.helper.append_rows_into_csv(custom_training_data_3, self.dummy_csv)
+		self.helper.append_rows_into_csv(custom_training_data_4, self.dummy_csv)
+		self.helper.append_rows_into_csv(custom_training_data_5, self.dummy_csv)
 
 	def test_insert_training_data_into_csv_2(self):
 
@@ -158,12 +156,10 @@ class HelperTest(Context):
 		print(custom_training_data_1)
 		print(custom_training_data_2)
 		print(custom_training_data_3)
-
-		csvfile = getcwd() + "/../data/PAOrg_issue_RespA_classifier_resources/dummy.csv"
 		
-		self.helper.append_rows_into_csv(custom_training_data_1, csvfile)
-		self.helper.append_rows_into_csv(custom_training_data_2, csvfile)
-		self.helper.append_rows_into_csv(custom_training_data_3, csvfile)
+		self.helper.append_rows_into_csv(custom_training_data_1, self.dummy_csv)
+		self.helper.append_rows_into_csv(custom_training_data_2, self.dummy_csv)
+		self.helper.append_rows_into_csv(custom_training_data_3, self.dummy_csv)
 
 	# def test_insert_training_data_into_csv_3(self):
 	# 		pdf_path = self.test_pdfs_dir + '/Presidential_Decree_Issues/for_training_data/Non-RespAs/'
@@ -193,10 +189,8 @@ class HelperTest(Context):
 	# 		analysis_data_sums_vectors = list(map(lambda vector: vector + [0], analysis_data_sums_vectors))
 			
 	# 		print(analysis_data_sums_vectors)
-
-	# 		csvfile = getcwd() + "/../data/PAOrg_issue_RespA_classifier_resources/dummy.csv"
 		
-	# 		self.helper.append_rows_into_csv(analysis_data_sums_vectors, csvfile)
+	# 		self.helper.append_rows_into_csv(analysis_data_sums_vectors, self.dummy_csv)
 
 	def test_insert_training_data_into_csv_3(self):
 		pdf_path = self.test_pdfs_dir + '/Presidential_Decree_Issues/'

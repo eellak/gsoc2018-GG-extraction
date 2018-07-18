@@ -1,4 +1,4 @@
-from context import main, unittest, call, os, shutil, Context
+from context import unittest, call, os, shutil, Context
 from shutil import rmtree
 
 class FetcherTest(Context):
@@ -10,7 +10,7 @@ class FetcherTest(Context):
 	def test_fetching_all_pdf_issues_of_specific_types(self):
 		# Fetch section 'Β' issues of 2013
 		issue_types = ['Β']
-		self.fetcher.scrape_pdfs(2013, 2013, issue_types )		
+		self.fetcher.scrape_pdfs(2013, 2013, issue_types)		
 
 	def test_fetching_paorgs(self):
 		# Fetch PAOrgs from local files and web
