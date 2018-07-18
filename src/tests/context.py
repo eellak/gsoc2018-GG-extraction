@@ -24,8 +24,8 @@ class Context(unittest.TestCase):
 	issue_clf_data_csv = getcwd() + "/../data/PAOrg_issue_RespA_classifier_resources/issue_respa_classifier_data.csv"
 	artcl_clf_data_csv = getcwd() + "/../data/PAOrg_issue_RespA_classifier_resources/article_respa_classifier_data.csv"
 	paragraph_clf_data_files = {
-								  'respa': getcwd() + "/../data/PAOrg_issue_RespA_classifier_resources/paragraph_respa_classifier_data/respa_paragraphs_dict.pkl",
-								  'non_respa' : getcwd() + "/../data/PAOrg_issue_RespA_classifier_resources/paragraph_respa_classifier_data/non_respa_paragraphs_dict.pkl"
+								  'non_respa' : getcwd() + "/../data/PAOrg_issue_RespA_classifier_resources/paragraph_respa_classifier_data/non_respa_paragraphs_dict.pkl",
+								  'respa': getcwd() + "/../data/PAOrg_issue_RespA_classifier_resources/paragraph_respa_classifier_data/respa_paragraphs_dict.pkl"								  
 								 }
 
 	parser = Parser()
@@ -35,7 +35,6 @@ class Context(unittest.TestCase):
 	article_clf = IssueOrArticleRespAClassifier(artcl_clf_data_csv)
 	paragraph_clf = ParagraphRespAClassifier(paragraph_clf_data_files)
 	helper = Helper()
-
 
 	@staticmethod
 	def make_test_txts_dir():
