@@ -5,6 +5,7 @@ from sklearn.model_selection import KFold
 from sklearn.model_selection import cross_val_score
 from sklearn.tree import DecisionTreeClassifier
 from numpy import mean
+from util.helper import Helper
 
 class RespAClassifier(object):
 	
@@ -50,12 +51,17 @@ class IssueOrArticleRespAClassifier(RespAClassifier):
 
 class ParagraphRespAClassifier(object):
 	
-	def __init__(self, arg):
+	def __init__(self, training_data_files):
 		super(ParagraphRespAClassifier, self).__init__()
-		# self.training_data_file =  
+		self.training_data_files = training_data_files
+		self.respa_training_data = Helper.load_pickle_file(training_data_files['respa'])
+		self.non_respa_training_data = Helper.load_pickle_file(training_data_files['non_respa'])
 
 	def fit(self, paragraph, is_respa):
 		pass
 
 	def test(self, paragraph):
+		pass
+
+	def cosine_similarity(self, dict1, dict2):
 		pass
