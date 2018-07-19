@@ -6,6 +6,7 @@ import sys
 from subprocess import call
 from os import getcwd
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+from collections import OrderedDict
 
 # import main
 from main.parser 	import Parser 
@@ -23,10 +24,9 @@ class Context(unittest.TestCase):
 	dummy_csv = getcwd() + "/../data/PAOrg_issue_RespA_classifier_resources/dummy.csv"
 	issue_clf_data_csv = getcwd() + "/../data/PAOrg_issue_RespA_classifier_resources/issue_respa_classifier_data.csv"
 	artcl_clf_data_csv = getcwd() + "/../data/PAOrg_issue_RespA_classifier_resources/article_respa_classifier_data.csv"
-	paragraph_clf_data_files = {
-								  'non_respa' : getcwd() + "/../data/PAOrg_issue_RespA_classifier_resources/paragraph_respa_classifier_data/non_respa_paragraphs_dict.pkl",
-								  'respa': getcwd() + "/../data/PAOrg_issue_RespA_classifier_resources/paragraph_respa_classifier_data/respa_paragraphs_dict.pkl"								  
-								 }
+	
+	paragraph_clf_data_files = OrderedDict([('non_respa', getcwd() + "/../data/PAOrg_issue_RespA_classifier_resources/paragraph_respa_classifier_data/non_respa_paragraphs_dict.pkl"),
+											 ('respa', getcwd() + "/../data/PAOrg_issue_RespA_classifier_resources/paragraph_respa_classifier_data/respa_paragraphs_dict.pkl")]) 
 
 	parser = Parser()
 	fetcher = Fetcher(issue_search_platform_src_url)
