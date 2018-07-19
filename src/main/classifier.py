@@ -7,6 +7,8 @@ from sklearn.tree import DecisionTreeClassifier
 from numpy import mean
 from math import sqrt
 from util.helper import Helper
+from main.analyzer import Analyzer
+from collections import OrderedDict, defaultdict
 
 class RespAClassifier(object):
 	
@@ -27,6 +29,12 @@ class IssueOrArticleRespAClassifier(RespAClassifier):
 	# Predicts whether or not 'issue' contains RespA
 	def train(self):
 		return svm.SVC(kernel='linear', C=1).fit(self.X, self.y)
+
+	def fit(self, txt, is_respa):
+		txt_analysis_feature_vector = Analyzer().get_n_gram_analysis_data_vectors([txt])
+		Helper.append_rows_into_csv(txt_analysis_feature_vector + [is_respa], self.training_data_csv_file)
+		# Update instance data
+		self.__init__(self.training_data_csv_file)
 
 	def cross_validate(self, test_size):
 		X_train, X_test, y_train, y_test = train_test_split(self.X, self.y, test_size=test_size)
@@ -53,40 +61,49 @@ class IssueOrArticleRespAClassifier(RespAClassifier):
 class ParagraphRespAClassifier(object):
 	
 	def __init__(self, training_data_files):
-		super(ParagraphRespAClassifier, self).__init__()
 		self.training_data_files = training_data_files
-		self.training_data = {  
-								'non_respa': Helper.load_pickle_file(training_data_files['non_respa']),
-								'respa': Helper.load_pickle_file(training_data_files['respa']) 
-							  }
+		self.non_respa_training_data = Helper.load_pickle_file(training_data_files['non_respa'])
+		self.respa_training_data = Helper.load_pickle_file(training_data_files['respa'])
+		self.training_data = OrderedDict([('non_respa', self.non_respa_training_data),
+										 ('respa', self.respa_training_data)])  				  
 
 	def fit(self, paragraph, is_respa):
 		words = Helper.get_clean_words(paragraph)[:20]
 		word_bigrams = Helper.get_word_n_grams(words, 2)
 		
-		appropriate_train_data_key = list(self.training_data)[is_respa]
+		appropriate_key = list(self.training_data)[is_respa]
+		print(len(self.training_data[appropriate_key]))
+		temp_dict = defaultdict(int, self.training_data[appropriate_key])
 		# Fit into training data
 		for bigram in word_bigrams: 
-			self.training_data[appropriate_train_data_key][bigram] += 1
-
+			temp_dict[(bigram[0], bigram[1])] += 1
+		
+		# Update instance data
+		self.training_data[appropriate_key].update(dict(temp_dict))
 		# And rewrite pickle file
-		appropriate_data_file_key = list(self.training_data_files)[is_respa]
-		Helper.write_to_pickle_file(self.training_data, self.training_data_files[appropriate_data_file_key])
+		Helper.write_to_pickle_file(self.training_data[appropriate_key], self.training_data_files[appropriate_key])
 
-	def test(self, paragraph):
-		pass
+	def has_respas(self, paragraph):
+		words = Helper.get_clean_words(paragraph)[:20]
+		word_bigrams = Helper.get_word_n_grams(words, 2)
 
-	def cosine_similarity(self, dict1, dict2):
+		paragraph_bigram_dict = {(bigram[0], bigram[1]):1 for bigram in word_bigrams}
+		pos_cosine = self.cosine_similarity(paragraph_bigram_dict, self.training_data['respa'])
+		neg_cosine = self.cosine_similarity(paragraph_bigram_dict, self.training_data['non_respa'])
+
+		return (pos_cosine > neg_cosine)
+
+	def cosine_similarity(self, dict_1, dict_2):
 		numer = 0
 		den_a = 0
 		
-		for key1,val1 in dic1:
-			numer += val1 * dic2.get(key1, 0.0)
-			den_a += va1 * val1
+		for key_1, val_1 in dict_1.items():
+			numer += val_1 * dict_2.get(key_1, 0.0)
+			den_a += val_1 * val_1
 		den_b = 0
 		
-		for val2 in dic2.values():
-			den_b += val2 * val2
+		for val_2 in dict_2.values():
+			den_b += val_2 * val_2
 		
 		return numer/sqrt(den_a * den_b)
 		 
