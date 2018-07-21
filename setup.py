@@ -129,7 +129,7 @@ def init_chromedriver():
         print('Downloading chromedriver for selenium failed.')    
     
 def setup():
-    install_dependencies()
+    # install_dependencies()
     init_db()
     init_chromedriver()
 

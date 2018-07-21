@@ -1,0 +1,6 @@
+selenium
+bs4
+openpyxl
+sklearn
+pandas
+scipy
