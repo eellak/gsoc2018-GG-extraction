@@ -64,9 +64,11 @@ class Parser(object):
 	#		 1. Find a way to always properly separate dec_summaries from each other:
 	# 		    Idea: Problems possibly solved just by detecting '\n\s*ΑΠΟΦΑΣΕΙΣ' as end key
 	# 		 2. Manage "ΔΙΟΡΘΩΣΗ ΣΦΑΛΜΑΤΩΝ" section
-	def get_dec_summaries_from_txt(self, txt, dec_contents):
+	def get_dec_summaries_from_txt(self, txt):
 		""" Must be fed 'dec_contents' as returned by get_dec_contents() """
 		txt = Helper.clean_up_txt(txt)
+		dec_contents = self.get_dec_contents_from_txt(txt)
+
 		if dec_contents:
 			dec_summaries = findall(r"([Α-ΩΆ-ΏA-Z].+?(?:(?![Β-ΔΖΘΚΜΝΞΠΡΤΦ-Ψβ-δζθκμνξπρτφ-ψ]\.\s?\n).)+?\.\s?\n)\d?\n?", dec_contents, flags=DOTALL)
 			# Strip of redundant dots
@@ -76,7 +78,6 @@ class Parser(object):
 										 if self.dec_correction_keys[0] not in dec_sum \
 											and self.dec_correction_keys[1] not in dec_sum]
 		else:
-			print(txt)
 			# Will also contain number e.g. Αριθμ. ...
 			dec_summaries = findall(r"(?:{dec_key}|(?:{start_keys}))\s*\n\s*(.+?)\.\s*\n\s*[α-ωά-ώΑ-ΩΆ-ΏA-Z()]"\
 							.format(dec_key = self.decs_key,
@@ -86,9 +87,10 @@ class Parser(object):
 		return dec_summaries
 
 	# Nums, meaning e.g. "Αριθμ. [...]"
-	def get_dec_nums_from_txt(self, txt, dec_summaries):
+	def get_dec_nums_from_txt(self, txt):
 		""" Must be fed 'dec_summaries' as returned by get_dec_summaries() """
 		txt = Helper.clean_up_txt(txt)
+		dec_summaries = self.get_dec_summaries_from_txt(txt)
 		dec_nums = []
 		if dec_summaries:
 			if len(dec_summaries) == 1:
@@ -103,7 +105,7 @@ class Parser(object):
 				dec_nums = dict(zip_longest(dec_idxs, dec_nums))
 		return dec_nums
 
-	def get_dec_prereqs_from_txt(self, txt, dec_num):
+	def get_dec_prereqs_from_txt(self, txt):
 		""" Must be fed 'dec_num', currently: len(dec_summaries) """
 		txt = Helper.clean_up_txt(txt)
 		
@@ -115,26 +117,18 @@ class Parser(object):
 															Helper.get_special_regex_disjunction(dec_init_keys)),
 															txt, flags=DOTALL)
 		if prereq_bodies:
-			if(len(prereq_bodies) >= dec_num):
-				for dec_idx in range(len(prereq_bodies)):
-					dec_prereqs[dec_idx + 1] = prereq_bodies[dec_idx]
-
-			elif (len(prereq_bodies) < dec_num):
-				# Just return detected ones as list (without index correspondence)
-				dec_prereqs = prereq_bodies
-
+			# Place into dict
+			for dec_idx in range(len(prereq_bodies)):
+				dec_prereqs[dec_idx + 1] = prereq_bodies[dec_idx]
 		else: 
-			if dec_num == 1:
-
-				dec_prereqs = findall(r"\.\n[Α-ΩΆ-ΏA-Z](.+?)(?:{})".format(Helper.get_special_regex_disjunction(dec_init_keys)), 
-																		txt, flags=DOTALL)
-			elif dec_num > 1:
-			# For now 
-				pass				
+			# Find whatever seems like prereqs
+			dec_prereqs = findall(r"\.\n[Α-ΩΆ-ΏA-Z](.+?)(?:{})".format(Helper.get_special_regex_disjunction(dec_init_keys)), 
+																	txt, flags=DOTALL)
+			
 
 		return dec_prereqs
 
-	def get_decisions_from_txt(self, txt, dec_num):
+	def get_decisions_from_txt(self, txt):
 		""" Must be fed 'dec_num', currently: len(dec_summaries) """
 		txt = Helper.clean_up_txt(txt)
 		
@@ -150,17 +144,7 @@ class Parser(object):
 										  Helper.get_special_regex_disjunction(dec_prereq_keys)), 
 										  txt, flags=DOTALL)
 		
-		if(len(dec_bodies) < dec_num):
-			# Try to get possible leftovers (exceptions)
-			# By fetch txt between (remaining_dec_idx) and (remaining_dec_idx + 1)
-			for remaining_dec_idx in range(len(dec_bodies), dec_num):
-				leftover_dec_bodies = findall(r"(?:\n\({}\)\n).+?(?:\n\({}\)\n)"\
-											  .format(remaining_dec_idx + 1, remaining_dec_idx + 2), 
-											 txt, flags=DOTALL)
-
-				dec_bodies += leftover_dec_bodies
-		elif len(dec_bodies) >= dec_num:
-			dec_bodies = dict(zip(range(1, len(dec_bodies) + 1), dec_bodies))
+		dec_bodies = dict(zip(range(1, len(dec_bodies) + 1), dec_bodies))
 	
 		return dec_bodies
 
