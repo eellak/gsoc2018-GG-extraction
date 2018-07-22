@@ -29,7 +29,7 @@ class ClassifierTest(Context):
 		txt_2 = self.get_txt('2', pdf_path=pdf_path, txt_path=txt_path)
 		txt_3 = self.get_txt('3', pdf_path=pdf_path, txt_path=txt_path)
 		
-		get_articles = self.parser.get_articles_from_txt
+		get_articles = self.parser.get_articles
 		articles_1 = get_articles(txt_1)
 		articles_2 = get_articles(txt_2)
 		articles_3 = get_articles(txt_3)
@@ -77,7 +77,7 @@ class ClassifierTest(Context):
 		txt_5 = self.get_txt('5', pdf_path=pdf_path, txt_path=txt_path)
 		txt_6 = self.get_txt('6', pdf_path=pdf_path, txt_path=txt_path)
 		
-		get_articles = self.parser.get_articles_from_txt
+		get_articles = self.parser.get_articles
 		articles_1 = get_articles(txt_1)
 		articles_2 = get_articles(txt_2)
 		articles_3 = get_articles(txt_3)

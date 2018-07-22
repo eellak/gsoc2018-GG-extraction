@@ -15,29 +15,29 @@ class AnalyzerTest(Context):
 			## 
 			#  Decision Contents
 			##
-			dec_contents_1 = self.parser.get_dec_contents_from_txt(txt_1);
-			dec_contents_2 = self.parser.get_dec_contents_from_txt(txt_2); 
-			dec_contents_3 = self.parser.get_dec_contents_from_txt(txt_3); 
-			dec_contents_4 = self.parser.get_dec_contents_from_txt(txt_4);
-			dec_contents_5 = self.parser.get_dec_contents_from_txt(txt_5);
+			dec_contents_1 = self.parser.get_dec_contents(txt_1);
+			dec_contents_2 = self.parser.get_dec_contents(txt_2); 
+			dec_contents_3 = self.parser.get_dec_contents(txt_3); 
+			dec_contents_4 = self.parser.get_dec_contents(txt_4);
+			dec_contents_5 = self.parser.get_dec_contents(txt_5);
 			
 			## 
 			#  Decision Summaries
 			## 
-			dec_summaries_1 = self.parser.get_dec_summaries_from_txt(txt_1);
-			dec_summaries_2 = self.parser.get_dec_summaries_from_txt(txt_2);
-			dec_summaries_3 = self.parser.get_dec_summaries_from_txt(txt_3);
-			dec_summaries_4 = self.parser.get_dec_summaries_from_txt(txt_4);
-			dec_summaries_5 = self.parser.get_dec_summaries_from_txt(txt_5);
+			dec_summaries_1 = self.parser.get_dec_summaries(txt_1);
+			dec_summaries_2 = self.parser.get_dec_summaries(txt_2);
+			dec_summaries_3 = self.parser.get_dec_summaries(txt_3);
+			dec_summaries_4 = self.parser.get_dec_summaries(txt_4);
+			dec_summaries_5 = self.parser.get_dec_summaries(txt_5);
 
 			## 
 			#  Decisions
 			##
-			decisions_1 = self.parser.get_decisions_from_txt(txt_1)
-			decisions_2 = self.parser.get_decisions_from_txt(txt_2)
-			decisions_3 = self.parser.get_decisions_from_txt(txt_3)
-			decisions_4 = self.parser.get_decisions_from_txt(txt_4)
-			decisions_5 = self.parser.get_decisions_from_txt(txt_5)
+			decisions_1 = self.parser.get_decisions(txt_1)
+			decisions_2 = self.parser.get_decisions(txt_2)
+			decisions_3 = self.parser.get_decisions(txt_3)
+			decisions_4 = self.parser.get_decisions(txt_4)
+			decisions_5 = self.parser.get_decisions(txt_5)
 
 			self.assertTrue(len(decisions_1) == 1);
 			self.assertTrue(len(decisions_2) == 1); 
@@ -52,11 +52,11 @@ class AnalyzerTest(Context):
 			if isinstance(decisions_4, dict): decisions_4 = list(decisions_4.values())
 			if isinstance(decisions_5, dict): decisions_5 = list(decisions_5.values())
 
-			articles_1 = self.parser.get_articles_from_txt(decisions_1[0])
-			articles_2 = self.parser.get_articles_from_txt(decisions_2[0])
-			articles_3 = self.parser.get_articles_from_txt(decisions_3[0])
-			articles_4 = self.parser.get_articles_from_txt(decisions_4[0])
-			articles_5 = self.parser.get_articles_from_txt(decisions_5[0])
+			articles_1 = self.parser.get_articles(decisions_1[0])
+			articles_2 = self.parser.get_articles(decisions_2[0])
+			articles_3 = self.parser.get_articles(decisions_3[0])
+			articles_4 = self.parser.get_articles(decisions_4[0])
+			articles_5 = self.parser.get_articles(decisions_5[0])
 
 			# Convert any dict to list
 			if isinstance(articles_1, dict): articles_1 = list(articles_1.values())
@@ -95,23 +95,23 @@ class AnalyzerTest(Context):
 			## 
 			#  Decision Contents
 			##
-			dec_contents_1 = self.parser.get_dec_contents_from_txt(txt_1);
-			dec_contents_2 = self.parser.get_dec_contents_from_txt(txt_2); 
-			dec_contents_3 = self.parser.get_dec_contents_from_txt(txt_3); 
+			dec_contents_1 = self.parser.get_dec_contents(txt_1);
+			dec_contents_2 = self.parser.get_dec_contents(txt_2); 
+			dec_contents_3 = self.parser.get_dec_contents(txt_3); 
 			
 			## 
 			#  Decision Summaries
 			## 
-			dec_summaries_1 = self.parser.get_dec_summaries_from_txt(txt_1);
-			dec_summaries_2 = self.parser.get_dec_summaries_from_txt(txt_2);
-			dec_summaries_3 = self.parser.get_dec_summaries_from_txt(txt_3);
+			dec_summaries_1 = self.parser.get_dec_summaries(txt_1);
+			dec_summaries_2 = self.parser.get_dec_summaries(txt_2);
+			dec_summaries_3 = self.parser.get_dec_summaries(txt_3);
 
 			## 
 			#  Decisions
 			##
-			decisions_1 = self.parser.get_decisions_from_txt(txt_1)
-			decisions_2 = self.parser.get_decisions_from_txt(txt_2)
-			decisions_3 = self.parser.get_decisions_from_txt(txt_3)
+			decisions_1 = self.parser.get_decisions(txt_1)
+			decisions_2 = self.parser.get_decisions(txt_2)
+			decisions_3 = self.parser.get_decisions(txt_3)
 
 			self.assertTrue(len(decisions_1) == 1);
 			self.assertTrue(len(decisions_2) == 1); 
@@ -122,9 +122,9 @@ class AnalyzerTest(Context):
 			if isinstance(decisions_2, dict): decisions_2 = list(decisions_2.values())
 			if isinstance(decisions_3, dict): decisions_3 = list(decisions_3.values())
 
-			articles_1 = self.parser.get_articles_from_txt(decisions_1[0])
-			articles_2 = self.parser.get_articles_from_txt(decisions_2[0])
-			articles_3 = self.parser.get_articles_from_txt(decisions_3[0])
+			articles_1 = self.parser.get_articles(decisions_1[0])
+			articles_2 = self.parser.get_articles(decisions_2[0])
+			articles_3 = self.parser.get_articles(decisions_3[0])
 
 			# Convert any dict to list
 			if isinstance(articles_1, dict): articles_1 = list(articles_1.values())
@@ -155,30 +155,30 @@ class AnalyzerTest(Context):
 		## 
 		#  Decision Contents
 		##
-		dec_contents_1 = self.parser.get_dec_contents_from_txt(txt_1);
-		dec_contents_2 = self.parser.get_dec_contents_from_txt(txt_2); 
-		dec_contents_3 = self.parser.get_dec_contents_from_txt(txt_3); 
-		dec_contents_4 = self.parser.get_dec_contents_from_txt(txt_4);
-		dec_contents_5 = self.parser.get_dec_contents_from_txt(txt_5);
+		dec_contents_1 = self.parser.get_dec_contents(txt_1);
+		dec_contents_2 = self.parser.get_dec_contents(txt_2); 
+		dec_contents_3 = self.parser.get_dec_contents(txt_3); 
+		dec_contents_4 = self.parser.get_dec_contents(txt_4);
+		dec_contents_5 = self.parser.get_dec_contents(txt_5);
 		
 		
 		## 
 		#  Decision Summaries
 		## 
-		dec_summaries_1 = self.parser.get_dec_summaries_from_txt(txt_1);
-		dec_summaries_2 = self.parser.get_dec_summaries_from_txt(txt_2);
-		dec_summaries_3 = self.parser.get_dec_summaries_from_txt(txt_3);
-		dec_summaries_4 = self.parser.get_dec_summaries_from_txt(txt_4);
-		dec_summaries_5 = self.parser.get_dec_summaries_from_txt(txt_5);
+		dec_summaries_1 = self.parser.get_dec_summaries(txt_1);
+		dec_summaries_2 = self.parser.get_dec_summaries(txt_2);
+		dec_summaries_3 = self.parser.get_dec_summaries(txt_3);
+		dec_summaries_4 = self.parser.get_dec_summaries(txt_4);
+		dec_summaries_5 = self.parser.get_dec_summaries(txt_5);
 
 		## 
 		#  Decisions
 		##
-		decisions_1 = self.parser.get_decisions_from_txt(txt_1)
-		decisions_2 = self.parser.get_decisions_from_txt(txt_2)
-		decisions_3 = self.parser.get_decisions_from_txt(txt_3)
-		decisions_4 = self.parser.get_decisions_from_txt(txt_4)
-		decisions_5 = self.parser.get_decisions_from_txt(txt_5)
+		decisions_1 = self.parser.get_decisions(txt_1)
+		decisions_2 = self.parser.get_decisions(txt_2)
+		decisions_3 = self.parser.get_decisions(txt_3)
+		decisions_4 = self.parser.get_decisions(txt_4)
+		decisions_5 = self.parser.get_decisions(txt_5)
 
 		# Convert any dict to list
 		if isinstance(decisions_1, dict): decisions_1 = list(decisions_1.values())
@@ -187,11 +187,11 @@ class AnalyzerTest(Context):
 		if isinstance(decisions_4, dict): decisions_4 = list(decisions_4.values())
 		if isinstance(decisions_5, dict): decisions_5 = list(decisions_5.values())
 
-		articles_1 = self.parser.get_articles_from_txt(decisions_1[0])
-		articles_2 = self.parser.get_articles_from_txt(decisions_2[0])
-		articles_3 = self.parser.get_articles_from_txt(decisions_3[0])
-		articles_4 = self.parser.get_articles_from_txt(decisions_4[0])
-		articles_5 = self.parser.get_articles_from_txt(decisions_5[0])
+		articles_1 = self.parser.get_articles(decisions_1[0])
+		articles_2 = self.parser.get_articles(decisions_2[0])
+		articles_3 = self.parser.get_articles(decisions_3[0])
+		articles_4 = self.parser.get_articles(decisions_4[0])
+		articles_5 = self.parser.get_articles(decisions_5[0])
 
 		# Convert any dict to list
 		if isinstance(articles_1, dict): articles_1 = list(articles_1.values())
@@ -216,33 +216,33 @@ class AnalyzerTest(Context):
 		## 
 		#  Decision Contents
 		##
-		dec_contents_1 = self.parser.get_dec_contents_from_txt(txt_1);
-		dec_contents_2 = self.parser.get_dec_contents_from_txt(txt_2); 
-		dec_contents_3 = self.parser.get_dec_contents_from_txt(txt_3); 
+		dec_contents_1 = self.parser.get_dec_contents(txt_1);
+		dec_contents_2 = self.parser.get_dec_contents(txt_2); 
+		dec_contents_3 = self.parser.get_dec_contents(txt_3); 
 		
 		
 		## 
 		#  Decision Summaries
 		## 
-		dec_summaries_1 = self.parser.get_dec_summaries_from_txt(txt_1);
-		dec_summaries_2 = self.parser.get_dec_summaries_from_txt(txt_2);
-		dec_summaries_3 = self.parser.get_dec_summaries_from_txt(txt_3);
+		dec_summaries_1 = self.parser.get_dec_summaries(txt_1);
+		dec_summaries_2 = self.parser.get_dec_summaries(txt_2);
+		dec_summaries_3 = self.parser.get_dec_summaries(txt_3);
 
 		## 
 		#  Decisions
 		##
-		decisions_1 = self.parser.get_decisions_from_txt(txt_1)
-		decisions_2 = self.parser.get_decisions_from_txt(txt_2)
-		decisions_3 = self.parser.get_decisions_from_txt(txt_3)
+		decisions_1 = self.parser.get_decisions(txt_1)
+		decisions_2 = self.parser.get_decisions(txt_2)
+		decisions_3 = self.parser.get_decisions(txt_3)
 
 		# Convert any dict to list
 		if isinstance(decisions_1, dict): decisions_1 = list(decisions_1.values())
 		if isinstance(decisions_2, dict): decisions_2 = list(decisions_2.values())
 		if isinstance(decisions_3, dict): decisions_3 = list(decisions_3.values())
 
-		articles_1 = self.parser.get_articles_from_txt(decisions_1[0])
-		articles_2 = self.parser.get_articles_from_txt(decisions_2[0])
-		articles_3 = self.parser.get_articles_from_txt(decisions_3[0])
+		articles_1 = self.parser.get_articles(decisions_1[0])
+		articles_2 = self.parser.get_articles(decisions_2[0])
+		articles_3 = self.parser.get_articles(decisions_3[0])
 
 		# Convert any dict to list
 		if isinstance(articles_1, dict): articles_1 = list(articles_1.values())

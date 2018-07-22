@@ -51,7 +51,7 @@ class Parser(object):
 	# @TODO:
 	# - Fine-tune section getters (see specific @TODOs)
 
-	def get_dec_contents_from_txt(self, txt):
+	def get_dec_contents(self, txt):
 		txt = Helper.clean_up_txt(txt)
 		dec_contents = findall(r"{}(.+?){}".format(self.dec_contents_key, self.decs_key), txt, flags=DOTALL)
 		if dec_contents:
@@ -64,10 +64,10 @@ class Parser(object):
 	#		 1. Find a way to always properly separate dec_summaries from each other:
 	# 		    Idea: Problems possibly solved just by detecting '\n\s*ΑΠΟΦΑΣΕΙΣ' as end key
 	# 		 2. Manage "ΔΙΟΡΘΩΣΗ ΣΦΑΛΜΑΤΩΝ" section
-	def get_dec_summaries_from_txt(self, txt):
+	def get_dec_summaries(self, txt):
 		""" Must be fed 'dec_contents' as returned by get_dec_contents() """
 		txt = Helper.clean_up_txt(txt)
-		dec_contents = self.get_dec_contents_from_txt(txt)
+		dec_contents = self.get_dec_contents(txt)
 
 		if dec_contents:
 			dec_summaries = findall(r"([Α-ΩΆ-ΏA-Z].+?(?:(?![Β-ΔΖΘΚΜΝΞΠΡΤΦ-Ψβ-δζθκμνξπρτφ-ψ]\.\s?\n).)+?\.\s?\n)\d?\n?", dec_contents, flags=DOTALL)
@@ -87,10 +87,10 @@ class Parser(object):
 		return dec_summaries
 
 	# Nums, meaning e.g. "Αριθμ. [...]"
-	def get_dec_nums_from_txt(self, txt):
+	def get_dec_nums(self, txt):
 		""" Must be fed 'dec_summaries' as returned by get_dec_summaries() """
 		txt = Helper.clean_up_txt(txt)
-		dec_summaries = self.get_dec_summaries_from_txt(txt)
+		dec_summaries = self.get_dec_summaries(txt)
 		dec_nums = []
 		if dec_summaries:
 			if len(dec_summaries) == 1:
@@ -105,7 +105,7 @@ class Parser(object):
 				dec_nums = dict(zip_longest(dec_idxs, dec_nums))
 		return dec_nums
 
-	def get_dec_prereqs_from_txt(self, txt):
+	def get_dec_prereqs(self, txt):
 		""" Must be fed 'dec_num', currently: len(dec_summaries) """
 		txt = Helper.clean_up_txt(txt)
 		
@@ -128,7 +128,7 @@ class Parser(object):
 
 		return dec_prereqs
 
-	def get_decisions_from_txt(self, txt):
+	def get_decisions(self, txt):
 		""" Must be fed 'dec_num', currently: len(dec_summaries) """
 		txt = Helper.clean_up_txt(txt)
 		
@@ -151,7 +151,7 @@ class Parser(object):
 	# @TODO: 
 	# 		1. Refine
 	#		2. Make format of final result definite
-	def get_dec_signees_from_txt(self, txt):
+	def get_dec_signees(self, txt):
 		# E.g. "Οι Υπουργοί", "Ο ΠΡΟΕΔΡΕΥΩΝ" etc.
 		dec_signees_general_occup_pattern = "{year}\s*\n\s*{by_order_of}?((?:{gen_occupation}))\s*\n"\
 											.format(year="\s\d{4}", 
@@ -175,12 +175,12 @@ class Parser(object):
 
 		return dict(zip(dec_signees_general_occup, dec_signees))
 
-	def get_dec_location_and_date_from_txt(self, txt):
+	def get_dec_location_and_date(self, txt):
 		regex_dec_location_and_date = Helper.get_dec_location_and_date_before_signees_regex()
 		dec_location_and_dates = findall(regex_dec_location_and_date, txt)
 		return dec_location_and_dates
 
-	def get_paorgs_from_txt(self, txt, paorgs_list):
+	def get_paorgs(self, txt, paorgs_list):
 		""" Must be fed a pre-fetched 'paorgs_list' """
 		txt = Helper.clean_up_for_paorgs_getter(txt)
 		
@@ -208,7 +208,7 @@ class Parser(object):
 		
 		return matching_paorgs
 
-	def get_articles_from_txt(self, txt):
+	def get_articles(self, txt):
 		""" Ideally to be fed 'txt' containing a presidential decree with articles """
 		dec_articles = []
 		if txt: 
@@ -256,7 +256,7 @@ class Parser(object):
 		return list(OrderedDict.fromkeys(rough_paorg_respa_sections))
 
 	# Get RespA sections contained in decision body 
-	def get_dec_respa_sections_from_txt(self, txt):
+	def get_dec_respa_sections(self, txt):
 		""" Ideally to be fed 'txt' containing decision """
 		dec_respa_sections_in_articles, \
 		dec_respa_sections_not_in_articles_1, \
@@ -286,7 +286,7 @@ class Parser(object):
 		return dec_respa_sections
 
 	# Get RespA decisions referred in decision prerequisites
-	def get_referred_dec_respa_sections_from_txt(self, txt):
+	def get_referred_dec_respa_sections(self, txt):
 		""" Ideally to be fed 'txt' containing decision prerequisites """
 		ref_dec_respa_sections = []
 
