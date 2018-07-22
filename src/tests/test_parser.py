@@ -1,4 +1,4 @@
-from context import unittest, call, os, errno, shutil, Context
+from context import unittest, call, os, errno, shutil, Context, Fetcher
 from shutil import rmtree
 
 class ParserTest(Context):

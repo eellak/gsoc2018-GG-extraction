@@ -1,4 +1,4 @@
-from context import unittest, call, os, shutil, Context
+from context import unittest, call, os, shutil, Context, Fetcher
 from shutil import rmtree
 
 class FetcherTest(Context):
