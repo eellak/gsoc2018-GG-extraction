@@ -1854,5 +1854,159 @@ class ParserTest(Context):
 		print(issue_categories)
 		print(issue_types)
 
+	def test_get_serial_number_1(self):
+		txt_1 = self.get_txt('1')
+		txt_2 = self.get_txt('2')
+		txt_3 = self.get_txt('3')
+		txt_4 = self.get_txt('4')
+		txt_5 = self.get_txt('5')
+		txt_6 = self.get_txt('6')
+		txt_7 = self.get_txt('7')
+		txt_8 = self.get_txt('8')
+
+		serial_num_1 = self.parser.get_serial_number(txt_1)
+		serial_num_2 = self.parser.get_serial_number(txt_2)
+		serial_num_3 = self.parser.get_serial_number(txt_3)
+		serial_num_4 = self.parser.get_serial_number(txt_4)
+		serial_num_5 = self.parser.get_serial_number(txt_5)
+		serial_num_6 = self.parser.get_serial_number(txt_6)
+		serial_num_7 = self.parser.get_serial_number(txt_7)
+		serial_num_8 = self.parser.get_serial_number(txt_8)
+
+		print(serial_num_1)
+		print(serial_num_2)
+		print(serial_num_3)
+		print(serial_num_4)
+		print(serial_num_5)
+		print(serial_num_6)
+		print(serial_num_7)
+		print(serial_num_8)
+	
+	def test_get_serial_number_2(self):
+		respa_pdf_path = self.test_pdfs_dir + '/RespA_Dec_Issues/w_RespA_Decisions/'
+		txt_1 = self.get_txt('1_w_RespA_Decisions', pdf_path=respa_pdf_path)
+		txt_2 = self.get_txt('2_w_RespA_Decisions', pdf_path=respa_pdf_path)
+		txt_3 = self.get_txt('3_w_RespA_Decisions', pdf_path=respa_pdf_path)
+		txt_4 = self.get_txt('4_w_RespA_Decisions', pdf_path=respa_pdf_path)
+		txt_5 = self.get_txt('5_w_RespA_Decisions', pdf_path=respa_pdf_path)
+		txt_6 = self.get_txt('6_w_RespA_Decisions', pdf_path=respa_pdf_path)
+		txt_7 = self.get_txt('7_w_RespA_Decisions', pdf_path=respa_pdf_path)
+		txt_8 = self.get_txt('8_w_RespA_Decisions', pdf_path=respa_pdf_path)
+		txt_9 = self.get_txt('9_w_RespA_Decisions', pdf_path=respa_pdf_path)
+		txt_10 = self.get_txt('10_w_RespA_Decisions', pdf_path=respa_pdf_path)
+		txt_11 = self.get_txt('11_w_RespA_Decisions', pdf_path=respa_pdf_path)
+
+		serial_num_1 = self.parser.get_serial_number(txt_1)
+		serial_num_2 = self.parser.get_serial_number(txt_2)
+		serial_num_3 = self.parser.get_serial_number(txt_3)
+		serial_num_4 = self.parser.get_serial_number(txt_4)
+		serial_num_5 = self.parser.get_serial_number(txt_5)
+		serial_num_6 = self.parser.get_serial_number(txt_6)
+		serial_num_7 = self.parser.get_serial_number(txt_7)
+		serial_num_8 = self.parser.get_serial_number(txt_8)
+		serial_num_9 = self.parser.get_serial_number(txt_9)
+		serial_num_10 = self.parser.get_serial_number(txt_10)
+		serial_num_11 = self.parser.get_serial_number(txt_11)
+
+		print(serial_num_1)
+		print(serial_num_2)
+		print(serial_num_3)
+		print(serial_num_4)
+		print(serial_num_5)
+		print(serial_num_6)
+		print(serial_num_7)
+		print(serial_num_8)
+		print(serial_num_9)
+		print(serial_num_10)
+		print(serial_num_11)
+
+	def test_get_serial_number_3(self):
+		respa_pdf_path = self.test_pdfs_dir + '/RespA_Dec_Issues/w_Referenced_RespA_Decisions/'
+		txt_1 = self.get_txt('1_w_Ref_RespA_Decisions', pdf_path=respa_pdf_path)
+		txt_2 = self.get_txt('2_w_Ref_RespA_Decisions', pdf_path=respa_pdf_path)
+		txt_3 = self.get_txt('3_w_Ref_RespA_Decisions', pdf_path=respa_pdf_path)
+		txt_4 = self.get_txt('4_w_Ref_RespA_Decisions', pdf_path=respa_pdf_path)
+		txt_5 = self.get_txt('5_w_Ref_RespA_Decisions', pdf_path=respa_pdf_path)
+		txt_6 = self.get_txt('6_w_Ref_RespA_Decisions', pdf_path=respa_pdf_path)
+		txt_7 = self.get_txt('7_w_Ref_RespA_Decisions', pdf_path=respa_pdf_path)
+		txt_8 = self.get_txt('8_w_Ref_RespA_Decisions', pdf_path=respa_pdf_path)
+
+		serial_num_1 = self.parser.get_serial_number(txt_1)
+		serial_num_2 = self.parser.get_serial_number(txt_2)
+		serial_num_3 = self.parser.get_serial_number(txt_3)
+		serial_num_4 = self.parser.get_serial_number(txt_4)
+		serial_num_5 = self.parser.get_serial_number(txt_5)
+		serial_num_6 = self.parser.get_serial_number(txt_6)
+		serial_num_7 = self.parser.get_serial_number(txt_7)
+		serial_num_8 = self.parser.get_serial_number(txt_8)
+
+		print(serial_num_1)
+		print(serial_num_2)
+		print(serial_num_3)
+		print(serial_num_4)
+		print(serial_num_5)
+		print(serial_num_6)
+		print(serial_num_7)
+		print(serial_num_8)
+
+	def test_get_serial_number_4(self):
+		pdf_path = self.test_pdfs_dir + '/Presidential_Decree_Issues/for_test_data/Non-RespAs/'
+		txt_path = self.test_txts_dir + '/for_test_data/Non-RespAs/'
+		txt_1 = self.get_txt('1', pdf_path=pdf_path, txt_path=txt_path)
+		txt_2 = self.get_txt('2', pdf_path=pdf_path, txt_path=txt_path)
+		txt_3 = self.get_txt('3', pdf_path=pdf_path, txt_path=txt_path)
+
+		serial_num_1 = self.parser.get_serial_number(txt_1)
+		serial_num_2 = self.parser.get_serial_number(txt_2)
+		serial_num_3 = self.parser.get_serial_number(txt_3)
+
+		print(serial_num_1)
+		print(serial_num_2)
+		print(serial_num_3)
+
+	def test_get_serial_number_5(self):
+		pdf_path = self.test_pdfs_dir + '/Presidential_Decree_Issues/for_test_data/RespAs/'
+		txt_path = self.test_txts_dir + '/for_test_data/RespAs/'
+		txt_1 = self.get_txt('1', pdf_path=pdf_path, txt_path=txt_path)
+		txt_2 = self.get_txt('2', pdf_path=pdf_path, txt_path=txt_path)
+		txt_3 = self.get_txt('3', pdf_path=pdf_path, txt_path=txt_path)
+		txt_4 = self.get_txt('4', pdf_path=pdf_path, txt_path=txt_path)
+		txt_5 = self.get_txt('5', pdf_path=pdf_path, txt_path=txt_path)
+		txt_6 = self.get_txt('6', pdf_path=pdf_path, txt_path=txt_path)
+
+		serial_num_1 = self.parser.get_serial_number(txt_1)
+		serial_num_2 = self.parser.get_serial_number(txt_2)
+		serial_num_3 = self.parser.get_serial_number(txt_3)
+		serial_num_4 = self.parser.get_serial_number(txt_4)
+		serial_num_5 = self.parser.get_serial_number(txt_5)
+		serial_num_6 = self.parser.get_serial_number(txt_6)
+
+		print(serial_num_1)
+		print(serial_num_2)
+		print(serial_num_3)
+		print(serial_num_4)
+		print(serial_num_5)
+		print(serial_num_6)
+
+	def test_get_serial_number_6(self):
+		pdf_path = self.test_pdfs_dir + '/Presidential_Decree_Issues/for_training_data/Non-RespAs/'
+		txt_path = self.test_txts_dir + '/for_training_data/Non-RespAs/'
+		get_txt = self.get_txt
+		get_serial_num = self.parser.get_serial_number
+		txts = [get_txt(str(i), pdf_path=pdf_path, txt_path=txt_path) for i in range(1, 25+1)]
+		serial_nums = [get_serial_num(txt) for txt in txts]
+
+		print(serial_nums)
+
+	def test_get_serial_number_7(self):
+		pdf_path = self.test_pdfs_dir + '/Presidential_Decree_Issues/for_training_data/RespAs/'
+		txt_path = self.test_txts_dir + '/for_training_data/RespAs/'
+		get_txt = self.get_txt
+		get_serial_num = self.parser.get_serial_number
+		txts = [get_txt(str(i), pdf_path=pdf_path, txt_path=txt_path) for i in range(1, 50+1)]
+		serial_nums = [get_serial_num(txt) for txt in txts]
+
+		print(serial_nums)
+
 if __name__ == '__main__':
 	unittest.main() 
