@@ -24,10 +24,13 @@ class Parser(object):
 		self.acronym_paorg_detect_accuracy = 0.85
 		self.__project_path = os.getcwd()
 		self.__illegal_chars = compile(r"\d+")
+		##################################################
+		## Το be constantly expanded (lots of variants) ##
+		##################################################
 		self.issue_number_key = "Αρ. Φύλλου"
+		self.issue_type_keys = ["ΑΠΟΦΑΣ", "ΠΡΟΕΔΡΙΚ", "[ΝN][OΟ][ΜM][OΟ]", "ΚΑΝΟΝΙΣΜ", "ΠΡΑΞ", "ΠΡΟΚΗΡΥΞ"]
 		self.dec_contents_key = "ΠΕΡΙΕΧΟΜΕΝΑ\nΑΠΟΦΑΣΕΙΣ"
 		self.decs_key = "ΑΠΟΦΑΣΕΙΣ"
-		# Must be expanded (lots of variants)
 		self.summaries_start_keys = ["ΠΡΟΕΔΡΙΚΟ ΔΙΑΤΑΓΜΑ ΥΠ\’ ΑΡΙΘ[^\n]+", "KANOΝΙΣΜΟΣ ΥΠ\’ ΑΡΙΘ[^\n]+", "ΝΟΜΟΣ ΥΠ\’ ΑΡΙΘ[^\n]+", 
 									 "[^«]ΠΡΑΞΗ ΝΟΜΟΘΕΤΙΚΟΥ ΠΕΡΙΕΧΟΜΕΝΟΥ[^\n]+"]
 		self.dec_prereq_keys = ["χοντας υπόψη:", "χοντας υπόψη", "χοντες υπόψη:", "χουσα υπόψη:", "χουσα υπ’ όψει:", "χοντας υπόψη του:", 
@@ -62,8 +65,7 @@ class Parser(object):
 	
 	# @TODO: 
 
-	#		 1. Find a way to always properly separate dec_summaries from each other:
-	# 		    Idea: Problems possibly solved just by detecting '\n\s*ΑΠΟΦΑΣΕΙΣ' as end key
+	#		 1. Find a way to always properly separate dec_summaries from each other
 	# 		 2. Manage "ΔΙΟΡΘΩΣΗ ΣΦΑΛΜΑΤΩΝ" section
 	def get_dec_summaries(self, txt):
 		""" Must be fed 'dec_contents' as returned by get_dec_contents() """
@@ -324,7 +326,12 @@ class Parser(object):
 		return issue_numbers[0] if issue_numbers else issue_numbers
 
 	def get_issue_category(self, txt):
-		issue_types = findall(r"ΤΕΥΧΟΣ[ ]+([\s\S]+?)\n", txt)
+		issue_categories = findall(r"ΤΕΥΧΟΣ[ ]+([\s\S]+?)\n", txt)
+		return issue_categories[0] if issue_categories else issue_categories
+
+	def get_issue_type(self, txt):
+		issue_types = findall(r"\s+((?:{issue_type_keys})[\s\S]+?)\n".\
+						 		format(issue_type_keys=Helper.get_special_regex_disjunction(self.issue_type_keys)), txt)
 		return issue_types[0] if issue_types else issue_types
 
 	def get_publication_date(self, txt):
@@ -335,8 +342,6 @@ class Parser(object):
 						 txt)
 		# First date occurence is the publication date
 		return dates[0] if dates else dates
-
-
 
 	# Get a dictionary containing assignment: {'PAOrg': ..., 'Persons': ..., 'Responsibilities': ..., etc.}
 	def get_respa_association(self, txt):
