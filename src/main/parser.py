@@ -320,9 +320,17 @@ class Parser(object):
 		return paragraphs
 
 	def get_issue_number(self, txt):
-		issue_number = findall(r"{issue_number_key}[ ]+(\d+)".format(issue_number_key=self.issue_number_key), txt)
-		if issue_number: issue_number = issue_number[0]
-		return issue_number
+		issue_numbers = findall(r"{issue_number_key}[ ]+(\d+)".format(issue_number_key=self.issue_number_key), txt)
+		return issue_numbers[0] if issue_numbers else issue_numbers
+
+	def get_publication_date(self, txt):
+		dates = findall(r"{day}[ ]+(?:{months})[ ]+{year}".\
+						 format(day="\d{1,2}", 
+						 		months=Helper.get_special_regex_disjunction(list(Helper.get_greek_months().keys())),
+						 		year="\d{4}"), 
+						 txt)
+		# First date occurence is the publication date
+		return dates[0] if dates else dates
 
 	# Get a dictionary containing assignment: {'PAOrg': ..., 'Persons': ..., 'Responsibilities': ..., etc.}
 	def get_respa_association(self, txt):
