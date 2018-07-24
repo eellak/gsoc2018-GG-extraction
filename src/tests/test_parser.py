@@ -2008,5 +2008,156 @@ class ParserTest(Context):
 
 		print(serial_nums)
 
+	def test_get_mentioned_issues_sections_1(self):
+		txt_1 = self.get_txt('1')
+		txt_2 = self.get_txt('2')
+		txt_3 = self.get_txt('3')
+		txt_4 = self.get_txt('4')
+		txt_5 = self.get_txt('5')
+		txt_6 = self.get_txt('6')
+		txt_7 = self.get_txt('7')
+		txt_8 = self.get_txt('8')
+
+		mentioned_issues_sections_1 = self.parser.get_mentioned_issues_sections(txt_1)
+		mentioned_issues_sections_2 = self.parser.get_mentioned_issues_sections(txt_2)
+		mentioned_issues_sections_3 = self.parser.get_mentioned_issues_sections(txt_3)
+		mentioned_issues_sections_4 = self.parser.get_mentioned_issues_sections(txt_4)
+		mentioned_issues_sections_5 = self.parser.get_mentioned_issues_sections(txt_5)
+		mentioned_issues_sections_6 = self.parser.get_mentioned_issues_sections(txt_6)
+		mentioned_issues_sections_7 = self.parser.get_mentioned_issues_sections(txt_7)
+		mentioned_issues_sections_8 = self.parser.get_mentioned_issues_sections(txt_8)
+
+		print(mentioned_issues_sections_1)
+		print(mentioned_issues_sections_2)
+		print(mentioned_issues_sections_3)
+		print(mentioned_issues_sections_4)
+		print(mentioned_issues_sections_5)
+		print(mentioned_issues_sections_6)
+		print(mentioned_issues_sections_7)
+		print(mentioned_issues_sections_8)
+
+	def test_get_mentioned_issues_sections_2(self):
+		respa_pdf_path = self.test_pdfs_dir + '/RespA_Dec_Issues/w_RespA_Decisions/'
+		txt_1 = self.get_txt('1_w_RespA_Decisions', pdf_path=respa_pdf_path)
+		txt_2 = self.get_txt('2_w_RespA_Decisions', pdf_path=respa_pdf_path)
+		txt_3 = self.get_txt('3_w_RespA_Decisions', pdf_path=respa_pdf_path)
+		txt_4 = self.get_txt('4_w_RespA_Decisions', pdf_path=respa_pdf_path)
+		txt_5 = self.get_txt('5_w_RespA_Decisions', pdf_path=respa_pdf_path)
+		txt_6 = self.get_txt('6_w_RespA_Decisions', pdf_path=respa_pdf_path)
+		txt_7 = self.get_txt('7_w_RespA_Decisions', pdf_path=respa_pdf_path)
+		txt_8 = self.get_txt('8_w_RespA_Decisions', pdf_path=respa_pdf_path)
+		txt_9 = self.get_txt('9_w_RespA_Decisions', pdf_path=respa_pdf_path)
+		txt_10 = self.get_txt('10_w_RespA_Decisions', pdf_path=respa_pdf_path)
+		txt_11 = self.get_txt('11_w_RespA_Decisions', pdf_path=respa_pdf_path)
+
+		mentioned_issues_sections_1 = self.parser.get_mentioned_issues_sections(txt_1)
+		mentioned_issues_sections_2 = self.parser.get_mentioned_issues_sections(txt_2)
+		mentioned_issues_sections_3 = self.parser.get_mentioned_issues_sections(txt_3)
+		mentioned_issues_sections_4 = self.parser.get_mentioned_issues_sections(txt_4)
+		mentioned_issues_sections_5 = self.parser.get_mentioned_issues_sections(txt_5)
+		mentioned_issues_sections_6 = self.parser.get_mentioned_issues_sections(txt_6)
+		mentioned_issues_sections_7 = self.parser.get_mentioned_issues_sections(txt_7)
+		mentioned_issues_sections_8 = self.parser.get_mentioned_issues_sections(txt_8)
+		mentioned_issues_sections_9 = self.parser.get_mentioned_issues_sections(txt_9)
+		mentioned_issues_sections_10 = self.parser.get_mentioned_issues_sections(txt_10)
+		mentioned_issues_sections_11 = self.parser.get_mentioned_issues_sections(txt_11)
+
+		print(mentioned_issues_sections_1)
+		print(mentioned_issues_sections_2)
+		print(mentioned_issues_sections_3)
+		print(mentioned_issues_sections_4)
+		print(mentioned_issues_sections_5)
+		print(mentioned_issues_sections_6)
+		print(mentioned_issues_sections_7)
+		print(mentioned_issues_sections_8)
+		print(mentioned_issues_sections_9)
+		print(mentioned_issues_sections_10)
+		print(mentioned_issues_sections_11)
+
+	def test_get_mentioned_issues_sections_3(self):
+		respa_pdf_path = self.test_pdfs_dir + '/RespA_Dec_Issues/w_Referenced_RespA_Decisions/'
+		txt_1 = self.get_txt('1_w_Ref_RespA_Decisions', pdf_path=respa_pdf_path)
+		txt_2 = self.get_txt('2_w_Ref_RespA_Decisions', pdf_path=respa_pdf_path)
+		txt_3 = self.get_txt('3_w_Ref_RespA_Decisions', pdf_path=respa_pdf_path)
+		txt_4 = self.get_txt('4_w_Ref_RespA_Decisions', pdf_path=respa_pdf_path)
+		txt_5 = self.get_txt('5_w_Ref_RespA_Decisions', pdf_path=respa_pdf_path)
+		txt_6 = self.get_txt('6_w_Ref_RespA_Decisions', pdf_path=respa_pdf_path)
+		txt_7 = self.get_txt('7_w_Ref_RespA_Decisions', pdf_path=respa_pdf_path)
+		txt_8 = self.get_txt('8_w_Ref_RespA_Decisions', pdf_path=respa_pdf_path)
+
+		mentioned_issues_sections_1 = self.parser.get_mentioned_issues_sections(txt_1)
+		mentioned_issues_sections_2 = self.parser.get_mentioned_issues_sections(txt_2)
+		mentioned_issues_sections_3 = self.parser.get_mentioned_issues_sections(txt_3)
+		mentioned_issues_sections_4 = self.parser.get_mentioned_issues_sections(txt_4)
+		mentioned_issues_sections_5 = self.parser.get_mentioned_issues_sections(txt_5)
+		mentioned_issues_sections_6 = self.parser.get_mentioned_issues_sections(txt_6)
+		mentioned_issues_sections_7 = self.parser.get_mentioned_issues_sections(txt_7)
+		mentioned_issues_sections_8 = self.parser.get_mentioned_issues_sections(txt_8)
+
+		print(mentioned_issues_sections_1)
+		print(mentioned_issues_sections_2)
+		print(mentioned_issues_sections_3)
+		print(mentioned_issues_sections_4)
+		print(mentioned_issues_sections_5)
+		print(mentioned_issues_sections_6)
+		print(mentioned_issues_sections_7)
+		print(mentioned_issues_sections_8)
+
+	def test_get_mentioned_issues_sections_4(self):
+		pdf_path = self.test_pdfs_dir + '/Presidential_Decree_Issues/for_test_data/Non-RespAs/'
+		txt_path = self.test_txts_dir + '/for_test_data/Non-RespAs/'
+		txt_1 = self.get_txt('1', pdf_path=pdf_path, txt_path=txt_path)
+		txt_2 = self.get_txt('2', pdf_path=pdf_path, txt_path=txt_path)
+		txt_3 = self.get_txt('3', pdf_path=pdf_path, txt_path=txt_path)
+
+		mentioned_issues_sections_1 = self.parser.get_mentioned_issues_sections(txt_1)
+		mentioned_issues_sections_2 = self.parser.get_mentioned_issues_sections(txt_2)
+		mentioned_issues_sections_3 = self.parser.get_mentioned_issues_sections(txt_3)
+		
+		print(mentioned_issues_sections_1)
+		print(mentioned_issues_sections_2)
+		print(mentioned_issues_sections_3)
+
+	def test_get_mentioned_issues_sections_5(self):
+		pdf_path = self.test_pdfs_dir + '/Presidential_Decree_Issues/for_test_data/RespAs/'
+		txt_path = self.test_txts_dir + '/for_test_data/RespAs/'
+		txt_1 = self.get_txt('1', pdf_path=pdf_path, txt_path=txt_path)
+		txt_2 = self.get_txt('2', pdf_path=pdf_path, txt_path=txt_path)
+		txt_3 = self.get_txt('3', pdf_path=pdf_path, txt_path=txt_path)
+		txt_4 = self.get_txt('4', pdf_path=pdf_path, txt_path=txt_path)
+		txt_5 = self.get_txt('5', pdf_path=pdf_path, txt_path=txt_path)
+		txt_6 = self.get_txt('6', pdf_path=pdf_path, txt_path=txt_path)
+
+		mentioned_issues_sections_1 = self.parser.get_mentioned_issues_sections(txt_1)
+		mentioned_issues_sections_2 = self.parser.get_mentioned_issues_sections(txt_2)
+		mentioned_issues_sections_3 = self.parser.get_mentioned_issues_sections(txt_3)
+		mentioned_issues_sections_4 = self.parser.get_mentioned_issues_sections(txt_4)
+		mentioned_issues_sections_5 = self.parser.get_mentioned_issues_sections(txt_5)
+		
+		print(mentioned_issues_sections_1)
+		print(mentioned_issues_sections_2)
+		print(mentioned_issues_sections_3)
+		print(mentioned_issues_sections_4)
+		print(mentioned_issues_sections_5)
+
+	def test_get_mentioned_issues_sections_6(self):
+		pdf_path = self.test_pdfs_dir + '/Presidential_Decree_Issues/for_training_data/Non-RespAs/'
+		txt_path = self.test_txts_dir + '/for_training_data/Non-RespAs/'
+		get_txt = self.get_txt
+		get_mentioned_issues_sections = self.parser.get_mentioned_issues_sections
+		txts = [get_txt(str(i), pdf_path=pdf_path, txt_path=txt_path) for i in range(1, 25+1)]
+		mentioned_issues_sections = [get_mentioned_issues_sections(txt) for txt in txts]
+		print(mentioned_issues_sections)
+
+
+	def test_get_mentioned_issues_sections_7(self):
+		pdf_path = self.test_pdfs_dir + '/Presidential_Decree_Issues/for_training_data/RespAs/'
+		txt_path = self.test_txts_dir + '/for_training_data/RespAs/'
+		get_txt = self.get_txt
+		get_mentioned_issues_sections = self.parser.get_mentioned_issues_sections
+		txts = [get_txt(str(i), pdf_path=pdf_path, txt_path=txt_path) for i in range(1, 50+1)]
+		mentioned_issues_sections = [get_mentioned_issues_sections(txt) for txt in txts]
+		print(mentioned_issues_sections)
+
 if __name__ == '__main__':
 	unittest.main() 
