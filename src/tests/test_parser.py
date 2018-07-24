@@ -1694,7 +1694,7 @@ class ParserTest(Context):
 		print(issue_nums)
 		print(pub_dates)
 
-	def test_get_issue_category_1(self):
+	def test_get_issue_category_and_type_1(self):
 		txt_1 = self.get_txt('1')
 		txt_2 = self.get_txt('2')
 		txt_3 = self.get_txt('3')
@@ -1704,25 +1704,25 @@ class ParserTest(Context):
 		txt_7 = self.get_txt('7')
 		txt_8 = self.get_txt('8')
 
-		issue_category_1 = self.parser.get_issue_category(txt_1)
-		issue_category_2 = self.parser.get_issue_category(txt_2)
-		issue_category_3 = self.parser.get_issue_category(txt_3)
-		issue_category_4 = self.parser.get_issue_category(txt_4)
-		issue_category_5 = self.parser.get_issue_category(txt_5)
-		issue_category_6 = self.parser.get_issue_category(txt_6)
-		issue_category_7 = self.parser.get_issue_category(txt_7)
-		issue_category_8 = self.parser.get_issue_category(txt_8)
+		issue_category_1, issue_type_1 = self.parser.get_issue_category(txt_1), self.parser.get_issue_type(txt_1)
+		issue_category_2, issue_type_2 = self.parser.get_issue_category(txt_2), self.parser.get_issue_type(txt_2)
+		issue_category_3, issue_type_3 = self.parser.get_issue_category(txt_3), self.parser.get_issue_type(txt_3)
+		issue_category_4, issue_type_4 = self.parser.get_issue_category(txt_4), self.parser.get_issue_type(txt_4)
+		issue_category_5, issue_type_5 = self.parser.get_issue_category(txt_5), self.parser.get_issue_type(txt_5)
+		issue_category_6, issue_type_6 = self.parser.get_issue_category(txt_6), self.parser.get_issue_type(txt_6)
+		issue_category_7, issue_type_7 = self.parser.get_issue_category(txt_7), self.parser.get_issue_type(txt_7)
+		issue_category_8, issue_type_8 = self.parser.get_issue_category(txt_8), self.parser.get_issue_type(txt_8)
 
-		print(issue_category_1)
-		print(issue_category_2)
-		print(issue_category_3)
-		print(issue_category_4)
-		print(issue_category_5)
-		print(issue_category_6)
-		print(issue_category_7)
-		print(issue_category_8)
+		print(issue_category_1, issue_type_1)
+		print(issue_category_2, issue_type_2)
+		print(issue_category_3, issue_type_3)
+		print(issue_category_4, issue_type_4)
+		print(issue_category_5, issue_type_5)
+		print(issue_category_6, issue_type_6)
+		print(issue_category_7, issue_type_7)
+		print(issue_category_8, issue_type_8)
 
-	def test_get_issue_category_2(self):
+	def test_get_issue_category_and_type_2(self):
 		respa_pdf_path = self.test_pdfs_dir + '/RespA_Dec_Issues/w_RespA_Decisions/'
 		txt_1 = self.get_txt('1_w_RespA_Decisions', pdf_path=respa_pdf_path)
 		txt_2 = self.get_txt('2_w_RespA_Decisions', pdf_path=respa_pdf_path)
@@ -1736,31 +1736,31 @@ class ParserTest(Context):
 		txt_10 = self.get_txt('10_w_RespA_Decisions', pdf_path=respa_pdf_path)
 		txt_11 = self.get_txt('11_w_RespA_Decisions', pdf_path=respa_pdf_path)
 
-		issue_category_1 = self.parser.get_issue_category(txt_1)
-		issue_category_2 = self.parser.get_issue_category(txt_2)
-		issue_category_3 = self.parser.get_issue_category(txt_3)
-		issue_category_4 = self.parser.get_issue_category(txt_4)
-		issue_category_5 = self.parser.get_issue_category(txt_5)
-		issue_category_6 = self.parser.get_issue_category(txt_6)
-		issue_category_7 = self.parser.get_issue_category(txt_7)
-		issue_category_8 = self.parser.get_issue_category(txt_8)
-		issue_category_9 = self.parser.get_issue_category(txt_9)
-		issue_category_10 = self.parser.get_issue_category(txt_10)
-		issue_category_11 = self.parser.get_issue_category(txt_11)
+		issue_category_1, issue_type_1 = self.parser.get_issue_category(txt_1), self.parser.get_issue_type(txt_1)
+		issue_category_2, issue_type_2 = self.parser.get_issue_category(txt_2), self.parser.get_issue_type(txt_2)
+		issue_category_3, issue_type_3 = self.parser.get_issue_category(txt_3), self.parser.get_issue_type(txt_3)
+		issue_category_4, issue_type_4 = self.parser.get_issue_category(txt_4), self.parser.get_issue_type(txt_4)
+		issue_category_5, issue_type_5 = self.parser.get_issue_category(txt_5), self.parser.get_issue_type(txt_5)
+		issue_category_6, issue_type_6 = self.parser.get_issue_category(txt_6), self.parser.get_issue_type(txt_6)
+		issue_category_7, issue_type_7 = self.parser.get_issue_category(txt_7), self.parser.get_issue_type(txt_7)
+		issue_category_8, issue_type_8 = self.parser.get_issue_category(txt_8), self.parser.get_issue_type(txt_8)
+		issue_category_9, issue_type_9 = self.parser.get_issue_category(txt_9), self.parser.get_issue_type(txt_9)
+		issue_category_10, issue_type_10 = self.parser.get_issue_category(txt_10), self.parser.get_issue_type(txt_10)
+		issue_category_11, issue_type_11 = self.parser.get_issue_category(txt_11), self.parser.get_issue_type(txt_11)
 
-		print(issue_category_1)
-		print(issue_category_2)
-		print(issue_category_3)
-		print(issue_category_4)
-		print(issue_category_5)
-		print(issue_category_6)
-		print(issue_category_7)
-		print(issue_category_8)
-		print(issue_category_9)
-		print(issue_category_10)
-		print(issue_category_11)
+		print(issue_category_1, issue_type_1)
+		print(issue_category_2, issue_type_2)
+		print(issue_category_3, issue_type_3)
+		print(issue_category_4, issue_type_4)
+		print(issue_category_5, issue_type_5)
+		print(issue_category_6, issue_type_6)
+		print(issue_category_7, issue_type_7)
+		print(issue_category_8, issue_type_8)
+		print(issue_category_9, issue_type_9)
+		print(issue_category_10, issue_type_10)
+		print(issue_category_11, issue_type_11)
 	
-	def test_get_issue_category_3(self):
+	def test_get_issue_category_and_type_3(self):
 		respa_pdf_path = self.test_pdfs_dir + '/RespA_Dec_Issues/w_Referenced_RespA_Decisions/'
 		txt_1 = self.get_txt('1_w_Ref_RespA_Decisions', pdf_path=respa_pdf_path)
 		txt_2 = self.get_txt('2_w_Ref_RespA_Decisions', pdf_path=respa_pdf_path)
@@ -1771,40 +1771,40 @@ class ParserTest(Context):
 		txt_7 = self.get_txt('7_w_Ref_RespA_Decisions', pdf_path=respa_pdf_path)
 		txt_8 = self.get_txt('8_w_Ref_RespA_Decisions', pdf_path=respa_pdf_path)
 
-		issue_category_1 = self.parser.get_issue_category(txt_1)
-		issue_category_2 = self.parser.get_issue_category(txt_2)
-		issue_category_3 = self.parser.get_issue_category(txt_3)
-		issue_category_4 = self.parser.get_issue_category(txt_4)
-		issue_category_5 = self.parser.get_issue_category(txt_5)
-		issue_category_6 = self.parser.get_issue_category(txt_6)
-		issue_category_7 = self.parser.get_issue_category(txt_7)
-		issue_category_8 = self.parser.get_issue_category(txt_8)
+		issue_category_1, issue_type_1 = self.parser.get_issue_category(txt_1), self.parser.get_issue_type(txt_1)
+		issue_category_2, issue_type_2 = self.parser.get_issue_category(txt_2), self.parser.get_issue_type(txt_2)
+		issue_category_3, issue_type_3 = self.parser.get_issue_category(txt_3), self.parser.get_issue_type(txt_3)
+		issue_category_4, issue_type_4 = self.parser.get_issue_category(txt_4), self.parser.get_issue_type(txt_4)
+		issue_category_5, issue_type_5 = self.parser.get_issue_category(txt_5), self.parser.get_issue_type(txt_5)
+		issue_category_6, issue_type_6 = self.parser.get_issue_category(txt_6), self.parser.get_issue_type(txt_6)
+		issue_category_7, issue_type_7 = self.parser.get_issue_category(txt_7), self.parser.get_issue_type(txt_7)
+		issue_category_8, issue_type_8 = self.parser.get_issue_category(txt_8), self.parser.get_issue_type(txt_8)
 		
-		print(issue_category_1)
-		print(issue_category_2)
-		print(issue_category_3)
-		print(issue_category_4)
-		print(issue_category_5)
-		print(issue_category_6)
-		print(issue_category_7)
-		print(issue_category_8)
+		print(issue_category_1, issue_type_1)
+		print(issue_category_2, issue_type_2)
+		print(issue_category_3, issue_type_3)
+		print(issue_category_4, issue_type_4)
+		print(issue_category_5, issue_type_5)
+		print(issue_category_6, issue_type_6)
+		print(issue_category_7, issue_type_7)
+		print(issue_category_8, issue_type_8)
 	
-	def test_get_issue_category_4(self):
+	def test_get_issue_category_and_type_4(self):
 		pdf_path = self.test_pdfs_dir + '/Presidential_Decree_Issues/for_test_data/Non-RespAs/'
 		txt_path = self.test_txts_dir + '/for_test_data/Non-RespAs/'
 		txt_1 = self.get_txt('1', pdf_path=pdf_path, txt_path=txt_path)
 		txt_2 = self.get_txt('2', pdf_path=pdf_path, txt_path=txt_path)
 		txt_3 = self.get_txt('3', pdf_path=pdf_path, txt_path=txt_path)
 
-		issue_category_1 = self.parser.get_issue_category(txt_1)
-		issue_category_2 = self.parser.get_issue_category(txt_2)
-		issue_category_3 = self.parser.get_issue_category(txt_3)
+		issue_category_1, issue_type_1 = self.parser.get_issue_category(txt_1), self.parser.get_issue_type(txt_1)
+		issue_category_2, issue_type_2 = self.parser.get_issue_category(txt_2), self.parser.get_issue_type(txt_2)
+		issue_category_3, issue_type_3 = self.parser.get_issue_category(txt_3), self.parser.get_issue_type(txt_3)
 		
-		print(issue_category_1)
-		print(issue_category_2)
-		print(issue_category_3)
+		print(issue_category_1, issue_type_1)
+		print(issue_category_2, issue_type_2)
+		print(issue_category_3, issue_type_3)
 	
-	def test_get_issue_category_5(self):
+	def test_get_issue_category_and_type_5(self):
 		pdf_path = self.test_pdfs_dir + '/Presidential_Decree_Issues/for_test_data/RespAs/'
 		txt_path = self.test_txts_dir + '/for_test_data/RespAs/'
 		txt_1 = self.get_txt('1', pdf_path=pdf_path, txt_path=txt_path)
@@ -1814,39 +1814,45 @@ class ParserTest(Context):
 		txt_5 = self.get_txt('5', pdf_path=pdf_path, txt_path=txt_path)
 		txt_6 = self.get_txt('6', pdf_path=pdf_path, txt_path=txt_path)
 
-		issue_category_1 = self.parser.get_issue_category(txt_1)
-		issue_category_2 = self.parser.get_issue_category(txt_2)
-		issue_category_3 = self.parser.get_issue_category(txt_3)
-		issue_category_4 = self.parser.get_issue_category(txt_4)
-		issue_category_5 = self.parser.get_issue_category(txt_5)
-		issue_category_6 = self.parser.get_issue_category(txt_6)
+		issue_category_1, issue_type_1 = self.parser.get_issue_category(txt_1), self.parser.get_issue_type(txt_1)
+		issue_category_2, issue_type_2 = self.parser.get_issue_category(txt_2), self.parser.get_issue_type(txt_2)
+		issue_category_3, issue_type_3 = self.parser.get_issue_category(txt_3), self.parser.get_issue_type(txt_3)
+		issue_category_4, issue_type_4 = self.parser.get_issue_category(txt_4), self.parser.get_issue_type(txt_4)
+		issue_category_5, issue_type_5 = self.parser.get_issue_category(txt_5), self.parser.get_issue_type(txt_5)
+		issue_category_6, issue_type_6 = self.parser.get_issue_category(txt_6), self.parser.get_issue_type(txt_6)
 	
-		print(issue_category_1)
-		print(issue_category_2)
-		print(issue_category_3)
-		print(issue_category_4)
-		print(issue_category_5)
-		print(issue_category_6)
+		print(issue_category_1, issue_type_1)
+		print(issue_category_2, issue_type_2)
+		print(issue_category_3, issue_type_3)
+		print(issue_category_4, issue_type_4)
+		print(issue_category_5, issue_type_5)
+		print(issue_category_6, issue_type_6)
 	
-	def test_get_issue_category_6(self):
+	def test_get_issue_category_and_type_6(self):
 		pdf_path = self.test_pdfs_dir + '/Presidential_Decree_Issues/for_training_data/Non-RespAs/'
 		txt_path = self.test_txts_dir + '/for_training_data/Non-RespAs/'
 		get_txt = self.get_txt
 		get_issue_category = self.parser.get_issue_category
+		get_issue_type = self.parser.get_issue_type
 		txts = [get_txt(str(i), pdf_path=pdf_path, txt_path=txt_path) for i in range(1, 25+1)]
 		issue_categories = [get_issue_category(txt) for txt in txts]
-
+		issue_types = [get_issue_type(txt) for txt in txts]
+		
 		print(issue_categories)
-	
-	def test_get_issue_category_7(self):
+		print(issue_types)
+
+	def test_get_issue_category_and_type_7(self):
 		pdf_path = self.test_pdfs_dir + '/Presidential_Decree_Issues/for_training_data/RespAs/'
 		txt_path = self.test_txts_dir + '/for_training_data/RespAs/'
 		get_txt = self.get_txt
 		get_issue_category = self.parser.get_issue_category
+		get_issue_type = self.parser.get_issue_type
 		txts = [get_txt(str(i), pdf_path=pdf_path, txt_path=txt_path) for i in range(1, 50+1)]
 		issue_categories = [get_issue_category(txt) for txt in txts]
-
+		issue_types = [get_issue_type(txt) for txt in txts]
+		
 		print(issue_categories)
+		print(issue_types)
 
 if __name__ == '__main__':
 	unittest.main() 
