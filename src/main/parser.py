@@ -347,10 +347,15 @@ class Parser(object):
 		serial_numbers = findall(r"\*\d{17}\*", txt)
 		return serial_numbers[0] if serial_numbers else serial_numbers
 
+	def get_mentioned_issues_sections(self, txt):
+		txt = Helper.clean_up_txt(txt)
+		mentioned_issues_sections = findall(r"\((ΦΕΚ[^\)]+)\)", txt)
+		return mentioned_issues_sections
+
 	# Get a dictionary containing assignment: {'PAOrg': ..., 'Persons': ..., 'Responsibilities': ..., etc.}
 	def get_respa_association(self, txt):
 		""" Ideally to be fed 'txt' containing RespA sections """
-		persons = get_person_named_entities(txt)
+		# persons = get_person_named_entities(txt)
 		# paorgs = 
 		# responsibilities = 
 
