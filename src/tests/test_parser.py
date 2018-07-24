@@ -1536,7 +1536,7 @@ class ParserTest(Context):
 		if isinstance(articles_4, dict): articles_4 = list(articles_4.values())
 		if isinstance(articles_5, dict): articles_5 = list(articles_5.values())
 
-	def test_get_issue_number_1(self):
+	def test_get_issue_num_and_publ_date_1(self):
 		txt_1 = self.get_txt('1')
 		txt_2 = self.get_txt('2')
 		txt_3 = self.get_txt('3')
@@ -1546,26 +1546,25 @@ class ParserTest(Context):
 		txt_7 = self.get_txt('7')
 		txt_8 = self.get_txt('8')
 
-		issue_num_1 = self.parser.get_issue_number(txt_1)
-		issue_num_2 = self.parser.get_issue_number(txt_2)
-		issue_num_3 = self.parser.get_issue_number(txt_3)
-		issue_num_4 = self.parser.get_issue_number(txt_4)
-		issue_num_5 = self.parser.get_issue_number(txt_5)
-		issue_num_6 = self.parser.get_issue_number(txt_6)
-		issue_num_7 = self.parser.get_issue_number(txt_7)
-		issue_num_8 = self.parser.get_issue_number(txt_8)
-
+		issue_num_1, pub_date_1 = self.parser.get_issue_number(txt_1), self.parser.get_publication_date(txt_1)
+		issue_num_2, pub_date_2 = self.parser.get_issue_number(txt_2), self.parser.get_publication_date(txt_2)
+		issue_num_3, pub_date_3 = self.parser.get_issue_number(txt_3), self.parser.get_publication_date(txt_3)
+		issue_num_4, pub_date_4 = self.parser.get_issue_number(txt_4), self.parser.get_publication_date(txt_4)
+		issue_num_5, pub_date_5 = self.parser.get_issue_number(txt_5), self.parser.get_publication_date(txt_5)
+		issue_num_6, pub_date_6 = self.parser.get_issue_number(txt_6), self.parser.get_publication_date(txt_6)
+		issue_num_7, pub_date_7 = self.parser.get_issue_number(txt_7), self.parser.get_publication_date(txt_7)
+		issue_num_8, pub_date_8 = self.parser.get_issue_number(txt_8), self.parser.get_publication_date(txt_8)
 		
-		print(issue_num_1)
-		print(issue_num_2)
-		print(issue_num_3)
-		print(issue_num_4)
-		print(issue_num_5)
-		print(issue_num_6)
-		print(issue_num_7)
-		print(issue_num_8)
+		print(issue_num_1, pub_date_1)
+		print(issue_num_2, pub_date_2)
+		print(issue_num_3, pub_date_3)
+		print(issue_num_4, pub_date_4)
+		print(issue_num_5, pub_date_5)
+		print(issue_num_6, pub_date_6)
+		print(issue_num_7, pub_date_7)
+		print(issue_num_8, pub_date_8)
 
-	def test_get_issue_number_2(self):
+	def test_get_issue_num_and_publ_date_2(self):
 		respa_pdf_path = self.test_pdfs_dir + '/RespA_Dec_Issues/w_RespA_Decisions/'
 		txt_1 = self.get_txt('1_w_RespA_Decisions', pdf_path=respa_pdf_path)
 		txt_2 = self.get_txt('2_w_RespA_Decisions', pdf_path=respa_pdf_path)
@@ -1579,31 +1578,31 @@ class ParserTest(Context):
 		txt_10 = self.get_txt('10_w_RespA_Decisions', pdf_path=respa_pdf_path)
 		txt_11 = self.get_txt('11_w_RespA_Decisions', pdf_path=respa_pdf_path)
 
-		issue_num_1 = self.parser.get_issue_number(txt_1)
-		issue_num_2 = self.parser.get_issue_number(txt_2)
-		issue_num_3 = self.parser.get_issue_number(txt_3)
-		issue_num_4 = self.parser.get_issue_number(txt_4)
-		issue_num_5 = self.parser.get_issue_number(txt_5)
-		issue_num_6 = self.parser.get_issue_number(txt_6)
-		issue_num_7 = self.parser.get_issue_number(txt_7)
-		issue_num_8 = self.parser.get_issue_number(txt_8)
-		issue_num_9 = self.parser.get_issue_number(txt_9)
-		issue_num_10 = self.parser.get_issue_number(txt_10)
-		issue_num_11 = self.parser.get_issue_number(txt_11)
+		issue_num_1, pub_date_1 = self.parser.get_issue_number(txt_1), self.parser.get_publication_date(txt_1)
+		issue_num_2, pub_date_2 = self.parser.get_issue_number(txt_2), self.parser.get_publication_date(txt_2)
+		issue_num_3, pub_date_3 = self.parser.get_issue_number(txt_3), self.parser.get_publication_date(txt_3)
+		issue_num_4, pub_date_4 = self.parser.get_issue_number(txt_4), self.parser.get_publication_date(txt_4)
+		issue_num_5, pub_date_5 = self.parser.get_issue_number(txt_5), self.parser.get_publication_date(txt_5)
+		issue_num_6, pub_date_6 = self.parser.get_issue_number(txt_6), self.parser.get_publication_date(txt_6)
+		issue_num_7, pub_date_7 = self.parser.get_issue_number(txt_7), self.parser.get_publication_date(txt_7)
+		issue_num_8, pub_date_8 = self.parser.get_issue_number(txt_8), self.parser.get_publication_date(txt_8)
+		issue_num_9, pub_date_9 = self.parser.get_issue_number(txt_9), self.parser.get_publication_date(txt_9)
+		issue_num_10, pub_date_10 = self.parser.get_issue_number(txt_10), self.parser.get_publication_date(txt_10)
+		issue_num_11, pub_date_11 = self.parser.get_issue_number(txt_11), self.parser.get_publication_date(txt_11)
 
-		print(issue_num_1)
-		print(issue_num_2)
-		print(issue_num_3)
-		print(issue_num_4)
-		print(issue_num_5)
-		print(issue_num_6)
-		print(issue_num_7)
-		print(issue_num_8)
-		print(issue_num_9)
-		print(issue_num_10)
-		print(issue_num_11)
+		print(issue_num_1, pub_date_1)
+		print(issue_num_2, pub_date_2)
+		print(issue_num_3, pub_date_3)
+		print(issue_num_4, pub_date_4)
+		print(issue_num_5, pub_date_5)
+		print(issue_num_6, pub_date_6)
+		print(issue_num_7, pub_date_7)
+		print(issue_num_8, pub_date_8)
+		print(issue_num_9, pub_date_9)
+		print(issue_num_10, pub_date_10)
+		print(issue_num_11, pub_date_11)
 
-	def test_get_issue_number_3(self):
+	def test_get_issue_num_and_publ_date_3(self):
 		respa_pdf_path = self.test_pdfs_dir + '/RespA_Dec_Issues/w_Referenced_RespA_Decisions/'
 		txt_1 = self.get_txt('1_w_Ref_RespA_Decisions', pdf_path=respa_pdf_path)
 		txt_2 = self.get_txt('2_w_Ref_RespA_Decisions', pdf_path=respa_pdf_path)
@@ -1614,40 +1613,40 @@ class ParserTest(Context):
 		txt_7 = self.get_txt('7_w_Ref_RespA_Decisions', pdf_path=respa_pdf_path)
 		txt_8 = self.get_txt('8_w_Ref_RespA_Decisions', pdf_path=respa_pdf_path)
 
-		issue_num_1 = self.parser.get_issue_number(txt_1)
-		issue_num_2 = self.parser.get_issue_number(txt_2)
-		issue_num_3 = self.parser.get_issue_number(txt_3)
-		issue_num_4 = self.parser.get_issue_number(txt_4)
-		issue_num_5 = self.parser.get_issue_number(txt_5)
-		issue_num_6 = self.parser.get_issue_number(txt_6)
-		issue_num_7 = self.parser.get_issue_number(txt_7)
-		issue_num_8 = self.parser.get_issue_number(txt_8)
+		issue_num_1, pub_date_1 = self.parser.get_issue_number(txt_1), self.parser.get_publication_date(txt_1)
+		issue_num_2, pub_date_2 = self.parser.get_issue_number(txt_2), self.parser.get_publication_date(txt_2)
+		issue_num_3, pub_date_3 = self.parser.get_issue_number(txt_3), self.parser.get_publication_date(txt_3)
+		issue_num_4, pub_date_4 = self.parser.get_issue_number(txt_4), self.parser.get_publication_date(txt_4)
+		issue_num_5, pub_date_5 = self.parser.get_issue_number(txt_5), self.parser.get_publication_date(txt_5)
+		issue_num_6, pub_date_6 = self.parser.get_issue_number(txt_6), self.parser.get_publication_date(txt_6)
+		issue_num_7, pub_date_7 = self.parser.get_issue_number(txt_7), self.parser.get_publication_date(txt_7)
+		issue_num_8, pub_date_8 = self.parser.get_issue_number(txt_8), self.parser.get_publication_date(txt_8)
 		
-		print(issue_num_1)
-		print(issue_num_2)
-		print(issue_num_3)
-		print(issue_num_4)
-		print(issue_num_5)
-		print(issue_num_6)
-		print(issue_num_7)
-		print(issue_num_8)
+		print(issue_num_1, pub_date_1)
+		print(issue_num_2, pub_date_2)
+		print(issue_num_3, pub_date_3)
+		print(issue_num_4, pub_date_4)
+		print(issue_num_5, pub_date_5)
+		print(issue_num_6, pub_date_6)
+		print(issue_num_7, pub_date_7)
+		print(issue_num_8, pub_date_8)
 
-	def test_get_issue_number_4(self):
+	def test_get_issue_num_and_publ_date_4(self):
 		pdf_path = self.test_pdfs_dir + '/Presidential_Decree_Issues/for_test_data/Non-RespAs/'
 		txt_path = self.test_txts_dir + '/for_test_data/Non-RespAs/'
 		txt_1 = self.get_txt('1', pdf_path=pdf_path, txt_path=txt_path)
 		txt_2 = self.get_txt('2', pdf_path=pdf_path, txt_path=txt_path)
 		txt_3 = self.get_txt('3', pdf_path=pdf_path, txt_path=txt_path)
 
-		issue_num_1 = self.parser.get_issue_number(txt_1)
-		issue_num_2 = self.parser.get_issue_number(txt_2)
-		issue_num_3 = self.parser.get_issue_number(txt_3)
+		issue_num_1, pub_date_1 = self.parser.get_issue_number(txt_1), self.parser.get_publication_date(txt_1)
+		issue_num_2, pub_date_2 = self.parser.get_issue_number(txt_2), self.parser.get_publication_date(txt_2)
+		issue_num_3, pub_date_3 = self.parser.get_issue_number(txt_3), self.parser.get_publication_date(txt_3)
 		
-		print(issue_num_1)
-		print(issue_num_2)
-		print(issue_num_3)
+		print(issue_num_1, pub_date_1)
+		print(issue_num_2, pub_date_2)
+		print(issue_num_3, pub_date_3)
 	
-	def test_get_issue_number_5(self):
+	def test_get_issue_num_and_publ_date_5(self):
 		pdf_path = self.test_pdfs_dir + '/Presidential_Decree_Issues/for_test_data/RespAs/'
 		txt_path = self.test_txts_dir + '/for_test_data/RespAs/'
 		txt_1 = self.get_txt('1', pdf_path=pdf_path, txt_path=txt_path)
@@ -1657,38 +1656,44 @@ class ParserTest(Context):
 		txt_5 = self.get_txt('5', pdf_path=pdf_path, txt_path=txt_path)
 		txt_6 = self.get_txt('6', pdf_path=pdf_path, txt_path=txt_path)
 
-		issue_num_1 = self.parser.get_issue_number(txt_1)
-		issue_num_2 = self.parser.get_issue_number(txt_2)
-		issue_num_3 = self.parser.get_issue_number(txt_3)
-		issue_num_4 = self.parser.get_issue_number(txt_4)
-		issue_num_5 = self.parser.get_issue_number(txt_5)
-		issue_num_6 = self.parser.get_issue_number(txt_6)
+		issue_num_1, pub_date_1 = self.parser.get_issue_number(txt_1), self.parser.get_publication_date(txt_1)
+		issue_num_2, pub_date_2 = self.parser.get_issue_number(txt_2), self.parser.get_publication_date(txt_2)
+		issue_num_3, pub_date_3 = self.parser.get_issue_number(txt_3), self.parser.get_publication_date(txt_3)
+		issue_num_4, pub_date_4 = self.parser.get_issue_number(txt_4), self.parser.get_publication_date(txt_4)
+		issue_num_5, pub_date_5 = self.parser.get_issue_number(txt_5), self.parser.get_publication_date(txt_5)
+		issue_num_6, pub_date_6 = self.parser.get_issue_number(txt_6), self.parser.get_publication_date(txt_6)
 
-		print(issue_num_1)
-		print(issue_num_2)
-		print(issue_num_3)
-		print(issue_num_4)
-		print(issue_num_5)
-		print(issue_num_6)
+		print(issue_num_1, pub_date_1)
+		print(issue_num_2, pub_date_2)
+		print(issue_num_3, pub_date_3)
+		print(issue_num_4, pub_date_4)
+		print(issue_num_5, pub_date_5)
+		print(issue_num_6, pub_date_6)
 
-	def test_get_issue_number_6(self):
+	def test_get_issue_num_and_publ_date_6(self):
 		pdf_path = self.test_pdfs_dir + '/Presidential_Decree_Issues/for_training_data/Non-RespAs/'
 		txt_path = self.test_txts_dir + '/for_training_data/Non-RespAs/'
 		get_txt = self.get_txt
 		txts = [get_txt(str(i), pdf_path=pdf_path, txt_path=txt_path) for i in range(1, 25+1)]
 		get_issue_num = self.parser.get_issue_number
+		get_pub_date = self.parser.get_publication_date
 		issue_nums = [get_issue_num(txt) for txt in txts]
+		pub_dates = [get_pub_date(txt) for txt in txts]
 		print(issue_nums)
+		print(pub_dates)
 		
-	def test_get_issue_number_7(self):
+	def test_get_issue_num_and_publ_date_7(self):
 		pdf_path = self.test_pdfs_dir + '/Presidential_Decree_Issues/for_training_data/RespAs/'
 		txt_path = self.test_txts_dir + '/for_training_data/RespAs/'
 		get_txt = self.get_txt
 		txts = [get_txt(str(i), pdf_path=pdf_path, txt_path=txt_path) for i in range(1, 50+1)]
 		get_issue_num = self.parser.get_issue_number
+		get_pub_date = self.parser.get_publication_date
 		issue_nums = [get_issue_num(txt) for txt in txts]
+		pub_dates = [get_pub_date(txt) for txt in txts]
 		print(issue_nums)
-		
+		print(pub_dates)
+			
 
 if __name__ == '__main__':
 	unittest.main() 
