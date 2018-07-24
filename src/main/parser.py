@@ -343,6 +343,10 @@ class Parser(object):
 		# First date occurence is the publication date
 		return dates[0] if dates else dates
 
+	def get_serial_number(self, txt):
+		serial_numbers = findall(r"\*\d{17}\*", txt)
+		return serial_numbers[0] if serial_numbers else serial_numbers
+
 	# Get a dictionary containing assignment: {'PAOrg': ..., 'Persons': ..., 'Responsibilities': ..., etc.}
 	def get_respa_association(self, txt):
 		""" Ideally to be fed 'txt' containing RespA sections """
