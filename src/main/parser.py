@@ -24,11 +24,12 @@ class Parser(object):
 		self.acronym_paorg_detect_accuracy = 0.85
 		self.__project_path = os.getcwd()
 		self.__illegal_chars = compile(r"\d+")
+		self.issue_number_key = "Αρ. Φύλλου"
 		self.dec_contents_key = "ΠΕΡΙΕΧΟΜΕΝΑ\nΑΠΟΦΑΣΕΙΣ"
 		self.decs_key = "ΑΠΟΦΑΣΕΙΣ"
+		# Must be expanded (lots of variants)
 		self.summaries_start_keys = ["ΠΡΟΕΔΡΙΚΟ ΔΙΑΤΑΓΜΑ ΥΠ\’ ΑΡΙΘ[^\n]+", "KANOΝΙΣΜΟΣ ΥΠ\’ ΑΡΙΘ[^\n]+", "ΝΟΜΟΣ ΥΠ\’ ΑΡΙΘ[^\n]+", 
 									 "[^«]ΠΡΑΞΗ ΝΟΜΟΘΕΤΙΚΟΥ ΠΕΡΙΕΧΟΜΕΝΟΥ[^\n]+"]
-		# Must be expanded (lots of variants)
 		self.dec_prereq_keys = ["χοντας υπόψη:", "χοντας υπόψη", "χοντες υπόψη:", "χουσα υπόψη:", "χουσα υπ’ όψει:", "χοντας υπόψη του:", 
 								"χοντας υπ\' όψη:", "χοντας υπ\’ όψη:", "Αφού έλαβε υπόψη:", "Λαμβάνοντας υπόψη:"]
 		self.dec_init_keys = ["αποφασίζουμε:", "αποφασίζουμε τα ακόλουθα:", "αποφασίζουμε τα εξής:", "διαπιστώνεται:",
@@ -43,7 +44,7 @@ class Parser(object):
 		self.respa_keys = {'assignment_verbs':["ναθέτουμε", "νατίθεται", "νατίθενται", "νάθεση", "ρίζουμε", "παλλάσσουμε", "εταβιβάζουμε"], 
 						   'assignment_types':["αθήκοντ", "ρμοδιότητ", "αθηκόντ", "ρμοδιοτήτ"]}
 
-		self.usual_paorg_unit_keys = ["Τμήμα", "Διεύθυνση", "Υπηρεσία"]
+		self.paorg_unit_keys = ["Τμήμα", "Διεύθυνση", "Υπηρεσία"]
 		self.dec_correction_keys = ['Διόρθωση', 'ΔΙΌΡΘΩΣΗ']
 		self.article_keys = ["Άρθρο"]
 		self.last_article_keys = ["Έναρξη Ισχύος", "Έναρξη ισχύος", "Η ισχύς του παρόντος", "EΝΑΡΞΗ ΙΣΧΥΟΣ"]
@@ -316,7 +317,12 @@ class Parser(object):
 		paragraphs = []
 		if txt:
 			paragraphs = findall(r"\n\s*[Ά-ΏΑ-Ωα-ωά-ώ\d+\(•\-]+[\.\)α-ω]([\s\S]+?)[\.\:](?=\n)", txt)
-		return paragraphs 
+		return paragraphs
+
+	def get_issue_number(self, txt):
+		issue_number = findall(r"{issue_number_key}[ ]+(\d+)".format(issue_number_key=self.issue_number_key), txt)
+		if issue_number: issue_number = issue_number[0]
+		return issue_number
 
 	# Get a dictionary containing assignment: {'PAOrg': ..., 'Persons': ..., 'Responsibilities': ..., etc.}
 	def get_respa_association(self, txt):
