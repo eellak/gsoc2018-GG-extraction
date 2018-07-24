@@ -323,6 +323,10 @@ class Parser(object):
 		issue_numbers = findall(r"{issue_number_key}[ ]+(\d+)".format(issue_number_key=self.issue_number_key), txt)
 		return issue_numbers[0] if issue_numbers else issue_numbers
 
+	def get_issue_category(self, txt):
+		issue_types = findall(r"ΤΕΥΧΟΣ[ ]+([\s\S]+?)\n", txt)
+		return issue_types[0] if issue_types else issue_types
+
 	def get_publication_date(self, txt):
 		dates = findall(r"{day}[ ]+(?:{months})[ ]+{year}".\
 						 format(day="\d{1,2}", 
@@ -331,6 +335,8 @@ class Parser(object):
 						 txt)
 		# First date occurence is the publication date
 		return dates[0] if dates else dates
+
+
 
 	# Get a dictionary containing assignment: {'PAOrg': ..., 'Persons': ..., 'Responsibilities': ..., etc.}
 	def get_respa_association(self, txt):
