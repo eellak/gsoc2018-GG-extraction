@@ -318,7 +318,7 @@ class Parser(object):
 		txt = Helper.clean_up_txt(txt)
 		paragraphs = []
 		if txt:
-			paragraphs = findall(r"\n\s*[Ά-ΏΑ-Ωα-ωά-ώ\d+\(•\-]+[\.\)α-ω]([\s\S]+?)[\.\:](?=\n)", txt)
+			paragraphs = findall(r"\n\s*[Ά-ΏΑ-Ωα-ωά-ώ\d+\(•\-]+[\.\)α-ω ]([\s\S]+?)(?:[\.\:](?=\s*\n)|\,(?=\s*\n[α-ω\d]+[\.\)]))", txt)
 		return paragraphs
 
 	def get_issue_number(self, txt):
@@ -352,7 +352,6 @@ class Parser(object):
 		mentioned_issues_sections = findall(r"\((ΦΕΚ[^\)]+)\)", txt)
 		return mentioned_issues_sections
 
-	# Get a dictionary containing assignment: {'PAOrg': ..., 'Persons': ..., 'Responsibilities': ..., etc.}
 	def get_respa_association(self, txt):
 		""" Ideally to be fed 'txt' containing RespA sections """
 		# persons = get_person_named_entities(txt)
