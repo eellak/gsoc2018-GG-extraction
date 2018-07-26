@@ -11,6 +11,7 @@ from subprocess import call
 from glob import glob
 from itertools import zip_longest
 from PIL import Image
+from nltk.tokenize import sent_tokenize
 from difflib import get_close_matches, SequenceMatcher
 # from polyglot.text import Text
 from collections import OrderedDict
@@ -312,7 +313,8 @@ class Parser(object):
 	def get_sentences(self, txt):
 		""" Ideally to be fed 'txt' containing '.' separated sentences """
 		txt = Helper.clean_up_txt(txt)
-		return Text(txt).sentences
+		# return Text(txt).sentences
+		return sent_tokenize(txt)
 
 	def get_paragraphs(self, txt):
 		txt = Helper.clean_up_txt(txt)
