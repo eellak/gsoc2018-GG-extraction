@@ -372,11 +372,11 @@ class AnalyzerTest(Context):
 		print(len(merged_non_respa_prgrh_unigrams_dict))	
 
 		# Concat
-		merged_non_respa_prgrh_bigrams_dict.update(merged_non_respa_prgrh_unigrams_dict)		
-		merged_non_respa_prgrph_n_grams_dict = merged_non_respa_prgrh_bigrams_dict
+		merged_non_respa_prgrph_n_grams_dict = {'bigrams' : dict(merged_non_respa_prgrh_bigrams_dict),
+												'unigrams' : dict(merged_non_respa_prgrh_unigrams_dict)}
 
 		# Dump to pickle file
-		data = dict(merged_non_respa_prgrph_n_grams_dict)
+		data = merged_non_respa_prgrph_n_grams_dict
 		self.helper.write_to_pickle_file(data, rel_pickle_file_path)
 
 	def test_pickle_merged_respa_paragraphs_dict(self):
@@ -436,11 +436,12 @@ class AnalyzerTest(Context):
 		print(len(merged_respa_prgrh_bigrams_dict))
 
 		# Concat
-		merged_respa_prgrh_bigrams_dict.update(merged_respa_prgrh_unigrams_dict)	
-		merged_respa_prgrph_n_grams_dict = merged_respa_prgrh_bigrams_dict
+		# Concat
+		merged_respa_prgrph_n_grams_dict = {'bigrams' : dict(merged_respa_prgrh_bigrams_dict),
+											'unigrams' : dict(merged_respa_prgrh_unigrams_dict)}
 
 		# Dump to pickle file
-		data = dict(merged_respa_prgrph_n_grams_dict)
+		data = merged_respa_prgrph_n_grams_dict
 		self.helper.write_to_pickle_file(data, rel_pickle_file_path)
 
 if __name__ == '__main__':
