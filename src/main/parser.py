@@ -318,6 +318,7 @@ class Parser(object):
 
 	def get_paragraphs(self, txt):
 		txt = Helper.clean_up_txt(txt)
+		txt = Helper.remove_txt_prelims(txt)
 		paragraphs = []
 		if txt:
 			paragraphs = findall(r"\n\s*[Ά-ΏΑ-Ωα-ωά-ώ\d+\(•\-]+[\.\)α-ω ]([\s\S]+?)(?:[\.\:](?=\s*\n)|\,(?=\s*\n[α-ω\d]+[\.\)]))", txt)
