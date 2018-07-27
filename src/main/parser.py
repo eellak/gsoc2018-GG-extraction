@@ -322,7 +322,7 @@ class Parser(object):
 		txt = Helper.codify_list_points(txt)
 		paragraphs = []
 		if txt:
-			paragraphs = findall(r"\n\s*[Ά-ΏΑ-Ωα-ωά-ώbullet\d+\(•\-]+[\.\)α-ω ]([\s\S]+?)(?:[\.\:](?=\s*\n)|\,(?=\s*\n(?:[α-ω\d]+[\.\)]|bullet)))", txt)
+			paragraphs = findall(r"\n\s*[Ά-ΏΑ-Ωα-ωά-ώbullet\d+\(•\-]+[\.\)α-ω ]([\s\S]+?(?:[\.\:](?=\s*\n)|\,(?=\s*\n(?:[α-ω\d]+[\.\)]|bullet))))", txt)
 		return paragraphs
 
 	def get_issue_number(self, txt):

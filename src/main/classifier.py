@@ -65,8 +65,11 @@ class ParagraphRespAClassifier(object):
 		self.training_data = OrderedDict() 
 		self.load_train_data('non_respa')
 		self.load_train_data('respa')
-		self.unit_keywords = ["ΤΜΗΜΑ", "ΓΡΑΦΕΙ", "ΔΙΕΥΘΥΝΣ", "ΥΠΗΡΕΣΙ", "ΣΥΜΒΟΥΛΙ",]
-
+		self.unit_keywords = ["ΤΜΗΜΑ", "ΓΡΑΦΕΙ", "ΔΙΕΥΘΥΝΣ", "ΥΠΗΡΕΣΙ", "ΣΥΜΒΟΥΛΙ", 'ΓΡΑΜΜΑΤΕ', "ΥΠΟΥΡΓ",
+							  "ΕΙΔΙΚΟΣ ΛΟΓΑΡΙΑΣΜΟΣ"]
+		self.responsibility_keyword_trios = [("ΑΡΜΟΔ", "ΓΙΑ", ":"),  ("ΑΡΜΟΔΙΟΤ", "ΕΧΕΙ", ":"), ("ΑΡΜΟΔΙΟΤ", "ΕΞΗΣ", ":"), 
+										("ΑΡΜΟΔΙΟΤ", "ΕΙΝΑΙ", ":"), ("ΑΡΜΟΔΙΟΤ", "ΑΚΟΛΟΥΘ", ":"), ("ΑΡΜΟΔΙΟΤ", "ΜΕΤΑΞΥ", ":")]
+														                         
 	def load_train_data(self, tag):
 		self.training_data[tag] = Helper.load_pickle_file(self.training_data_files[tag])
 
@@ -109,12 +112,37 @@ class ParagraphRespAClassifier(object):
 		bigram_neg_cosine = self.cosine_similarity(paragraph_bigram_dict, self.training_data['non_respa']['bigrams'])
 
 		return (unigram_pos_cosine > unigram_neg_cosine), (bigram_pos_cosine > bigram_neg_cosine)
+
+	def custom_has_respas(self, paragraph):
+		words = Helper.get_clean_words(paragraph)[:20]
+		word_bigrams = Helper.get_word_n_grams(words, 2)
+		word_unigrams = Helper.get_word_n_grams(words, 1)
+		paragraph_bigram_dict = {(bigram[0], bigram[1]):1 for bigram in word_bigrams}
+		paragraph_unigram_dict = {(unigram[0]):1 for unigram in word_unigrams}
 		
-	def has_units(self, paragraph):
+		unigram_pos_cosine, unigram_neg_cosine = 0, 0
+		if paragraph_unigram_dict:
+			unigram_pos_cosine = self.cosine_similarity(paragraph_unigram_dict, self.training_data['respa']['unigrams'])
+			unigram_neg_cosine = self.cosine_similarity(paragraph_unigram_dict, self.training_data['non_respa']['unigrams'])
+
+		bigram_pos_cosine, bigram_neg_cosine = 0, 0
+		if paragraph_bigram_dict:
+			bigram_pos_cosine = self.cosine_similarity(paragraph_bigram_dict, self.training_data['respa']['bigrams'])
+			bigram_neg_cosine = self.cosine_similarity(paragraph_bigram_dict, self.training_data['non_respa']['bigrams'])
+
+		weighted_pos_cosine = 0.9*bigram_pos_cosine + 0.1*unigram_pos_cosine
+		weighted_neg_cosine = 0.9*bigram_neg_cosine + 0.1*unigram_neg_cosine
+
+		return [paragraph, paragraph_unigram_dict, paragraph_bigram_dict, 
+				(unigram_pos_cosine > unigram_neg_cosine), (bigram_pos_cosine > bigram_neg_cosine),
+				(weighted_pos_cosine > weighted_neg_cosine)]
+
+	def has_units_following_respas(self, paragraph):
 		paragraph = Helper.deintonate_txt(paragraph)
 		paragraph = paragraph.upper()
-		print(paragraph)
-		return any(kw in paragraph[:30] for kw in self.unit_keywords)
+		return any((((unit_kw in paragraph) and (resp_kw_trio[0] in paragraph) and (resp_kw_trio[1] in paragraph) and (resp_kw_trio[2] in paragraph)))
+				    for unit_kw in self.unit_keywords
+				    for resp_kw_trio in self.responsibility_keyword_trios)
 
 	def cosine_similarity(self, dict_1, dict_2):
 		numer = 0
