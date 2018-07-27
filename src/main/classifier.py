@@ -65,6 +65,7 @@ class ParagraphRespAClassifier(object):
 		self.training_data = OrderedDict() 
 		self.load_train_data('non_respa')
 		self.load_train_data('respa')
+		self.unit_keywords = ["ΤMHMA", "ΓΡΑΦΕΙ", "ΔΙΕΥΘΥΝΣ", "ΥΠΗΡΕΣΙ", "ΣΥΜΒΟΥΛΙ",]
 
 	def load_train_data(self, tag):
 		self.training_data[tag] = Helper.load_pickle_file(self.training_data_files[tag])
@@ -108,6 +109,11 @@ class ParagraphRespAClassifier(object):
 		neg_cosine = self.cosine_similarity(paragraph_n_gram_dict, self.training_data['non_respa'])
 
 		return (pos_cosine > neg_cosine)
+
+	def has_units(self, paragraph):
+		paragraph = Helper.deintonate_txt(paragraph)
+		paragraph = paragraph.upper()
+		return any(kw in paragraph[:30] for kw in self.unit_keywords)
 
 	def cosine_similarity(self, dict_1, dict_2):
 		numer = 0
