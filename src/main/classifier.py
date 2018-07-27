@@ -62,34 +62,50 @@ class ParagraphRespAClassifier(object):
 	
 	def __init__(self, training_data_files):
 		self.training_data_files = training_data_files
-		self.non_respa_training_data = Helper.load_pickle_file(training_data_files['non_respa'])
-		self.respa_training_data = Helper.load_pickle_file(training_data_files['respa'])
-		self.training_data = OrderedDict([('non_respa', self.non_respa_training_data),
-										 ('respa', self.respa_training_data)])  				  
+		self.training_data = OrderedDict() 
+		self.load_train_data('non_respa')
+		self.load_train_data('respa')
+
+	def load_train_data(self, tag):
+		self.training_data[tag] = Helper.load_pickle_file(self.training_data_files[tag])
+
+	def write_train_data(self, tag):
+		Helper.write_to_pickle_file(self.training_data[tag], self.training_data_files[tag])
 
 	def fit(self, paragraph, is_respa):
 		words = Helper.get_clean_words(paragraph)[:20]
 		word_bigrams = Helper.get_word_n_grams(words, 2)
-		
+		word_unigrams = Helper.get_word_n_grams(words, 1)
+
 		appropriate_key = list(self.training_data)[is_respa]
 		print(len(self.training_data[appropriate_key]))
 		temp_dict = defaultdict(int, self.training_data[appropriate_key])
+		
 		# Fit into training data
+		for unigram in word_unigrams:
+			temp_dict[unigram[0]] += 1
 		for bigram in word_bigrams: 
 			temp_dict[(bigram[0], bigram[1])] += 1
 		
 		# Update instance data
 		self.training_data[appropriate_key].update(dict(temp_dict))
 		# And rewrite pickle file
-		Helper.write_to_pickle_file(self.training_data[appropriate_key], self.training_data_files[appropriate_key])
+		self.write_train_data(appropriate_key)
 
 	def has_respas(self, paragraph):
 		words = Helper.get_clean_words(paragraph)[:20]
 		word_bigrams = Helper.get_word_n_grams(words, 2)
+		word_unigrams = Helper.get_word_n_grams(words, 1)
 
 		paragraph_bigram_dict = {(bigram[0], bigram[1]):1 for bigram in word_bigrams}
-		pos_cosine = self.cosine_similarity(paragraph_bigram_dict, self.training_data['respa'])
-		neg_cosine = self.cosine_similarity(paragraph_bigram_dict, self.training_data['non_respa'])
+		paragraph_unigram_dict = {(unigram[0]):1 for unigram in word_unigrams}
+
+		# Concat
+		paragraph_bigram_dict.update(paragraph_unigram_dict)
+		paragraph_n_gram_dict = paragraph_bigram_dict
+
+		pos_cosine = self.cosine_similarity(paragraph_n_gram_dict, self.training_data['respa'])
+		neg_cosine = self.cosine_similarity(paragraph_n_gram_dict, self.training_data['non_respa'])
 
 		return (pos_cosine > neg_cosine)
 

@@ -337,25 +337,46 @@ class AnalyzerTest(Context):
 		non_respa_paragraph_bigrams_list = [get_word_n_grams(prgrh_words, 2) 
 											for prgrh_words in non_respa_paragraph_words_list]
 
+		non_respa_paragraph_unigram_list = [get_word_n_grams(prgrh_words, 1) 
+											for prgrh_words in non_respa_paragraph_words_list]
 		
 		non_respa_paragraph_bigram_dicts = []
 		for bigrams in non_respa_paragraph_bigrams_list:
 			non_respa_paragraph_bigram_dicts.append([((bigram[0], bigram[1]), 1) for bigram in bigrams])
 		
-		# Bigrams before merge
+		non_respa_paragraph_unigram_dicts = []
+		for unigrams in non_respa_paragraph_unigram_list:
+			non_respa_paragraph_unigram_dicts.append([(unigram[0], 1) for unigram in unigrams])
+
+		print('Bigrams before merge:')
 		print(sum([len(prgrph_bigrams) for prgrph_bigrams in non_respa_paragraph_bigram_dicts]))
+		print('Unigrams before merge:')
+		print(sum([len(prgrph_unigrams) for prgrph_unigrams in non_respa_paragraph_unigram_dicts]))
 
-		# Merge possible keys
+		# Merge possible bigram keys
 		merged_non_respa_prgrh_bigrams_dict = defaultdict(int)
-		for prgrh_bigrams in non_respa_paragraph_bigram_dicts:
-			for bigram in prgrh_bigrams:
-				merged_non_respa_prgrh_bigrams_dict[bigram[0]] += bigram[1]
+		for prgrh_bigram_dicts in non_respa_paragraph_bigram_dicts:
+			for bigram_dict in prgrh_bigram_dicts:
+				merged_non_respa_prgrh_bigrams_dict[bigram_dict[0]] += bigram_dict[1]
 
-		# Bigrams after merge
-		print(len(merged_non_respa_prgrh_bigrams_dict))		
+		# Merge possible unigram keys
+		merged_non_respa_prgrh_unigrams_dict = defaultdict(int)
+		for prgrh_unigram_dicts in non_respa_paragraph_unigram_dicts:
+			for unigram_dict in prgrh_unigram_dicts:
+				merged_non_respa_prgrh_unigrams_dict[unigram_dict[0]] += unigram_dict[1]
+
+		print('Bigrams after merge:')
+		print(len(merged_non_respa_prgrh_bigrams_dict))	
+
+		print('Unigrams after merge:')
+		print(len(merged_non_respa_prgrh_unigrams_dict))	
+
+		# Concat
+		merged_non_respa_prgrh_bigrams_dict.update(merged_non_respa_prgrh_unigrams_dict)		
+		merged_non_respa_prgrph_n_grams_dict = merged_non_respa_prgrh_bigrams_dict
 
 		# Dump to pickle file
-		data = dict(merged_non_respa_prgrh_bigrams_dict)
+		data = dict(merged_non_respa_prgrph_n_grams_dict)
 		self.helper.write_to_pickle_file(data, rel_pickle_file_path)
 
 	def test_pickle_merged_respa_paragraphs_dict(self):
@@ -379,12 +400,21 @@ class AnalyzerTest(Context):
 		respa_paragraph_bigrams_list = [get_word_n_grams(prgrh_words, 2) 
 											for prgrh_words in respa_paragraph_words_list]
 
-		
+		respa_paragraph_unigram_list = [get_word_n_grams(prgrh_words, 1) 
+											for prgrh_words in respa_paragraph_words_list]
+
 		respa_paragraph_bigram_dicts = []
 		for bigrams in respa_paragraph_bigrams_list:
 			respa_paragraph_bigram_dicts.append([((bigram[0], bigram[1]), 1) for bigram in bigrams])
 		
-		# Bigrams before merge
+		respa_paragraph_unigram_dicts = []
+		for unigrams in respa_paragraph_unigram_list:
+			respa_paragraph_unigram_dicts.append([(unigram[0], 1) for unigram in unigrams])
+
+		print('Unigrams before merge:')
+		print(sum([len(prgrph_unigrams) for prgrph_unigrams in respa_paragraph_unigram_dicts]))
+
+		print('Bigrams before merge:')
 		print(sum([len(prgrph_bigrams) for prgrph_bigrams in respa_paragraph_bigram_dicts]))
 
 		# Merge possible keys
@@ -393,11 +423,24 @@ class AnalyzerTest(Context):
 			for bigram in prgrh_bigrams:
 				merged_respa_prgrh_bigrams_dict[bigram[0]] += bigram[1]
 
-		# Bigrams after merge
+		# Merge possible unigram keys
+		merged_respa_prgrh_unigrams_dict = defaultdict(int)
+		for prgrh_unigram_dicts in respa_paragraph_unigram_dicts:
+			for unigram_dict in prgrh_unigram_dicts:
+				merged_respa_prgrh_unigrams_dict[unigram_dict[0]] += unigram_dict[1]
+		
+		print('Bigrams after merge:')
+		print(len(merged_respa_prgrh_unigrams_dict))	
+
+		print('Unigrams after merge:')
 		print(len(merged_respa_prgrh_bigrams_dict))
 
+		# Concat
+		merged_respa_prgrh_bigrams_dict.update(merged_respa_prgrh_unigrams_dict)	
+		merged_respa_prgrph_n_grams_dict = merged_respa_prgrh_bigrams_dict
+
 		# Dump to pickle file
-		data = dict(merged_respa_prgrh_bigrams_dict)
+		data = dict(merged_respa_prgrph_n_grams_dict)
 		self.helper.write_to_pickle_file(data, rel_pickle_file_path)
 
 if __name__ == '__main__':
