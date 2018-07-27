@@ -128,10 +128,23 @@ class Helper:
         prelim_regex.append("\fΤεύχος [Α-Ω].*\nΕΦΗΜΕΡΙ.*\n[0-9]*\n")
         prelim_regex.append("\f[0-9]*\nΕΦΗΜΕΡΙ.*\nΤεύχος [Α-Ω].*\n")
         prelim_regex.append(".ρθρο [0-9]*\\n")
-        for regex in prelim_regex
+        for regex in prelim_regex:
             pat = re.compile(regex)
             txt = pat.sub('', txt)
         return txt
+    
+    @staticmethod
+    def codify_list_points(txt):
+        list_point_regex = []
+        list_point_regex.append("\d+\.")
+        list_point_regex.append("\d+\)")
+        list_point_regex.append("[α-ω]+\.")
+        list_point_regex.append("[α-ω]+\)")
+        for regex in list_point_regex:
+            pat = re.compile(regex)
+            txt = pat.sub("#bullet", txt)
+        return txt
+
     @staticmethod
     def clean_up_for_paorgs_getter(txt):
         return txt.replace('−\n', '').replace('-\n', '')\
