@@ -136,13 +136,13 @@ class Helper:
     @staticmethod
     def codify_list_points(txt):
         list_point_regex = []
-        list_point_regex.append("\d+\. ")
-        list_point_regex.append("\d+\) ")
-        list_point_regex.append("[α-ω]+\. ")
-        list_point_regex.append("[α-ω]+\) ")
+        list_point_regex.append(r"\n\d+\. ")
+        list_point_regex.append(r"\n\d+\) ")
+        list_point_regex.append(r"\n[α-ω]+\. ")
+        list_point_regex.append(r"\n[α-ω]+\) ")
         for regex in list_point_regex:
             pat = re.compile(regex)
-            txt = pat.sub("#bullet", txt)
+            txt = pat.sub("\nbullet ", txt)
         return txt
 
     @staticmethod
