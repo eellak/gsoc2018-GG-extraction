@@ -147,6 +147,27 @@ class ParagraphRespAClassifier(object):
 				    for unit_kw in self.unit_keywords
 				    for resp_kw_trio in self.responsibility_keyword_trios)
 
+
+	def has_units_and_respas(self, paragraph):
+		paragraph = Helper.deintonate_txt(paragraph)
+		paragraph = paragraph.upper()
+		return any((((unit_kw in paragraph) and\
+					 (resp_kw_trio[0] in paragraph) and\
+					 (resp_kw_trio[1] in paragraph) and\
+					 (resp_kw_trio[2] not in paragraph)))
+				    for unit_kw in self.unit_keywords
+				    for resp_kw_trio in self.responsibility_keyword_trios)
+
+	def has_units_followed_by_respas(self, paragraph):
+		paragraph = Helper.deintonate_txt(paragraph)
+		paragraph = paragraph.upper()
+		return any((((unit_kw in paragraph) and\
+					 (resp_kw_trio[0] in paragraph) and\
+				 	 (resp_kw_trio[1] in paragraph) and\
+				 	 (resp_kw_trio[2] in paragraph)))
+				    for unit_kw in self.unit_keywords
+				    for resp_kw_trio in self.responsibility_keyword_trios)
+
 	def cosine_similarity(self, dict_1, dict_2):
 		numer = 0
 		den_a = 0
