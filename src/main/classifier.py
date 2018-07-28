@@ -137,10 +137,13 @@ class ParagraphRespAClassifier(object):
 				(unigram_pos_cosine > unigram_neg_cosine), (bigram_pos_cosine > bigram_neg_cosine),
 				(weighted_pos_cosine > weighted_neg_cosine)]
 
-	def has_units_following_respas(self, paragraph):
+	def has_units(self, paragraph):
 		paragraph = Helper.deintonate_txt(paragraph)
 		paragraph = paragraph.upper()
-		return any((((unit_kw in paragraph) and (resp_kw_trio[0] in paragraph) and (resp_kw_trio[1] in paragraph) and (resp_kw_trio[2] in paragraph)))
+		return any((((unit_kw in paragraph) and\
+					 (resp_kw_trio[0] not in paragraph) and\
+					 (resp_kw_trio[1] not in paragraph) and\
+					 (resp_kw_trio[2] not in paragraph)))
 				    for unit_kw in self.unit_keywords
 				    for resp_kw_trio in self.responsibility_keyword_trios)
 
