@@ -140,6 +140,12 @@ class ParagraphRespAClassifier(object):
 	def has_units(self, paragraph):
 		paragraph = Helper.deintonate_txt(paragraph)
 		paragraph = paragraph.upper()
+		return any(unit_kw in paragraph
+				   for unit_kw in self.unit_keywords)
+
+	def has_only_units(self, paragraph):
+		paragraph = Helper.deintonate_txt(paragraph)
+		paragraph = paragraph.upper()
 		return any((((unit_kw in paragraph) and\
 					 (resp_kw_trio[0] not in paragraph) and\
 					 (resp_kw_trio[1] not in paragraph) and\
