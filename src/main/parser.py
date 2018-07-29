@@ -365,19 +365,19 @@ class Parser(object):
 		
 		def get_units_and_respas(paragraphs, max_respas_threshold):
 			units_and_respas = OrderedDict()
-			insertions_since_last_unit_detection = 0
+			appends_since_last_unit_detection = 0
 			for prgrph in paragraphs:
 				if paragraph_clf.has_units_followed_by_respas(prgrph):
 					units_and_respas[prgrph] = []
-					insertions_since_last_unit_detection = 0
+					appends_since_last_unit_detection = 0
 				else:
 					if units_and_respas and\
-					insertions_since_last_unit_detection <= max_respas_threshold:
+					appends_since_last_unit_detection <= max_respas_threshold:
 						# Assume prgrph is a respa and 
 						# append to last detected unit
 						last_detected_unit = next(reversed(units_and_respas)) 
 						units_and_respas[last_detected_unit].append(prgrph)
-						insertions_since_last_unit_detection += 1  
+						appends_since_last_unit_detection += 1  
 			return units_and_respas
 
 		if articles:
