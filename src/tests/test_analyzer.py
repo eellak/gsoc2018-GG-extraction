@@ -444,5 +444,37 @@ class AnalyzerTest(Context):
 		data = merged_respa_prgrph_n_grams_dict
 		self.helper.write_to_pickle_file(data, rel_pickle_file_path)
 
+	def test_unit_paragraph_occurences_by_type_1(self):
+		pdf_path = self.test_pdfs_dir + '/Presidential_Decree_Issues/'
+		txt_path = self.test_txts_dir + '/'
+		
+		txt_1 = self.get_txt('1_Pres_Decree', pdf_path=pdf_path, txt_path=txt_path)
+		txt_2 = self.get_txt('2_Pres_Decree', pdf_path=pdf_path, txt_path=txt_path)
+		txt_3 = self.get_txt('3_Pres_Decree', pdf_path=pdf_path, txt_path=txt_path)
+		txt_4 = self.get_txt('4_Pres_Decree', pdf_path=pdf_path, txt_path=txt_path)
+		txt_5 = self.get_txt('5_Pres_Decree', pdf_path=pdf_path, txt_path=txt_path)
+		txt_6 = self.get_txt('6_Pres_Decree', pdf_path=pdf_path, txt_path=txt_path)
+		txt_7 = self.get_txt('7_Pres_Decree', pdf_path=pdf_path, txt_path=txt_path)
+		txt_8 = self.get_txt('8_Pres_Decree', pdf_path=pdf_path, txt_path=txt_path)
+		
+		units_followed_by_respas_occurs_1 = self.analyzer.get_unit_paragraph_occurences_by_type(txt_1, 'units_followed_by_respas')
+		units_followed_by_respas_occurs_2 = self.analyzer.get_unit_paragraph_occurences_by_type(txt_2, 'units_followed_by_respas')
+		units_followed_by_respas_occurs_3 = self.analyzer.get_unit_paragraph_occurences_by_type(txt_3, 'units_followed_by_respas')
+		units_followed_by_respas_occurs_4 = self.analyzer.get_unit_paragraph_occurences_by_type(txt_4, 'units_followed_by_respas')
+		units_followed_by_respas_occurs_5 = self.analyzer.get_unit_paragraph_occurences_by_type(txt_5, 'units_followed_by_respas')
+		units_followed_by_respas_occurs_6 = self.analyzer.get_unit_paragraph_occurences_by_type(txt_6, 'units_followed_by_respas')
+		units_followed_by_respas_occurs_7 = self.analyzer.get_unit_paragraph_occurences_by_type(txt_7, 'units_followed_by_respas')
+		units_followed_by_respas_occurs_8 = self.analyzer.get_unit_paragraph_occurences_by_type(txt_8, 'units_followed_by_respas')
+
+		print(units_followed_by_respas_occurs_1)
+		print(units_followed_by_respas_occurs_2)
+		print(units_followed_by_respas_occurs_3)
+		print(units_followed_by_respas_occurs_4)
+		print(units_followed_by_respas_occurs_5)
+		print(units_followed_by_respas_occurs_6)
+		print(units_followed_by_respas_occurs_7)
+		print(units_followed_by_respas_occurs_8)
+		
+
 if __name__ == '__main__':
 	unittest.main()
