@@ -1,6 +1,6 @@
 from util.helper import Helper
 from collections import OrderedDict
-from main.parser import Parser
+import main.parser
 import main.classifier
 
 
@@ -146,7 +146,7 @@ class Analyzer(object):
 			 			if len(prgrh) > 20 and Helper.get_clean_words(prgrh)[:20]])
 
 		paragraph_clf = main.classifier.ParagraphRespAClassifier()
-		parser = Parser()
+		parser = main.parser.Parser()
 		if type == 'units_followed_by_respas': units_clf_func = paragraph_clf.has_units_followed_by_respas
 		elif type == 'units_and_respas': units_clf_func = paragraph_clf.has_units_and_respas
 		elif type == 'only_units': units_clf_func = paragraph_clf.has_only_units
