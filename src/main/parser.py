@@ -16,6 +16,7 @@ from difflib import get_close_matches, SequenceMatcher
 # from polyglot.text import Text
 from collections import OrderedDict
 from util.helper import Helper
+import main.classifier
 
 class Parser(object):
 	
@@ -356,13 +357,39 @@ class Parser(object):
 		mentioned_issues_sections = findall(r"\((ΦΕΚ[^\)]+)\)", txt)
 		return mentioned_issues_sections
 
-	def get_respa_association(self, txt):
-		""" Ideally to be fed 'txt' containing RespA sections """
-		# persons = get_person_named_entities(txt)
-		# paorgs = 
-		# responsibilities = 
+	def get_units_followed_by_respas(self, paorg_pres_decree_txt):
+		paragraph_clf = main.classifier.ParagraphRespAClassifier()
+		max_respas_threshold = 12
+		units_followed_by_respas = OrderedDict()
+		articles = self.get_articles(paorg_pres_decree_txt)
+		
+		def get_units_and_respas(paragraphs, max_respas_threshold):
+			units_and_respas = OrderedDict()
+			insertions_since_last_unit_detection = 0
+			for prgrph in paragraphs:
+				if paragraph_clf.has_units_followed_by_respas(prgrph):
+					units_and_respas[prgrph] = []
+					insertions_since_last_unit_detection = 0
+				else:
+					if units_and_respas and\
+					insertions_since_last_unit_detection <= max_respas_threshold:
+						# Assume prgrph is a respa and 
+						# append to last detected unit
+						last_detected_unit = next(reversed(units_and_respas)) 
+						units_and_respas[last_detected_unit].append(prgrph)
+						insertions_since_last_unit_detection += 1  
+			return units_and_respas
 
-		return {}
+		if articles:
+			if isinstance(articles, dict): articles = list(articles.values())
+			for artcl in articles:
+				artcl_paragraphs = self.get_paragraphs(artcl)
+				units_followed_by_respas.update(get_units_and_respas(artcl_paragraphs, max_respas_threshold))
+		else:
+			paragraphs = self.get_paragraphs(paorg_pres_decree_txt)
+			units_followed_by_respas = get_units_and_respas(artcl_paragraphs, max_respas_threshold)
+
+		return dict(units_followed_by_respas)
 
 	def get_simple_pdf_text(self, file_name, txt_name):
 		
