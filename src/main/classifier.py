@@ -7,7 +7,7 @@ from sklearn.tree import DecisionTreeClassifier
 from numpy import mean
 from math import sqrt
 from util.helper import Helper
-from main.analyzer import Analyzer
+import main.analyzer
 from collections import OrderedDict, defaultdict
 
 class RespAClassifier(object):
@@ -31,7 +31,7 @@ class IssueOrArticleRespAClassifier(RespAClassifier):
 		return svm.SVC(kernel='linear', C=1).fit(self.X, self.y)
 
 	def fit(self, txt, is_respa):
-		txt_analysis_feature_vector = Analyzer().get_n_gram_analysis_data_vectors([txt])
+		txt_analysis_feature_vector = main.analyzer.Analyzer().get_n_gram_analysis_data_vectors([txt])
 		Helper.append_rows_into_csv(txt_analysis_feature_vector + [is_respa], self.training_data_csv_file)
 		# Update instance data
 		self.__init__(self.training_data_csv_file)
@@ -60,11 +60,13 @@ class IssueOrArticleRespAClassifier(RespAClassifier):
 
 class ParagraphRespAClassifier(object):
 	
-	def __init__(self, training_data_files):
-		self.training_data_files = training_data_files
-		self.training_data = OrderedDict() 
-		self.load_train_data('non_respa')
-		self.load_train_data('respa')
+	def __init__(self, training_data_files = None):
+		if training_data_files is not None:
+			self.training_data_files = training_data_files
+			self.training_data = OrderedDict() 
+			self.load_train_data('non_respa')
+			self.load_train_data('respa')
+
 		self.unit_keywords = ["ΤΜΗΜΑ", "ΓΡΑΦΕΙ", "ΔΙΕΥΘΥΝΣ", "ΥΠΗΡΕΣΙ", "ΣΥΜΒΟΥΛΙ", 'ΓΡΑΜΜΑΤΕ', "ΥΠΟΥΡΓ",
 							  "ΕΙΔΙΚΟΣ ΛΟΓΑΡΙΑΣΜΟΣ"]
 		self.responsibility_keyword_trios = [("ΑΡΜΟΔ", "ΓΙΑ", ":"),  ("ΑΡΜΟΔΙΟΤ", "ΕΧΕΙ", ":"), ("ΑΡΜΟΔΙΟΤ", "ΕΞΗΣ", ":"), 
