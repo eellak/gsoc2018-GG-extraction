@@ -2187,5 +2187,33 @@ class ParserTest(Context):
 		self.helper.append_rows_into_csv(units_followed_by_respas_2, "/home/chrisk/Desktop/units_followed_by_respas_2.csv")
 		self.helper.append_rows_into_csv(units_followed_by_respas_3, "/home/chrisk/Desktop/units_followed_by_respas_3.csv")
 
+	def test_get_units_followed_by_respas_2(self):
+		pdf_path = self.test_pdfs_dir + '/Presidential_Decree_Issues/for_training_data/RespAs/'
+		txt_path = self.test_txts_dir + '/for_training_data/RespAs/'
+		
+		txt_1 = self.get_txt('6', pdf_path=pdf_path, txt_path=txt_path)
+		txt_2 = self.get_txt('50', pdf_path=pdf_path, txt_path=txt_path)
+		txt_3 = self.get_txt('19', pdf_path=pdf_path, txt_path=txt_path)
+		
+		units_followed_by_respas_1 = self.parser.get_units_followed_by_respas(txt_1)
+		units_followed_by_respas_2 = self.parser.get_units_followed_by_respas(txt_2)
+		units_followed_by_respas_3 = self.parser.get_units_followed_by_respas(txt_3)
+		
+		# print(units_followed_by_respas_1)
+		# print(units_followed_by_respas_2)
+
+		# To csv for visualization
+		units_followed_by_respas_1 = list(map(list, units_followed_by_respas_1.items()))
+		units_followed_by_respas_2 = list(map(list, units_followed_by_respas_2.items()))
+		units_followed_by_respas_3 = list(map(list, units_followed_by_respas_3.items()))
+		
+		units_followed_by_respas_1 = [[unit_and_respas[0], ''.join(unit_and_respas[1])] for unit_and_respas in units_followed_by_respas_1]
+		units_followed_by_respas_2 = [[unit_and_respas[0], ''.join(unit_and_respas[1])] for unit_and_respas in units_followed_by_respas_2]
+		units_followed_by_respas_3 = [[unit_and_respas[0], ''.join(unit_and_respas[1])] for unit_and_respas in units_followed_by_respas_3]
+		
+		self.helper.append_rows_into_csv(units_followed_by_respas_1, "/home/chrisk/Desktop/units_followed_by_respas_3.csv")
+		self.helper.append_rows_into_csv(units_followed_by_respas_2, "/home/chrisk/Desktop/units_followed_by_respas_4.csv")
+		self.helper.append_rows_into_csv(units_followed_by_respas_3, "/home/chrisk/Desktop/units_followed_by_respas_5.csv")
+
 if __name__ == '__main__':
 	unittest.main() 
