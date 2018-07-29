@@ -1,5 +1,8 @@
 from util.helper import Helper
 from collections import OrderedDict
+from main.parser import Parser
+import main.classifier
+
 
 class Analyzer(object):
 	
@@ -134,4 +137,30 @@ class Analyzer(object):
 				respa_occurences_in_txt['quadgram_analysis'][key]
 		
 		return analysis_data_sums
-			
+
+
+	def get_unit_paragraph_occurences_by_type(self, paorg_pres_decree_txt, type):
+		
+		def get_specific_units_clf_func_occurrences(unit_paragraph_occurences, paragraphs):
+			return sum([units_clf_func(prgrh) for prgrh in paragraphs
+			 			if len(prgrh) > 20 and Helper.get_clean_words(prgrh)[:20]])
+
+		paragraph_clf = main.classifier.ParagraphRespAClassifier()
+		parser = Parser()
+		if type == 'units_followed_by_respas': units_clf_func = paragraph_clf.has_units_followed_by_respas
+		elif type == 'units_and_respas': units_clf_func = paragraph_clf.has_units_and_respas
+		elif type == 'only_units': units_clf_func = paragraph_clf.has_only_units
+		elif type == 'units': units_clf_func = paragraph_clf.has_units
+	
+		unit_paragraph_occurences = 0
+		articles = parser.get_articles(paorg_pres_decree_txt)
+		if articles:
+			if isinstance(articles, dict): articles = list(articles.values())
+			for artcl in articles:
+				artcl_paragraphs = parser.get_paragraphs(artcl)
+				unit_paragraph_occurences += get_specific_units_clf_func_occurrences(unit_paragraph_occurences, artcl_paragraphs)
+		else:
+			paragraphs = parser.get_paragraphs(paorg_pres_decree_txt)
+			unit_paragraph_occurences = get_specific_units_clf_func_occurrences(unit_paragraph_occurences, paragraphs)
+
+		return unit_paragraph_occurences		
