@@ -364,21 +364,22 @@ class Parser(object):
 		articles = self.get_articles(paorg_pres_decree_txt)
 		
 		def get_units_followed_by_respas_dict(paragraphs, max_respas_threshold):
-			units_and_respas = OrderedDict()
+			units_followed_by_respas = OrderedDict()
 			appends_since_last_unit_detection = 0
 			for prgrph in paragraphs:
 				if paragraph_clf.has_units_followed_by_respas(prgrph):
-					units_and_respas[prgrph] = []
+					units_followed_by_respas[prgrph] = []
 					appends_since_last_unit_detection = 0
 				else:
-					if units_and_respas and\
-					appends_since_last_unit_detection <= max_respas_threshold:
+					if units_followed_by_respas and\
+					   (not paragraph_clf.has_units_and_respas(prgrph)) and\
+					   appends_since_last_unit_detection <= max_respas_threshold:
 						# Assume prgrph is a respa and 
 						# append to last detected unit
-						last_detected_unit = next(reversed(units_and_respas)) 
-						units_and_respas[last_detected_unit].append(prgrph)
+						last_detected_unit = next(reversed(units_followed_by_respas)) 
+						units_followed_by_respas[last_detected_unit].append(prgrph)
 						appends_since_last_unit_detection += 1  
-			return units_and_respas
+			return units_followed_by_respas
 
 		if articles:
 			if isinstance(articles, dict): articles = list(articles.values())
