@@ -71,6 +71,7 @@ class ParagraphRespAClassifier(object):
 							  "ΕΙΔΙΚΟΣ ΛΟΓΑΡΙΑΣΜΟΣ"]
 		self.responsibility_keyword_trios = [("ΑΡΜΟΔ", "ΓΙΑ", ":"),  ("ΑΡΜΟΔΙΟΤ", "ΕΧΕΙ", ":"), ("ΑΡΜΟΔΙΟΤ", "ΕΞΗΣ", ":"), 
 										("ΑΡΜΟΔΙΟΤ", "ΕΙΝΑΙ", ":"), ("ΑΡΜΟΔΙΟΤ", "ΑΚΟΛΟΥΘ", ":"), ("ΑΡΜΟΔΙΟΤ", "ΜΕΤΑΞΥ", ":")]
+		self.responsibilities_decl_pair = [("ΑΡΜΟΔΙΟΤ", ":")]
 														                         
 	def load_train_data(self, tag):
 		self.training_data[tag] = Helper.load_pickle_file(self.training_data_files[tag])
@@ -140,14 +141,12 @@ class ParagraphRespAClassifier(object):
 				(weighted_pos_cosine > weighted_neg_cosine)]
 
 	def has_units(self, paragraph):
-		paragraph = Helper.deintonate_txt(paragraph)
-		paragraph = paragraph.upper()
+		paragraph = normalize_txt(paragraph)
 		return any(unit_kw in paragraph
 				   for unit_kw in self.unit_keywords)
 
 	def has_only_units(self, paragraph):
-		paragraph = Helper.deintonate_txt(paragraph)
-		paragraph = paragraph.upper()
+		paragraph = normalize_txt(paragraph)
 		return any((((unit_kw in paragraph) and\
 					 (resp_kw_trio[0] not in paragraph) and\
 					 (resp_kw_trio[1] not in paragraph) and\
@@ -157,8 +156,7 @@ class ParagraphRespAClassifier(object):
 
 
 	def has_units_and_respas(self, paragraph):
-		paragraph = Helper.deintonate_txt(paragraph)
-		paragraph = paragraph.upper()
+		paragraph = normalize_txt(paragraph)
 		return any((((unit_kw in paragraph) and\
 					 (resp_kw_trio[0] in paragraph) and\
 					 (resp_kw_trio[1] in paragraph) and\
@@ -167,14 +165,19 @@ class ParagraphRespAClassifier(object):
 				    for resp_kw_trio in self.responsibility_keyword_trios)
 
 	def has_units_followed_by_respas(self, paragraph):
-		paragraph = Helper.deintonate_txt(paragraph)
-		paragraph = paragraph.upper()
+		paragraph = normalize_txt(paragraph)
 		return any((((unit_kw in paragraph) and\
 					 (resp_kw_trio[0] in paragraph) and\
 				 	 (resp_kw_trio[1] in paragraph) and\
 				 	 (resp_kw_trio[2] in paragraph)))
 				    for unit_kw in self.unit_keywords
 				    for resp_kw_trio in self.responsibility_keyword_trios)
+
+	def has_respas_decl(self, paragraph):
+		paragraph = normalize_txt(paragraph)
+		return (self.responsibilities_decl_pair[0][0] in paragraph and\
+			   self.responsibilities_decl_pair[0][0] in paragraph)
+				    
 
 	def cosine_similarity(self, dict_1, dict_2):
 		numer = 0
