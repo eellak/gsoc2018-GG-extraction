@@ -363,7 +363,7 @@ class Parser(object):
 		units_followed_by_respas = OrderedDict()
 		articles = self.get_articles(paorg_pres_decree_txt)
 		
-		def get_units_and_respas(paragraphs, max_respas_threshold):
+		def get_units_followed_by_respas_dict(paragraphs, max_respas_threshold):
 			units_and_respas = OrderedDict()
 			appends_since_last_unit_detection = 0
 			for prgrph in paragraphs:
@@ -384,12 +384,46 @@ class Parser(object):
 			if isinstance(articles, dict): articles = list(articles.values())
 			for artcl in articles:
 				artcl_paragraphs = self.get_paragraphs(artcl)
-				units_followed_by_respas.update(get_units_and_respas(artcl_paragraphs, max_respas_threshold))
+				units_followed_by_respas.update(get_units_followed_by_respas_dict(artcl_paragraphs, max_respas_threshold))
 		else:
 			paragraphs = self.get_paragraphs(paorg_pres_decree_txt)
-			units_followed_by_respas = get_units_and_respas(artcl_paragraphs, max_respas_threshold)
+			units_followed_by_respas = get_units_followed_by_respas_dict(artcl_paragraphs, max_respas_threshold)
 
 		return dict(units_followed_by_respas)
+
+	def get_units_and_respas(self, paorg_pres_decree_txt):
+		paragraph_clf = main.classifier.ParagraphRespAClassifier()
+		articles = self.get_articles(paorg_pres_decree_txt)
+		units_and_respas = {}
+		units_and_respa_sections = []
+		
+		def get_units_and_respas_sections(paragraphs):
+			return [prgrph for prgrph in paragraphs if paragraph_clf.has_units_and_respas(prgrph)]
+
+		def disentangle_units_from_respas(units_and_respa_sections):
+			units_and_respas = {}
+			for unit_and_respa_section in units_and_respa_sections:
+				# Unit assumed to be in 10 first words
+				unit = ' '.join(Helper.get_words(unit_and_respa_section, n=10))
+				respas = unit_and_respa_section
+				units_and_respas[unit] = respas
+			return units_and_respas
+					
+		if articles:
+			if isinstance(articles, dict): articles = list(articles.values())
+			for artcl in articles:
+				artcl_paragraphs = self.get_paragraphs(artcl)
+				units_and_respa_sections.append(get_units_and_respas_sections(artcl_paragraphs))
+			units_and_respa_sections = [item for sublist in units_and_respa_sections for item in sublist]
+		else:
+			paragraphs = self.get_paragraphs(paorg_pres_decree_txt)
+			units_and_respa_sections = get_units_and_respas_sections(paragraphs)
+
+		unit_and_respa_sections = [x for x in units_and_respa_sections if x]
+		print(unit_and_respa_sections)
+		units_and_respas = disentangle_units_from_respas(units_and_respa_sections)
+
+		return units_and_respas
 
 	def get_simple_pdf_text(self, file_name, txt_name):
 		
