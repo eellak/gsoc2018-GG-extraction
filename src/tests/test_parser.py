@@ -2194,10 +2194,12 @@ class ParserTest(Context):
 		txt_1 = self.get_txt('6', pdf_path=pdf_path, txt_path=txt_path)
 		txt_2 = self.get_txt('50', pdf_path=pdf_path, txt_path=txt_path)
 		txt_3 = self.get_txt('19', pdf_path=pdf_path, txt_path=txt_path)
+		txt_4 = self.get_txt('24', pdf_path=pdf_path, txt_path=txt_path)
 		
 		units_followed_by_respas_1 = self.parser.get_units_followed_by_respas(txt_1)
 		units_followed_by_respas_2 = self.parser.get_units_followed_by_respas(txt_2)
 		units_followed_by_respas_3 = self.parser.get_units_followed_by_respas(txt_3)
+		units_followed_by_respas_4 = self.parser.get_units_followed_by_respas(txt_4)
 		
 		# print(units_followed_by_respas_1)
 		# print(units_followed_by_respas_2)
@@ -2206,14 +2208,38 @@ class ParserTest(Context):
 		units_followed_by_respas_1 = list(map(list, units_followed_by_respas_1.items()))
 		units_followed_by_respas_2 = list(map(list, units_followed_by_respas_2.items()))
 		units_followed_by_respas_3 = list(map(list, units_followed_by_respas_3.items()))
+		units_followed_by_respas_4 = list(map(list, units_followed_by_respas_4.items()))
 		
 		units_followed_by_respas_1 = [[unit_and_respas[0], ''.join(unit_and_respas[1])] for unit_and_respas in units_followed_by_respas_1]
 		units_followed_by_respas_2 = [[unit_and_respas[0], ''.join(unit_and_respas[1])] for unit_and_respas in units_followed_by_respas_2]
 		units_followed_by_respas_3 = [[unit_and_respas[0], ''.join(unit_and_respas[1])] for unit_and_respas in units_followed_by_respas_3]
+		units_followed_by_respas_4 = [[unit_and_respas[0], ''.join(unit_and_respas[1])] for unit_and_respas in units_followed_by_respas_4]
 		
 		self.helper.append_rows_into_csv(units_followed_by_respas_1, "/home/chrisk/Desktop/units_followed_by_respas_3.csv")
 		self.helper.append_rows_into_csv(units_followed_by_respas_2, "/home/chrisk/Desktop/units_followed_by_respas_4.csv")
 		self.helper.append_rows_into_csv(units_followed_by_respas_3, "/home/chrisk/Desktop/units_followed_by_respas_5.csv")
+		self.helper.append_rows_into_csv(units_followed_by_respas_4, "/home/chrisk/Desktop/units_followed_by_respas_6.csv")
+
+	def test_get_units_and_respas_1(self): 
+		pdf_path = self.test_pdfs_dir + '/Presidential_Decree_Issues/'
+		txt_path = self.test_txts_dir + '/'
+
+		txt_1 = self.get_txt('3_Pres_Decree', pdf_path=pdf_path, txt_path=txt_path)
+		txt_2 = self.get_txt('4_Pres_Decree', pdf_path=pdf_path, txt_path=txt_path)
+		txt_3 = self.get_txt('5_Pres_Decree', pdf_path=pdf_path, txt_path=txt_path)
+		txt_4 = self.get_txt('6_Pres_Decree', pdf_path=pdf_path, txt_path=txt_path)
+
+		units_and_respas_1 = self.parser.get_units_and_respas(txt_1)
+		# units_and_respas_2 = self.parser.get_units_and_respas(txt_2)
+		# units_and_respas_3 = self.parser.get_units_and_respas(txt_3)
+		# units_and_respas_4 = self.parser.get_units_and_respas(txt_4)
+
+		print(units_and_respas_1)
+		# print(units_and_respas_2)
+		# print(units_and_respas_3)
+		# print(units_and_respas_4)
+
+
 
 if __name__ == '__main__':
 	unittest.main() 
