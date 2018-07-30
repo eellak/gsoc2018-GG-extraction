@@ -346,6 +346,11 @@ class Helper:
         
         return txt
 
+    @staticmethod
+    def normalize_txt(txt):
+        txt = Helper.deintonate_txt(txt)
+        return txt.upper()
+
     # Converts a textual date to a unix timestamp
     @staticmethod
     def date_to_unix_timestamp(date, lang='el'):
