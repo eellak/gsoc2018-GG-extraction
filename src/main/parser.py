@@ -379,7 +379,7 @@ class Parser(object):
 						last_detected_unit = next(reversed(units_followed_by_respas)) 
 						units_followed_by_respas[last_detected_unit].append(prgrph)
 						appends_since_last_unit_detection += 1  
-			return units_followed_by_respas
+			return {k:v for k, v in units_followed_by_respas.items() if v}
 
 		if articles:
 			if isinstance(articles, dict): articles = list(articles.values())
