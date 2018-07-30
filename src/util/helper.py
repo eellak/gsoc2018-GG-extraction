@@ -173,6 +173,12 @@ class Helper:
         return clean_words if n<=0 else clean_words[:n]
 
     @staticmethod
+    def get_words(txt, n=0):
+        txt = Helper.clean_up_txt(txt)
+        words = re.sub("[^\w]", " ",  txt).split()
+        return words if n<=0 else words[:n]
+
+    @staticmethod
     def get_greek_stopwords():
         return ["αλλα","αν","αντι","απο","αυτα","αυτεσ","αυτη","αυτο","αυτοι","αυτοσ","αυτουσ","αυτων","αἱ","αἳ","αἵ","αὐτόσ",
                 "αὐτὸς","αὖ","γάρ","γα","γα^","γε","για","γοῦν","γὰρ","δ'","δέ","δή","δαί","δαίσ","δαὶ","δαὶς","δε","δεν","δι'",
