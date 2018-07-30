@@ -323,7 +323,7 @@ class Parser(object):
 		txt = Helper.codify_list_points(txt)
 		paragraphs = []
 		if txt:
-			paragraphs = findall(r"\n\s*[Ά-ΏΑ-Ωα-ωά-ώbullet\d+\(•\-]+[\.\)α-ω ]([\s\S]+?(?:[\.\:](?=\s*\n)|\,(?=\s*\n(?:[α-ω\d]+[\.\)]|bullet))))", txt)
+			paragraphs = findall(r"\n\s*[Ά-ΏΑ-Ωα-ωά-ώbullet\d+\(•\-\−]+[\.\)α-ω ]([\s\S]+?(?:[\.\:](?=\s*\n)|\,(?=\s*\n(?:[α-ω\d]+[\.\)]|bullet))))", txt)
 		return paragraphs
 
 	def get_issue_number(self, txt):
@@ -392,6 +392,12 @@ class Parser(object):
 
 		return dict(units_followed_by_respas)
 
+	# def units_and_respas_following_respas_decl(self, paorg_pres_decree_txt):
+	# 	paragraph_clf = main.classifier.ParagraphRespAClassifier()
+		
+	# 		paragraph_clf.has_respas_decl(prgrph)
+	# 		paragraph_clf.
+
 	def get_units_and_respas(self, paorg_pres_decree_txt):
 		paragraph_clf = main.classifier.ParagraphRespAClassifier()
 		articles = self.get_articles(paorg_pres_decree_txt)
@@ -421,7 +427,6 @@ class Parser(object):
 			units_and_respa_sections = get_units_and_respas_sections(paragraphs)
 
 		unit_and_respa_sections = [x for x in units_and_respa_sections if x]
-		print(unit_and_respa_sections)
 		units_and_respas = disentangle_units_from_respas(units_and_respa_sections)
 
 		return units_and_respas
