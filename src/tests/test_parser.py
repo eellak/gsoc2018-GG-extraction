@@ -2230,16 +2230,34 @@ class ParserTest(Context):
 		txt_4 = self.get_txt('6_Pres_Decree', pdf_path=pdf_path, txt_path=txt_path)
 
 		units_and_respas_1 = self.parser.get_units_and_respas(txt_1)
-		# units_and_respas_2 = self.parser.get_units_and_respas(txt_2)
-		# units_and_respas_3 = self.parser.get_units_and_respas(txt_3)
-		# units_and_respas_4 = self.parser.get_units_and_respas(txt_4)
+		units_and_respas_2 = self.parser.get_units_and_respas(txt_2)
+		units_and_respas_3 = self.parser.get_units_and_respas(txt_3)
+		units_and_respas_4 = self.parser.get_units_and_respas(txt_4)
 
-		print(units_and_respas_1)
+		# print(units_and_respas_1)
 		# print(units_and_respas_2)
 		# print(units_and_respas_3)
 		# print(units_and_respas_4)
 
+		# To csv for visualization
+		units_and_respas_1 = list(map(list, units_and_respas_1.items()))
+		units_and_respas_2 = list(map(list, units_and_respas_2.items()))
+		units_and_respas_3 = list(map(list, units_and_respas_3.items()))
+		units_and_respas_4 = list(map(list, units_and_respas_4.items()))
+		
+		self.helper.append_rows_into_csv(units_and_respas_1, "/home/chrisk/Desktop/units_and_respas_1.csv")
+		self.helper.append_rows_into_csv(units_and_respas_2, "/home/chrisk/Desktop/units_and_respas_2.csv")
+		self.helper.append_rows_into_csv(units_and_respas_3, "/home/chrisk/Desktop/units_and_respas_3.csv")
+		self.helper.append_rows_into_csv(units_and_respas_4, "/home/chrisk/Desktop/units_and_respas_4.csv")
 
+	def test_get_units_and_respas_2(self):
+		pdf_path = self.test_pdfs_dir + '/Presidential_Decree_Issues/for_training_data/RespAs/'
+		txt_path = self.test_txts_dir + '/for_training_data/RespAs/'
+		
+		txt_1 = self.get_txt('2', pdf_path=pdf_path, txt_path=txt_path)
+
+		units_and_respas_1 = self.parser.get_units_and_respas(txt_1)
+		print(units_and_respas_1)
 
 if __name__ == '__main__':
 	unittest.main() 

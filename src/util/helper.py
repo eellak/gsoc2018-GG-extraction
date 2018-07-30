@@ -142,7 +142,7 @@ class Helper:
         list_point_regex.append(r"\n[ ]*[α-ω]+\) ")
         for regex in list_point_regex:
             pat = re.compile(regex)
-            txt = pat.sub("\nbullet ", txt)
+            txt = pat.sub("\nBullet ", txt)
         return txt
 
     @staticmethod

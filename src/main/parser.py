@@ -323,7 +323,7 @@ class Parser(object):
 		txt = Helper.codify_list_points(txt)
 		paragraphs = []
 		if txt:
-			paragraphs = findall(r"\n\s*[Ά-ΏΑ-Ωα-ωά-ώbullet\d+\(•\-]+[\.\)α-ω ]([\s\S]+?(?:[\.\:](?=\s*\n)|\,(?=\s*\n(?:[α-ω\d]+[\.\)]|bullet))))", txt)
+			paragraphs = findall(r"\n?\s*[Ά-ΏΑ-Ωα-ωά-ώBullet\d+\(•\-\−]+[\.\)α-ω ]([\s\S]+?(?:[\.\:](?=\s*\n)|\,(?=\s*\n(?:[α-ω\d]+[\.\)]|Bullet))))", txt)
 		return paragraphs
 
 	def get_issue_number(self, txt):
@@ -359,11 +359,11 @@ class Parser(object):
 
 	def get_units_followed_by_respas(self, paorg_pres_decree_txt):
 		paragraph_clf = main.classifier.ParagraphRespAClassifier()
-		max_respas_threshold = 12
+		respas_threshold = 12
 		units_followed_by_respas = OrderedDict()
 		articles = self.get_articles(paorg_pres_decree_txt)
 		
-		def get_units_followed_by_respas_dict(paragraphs, max_respas_threshold):
+		def get_units_followed_by_respas_dict(paragraphs, respas_threshold):
 			units_followed_by_respas = OrderedDict()
 			appends_since_last_unit_detection = 0
 			for prgrph in paragraphs:
@@ -371,35 +371,58 @@ class Parser(object):
 					units_followed_by_respas[prgrph] = []
 					appends_since_last_unit_detection = 0
 				else:
-					if units_followed_by_respas and\
-					   (not paragraph_clf.has_units_and_respas(prgrph)) and\
-					   appends_since_last_unit_detection <= max_respas_threshold:
+					units_followed_by_respas_criteria = units_followed_by_respas and\
+													   (not paragraph_clf.has_units_and_respas(prgrph)) and\
+													   appends_since_last_unit_detection <= respas_threshold
+					if units_followed_by_respas_criteria:
 						# Assume prgrph is a respa and 
 						# append to last detected unit
 						last_detected_unit = next(reversed(units_followed_by_respas)) 
 						units_followed_by_respas[last_detected_unit].append(prgrph)
 						appends_since_last_unit_detection += 1  
-			return units_followed_by_respas
+			return {k:v for k, v in units_followed_by_respas.items() if v}
 
 		if articles:
 			if isinstance(articles, dict): articles = list(articles.values())
 			for artcl in articles:
 				artcl_paragraphs = self.get_paragraphs(artcl)
-				units_followed_by_respas.update(get_units_followed_by_respas_dict(artcl_paragraphs, max_respas_threshold))
+				units_followed_by_respas.update(get_units_followed_by_respas_dict(artcl_paragraphs, respas_threshold))
 		else:
 			paragraphs = self.get_paragraphs(paorg_pres_decree_txt)
-			units_followed_by_respas = get_units_followed_by_respas_dict(artcl_paragraphs, max_respas_threshold)
+			units_followed_by_respas = get_units_followed_by_respas_dict(artcl_paragraphs, respas_threshold)
 
 		return dict(units_followed_by_respas)
+
+	# def units_and_respas_following_respas_decl(self, paorg_pres_decree_txt):
+	# 	paragraph_clf = main.classifier.ParagraphRespAClassifier()
+		
+	# 		paragraph_clf.has_respas_decl(prgrph)
+	# 		paragraph_clf.
 
 	def get_units_and_respas(self, paorg_pres_decree_txt):
 		paragraph_clf = main.classifier.ParagraphRespAClassifier()
 		articles = self.get_articles(paorg_pres_decree_txt)
+		additional_respas_threshold = 6
 		units_and_respas = {}
 		units_and_respa_sections = []
 		
-		def get_units_and_respas_sections(paragraphs):
-			return [prgrph for prgrph in paragraphs if paragraph_clf.has_units_and_respas(prgrph)]
+		def get_unit_and_respa_paragraphs(paragraphs, additional_respas_threshold):
+			unit_and_respa_sections = []
+			for i, prgrph in enumerate(paragraphs):
+			    unit_and_respa_paragraph_criteria = (paragraph_clf.has_units_and_respas(prgrph) or
+			      								  (paragraph_clf.has_units_followed_by_respas(prgrph) and len(prgrph)>150))
+			    if unit_and_respa_paragraph_criteria:
+			    	additional_respas_following_criterion = (prgrph[-1] == ':')
+			    	if additional_respas_following_criterion:
+			    		print('IN HERE!')
+				    	# Append following paragraphs 
+				    	# containing additional respas to prgrph
+				    	for j in range(i+1, i+1+additional_respas_threshold):
+				    		if j < len(paragraphs):
+				    			prgrph += paragraphs[j]
+			    	# Append paragraph containing unit with its respas
+			    	unit_and_respa_sections.append(prgrph)
+			return unit_and_respa_sections
 
 		def disentangle_units_from_respas(units_and_respa_sections):
 			units_and_respas = {}
@@ -407,21 +430,22 @@ class Parser(object):
 				# Unit assumed to be in 10 first words
 				unit = ' '.join(Helper.get_words(unit_and_respa_section, n=10))
 				respas = unit_and_respa_section
-				units_and_respas[unit] = respas
+				# Units starts with uppercase character
+				if unit[0].isupper():
+					units_and_respas[unit] = respas
 			return units_and_respas
 					
 		if articles:
 			if isinstance(articles, dict): articles = list(articles.values())
 			for artcl in articles:
 				artcl_paragraphs = self.get_paragraphs(artcl)
-				units_and_respa_sections.append(get_units_and_respas_sections(artcl_paragraphs))
+				units_and_respa_sections.append(get_unit_and_respa_paragraphs(artcl_paragraphs, additional_respas_threshold))
 			units_and_respa_sections = [item for sublist in units_and_respa_sections for item in sublist]
 		else:
 			paragraphs = self.get_paragraphs(paorg_pres_decree_txt)
-			units_and_respa_sections = get_units_and_respas_sections(paragraphs)
+			units_and_respa_sections = get_unit_and_respa_paragraphs(paragraphs, additional_respas_threshold)
 
 		unit_and_respa_sections = [x for x in units_and_respa_sections if x]
-		print(unit_and_respa_sections)
 		units_and_respas = disentangle_units_from_respas(units_and_respa_sections)
 
 		return units_and_respas
