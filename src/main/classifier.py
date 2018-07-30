@@ -141,12 +141,12 @@ class ParagraphRespAClassifier(object):
 				(weighted_pos_cosine > weighted_neg_cosine)]
 
 	def has_units(self, paragraph):
-		paragraph = normalize_txt(paragraph)
+		paragraph = Helper.normalize_txt(paragraph)
 		return any(unit_kw in paragraph
 				   for unit_kw in self.unit_keywords)
 
 	def has_only_units(self, paragraph):
-		paragraph = normalize_txt(paragraph)
+		paragraph = Helper.normalize_txt(paragraph)
 		return any((((unit_kw in paragraph) and\
 					 (resp_kw_trio[0] not in paragraph) and\
 					 (resp_kw_trio[1] not in paragraph) and\
@@ -156,7 +156,7 @@ class ParagraphRespAClassifier(object):
 
 
 	def has_units_and_respas(self, paragraph):
-		paragraph = normalize_txt(paragraph)
+		paragraph = Helper.normalize_txt(paragraph)
 		return any((((unit_kw in paragraph) and\
 					 (resp_kw_trio[0] in paragraph) and\
 					 (resp_kw_trio[1] in paragraph) and\
@@ -165,7 +165,7 @@ class ParagraphRespAClassifier(object):
 				    for resp_kw_trio in self.responsibility_keyword_trios)
 
 	def has_units_followed_by_respas(self, paragraph):
-		paragraph = normalize_txt(paragraph)
+		paragraph = Helper.normalize_txt(paragraph)
 		return any((((unit_kw in paragraph) and\
 					 (resp_kw_trio[0] in paragraph) and\
 				 	 (resp_kw_trio[1] in paragraph) and\
@@ -174,7 +174,7 @@ class ParagraphRespAClassifier(object):
 				    for resp_kw_trio in self.responsibility_keyword_trios)
 
 	def has_respas_decl(self, paragraph):
-		paragraph = normalize_txt(paragraph)
+		paragraph = Helper.normalize_txt(paragraph)
 		return (self.responsibilities_decl_pair[0][0] in paragraph and\
 			   self.responsibilities_decl_pair[0][0] in paragraph)
 				    
