@@ -71,7 +71,7 @@ class ParagraphRespAClassifier(object):
 							  "ΕΙΔΙΚΟΣ ΛΟΓΑΡΙΑΣΜΟΣ"]
 		self.responsibility_keyword_trios = [("ΑΡΜΟΔ", "ΓΙΑ", ":"),  ("ΑΡΜΟΔΙΟΤ", "ΕΧΕΙ", ":"), ("ΑΡΜΟΔΙΟΤ", "ΕΞΗΣ", ":"), 
 										("ΑΡΜΟΔΙΟΤ", "ΕΙΝΑΙ", ":"), ("ΑΡΜΟΔΙΟΤ", "ΑΚΟΛΟΥΘ", ":"), ("ΑΡΜΟΔΙΟΤ", "ΜΕΤΑΞΥ", ":")]
-		self.responsibilities_decl_pair = [("ΑΡΜΟΔΙΟΤ", ":")]
+		self.responsibilities_decl_pair = [("ΑΡΜΟΔΙΟΤΗΤΕΣ", ":")]
 														                         
 	def load_train_data(self, tag):
 		self.training_data[tag] = Helper.load_pickle_file(self.training_data_files[tag])
