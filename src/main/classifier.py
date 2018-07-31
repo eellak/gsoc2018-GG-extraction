@@ -67,8 +67,8 @@ class ParagraphRespAClassifier(object):
 			self.load_train_data('non_respa')
 			self.load_train_data('respa')
 
-		self.unit_keywords = ["ΤΜΗΜΑ", "ΓΡΑΦΕΙ", "ΔΙΕΥΘΥΝΣ", "ΥΠΗΡΕΣΙ", "ΣΥΜΒΟΥΛΙ", 'ΓΡΑΜΜΑΤΕ', "ΥΠΟΥΡΓ",
-							  "ΕΙΔΙΚΟΣ ΛΟΓΑΡΙΑΣΜΟΣ"]
+		self.unit_keywords = ["ΤΜΗΜΑ", "ΓΡΑΦΕΙΟ", "ΓΡΑΦΕΙΑ", "ΔΙΕΥΘΥΝΣ", "ΥΠΗΡΕΣΙ", "ΣΥΜΒΟΥΛΙ", 'ΓΡΑΜΜΑΤΕ', "ΥΠΟΥΡΓ",
+							  "ΕΙΔΙΚΟΣ ΛΟΓΑΡΙΑΣΜΟΣ", "MONAΔ"]
 		self.responsibility_keyword_trios = [("ΑΡΜΟΔ", "ΓΙΑ", ":"),  ("ΑΡΜΟΔΙΟΤ", "ΕΧΕΙ", ":"), ("ΑΡΜΟΔΙΟΤ", "ΕΞΗΣ", ":"), 
 										("ΑΡΜΟΔΙΟΤ", "ΕΙΝΑΙ", ":"), ("ΑΡΜΟΔΙΟΤ", "ΑΚΟΛΟΥΘ", ":"), ("ΑΡΜΟΔΙΟΤ", "ΜΕΤΑΞΥ", ":")]
 		self.responsibilities_decl_pair = [("ΑΡΜΟΔΙΟΤΗΤΕΣ", ":")]
@@ -176,7 +176,7 @@ class ParagraphRespAClassifier(object):
 	def has_respas_decl(self, paragraph):
 		paragraph = Helper.normalize_txt(paragraph)
 		return (self.responsibilities_decl_pair[0][0] in paragraph and\
-			   self.responsibilities_decl_pair[0][0] in paragraph)
+			   self.responsibilities_decl_pair[0][1] in paragraph)
 				    
 
 	def cosine_similarity(self, dict_1, dict_2):
