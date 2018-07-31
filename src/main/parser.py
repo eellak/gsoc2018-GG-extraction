@@ -323,7 +323,7 @@ class Parser(object):
 		txt = Helper.codify_list_points(txt)
 		paragraphs = []
 		if txt:
-			paragraphs = findall(r"\n?\s*[Ά-ΏΑ-Ωα-ωά-ώBullet\d+\(•\-\−]+[\.\)α-ω ]([\s\S]+?(?:[\.\:](?=\s*\n)|\,(?=\s*\n(?:[α-ω\d]+[\.\)]|Bullet))))", txt)
+			paragraphs = findall(r"\n?\s*([Ά-ΏΑ-Ωα-ωά-ώBullet\d+\(•\-\−]+[\.\)α-ω ][\s\S]+?(?:[\.\:](?=\s*\n)|\,(?=\s*\n(?:[α-ω\d]+[\.\)]|Bullet))))", txt)
 		return paragraphs
 
 	def get_issue_number(self, txt):
@@ -359,7 +359,7 @@ class Parser(object):
 
 	def get_units_followed_by_respas(self, paorg_pres_decree_txt):
 		paragraph_clf = main.classifier.ParagraphRespAClassifier()
-		respas_threshold = 12
+		respas_threshold = 15
 		units_followed_by_respas = OrderedDict()
 		articles = self.get_articles(paorg_pres_decree_txt)
 		
@@ -393,11 +393,81 @@ class Parser(object):
 
 		return dict(units_followed_by_respas)
 
-	# def units_and_respas_following_respas_decl(self, paorg_pres_decree_txt):
-	# 	paragraph_clf = main.classifier.ParagraphRespAClassifier()
+	def get_units_and_respas_following_respas_decl(self, paorg_pres_decree_txt):
+		paragraph_clf = main.classifier.ParagraphRespAClassifier()
+		articles = self.get_articles(paorg_pres_decree_txt)
+		units_and_respas_following_respas_decl = OrderedDict()
+		units_threshold = 20
+		respas_threshold = 15
 		
-	# 		paragraph_clf.has_respas_decl(prgrph)
-	# 		paragraph_clf.
+		def get_units_and_respas_following_respas_decl_dict(paragraphs):
+			units_and_respas_following_respas_decl = OrderedDict()
+			respas_decl_criteria = False
+			paragraphs = list(map(lambda prgrph: prgrph.replace('Bullet ', ''), paragraphs))
+			for i, prgrph in enumerate(paragraphs):
+				prgrph_has_respas_decl = paragraph_clf.has_respas_decl(prgrph[:200])
+				first_list_elem_has_unit = paragraph_clf.has_units(paragraphs[i+1]) if (i + 1) < len(paragraphs) else False
+				respas_decl_criteria = prgrph_has_respas_decl and first_list_elem_has_unit
+				
+				if respas_decl_criteria:
+					j = i + 1
+					units_counter = 0
+					while True:
+						break_criteria = (j >= len(paragraphs)) or (units_counter > units_threshold)
+						if break_criteria:
+							break
+						cur_prgrph = paragraphs[j]
+						respas = []
+						unit = ' '.join(Helper.get_words(cur_prgrph, n=10))
+						if paragraph_clf.has_units_and_respas(cur_prgrph) and\
+							paragraph_clf.has_units(cur_prgrph[:20]) and\
+							unit[0].isupper():
+							# Case 2
+							respas = [cur_prgrph]
+							j += 1
+						elif paragraph_clf.has_units(cur_prgrph[:20]) and\
+							 unit[0].isupper():
+							# Case 1
+							for k in range(j+1, j+1+respas_threshold):	
+								# Fetch respas
+								list_bounds_ok = k < len(paragraphs)
+								possible_respa = paragraphs[k] if list_bounds_ok else ''
+								if possible_respa:
+									legible_respa_criterion = (not paragraph_clf.has_units(possible_respa[:10]))
+															   
+								respa_criterion = list_bounds_ok and legible_respa_criterion
+								if respa_criterion:
+									respa = possible_respa
+									if k == j+1:
+										# Might contain first respa
+										respas.append(cur_prgrph)
+									respas.append(respa)
+									j = k + 1
+								else:
+									j = k
+									break
+						else:
+							# Ignore
+							j += 1	
+
+						if respas:
+							units_and_respas_following_respas_decl[unit] = respas
+							units_counter += 1
+
+			return units_and_respas_following_respas_decl
+	
+		if articles:
+			if isinstance(articles, dict): articles = list(articles.values())
+			for artcl in articles:
+				artcl_paragraphs = self.get_paragraphs(artcl)
+				units_and_respas_following_respas_decl.update(get_units_and_respas_following_respas_decl_dict(artcl_paragraphs))
+					
+		else:
+			paragraphs = self.get_paragraphs(paorg_pres_decree_txt)
+			units_and_respas_following_respas_decl = get_units_and_respas_following_respas_decl_dict(paragraphs)
+		
+		# print(len(units_and_respas_following_respas_decl))
+		return units_and_respas_following_respas_decl
 
 	def get_units_and_respas(self, paorg_pres_decree_txt):
 		paragraph_clf = main.classifier.ParagraphRespAClassifier()
