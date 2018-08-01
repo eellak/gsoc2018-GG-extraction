@@ -335,6 +335,13 @@ class Helper:
                }       
 
     @staticmethod
+    def make_dir(path):
+        try:
+            os.makedirs(path)
+        except OSError:
+            pass
+
+    @staticmethod
     def deintonate_txt(txt):
         intonations = Helper.get_greek_intonations()
         
