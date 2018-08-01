@@ -397,8 +397,8 @@ class Parser(object):
 		paragraph_clf = main.classifier.ParagraphRespAClassifier()
 		articles = self.get_articles(paorg_pres_decree_txt)
 		units_and_respas_following_respas_decl = OrderedDict()
-		units_threshold = 20
-		respas_threshold = 15
+		units_threshold = 100
+		respas_threshold = 40
 		
 		def get_units_and_respas_following_respas_decl_dict(paragraphs):
 			units_and_respas_following_respas_decl = OrderedDict()
