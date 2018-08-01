@@ -2304,5 +2304,39 @@ class ParserTest(Context):
 		self.helper.append_rows_into_csv(units_and_respas_follow_respas_decl_3, dir_path + "units_and_respas_follow_respas_decl_3.csv")
 		self.helper.append_rows_into_csv(units_and_respas_follow_respas_decl_4, dir_path + "units_and_respas_follow_respas_decl_4.csv")
 
+	def test_get_units_and_respas_following_respas_decl_2(self):
+		pdf_path = self.test_pdfs_dir + '/Presidential_Decree_Issues/for_training_data/RespAs/'
+		txt_path = self.test_txts_dir + '/for_training_data/RespAs/'
+		
+		txt_1 = self.get_txt('10', pdf_path=pdf_path, txt_path=txt_path)
+		txt_2 = self.get_txt('11', pdf_path=pdf_path, txt_path=txt_path)
+		txt_3 = self.get_txt('12', pdf_path=pdf_path, txt_path=txt_path)
+		txt_4 = self.get_txt('13', pdf_path=pdf_path, txt_path=txt_path)
+
+		units_and_respas_follow_respas_decl_1 = self.parser.get_units_and_respas_following_respas_decl(txt_1)
+		units_and_respas_follow_respas_decl_2 = self.parser.get_units_and_respas_following_respas_decl(txt_2)
+		units_and_respas_follow_respas_decl_3 = self.parser.get_units_and_respas_following_respas_decl(txt_3)
+		units_and_respas_follow_respas_decl_4 = self.parser.get_units_and_respas_following_respas_decl(txt_4)
+
+		# To csv for visualization
+		units_and_respas_follow_respas_decl_1 = list(map(list, units_and_respas_follow_respas_decl_1.items()))
+		units_and_respas_follow_respas_decl_2 = list(map(list, units_and_respas_follow_respas_decl_2.items()))
+		units_and_respas_follow_respas_decl_3 = list(map(list, units_and_respas_follow_respas_decl_3.items()))
+		units_and_respas_follow_respas_decl_4 = list(map(list, units_and_respas_follow_respas_decl_4.items()))
+
+		units_and_respas_follow_respas_decl_1 = [[units_and_respas_follow_respas_decl[0], ''.join(units_and_respas_follow_respas_decl[1])] for units_and_respas_follow_respas_decl in units_and_respas_follow_respas_decl_1]
+		units_and_respas_follow_respas_decl_2 = [[units_and_respas_follow_respas_decl[0], ''.join(units_and_respas_follow_respas_decl[1])] for units_and_respas_follow_respas_decl in units_and_respas_follow_respas_decl_2]
+		units_and_respas_follow_respas_decl_3 = [[units_and_respas_follow_respas_decl[0], ''.join(units_and_respas_follow_respas_decl[1])] for units_and_respas_follow_respas_decl in units_and_respas_follow_respas_decl_3]
+		units_and_respas_follow_respas_decl_4 = [[units_and_respas_follow_respas_decl[0], ''.join(units_and_respas_follow_respas_decl[1])] for units_and_respas_follow_respas_decl in units_and_respas_follow_respas_decl_4]
+		
+		
+		dir_path = "/home/chrisk/Desktop/Units_and_RespAs_following_RespA_decl/"
+		self.helper.make_dir(dir_path)
+		# self.helper.append_rows_into_csv(units_and_respas_follow_respas_decl_1, dir_path + "units_and_respas_follow_respas_decl_5.csv")
+		# self.helper.append_rows_into_csv(units_and_respas_follow_respas_decl_2, dir_path + "units_and_respas_follow_respas_decl_6.csv")
+		# self.helper.append_rows_into_csv(units_and_respas_follow_respas_decl_3, dir_path + "units_and_respas_follow_respas_decl_7.csv")
+		# self.helper.append_rows_into_csv(units_and_respas_follow_respas_decl_4, dir_path + "units_and_respas_follow_respas_decl_8.csv")
+
+
 if __name__ == '__main__':
 	unittest.main() 
