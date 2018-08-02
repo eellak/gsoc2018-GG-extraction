@@ -398,17 +398,16 @@ class Parser(object):
 		articles = self.get_articles(paorg_pres_decree_txt)
 		units_and_respas_following_respas_decl = OrderedDict()
 		units_threshold = 100
-		respas_threshold = 40
+		respas_threshold = 60
 		
 		def get_units_and_respas_following_respas_decl_dict(paragraphs):
 			units_and_respas_following_respas_decl = OrderedDict()
 			respas_decl_criteria = False
 			paragraphs = list(map(lambda prgrph: prgrph.replace('Bullet ', ''), paragraphs))
 			for i, prgrph in enumerate(paragraphs):
-				prgrph_has_respas_decl = paragraph_clf.has_respas_decl(prgrph[:200])
+				prgrph_has_respas_decl = paragraph_clf.has_respas_decl(prgrph[:300])
 				first_list_elem_has_unit = paragraph_clf.has_units(paragraphs[i+1]) if (i + 1) < len(paragraphs) else False
 				respas_decl_criteria = prgrph_has_respas_decl and first_list_elem_has_unit
-				
 				if respas_decl_criteria:
 					j = i + 1
 					units_counter = 0
@@ -417,13 +416,21 @@ class Parser(object):
 						if break_criteria:
 							break
 						cur_prgrph = paragraphs[j]
+						
 						respas = []
 						unit = ' '.join(Helper.get_words(cur_prgrph, n=10))
 						if paragraph_clf.has_units_and_respas(cur_prgrph) and\
 							paragraph_clf.has_units(cur_prgrph[:20]) and\
 							unit[0].isupper():
 							# Case 2
-							respas = [cur_prgrph]
+							addit_prgrph = paragraphs[j+1] if j+1 < len(paragraphs) else ''
+							additional_respa_section = ('Επίσης' in addit_prgrph[:10]
+														or 'Ειδικότερα' in addit_prgrph[:10]
+														or 'Συγκεκριμένα' in addit_prgrph[:10]
+														or 'Επιπλέον' in addit_prgrph[:10]
+														or 'Το Τμήμα αυτό' in addit_prgrph[:10]
+														or 'To Γραφείο αυτό' in addit_prgrph[:10]) if addit_prgrph else False
+							respas = [cur_prgrph + addit_prgrph] if additional_respa_section else [cur_prgrph]
 							j += 1
 						elif paragraph_clf.has_units(cur_prgrph[:20]) and\
 							 unit[0].isupper():
@@ -431,18 +438,20 @@ class Parser(object):
 							for k in range(j+1, j+1+respas_threshold):	
 								# Fetch respas
 								list_bounds_ok = k < len(paragraphs)
-								possible_respa = paragraphs[k] if list_bounds_ok else ''
-								if possible_respa:
-									legible_respa_criterion = (not paragraph_clf.has_units(possible_respa[:10]))
-															   
-								respa_criterion = list_bounds_ok and legible_respa_criterion
-								if respa_criterion:
-									respa = possible_respa
-									if k == j+1:
-										# Might contain first respa
-										respas.append(cur_prgrph)
-									respas.append(respa)
-									j = k + 1
+								if list_bounds_ok:
+									possible_respa = paragraphs[k]
+									legible_respa_criterion = (not paragraph_clf.has_units(possible_respa[:15]))
+									
+									if legible_respa_criterion:
+										respa = possible_respa
+										if k == j+1:
+											# Might contain first respa
+											respas.append(cur_prgrph)
+										respas.append(respa)
+										j = k + 1
+									else:
+										j = k
+										break
 								else:
 									j = k
 									break
