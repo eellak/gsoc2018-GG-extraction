@@ -67,11 +67,11 @@ class ParagraphRespAClassifier(object):
 			self.load_train_data('non_respa')
 			self.load_train_data('respa')
 
-		self.unit_keywords = ["ΤΜΗΜΑ", "ΓΡΑΦΕΙΟ", "ΓΡΑΦΕΙΑ", "ΑΥΤΟΤΕΛ", "ΔΙΕΥΘΥΝΣ", "ΥΠΗΡΕΣΙ", "ΣΥΜΒΟΥΛΙ", 'ΓΡΑΜΜΑΤΕ', "ΥΠΟΥΡΓ",
-							  "ΕΙΔΙΚΟΣ ΛΟΓΑΡΙΑΣΜΟΣ", "MONAΔ"]
+		self.unit_keywords = ["ΤΜΗΜΑ", "ΓΡΑΦΕΙΟ", "ΓΡΑΦΕΙΑ", "ΑΥΤΟΤΕΛ", "ΔΙΕΥΘΥΝΣ", "ΥΠΗΡΕΣΙΑ", 
+							  "ΣΥΜΒΟΥΛΙ", 'ΓΡΑΜΜΑΤΕ', "ΥΠΟΥΡΓ", "ΕΙΔΙΚΟΣ ΛΟΓΑΡΙΑΣΜΟΣ", "MONAΔ", "ΠΕΡΙΦΕΡΕΙ"]
 		self.responsibility_keyword_trios = [("ΑΡΜΟΔ", "ΓΙΑ", ":"),  ("ΑΡΜΟΔΙΟΤ", "ΕΧΕΙ", ":"), ("ΑΡΜΟΔΙΟΤ", "ΕΞΗΣ", ":"), 
 										("ΑΡΜΟΔΙΟΤ", "ΕΙΝΑΙ", ":"), ("ΑΡΜΟΔΙΟΤ", "ΑΚΟΛΟΥΘ", ":"), ("ΑΡΜΟΔΙΟΤ", "ΜΕΤΑΞΥ", ":")]
-		self.responsibilities_decl_pair = [("ΑΡΜΟΔΙΟΤΗΤΕΣ", ":")]
+		self.responsibilities_decl_pairs = [("ΑΡΜΟΔΙΟΤΗΤΕΣ", ":"), ("ΑΡΜΟΔΙΟΤΗΤΕΣ", ".")]
 														                         
 	def load_train_data(self, tag):
 		self.training_data[tag] = Helper.load_pickle_file(self.training_data_files[tag])
@@ -175,8 +175,11 @@ class ParagraphRespAClassifier(object):
 
 	def has_respas_decl(self, paragraph):
 		paragraph = Helper.normalize_txt(paragraph)
-		return (self.responsibilities_decl_pair[0][0] in paragraph and\
-			   self.responsibilities_decl_pair[0][1] in paragraph)
+		return (self.responsibilities_decl_pairs[0][0] in paragraph and\
+			   	self.responsibilities_decl_pairs[0][1] in paragraph) or\
+				(self.responsibilities_decl_pairs[1][0] in paragraph and\
+				 (self.responsibilities_decl_pairs[1][1] == paragraph[-1] or self.responsibilities_decl_pairs[1][1] == paragraph[-2] ))
+				   
 				    
 
 	def cosine_similarity(self, dict_1, dict_2):
