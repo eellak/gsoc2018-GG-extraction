@@ -127,6 +127,7 @@ class Helper:
         prelim_regex = []
         prelim_regex.append("\fΤεύχος [Α-Ω].*\nΕΦΗΜΕΡΙ.*\n[0-9]*\n")
         prelim_regex.append("\f[0-9]*\nΕΦΗΜΕΡΙ.*\nΤεύχος [Α-Ω].*\n")
+        prelim_regex.append("ΕΦΗΜΕΡΙ.*\n[0-9]*\n")
         prelim_regex.append(".ρθρο [0-9]*\\n")
         for regex in prelim_regex:
             pat = re.compile(regex)
