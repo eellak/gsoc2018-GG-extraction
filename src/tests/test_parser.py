@@ -2331,7 +2331,7 @@ class ParserTest(Context):
 	def test_get_units_and_respas_following_respas_decl_3(self):
 		pdf_path = self.test_pdfs_dir + '/Presidential_Decree_Issues/for_training_data/RespAs/'
 		txt_path = self.test_txts_dir + '/for_training_data/RespAs/'
-		txt_1 = self.get_txt('23', pdf_path=pdf_path, txt_path=txt_path)
+		txt_1 = self.get_txt('48', pdf_path=pdf_path, txt_path=txt_path)
 		units_and_respas_follow_respas_decl_1 = self.parser.get_units_and_respas_following_respas_decl(txt_1)
 
 if __name__ == '__main__':
