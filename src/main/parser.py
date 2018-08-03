@@ -45,7 +45,7 @@ class Parser(object):
 											 "η παρούσα ισχύει", "Η παρούσα απόφαση", "Η ισχύς του παρόντος", 
 											 "Ο παρών Κανονισμός", "Η ισχύς της παρούσας", "Η ισχύς των διατάξεων"],
 							 'finish_group': ["την δημοσίευση", "τη δημοσίευση", "τη δημοσίευσή", "να δημοσιευθεί", "να δημοσιευτεί", "να δημοσιευθούν",  
-							 				 "F\n", "της δημοσιεύσεώς", "δημοσίευση", "θα κυρωθεί"]}
+											 "F\n", "της δημοσιεύσεώς", "δημοσίευση", "θα κυρωθεί"]}
 		self.respa_keys = {'assignment_verbs':["ναθέτουμε", "νατίθεται", "νατίθενται", "νάθεση", "ρίζουμε", "παλλάσσουμε", "εταβιβάζουμε"], 
 						   'assignment_types':["αθήκοντ", "ρμοδιότητ", "αθηκόντ", "ρμοδιοτήτ"]}
 
@@ -221,7 +221,7 @@ class Parser(object):
 							.format(artcl=self.article_keys[0]), txt, flags=DOTALL)
 			last_article = findall(r"({artcl}\s*\d+\s*\n(?:{last_article}).+?\.\s*\n)"\
 							.format(artcl=self.article_keys[0], 
-								    last_article=Helper.get_special_regex_disjunction(self.last_article_keys)), 
+									last_article=Helper.get_special_regex_disjunction(self.last_article_keys)), 
 							txt, flags=DOTALL)
 			
 			if last_article:
@@ -336,14 +336,14 @@ class Parser(object):
 
 	def get_issue_type(self, txt):
 		issue_types = findall(r"\s+((?:{issue_type_keys})[\s\S]+?)\n".\
-						 		format(issue_type_keys=Helper.get_special_regex_disjunction(self.issue_type_keys)), txt)
+								format(issue_type_keys=Helper.get_special_regex_disjunction(self.issue_type_keys)), txt)
 		return issue_types[0] if issue_types else issue_types
 
 	def get_publication_date(self, txt):
 		dates = findall(r"{day}[ ]+(?:{months})[ ]+{year}".\
 						 format(day="\d{1,2}", 
-						 		months=Helper.get_special_regex_disjunction(list(Helper.get_greek_months().keys())),
-						 		year="\d{4}"), 
+								months=Helper.get_special_regex_disjunction(list(Helper.get_greek_months().keys())),
+								year="\d{4}"), 
 						 txt)
 		# First date occurence is the publication date
 		return dates[0] if dates else dates
@@ -400,14 +400,14 @@ class Parser(object):
 		units_threshold = 100
 		respas_threshold = 60
 		
-		def get_units_and_respas_following_respas_decl_dict(paragraphs):
-			units_and_respas_following_respas_decl = OrderedDict()
+		def set_units_and_respas_following_respas_decl_dict(paragraphs):
 			respas_decl_criteria = False
 			paragraphs = list(map(lambda prgrph: prgrph.replace('Bullet ', ''), paragraphs))
 			for i, prgrph in enumerate(paragraphs):
 				prgrph_has_respas_decl = paragraph_clf.has_respas_decl(prgrph[:300])
 				first_list_elem_has_unit = paragraph_clf.has_units(paragraphs[i+1]) if (i + 1) < len(paragraphs) else False
 				respas_decl_criteria = prgrph_has_respas_decl and first_list_elem_has_unit
+				
 				if respas_decl_criteria:
 					j = i + 1
 					units_counter = 0
@@ -416,23 +416,24 @@ class Parser(object):
 						if break_criteria:
 							break
 						cur_prgrph = paragraphs[j]
-						
 						respas = []
 						unit = ' '.join(Helper.get_words(cur_prgrph, n=10))
+
 						if paragraph_clf.has_units_and_respas(cur_prgrph) and\
 							paragraph_clf.has_units(cur_prgrph[:20]) and\
 							unit[0].isupper():
 							# Case 2
+							
 							addit_prgrph = paragraphs[j+1] if j+1 < len(paragraphs) else ''
 							additional_respa_section = ('Επίσης' in addit_prgrph[:10]
 														or 'Ειδικότερα' in addit_prgrph[:10]
 														or 'Συγκεκριμένα' in addit_prgrph[:10]
 														or 'Επιπλέον' in addit_prgrph[:10]
-														or 'Το Τμήμα αυτό' in addit_prgrph[:10]
-														or 'To Γραφείο αυτό' in addit_prgrph[:10]) if addit_prgrph else False
+														or 'μήμα αυτό' in addit_prgrph[:10]
+														or 'ραφείο αυτό' in addit_prgrph[:10]) if addit_prgrph else False
 							respas = [cur_prgrph + addit_prgrph] if additional_respa_section else [cur_prgrph]
 							j += 1
-						elif paragraph_clf.has_units(cur_prgrph[:20]) and\
+						elif paragraph_clf.has_units(cur_prgrph.replace('Αρμοδιότητες ', '')[:20]) and\
 							 unit[0].isupper():
 							# Case 1
 							for k in range(j+1, j+1+respas_threshold):	
@@ -441,7 +442,6 @@ class Parser(object):
 								if list_bounds_ok:
 									possible_respa = paragraphs[k]
 									legible_respa_criterion = (not paragraph_clf.has_units(possible_respa[:15]))
-									
 									if legible_respa_criterion:
 										respa = possible_respa
 										if k == j+1:
@@ -460,22 +460,26 @@ class Parser(object):
 							j += 1	
 
 						if respas:
-							units_and_respas_following_respas_decl[unit] = respas
-							units_counter += 1
+							
+							if unit in units_and_respas_following_respas_decl and\
+							  any([(respa not in units_and_respas_following_respas_decl[unit]) for respa in respas]):
+								units_and_respas_following_respas_decl[unit] += respas
+							else:
+								units_and_respas_following_respas_decl[unit] = respas
 
-			return units_and_respas_following_respas_decl
+							units_counter += 1
+			return
 	
 		if articles:
 			if isinstance(articles, dict): articles = list(articles.values())
 			for artcl in articles:
 				artcl_paragraphs = self.get_paragraphs(artcl)
-				units_and_respas_following_respas_decl.update(get_units_and_respas_following_respas_decl_dict(artcl_paragraphs))
+				set_units_and_respas_following_respas_decl_dict(artcl_paragraphs)
 					
 		else:
 			paragraphs = self.get_paragraphs(paorg_pres_decree_txt)
-			units_and_respas_following_respas_decl = get_units_and_respas_following_respas_decl_dict(paragraphs)
+			set_units_and_respas_following_respas_decl_dict(paragraphs)
 		
-		# print(len(units_and_respas_following_respas_decl))
 		return units_and_respas_following_respas_decl
 
 	def get_units_and_respas(self, paorg_pres_decree_txt):
@@ -488,19 +492,19 @@ class Parser(object):
 		def get_unit_and_respa_paragraphs(paragraphs, additional_respas_threshold):
 			unit_and_respa_sections = []
 			for i, prgrph in enumerate(paragraphs):
-			    unit_and_respa_paragraph_criteria = (paragraph_clf.has_units_and_respas(prgrph) or
-			      								  (paragraph_clf.has_units_followed_by_respas(prgrph) and len(prgrph)>150))
-			    if unit_and_respa_paragraph_criteria:
-			    	additional_respas_following_criterion = (prgrph[-1] == ':')
-			    	if additional_respas_following_criterion:
-			    		print('IN HERE!')
-				    	# Append following paragraphs 
-				    	# containing additional respas to prgrph
-				    	for j in range(i+1, i+1+additional_respas_threshold):
-				    		if j < len(paragraphs):
-				    			prgrph += paragraphs[j]
-			    	# Append paragraph containing unit with its respas
-			    	unit_and_respa_sections.append(prgrph)
+				unit_and_respa_paragraph_criteria = (paragraph_clf.has_units_and_respas(prgrph) or
+												  (paragraph_clf.has_units_followed_by_respas(prgrph) and len(prgrph)>150))
+				if unit_and_respa_paragraph_criteria:
+					additional_respas_following_criterion = (prgrph[-1] == ':')
+					if additional_respas_following_criterion:
+						print('IN HERE!')
+						# Append following paragraphs 
+						# containing additional respas to prgrph
+						for j in range(i+1, i+1+additional_respas_threshold):
+							if j < len(paragraphs):
+								prgrph += paragraphs[j]
+					# Append paragraph containing unit with its respas
+					unit_and_respa_sections.append(prgrph)
 			return unit_and_respa_sections
 
 		def disentangle_units_from_respas(units_and_respa_sections):
