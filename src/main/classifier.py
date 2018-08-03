@@ -67,11 +67,11 @@ class ParagraphRespAClassifier(object):
 			self.load_train_data('non_respa')
 			self.load_train_data('respa')
 
-		self.unit_keywords = ["ΤΜΗΜΑ", "ΓΡΑΦΕΙΟ", "ΓΡΑΦΕΙΑ", "ΑΥΤΟΤΕΛ", "ΔΙΕΥΘΥΝΣ", "ΥΠΗΡΕΣΙΑ", 
-							  "ΣΥΜΒΟΥΛΙ", 'ΓΡΑΜΜΑΤΕ', "ΥΠΟΥΡΓ", "ΕΙΔΙΚΟΣ ΛΟΓΑΡΙΑΣΜΟΣ", "MONAΔ", "ΠΕΡΙΦΕΡΕΙ"]
-		self.responsibility_keyword_trios = [("ΑΡΜΟΔ", "ΓΙΑ", ":"),  ("ΑΡΜΟΔΙΟΤ", "ΕΧΕΙ", ":"), ("ΑΡΜΟΔΙΟΤ", "ΕΞΗΣ", ":"), 
-										("ΑΡΜΟΔΙΟΤ", "ΕΙΝΑΙ", ":"), ("ΑΡΜΟΔΙΟΤ", "ΑΚΟΛΟΥΘ", ":"), ("ΑΡΜΟΔΙΟΤ", "ΜΕΤΑΞΥ", ":")]
-		self.responsibilities_decl_pairs = [("ΑΡΜΟΔΙΟΤΗΤΕΣ", ":"), ("ΑΡΜΟΔΙΟΤΗΤΕΣ", ".")]
+		self.unit_keywords = ["ΤΜΗΜΑ", "ΓΡΑΦΕΙΟ ", "ΓΡΑΦΕΙΑ ", "ΑΥΤΟΤΕΛ", "ΔΙΕΥΘΥΝΣ", "ΥΠΗΡΕΣΙΑ ", 
+							  "ΣΥΜΒΟΥΛΙ", 'ΓΡΑΜΜΑΤΕIA ', "ΥΠΟΥΡΓ", "ΕΙΔΙΚΟΣ ΛΟΓΑΡΙΑΣΜΟΣ", "MONAΔ", "ΠΕΡΙΦΕΡΕΙ"]
+		self.responsibility_keyword_trios = [("ΑΡΜΟΔ", "ΓΙΑ", ":"), ("ΜΕΡΙΜΝΑ", "ΓΙΑ", ":"), ("ΩΣ", "ΣΚΟΠΟ", ":"), ("ΑΡΜΟΔΙΟΤ", "ΕΧΕΙ", ":"), ("ΑΡΜΟΔΙΟΤ", "ΕΞΗΣ", ":"), ("ΑΡΜΟΔΙΟΤ", "ΠΟΥ", ":"),
+										("ΑΡΜΟΔΙΟΤ", "ΕΙΝΑΙ", ":"), ("ΑΡΜΟΔΙΟΤ", "ΤΟΥ", ":"), ("ΑΡΜΟΔΙΟΤ", "ΑΚΟΛΟΥΘ", ":"), ("ΑΡΜΟΔΙΟΤ", "ΜΕΤΑΞΥ", ":"), ("ΑΡΜΟΔΙΟΤ", "ΕΠΙ", ":"), ("ΑΡΜΟΔΙΟΤ", "ΣΕ", ":"), ("ΑΡΜΟΔΙΟΤ", "ΠΕΡΙΛΑΜΒ", ":")]
+		self.responsibilities_decl_pairs = [("ΑΡΜΟΔΙΟΤΗΤ", ":"), ("ΑΡΜΟΔΙΟΤΗΤ", "."), ('ΑΡΜΟΔΙΟΤΗΤΕΣ', 'ΥΠΗΡΕΣΙΩΝ')]
 														                         
 	def load_train_data(self, tag):
 		self.training_data[tag] = Helper.load_pickle_file(self.training_data_files[tag])
@@ -178,7 +178,9 @@ class ParagraphRespAClassifier(object):
 		return (self.responsibilities_decl_pairs[0][0] in paragraph and\
 			   	self.responsibilities_decl_pairs[0][1] in paragraph) or\
 				(self.responsibilities_decl_pairs[1][0] in paragraph and\
-				 (self.responsibilities_decl_pairs[1][1] == paragraph[-1] or self.responsibilities_decl_pairs[1][1] == paragraph[-2] ))
+				 (self.responsibilities_decl_pairs[1][1] == paragraph[-1] or self.responsibilities_decl_pairs[1][1] == paragraph[-2])) or\
+				(self.responsibilities_decl_pairs[2][0] in paragraph and\
+					self.responsibilities_decl_pairs[2][1] in paragraph)
 				   
 				    
 
