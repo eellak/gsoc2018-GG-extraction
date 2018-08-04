@@ -136,15 +136,19 @@ class Helper:
     
     @staticmethod
     def codify_list_points(txt):
-        list_point_regex = []
-        list_point_regex.append(r"\n[ ]*\d+\. ")
-        list_point_regex.append(r"\n[ ]*\d+\) ")
-        list_point_regex.append(r"\n[ ]*[α-ω]+\. ")
-        list_point_regex.append(r"\n[ ]*[α-ω]+\) ")
-        for regex in list_point_regex:
-            pat = re.compile(regex)
-            txt = pat.sub("\nBullet ", txt)
-        return txt
+        txt = re.sub(r"^[ ]*[α-ωΑ-Ω0-9]+[\.\)] ", "Bullet ", txt)
+        return re.sub(r"\n[ ]*[α-ωΑ-Ω0-9]+[\.\)] ", "Bullet ", txt)
+
+    @staticmethod
+    def remove_list_points(txt):
+        txt = re.sub(r"^[ ]*[α-ωΑ-Ω0-9]+[\.\)] ", "", txt)
+        return re.sub(r"\n[ ]*[α-ωΑ-Ω0-9]+[\.\)] ", "", txt)
+
+    @staticmethod
+    def contains_list_points(txt):
+        result = True if re.search(r"^[ ]*[α-ωΑ-Ω0-9]+[\.\)] ", txt) else False
+        result = True if re.search(r"\n[ ]*[α-ωΑ-Ω0-9]+[\.\)] ", txt) else False
+        return result
 
     @staticmethod
     def clean_up_for_paorgs_getter(txt):
