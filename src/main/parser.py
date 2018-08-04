@@ -320,7 +320,7 @@ class Parser(object):
 	def get_paragraphs(self, txt):
 		txt = Helper.clean_up_txt(txt)
 		txt = Helper.remove_txt_prelims(txt)
-		txt = Helper.codify_list_points(txt)
+		# txt = Helper.codify_list_points(txt)
 		paragraphs = []
 		if txt:
 			paragraphs = findall(r"\n?\s*([Ά-ΏΑ-Ωα-ωά-ώBullet\d+\(•\-\−]+[\.\)α-ω ][\s\S]+?(?:[\.\:](?=\s*\n)|\,(?=\s*\n(?:[α-ω\d]+[\.\)]|Bullet))))", txt)
@@ -402,28 +402,28 @@ class Parser(object):
 		
 		def set_units_and_respas_following_respas_decl_dict(paragraphs):
 			respas_decl_criteria = False
-			paragraphs = list(map(lambda prgrph: prgrph.replace('Bullet ', ''), paragraphs))
+			# paragraphs = list(map(lambda prgrph: prgrph.replace('Bullet ', ''), paragraphs))
 			for i, prgrph in enumerate(paragraphs):
 				prgrph_has_respas_decl = paragraph_clf.has_respas_decl(prgrph[:300])
 				first_list_elem_has_unit = paragraph_clf.has_units(paragraphs[i+1]) if (i + 1) < len(paragraphs) else False
 				respas_decl_criteria = prgrph_has_respas_decl and first_list_elem_has_unit
-				
 				if respas_decl_criteria:
 					j = i + 1
 					units_counter = 0
+					
 					while True:
 						break_criteria = (j >= len(paragraphs)) or (units_counter > units_threshold)
 						if break_criteria:
 							break
 						cur_prgrph = paragraphs[j]
 						respas = []
-						unit = ' '.join(Helper.get_words(cur_prgrph, n=10))
-
-						if paragraph_clf.has_units_and_respas(cur_prgrph) and\
-							paragraph_clf.has_units(cur_prgrph[:20]) and\
+						unit = ' '.join(Helper.get_words(Helper.remove_list_points(cur_prgrph), n=10))
+						
+						if ((paragraph_clf.has_units_and_respas(cur_prgrph) and\
+							paragraph_clf.has_units(cur_prgrph[:20])) or ('Αρμοδιότητες' in cur_prgrph and '.' not in cur_prgrph[:70])) and\
+							not Helper.contains_list_points(cur_prgrph[10:]) and\
 							unit[0].isupper():
 							# Case 2
-							
 							addit_prgrph = paragraphs[j+1] if j+1 < len(paragraphs) else ''
 							additional_respa_section = ('Επίσης' in addit_prgrph[:10]
 														or 'Ειδικότερα' in addit_prgrph[:10]
@@ -441,13 +441,17 @@ class Parser(object):
 								list_bounds_ok = k < len(paragraphs)
 								if list_bounds_ok:
 									possible_respa = paragraphs[k]
-									legible_respa_criterion = (not paragraph_clf.has_units(possible_respa[:15]))
+									legible_respa_criterion = (not paragraph_clf.has_units(possible_respa.replace('Αρμοδιότητες ', '')[:20]))
+									has_units_followed_by_respas = paragraph_clf.has_units_followed_by_respas(possible_respa)
+			
 									if legible_respa_criterion:
 										respa = possible_respa
 										if k == j+1:
 											# Might contain first respa
 											respas.append(cur_prgrph)
 										respas.append(respa)
+										j = k + 1
+									elif has_units_followed_by_respas and k == j + 1:
 										j = k + 1
 									else:
 										j = k
