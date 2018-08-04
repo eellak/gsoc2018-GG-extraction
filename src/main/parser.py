@@ -442,7 +442,7 @@ class Parser(object):
 						if ((paragraph_clf.has_units_and_respas(cur_prgrph) and\
 							paragraph_clf.has_units(cur_prgrph[:20])) or ('Αρμοδιότητες' in cur_prgrph and '.' not in cur_prgrph[:70])) and\
 							not Helper.contains_list_points(cur_prgrph[10:]) and\
-							unit[0].isupper():
+							(unit[0].isupper() or unit[0].isdigit()):
 							# Case 2
 							addit_prgrph = paragraphs[j+1] if j+1 < len(paragraphs) else ''
 							additional_respa_section = ('Επίσης' in addit_prgrph[:10]
