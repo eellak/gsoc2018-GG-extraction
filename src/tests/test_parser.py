@@ -2166,26 +2166,39 @@ class ParserTest(Context):
 		txt_1 = self.get_txt('1_Pres_Decree', pdf_path=pdf_path, txt_path=txt_path)
 		txt_2 = self.get_txt('2_Pres_Decree', pdf_path=pdf_path, txt_path=txt_path)
 		txt_3 = self.get_txt('3_Pres_Decree', pdf_path=pdf_path, txt_path=txt_path)
-		txt_4 = self.get_txt('6_Pres_Decree', pdf_path=pdf_path, txt_path=txt_path)
+		txt_4 = self.get_txt('4_Pres_Decree', pdf_path=pdf_path, txt_path=txt_path)
+		txt_5 = self.get_txt('5_Pres_Decree', pdf_path=pdf_path, txt_path=txt_path)
+		txt_6 = self.get_txt('6_Pres_Decree', pdf_path=pdf_path, txt_path=txt_path)
+		txt_7 = self.get_txt('7_Pres_Decree', pdf_path=pdf_path, txt_path=txt_path)
+		txt_8 = self.get_txt('8_Pres_Decree', pdf_path=pdf_path, txt_path=txt_path)
 		
 		units_followed_by_respas_1 = self.parser.get_units_followed_by_respas(txt_1)
 		units_followed_by_respas_2 = self.parser.get_units_followed_by_respas(txt_2)
 		units_followed_by_respas_3 = self.parser.get_units_followed_by_respas(txt_3)
 		units_followed_by_respas_4 = self.parser.get_units_followed_by_respas(txt_4)
-		
-		# print(units_followed_by_respas_1)
-		# print(units_followed_by_respas_2)
+		units_followed_by_respas_5 = self.parser.get_units_followed_by_respas(txt_5)
+		units_followed_by_respas_6 = self.parser.get_units_followed_by_respas(txt_6)
+		units_followed_by_respas_7 = self.parser.get_units_followed_by_respas(txt_7)
+		units_followed_by_respas_8 = self.parser.get_units_followed_by_respas(txt_8)
 
 		# To csv for visualization
 		# units_followed_by_respas_1 = list(map(list, units_followed_by_respas_1.items()))
 		# units_followed_by_respas_2 = list(map(list, units_followed_by_respas_2.items()))
 		# units_followed_by_respas_3 = list(map(list, units_followed_by_respas_3.items()))
 		# units_followed_by_respas_4 = list(map(list, units_followed_by_respas_4.items()))
+		# units_followed_by_respas_5 = list(map(list, units_followed_by_respas_5.items()))
+		# units_followed_by_respas_6 = list(map(list, units_followed_by_respas_6.items()))
+		# units_followed_by_respas_7 = list(map(list, units_followed_by_respas_7.items()))
+		# units_followed_by_respas_8 = list(map(list, units_followed_by_respas_8.items()))
 		
 		# units_followed_by_respas_1 = [[unit_and_respas[0], ''.join(unit_and_respas[1])] for unit_and_respas in units_followed_by_respas_1]
 		# units_followed_by_respas_2 = [[unit_and_respas[0], ''.join(unit_and_respas[1])] for unit_and_respas in units_followed_by_respas_2]
 		# units_followed_by_respas_3 = [[unit_and_respas[0], ''.join(unit_and_respas[1])] for unit_and_respas in units_followed_by_respas_3]
 		# units_followed_by_respas_4 = [[unit_and_respas[0], ''.join(unit_and_respas[1])] for unit_and_respas in units_followed_by_respas_4]
+		# units_followed_by_respas_5 = [[unit_and_respas[0], ''.join(unit_and_respas[1])] for unit_and_respas in units_followed_by_respas_5]
+		# units_followed_by_respas_6 = [[unit_and_respas[0], ''.join(unit_and_respas[1])] for unit_and_respas in units_followed_by_respas_6]
+		# units_followed_by_respas_7 = [[unit_and_respas[0], ''.join(unit_and_respas[1])] for unit_and_respas in units_followed_by_respas_7]
+		# units_followed_by_respas_8 = [[unit_and_respas[0], ''.join(unit_and_respas[1])] for unit_and_respas in units_followed_by_respas_8]
 		
 		# dir_path = "/home/chrisk/Desktop/Units_followed_by_RespAs/"
 		# self.helper.make_dir(dir_path)
@@ -2193,6 +2206,10 @@ class ParserTest(Context):
 		# self.helper.append_rows_into_csv(units_followed_by_respas_2, dir_path + "units_followed_by_respas_2.csv")
 		# self.helper.append_rows_into_csv(units_followed_by_respas_3, dir_path + "units_followed_by_respas_3.csv")
 		# self.helper.append_rows_into_csv(units_followed_by_respas_4, dir_path + "units_followed_by_respas_4.csv")
+		# self.helper.append_rows_into_csv(units_followed_by_respas_5, dir_path + "units_followed_by_respas_5.csv")
+		# self.helper.append_rows_into_csv(units_followed_by_respas_6, dir_path + "units_followed_by_respas_6.csv")
+		# self.helper.append_rows_into_csv(units_followed_by_respas_7, dir_path + "units_followed_by_respas_7.csv")
+		# self.helper.append_rows_into_csv(units_followed_by_respas_8, dir_path + "units_followed_by_respas_8.csv")
 
 	def test_get_units_followed_by_respas_2(self):
 		pdf_path = self.test_pdfs_dir + '/Presidential_Decree_Issues/for_training_data/RespAs/'
