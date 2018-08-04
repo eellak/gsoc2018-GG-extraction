@@ -2177,22 +2177,22 @@ class ParserTest(Context):
 		# print(units_followed_by_respas_2)
 
 		# To csv for visualization
-		units_followed_by_respas_1 = list(map(list, units_followed_by_respas_1.items()))
-		units_followed_by_respas_2 = list(map(list, units_followed_by_respas_2.items()))
-		units_followed_by_respas_3 = list(map(list, units_followed_by_respas_3.items()))
-		units_followed_by_respas_4 = list(map(list, units_followed_by_respas_4.items()))
+		# units_followed_by_respas_1 = list(map(list, units_followed_by_respas_1.items()))
+		# units_followed_by_respas_2 = list(map(list, units_followed_by_respas_2.items()))
+		# units_followed_by_respas_3 = list(map(list, units_followed_by_respas_3.items()))
+		# units_followed_by_respas_4 = list(map(list, units_followed_by_respas_4.items()))
 		
-		units_followed_by_respas_1 = [[unit_and_respas[0], ''.join(unit_and_respas[1])] for unit_and_respas in units_followed_by_respas_1]
-		units_followed_by_respas_2 = [[unit_and_respas[0], ''.join(unit_and_respas[1])] for unit_and_respas in units_followed_by_respas_2]
-		units_followed_by_respas_3 = [[unit_and_respas[0], ''.join(unit_and_respas[1])] for unit_and_respas in units_followed_by_respas_3]
-		units_followed_by_respas_4 = [[unit_and_respas[0], ''.join(unit_and_respas[1])] for unit_and_respas in units_followed_by_respas_4]
+		# units_followed_by_respas_1 = [[unit_and_respas[0], ''.join(unit_and_respas[1])] for unit_and_respas in units_followed_by_respas_1]
+		# units_followed_by_respas_2 = [[unit_and_respas[0], ''.join(unit_and_respas[1])] for unit_and_respas in units_followed_by_respas_2]
+		# units_followed_by_respas_3 = [[unit_and_respas[0], ''.join(unit_and_respas[1])] for unit_and_respas in units_followed_by_respas_3]
+		# units_followed_by_respas_4 = [[unit_and_respas[0], ''.join(unit_and_respas[1])] for unit_and_respas in units_followed_by_respas_4]
 		
-		dir_path = "/home/chrisk/Desktop/Units_followed_by_RespAs/"
-		self.helper.make_dir(dir_path)
-		self.helper.append_rows_into_csv(units_followed_by_respas_1, dir_path + "units_followed_by_respas_1.csv")
-		self.helper.append_rows_into_csv(units_followed_by_respas_2, dir_path + "units_followed_by_respas_2.csv")
-		self.helper.append_rows_into_csv(units_followed_by_respas_3, dir_path + "units_followed_by_respas_3.csv")
-		self.helper.append_rows_into_csv(units_followed_by_respas_4, dir_path + "units_followed_by_respas_4.csv")
+		# dir_path = "/home/chrisk/Desktop/Units_followed_by_RespAs/"
+		# self.helper.make_dir(dir_path)
+		# self.helper.append_rows_into_csv(units_followed_by_respas_1, dir_path + "units_followed_by_respas_1.csv")
+		# self.helper.append_rows_into_csv(units_followed_by_respas_2, dir_path + "units_followed_by_respas_2.csv")
+		# self.helper.append_rows_into_csv(units_followed_by_respas_3, dir_path + "units_followed_by_respas_3.csv")
+		# self.helper.append_rows_into_csv(units_followed_by_respas_4, dir_path + "units_followed_by_respas_4.csv")
 
 	def test_get_units_followed_by_respas_2(self):
 		pdf_path = self.test_pdfs_dir + '/Presidential_Decree_Issues/for_training_data/RespAs/'
@@ -2213,22 +2213,22 @@ class ParserTest(Context):
 		# print(units_followed_by_respas_2)
 
 		# To csv for visualization
-		units_followed_by_respas_1 = list(map(list, units_followed_by_respas_1.items()))
-		units_followed_by_respas_2 = list(map(list, units_followed_by_respas_2.items()))
-		units_followed_by_respas_3 = list(map(list, units_followed_by_respas_3.items()))
-		units_followed_by_respas_4 = list(map(list, units_followed_by_respas_4.items()))
+		# units_followed_by_respas_1 = list(map(list, units_followed_by_respas_1.items()))
+		# units_followed_by_respas_2 = list(map(list, units_followed_by_respas_2.items()))
+		# units_followed_by_respas_3 = list(map(list, units_followed_by_respas_3.items()))
+		# units_followed_by_respas_4 = list(map(list, units_followed_by_respas_4.items()))
 		
-		units_followed_by_respas_1 = [[unit_and_respas[0], ''.join(unit_and_respas[1])] for unit_and_respas in units_followed_by_respas_1]
-		units_followed_by_respas_2 = [[unit_and_respas[0], ''.join(unit_and_respas[1])] for unit_and_respas in units_followed_by_respas_2]
-		units_followed_by_respas_3 = [[unit_and_respas[0], ''.join(unit_and_respas[1])] for unit_and_respas in units_followed_by_respas_3]
-		units_followed_by_respas_4 = [[unit_and_respas[0], ''.join(unit_and_respas[1])] for unit_and_respas in units_followed_by_respas_4]
+		# units_followed_by_respas_1 = [[unit_and_respas[0], ''.join(unit_and_respas[1])] for unit_and_respas in units_followed_by_respas_1]
+		# units_followed_by_respas_2 = [[unit_and_respas[0], ''.join(unit_and_respas[1])] for unit_and_respas in units_followed_by_respas_2]
+		# units_followed_by_respas_3 = [[unit_and_respas[0], ''.join(unit_and_respas[1])] for unit_and_respas in units_followed_by_respas_3]
+		# units_followed_by_respas_4 = [[unit_and_respas[0], ''.join(unit_and_respas[1])] for unit_and_respas in units_followed_by_respas_4]
 		
-		dir_path = "/home/chrisk/Desktop/Units_followed_by_RespAs/"
-		self.helper.make_dir(dir_path)
-		self.helper.append_rows_into_csv(units_followed_by_respas_1, dir_path + "units_followed_by_respas_3.csv")
-		self.helper.append_rows_into_csv(units_followed_by_respas_2, dir_path + "units_followed_by_respas_4.csv")
-		self.helper.append_rows_into_csv(units_followed_by_respas_3, dir_path + "units_followed_by_respas_5.csv")
-		self.helper.append_rows_into_csv(units_followed_by_respas_4, dir_path + "units_followed_by_respas_6.csv")
+		# dir_path = "/home/chrisk/Desktop/Units_followed_by_RespAs/"
+		# self.helper.make_dir(dir_path)
+		# self.helper.append_rows_into_csv(units_followed_by_respas_1, dir_path + "units_followed_by_respas_3.csv")
+		# self.helper.append_rows_into_csv(units_followed_by_respas_2, dir_path + "units_followed_by_respas_4.csv")
+		# self.helper.append_rows_into_csv(units_followed_by_respas_3, dir_path + "units_followed_by_respas_5.csv")
+		# self.helper.append_rows_into_csv(units_followed_by_respas_4, dir_path + "units_followed_by_respas_6.csv")
 
 	def test_get_units_and_respas_1(self): 
 		pdf_path = self.test_pdfs_dir + '/Presidential_Decree_Issues/'
@@ -2250,17 +2250,17 @@ class ParserTest(Context):
 		# print(units_and_respas_4)
 
 		# To csv for visualization
-		units_and_respas_1 = list(map(list, units_and_respas_1.items()))
-		units_and_respas_2 = list(map(list, units_and_respas_2.items()))
-		units_and_respas_3 = list(map(list, units_and_respas_3.items()))
-		units_and_respas_4 = list(map(list, units_and_respas_4.items()))
+		# units_and_respas_1 = list(map(list, units_and_respas_1.items()))
+		# units_and_respas_2 = list(map(list, units_and_respas_2.items()))
+		# units_and_respas_3 = list(map(list, units_and_respas_3.items()))
+		# units_and_respas_4 = list(map(list, units_and_respas_4.items()))
 		
-		dir_path = "/home/chrisk/Desktop/Units_and_RespAs/"
-		self.helper.make_dir(dir_path)
-		self.helper.append_rows_into_csv(units_and_respas_1, dir_path + "units_and_respas_1.csv")
-		self.helper.append_rows_into_csv(units_and_respas_2, dir_path + "units_and_respas_2.csv")
-		self.helper.append_rows_into_csv(units_and_respas_3, dir_path + "units_and_respas_3.csv")
-		self.helper.append_rows_into_csv(units_and_respas_4, dir_path + "units_and_respas_4.csv")
+		# dir_path = "/home/chrisk/Desktop/Units_and_RespAs/"
+		# self.helper.make_dir(dir_path)
+		# self.helper.append_rows_into_csv(units_and_respas_1, dir_path + "units_and_respas_1.csv")
+		# self.helper.append_rows_into_csv(units_and_respas_2, dir_path + "units_and_respas_2.csv")
+		# self.helper.append_rows_into_csv(units_and_respas_3, dir_path + "units_and_respas_3.csv")
+		# self.helper.append_rows_into_csv(units_and_respas_4, dir_path + "units_and_respas_4.csv")
 
 	def test_get_units_and_respas_2(self):
 		pdf_path = self.test_pdfs_dir + '/Presidential_Decree_Issues/for_training_data/RespAs/'
@@ -2286,23 +2286,23 @@ class ParserTest(Context):
 		units_and_respas_follow_respas_decl_4 = self.parser.get_units_and_respas_following_respas_decl(txt_4)
 
 		# To csv for visualization
-		units_and_respas_follow_respas_decl_1 = list(map(list, units_and_respas_follow_respas_decl_1.items()))
-		units_and_respas_follow_respas_decl_2 = list(map(list, units_and_respas_follow_respas_decl_2.items()))
-		units_and_respas_follow_respas_decl_3 = list(map(list, units_and_respas_follow_respas_decl_3.items()))
-		units_and_respas_follow_respas_decl_4 = list(map(list, units_and_respas_follow_respas_decl_4.items()))
+		# units_and_respas_follow_respas_decl_1 = list(map(list, units_and_respas_follow_respas_decl_1.items()))
+		# units_and_respas_follow_respas_decl_2 = list(map(list, units_and_respas_follow_respas_decl_2.items()))
+		# units_and_respas_follow_respas_decl_3 = list(map(list, units_and_respas_follow_respas_decl_3.items()))
+		# units_and_respas_follow_respas_decl_4 = list(map(list, units_and_respas_follow_respas_decl_4.items()))
 
-		units_and_respas_follow_respas_decl_1 = [[units_and_respas_follow_respas_decl[0], ''.join(units_and_respas_follow_respas_decl[1])] for units_and_respas_follow_respas_decl in units_and_respas_follow_respas_decl_1]
-		units_and_respas_follow_respas_decl_2 = [[units_and_respas_follow_respas_decl[0], ''.join(units_and_respas_follow_respas_decl[1])] for units_and_respas_follow_respas_decl in units_and_respas_follow_respas_decl_2]
-		units_and_respas_follow_respas_decl_3 = [[units_and_respas_follow_respas_decl[0], ''.join(units_and_respas_follow_respas_decl[1])] for units_and_respas_follow_respas_decl in units_and_respas_follow_respas_decl_3]
-		units_and_respas_follow_respas_decl_4 = [[units_and_respas_follow_respas_decl[0], ''.join(units_and_respas_follow_respas_decl[1])] for units_and_respas_follow_respas_decl in units_and_respas_follow_respas_decl_4]
+		# units_and_respas_follow_respas_decl_1 = [[units_and_respas_follow_respas_decl[0], ''.join(units_and_respas_follow_respas_decl[1])] for units_and_respas_follow_respas_decl in units_and_respas_follow_respas_decl_1]
+		# units_and_respas_follow_respas_decl_2 = [[units_and_respas_follow_respas_decl[0], ''.join(units_and_respas_follow_respas_decl[1])] for units_and_respas_follow_respas_decl in units_and_respas_follow_respas_decl_2]
+		# units_and_respas_follow_respas_decl_3 = [[units_and_respas_follow_respas_decl[0], ''.join(units_and_respas_follow_respas_decl[1])] for units_and_respas_follow_respas_decl in units_and_respas_follow_respas_decl_3]
+		# units_and_respas_follow_respas_decl_4 = [[units_and_respas_follow_respas_decl[0], ''.join(units_and_respas_follow_respas_decl[1])] for units_and_respas_follow_respas_decl in units_and_respas_follow_respas_decl_4]
 		
 		
-		dir_path = "/home/chrisk/Desktop/Units_and_RespAs_following_RespA_decl/"
-		self.helper.make_dir(dir_path)
-		self.helper.append_rows_into_csv(units_and_respas_follow_respas_decl_1, dir_path + "units_and_respas_follow_respas_decl_1.csv")
-		self.helper.append_rows_into_csv(units_and_respas_follow_respas_decl_2, dir_path + "units_and_respas_follow_respas_decl_2.csv")
-		self.helper.append_rows_into_csv(units_and_respas_follow_respas_decl_3, dir_path + "units_and_respas_follow_respas_decl_3.csv")
-		self.helper.append_rows_into_csv(units_and_respas_follow_respas_decl_4, dir_path + "units_and_respas_follow_respas_decl_4.csv")
+		# dir_path = "/home/chrisk/Desktop/Units_and_RespAs_following_RespA_decl/"
+		# self.helper.make_dir(dir_path)
+		# self.helper.append_rows_into_csv(units_and_respas_follow_respas_decl_1, dir_path + "units_and_respas_follow_respas_decl_1.csv")
+		# self.helper.append_rows_into_csv(units_and_respas_follow_respas_decl_2, dir_path + "units_and_respas_follow_respas_decl_2.csv")
+		# self.helper.append_rows_into_csv(units_and_respas_follow_respas_decl_3, dir_path + "units_and_respas_follow_respas_decl_3.csv")
+		# self.helper.append_rows_into_csv(units_and_respas_follow_respas_decl_4, dir_path + "units_and_respas_follow_respas_decl_4.csv")
 
 	def test_get_units_and_respas_following_respas_decl_2(self):
 		pdf_path = self.test_pdfs_dir + '/Presidential_Decree_Issues/for_training_data/RespAs/'
@@ -2314,19 +2314,19 @@ class ParserTest(Context):
 													for txt in txts]
 		
 		# To csv for visualization
-		units_and_respas_follow_respas_decl_list = [list(map(list, units_and_respas_follow_respas_decl.items()))
-												 for units_and_respas_follow_respas_decl in units_and_respas_follow_respas_decl_list]
+		# units_and_respas_follow_respas_decl_list = [list(map(list, units_and_respas_follow_respas_decl.items()))
+		# 										 for units_and_respas_follow_respas_decl in units_and_respas_follow_respas_decl_list]
 
-		temp = []
-		for units_and_respas_follow_respas_decl in units_and_respas_follow_respas_decl_list:
-			temp.append([[el[0], ''.join(el[1])] for el in units_and_respas_follow_respas_decl])
+		# temp = []
+		# for units_and_respas_follow_respas_decl in units_and_respas_follow_respas_decl_list:
+		# 	temp.append([[el[0], ''.join(el[1])] for el in units_and_respas_follow_respas_decl])
 
-		units_and_respas_follow_respas_decl_list = temp
+		# units_and_respas_follow_respas_decl_list = temp
 		
-		dir_path = "/home/chrisk/Desktop/Units_and_RespAs_following_RespA_decl/"
-		self.helper.make_dir(dir_path)
-		for i, units_and_respas_follow_respas_decl in enumerate(units_and_respas_follow_respas_decl_list):
-			self.helper.append_rows_into_csv(units_and_respas_follow_respas_decl, dir_path + "units_and_respas_follow_respas_decl_" + str(i+1) + ".csv")
+		# dir_path = "/home/chrisk/Desktop/Units_and_RespAs_following_RespA_decl/"
+		# self.helper.make_dir(dir_path)
+		# for i, units_and_respas_follow_respas_decl in enumerate(units_and_respas_follow_respas_decl_list):
+		# 	self.helper.append_rows_into_csv(units_and_respas_follow_respas_decl, dir_path + "units_and_respas_follow_respas_decl_" + str(i+1) + ".csv")
 
 	def test_get_units_and_respas_following_respas_decl_3(self):
 		pdf_path = self.test_pdfs_dir + '/Presidential_Decree_Issues/for_training_data/RespAs/'
