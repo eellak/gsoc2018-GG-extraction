@@ -2270,25 +2270,25 @@ class ParserTest(Context):
 		units_and_respas_8 = self.parser.get_units_and_respas(txt_8)
 
 		# To csv for visualization
-		units_and_respas_1 = list(map(list, units_and_respas_1.items()))
-		units_and_respas_2 = list(map(list, units_and_respas_2.items()))
-		units_and_respas_3 = list(map(list, units_and_respas_3.items()))
-		units_and_respas_4 = list(map(list, units_and_respas_4.items()))
-		units_and_respas_5 = list(map(list, units_and_respas_5.items()))
-		units_and_respas_6 = list(map(list, units_and_respas_6.items()))
-		units_and_respas_7 = list(map(list, units_and_respas_7.items()))
-		units_and_respas_8 = list(map(list, units_and_respas_8.items()))
+		# units_and_respas_1 = list(map(list, units_and_respas_1.items()))
+		# units_and_respas_2 = list(map(list, units_and_respas_2.items()))
+		# units_and_respas_3 = list(map(list, units_and_respas_3.items()))
+		# units_and_respas_4 = list(map(list, units_and_respas_4.items()))
+		# units_and_respas_5 = list(map(list, units_and_respas_5.items()))
+		# units_and_respas_6 = list(map(list, units_and_respas_6.items()))
+		# units_and_respas_7 = list(map(list, units_and_respas_7.items()))
+		# units_and_respas_8 = list(map(list, units_and_respas_8.items()))
 		
-		dir_path = "/home/chrisk/Desktop/Units_and_RespAs/"
-		self.helper.make_dir(dir_path)
-		self.helper.append_rows_into_csv(units_and_respas_1, dir_path + "units_and_respas_1.csv")
-		self.helper.append_rows_into_csv(units_and_respas_2, dir_path + "units_and_respas_2.csv")
-		self.helper.append_rows_into_csv(units_and_respas_3, dir_path + "units_and_respas_3.csv")
-		self.helper.append_rows_into_csv(units_and_respas_4, dir_path + "units_and_respas_4.csv")
-		self.helper.append_rows_into_csv(units_and_respas_5, dir_path + "units_and_respas_5.csv")
-		self.helper.append_rows_into_csv(units_and_respas_6, dir_path + "units_and_respas_6.csv")
-		self.helper.append_rows_into_csv(units_and_respas_7, dir_path + "units_and_respas_7.csv")
-		self.helper.append_rows_into_csv(units_and_respas_8, dir_path + "units_and_respas_8.csv")
+		# dir_path = "/home/chrisk/Desktop/Units_and_RespAs/"
+		# self.helper.make_dir(dir_path)
+		# self.helper.append_rows_into_csv(units_and_respas_1, dir_path + "units_and_respas_1.csv")
+		# self.helper.append_rows_into_csv(units_and_respas_2, dir_path + "units_and_respas_2.csv")
+		# self.helper.append_rows_into_csv(units_and_respas_3, dir_path + "units_and_respas_3.csv")
+		# self.helper.append_rows_into_csv(units_and_respas_4, dir_path + "units_and_respas_4.csv")
+		# self.helper.append_rows_into_csv(units_and_respas_5, dir_path + "units_and_respas_5.csv")
+		# self.helper.append_rows_into_csv(units_and_respas_6, dir_path + "units_and_respas_6.csv")
+		# self.helper.append_rows_into_csv(units_and_respas_7, dir_path + "units_and_respas_7.csv")
+		# self.helper.append_rows_into_csv(units_and_respas_8, dir_path + "units_and_respas_8.csv")
 
 	def test_get_units_and_respas_2(self):
 		pdf_path = self.test_pdfs_dir + '/Presidential_Decree_Issues/for_training_data/RespAs/'
@@ -2361,6 +2361,60 @@ class ParserTest(Context):
 		txt_path = self.test_txts_dir + '/for_training_data/RespAs/'
 		txt_1 = self.get_txt('48', pdf_path=pdf_path, txt_path=txt_path)
 		units_and_respas_follow_respas_decl_1 = self.parser.get_units_and_respas_following_respas_decl(txt_1)
+
+	def test_get_rough_unit_respa_associations_1(self):
+		pdf_path = self.test_pdfs_dir + '/Presidential_Decree_Issues/'
+		txt_path = self.test_txts_dir + '/'
+
+		txt_1 = self.get_txt('1_Pres_Decree', pdf_path=pdf_path, txt_path=txt_path)
+		txt_2 = self.get_txt('2_Pres_Decree', pdf_path=pdf_path, txt_path=txt_path)
+		txt_3 = self.get_txt('3_Pres_Decree', pdf_path=pdf_path, txt_path=txt_path)
+		txt_4 = self.get_txt('4_Pres_Decree', pdf_path=pdf_path, txt_path=txt_path)
+		txt_5 = self.get_txt('5_Pres_Decree', pdf_path=pdf_path, txt_path=txt_path)
+		txt_6 = self.get_txt('6_Pres_Decree', pdf_path=pdf_path, txt_path=txt_path)
+		txt_7 = self.get_txt('7_Pres_Decree', pdf_path=pdf_path, txt_path=txt_path)
+		txt_8 = self.get_txt('8_Pres_Decree', pdf_path=pdf_path, txt_path=txt_path)
+
+		rough_unit_respa_associations_1 = self.parser.get_rough_unit_respa_associations(txt_1)
+		rough_unit_respa_associations_2 = self.parser.get_rough_unit_respa_associations(txt_2)
+		rough_unit_respa_associations_3 = self.parser.get_rough_unit_respa_associations(txt_3)
+		rough_unit_respa_associations_4 = self.parser.get_rough_unit_respa_associations(txt_4)
+		rough_unit_respa_associations_5 = self.parser.get_rough_unit_respa_associations(txt_5)
+		rough_unit_respa_associations_6 = self.parser.get_rough_unit_respa_associations(txt_6)
+		rough_unit_respa_associations_7 = self.parser.get_rough_unit_respa_associations(txt_7)
+		rough_unit_respa_associations_8 = self.parser.get_rough_unit_respa_associations(txt_8)
+
+		# To csv for visualization
+		rough_unit_respa_associations_1 = list(map(list, rough_unit_respa_associations_1.items()))
+		rough_unit_respa_associations_2 = list(map(list, rough_unit_respa_associations_2.items()))
+		rough_unit_respa_associations_3 = list(map(list, rough_unit_respa_associations_3.items()))
+		rough_unit_respa_associations_4 = list(map(list, rough_unit_respa_associations_4.items()))
+		rough_unit_respa_associations_5 = list(map(list, rough_unit_respa_associations_5.items()))
+		rough_unit_respa_associations_6 = list(map(list, rough_unit_respa_associations_6.items()))
+		rough_unit_respa_associations_7 = list(map(list, rough_unit_respa_associations_7.items()))
+		rough_unit_respa_associations_8 = list(map(list, rough_unit_respa_associations_8.items()))
+		
+		rough_unit_respa_associations_1 = [[rough_unit_respa_association[0], ''.join(rough_unit_respa_association[1])] for rough_unit_respa_association in rough_unit_respa_associations_1]
+		rough_unit_respa_associations_2 = [[rough_unit_respa_association[0], ''.join(rough_unit_respa_association[1])] for rough_unit_respa_association in rough_unit_respa_associations_2]
+		rough_unit_respa_associations_3 = [[rough_unit_respa_association[0], ''.join(rough_unit_respa_association[1])] for rough_unit_respa_association in rough_unit_respa_associations_3]
+		rough_unit_respa_associations_4 = [[rough_unit_respa_association[0], ''.join(rough_unit_respa_association[1])] for rough_unit_respa_association in rough_unit_respa_associations_4]
+		rough_unit_respa_associations_5 = [[rough_unit_respa_association[0], ''.join(rough_unit_respa_association[1])] for rough_unit_respa_association in rough_unit_respa_associations_5]
+		rough_unit_respa_associations_6 = [[rough_unit_respa_association[0], ''.join(rough_unit_respa_association[1])] for rough_unit_respa_association in rough_unit_respa_associations_6]
+		rough_unit_respa_associations_7 = [[rough_unit_respa_association[0], ''.join(rough_unit_respa_association[1])] for rough_unit_respa_association in rough_unit_respa_associations_7]
+		rough_unit_respa_associations_8 = [[rough_unit_respa_association[0], ''.join(rough_unit_respa_association[1])] for rough_unit_respa_association in rough_unit_respa_associations_8]
+
+
+		dir_path = "/home/chrisk/Desktop/Rough_Unit_RespA_Associations/"
+		self.helper.make_dir(dir_path)
+		self.helper.append_rows_into_csv(rough_unit_respa_associations_1, dir_path + "rough_unit_respa_associations_1.csv")
+		self.helper.append_rows_into_csv(rough_unit_respa_associations_2, dir_path + "rough_unit_respa_associations_2.csv")
+		self.helper.append_rows_into_csv(rough_unit_respa_associations_3, dir_path + "rough_unit_respa_associations_3.csv")
+		self.helper.append_rows_into_csv(rough_unit_respa_associations_4, dir_path + "rough_unit_respa_associations_4.csv")
+		self.helper.append_rows_into_csv(rough_unit_respa_associations_5, dir_path + "rough_unit_respa_associations_5.csv")
+		self.helper.append_rows_into_csv(rough_unit_respa_associations_6, dir_path + "rough_unit_respa_associations_6.csv")
+		self.helper.append_rows_into_csv(rough_unit_respa_associations_7, dir_path + "rough_unit_respa_associations_7.csv")
+		self.helper.append_rows_into_csv(rough_unit_respa_associations_8, dir_path + "rough_unit_respa_associations_8.csv")
+
 
 if __name__ == '__main__':
 	unittest.main() 
