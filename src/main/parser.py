@@ -229,36 +229,36 @@ class Parser(object):
 				dec_articles.append(last_article[0])
 			return dict(zip(range(1, len(dec_articles) + 1), dec_articles))
 
-	def get_rough_respas_of_organization_units_from_pres_decree_txt(self, txt):
-		""" Ideally to be fed 'txt' containing an article with responsibilities """
-		txt = Helper.clean_up_txt(txt)
-		primary_respa_keys = self.paorg_issue_respa_keys['primary']
+	# def get_rough_respas_of_organization_units_from_pres_decree_txt(self, txt):
+	# 	""" Ideally to be fed 'txt' containing an article with responsibilities """
+	# 	txt = Helper.clean_up_txt(txt)
+	# 	primary_respa_keys = self.paorg_issue_respa_keys['primary']
 
-		rough_paorg_respa_sections = []
-		if txt:
-			# Attempt 1
-			rough_paorg_respa_sections_1 = findall("((?:\d+\.|[Α-ΩΆ-ΏA-Z](?:\)|\.).*)?(?:.*\n){1,3}" + ".+?(?:{resp_keys})[\s\S]+?\:\s*\n[\s\S]+?(?=\.\s*\n\s*(?![α-ωά-ώa-z])|\,\s*\n\s*(?![\s\S]+?\.)))"\
-												 .format(resp_keys=Helper.get_special_regex_disjunction(primary_respa_keys)), txt)
+	# 	rough_paorg_respa_sections = []
+	# 	if txt:
+	# 		# Attempt 1
+	# 		rough_paorg_respa_sections_1 = findall("((?:\d+\.|[Α-ΩΆ-ΏA-Z](?:\)|\.).*)?(?:.*\n){1,3}" + ".+?(?:{resp_keys})[\s\S]+?\:\s*\n[\s\S]+?(?=\.\s*\n\s*(?![α-ωά-ώa-z])|\,\s*\n\s*(?![\s\S]+?\.)))"\
+	# 											 .format(resp_keys=Helper.get_special_regex_disjunction(primary_respa_keys)), txt)
 
-			# Attempt 2
-			rough_paorg_respa_sections_2 = findall("((?:\d+\.|[Α-ΩΆ-ΏA-Z](?:\)|\.).*)?(?:.*\n){1,3}" + ".+?(?:{resp_keys})[\s\S]+?\s*για[^\:]+?\s*[\s\S]+?(?=\.\s*\n\s*(?![α-ωά-ώa-z])))"\
-												 .format(resp_keys=Helper.get_special_regex_disjunction(primary_respa_keys)), txt)
+	# 		# Attempt 2
+	# 		rough_paorg_respa_sections_2 = findall("((?:\d+\.|[Α-ΩΆ-ΏA-Z](?:\)|\.).*)?(?:.*\n){1,3}" + ".+?(?:{resp_keys})[\s\S]+?\s*για[^\:]+?\s*[\s\S]+?(?=\.\s*\n\s*(?![α-ωά-ώa-z])))"\
+	# 											 .format(resp_keys=Helper.get_special_regex_disjunction(primary_respa_keys)), txt)
 
-			if rough_paorg_respa_sections_1:
-				# Check if any of Attempt 2 in Attempt 1
-				for respa_2 in rough_paorg_respa_sections_2:
-					for respa_1 in rough_paorg_respa_sections_1:
-						if respa_2 and (':' not in respa_2) and\
-						   (respa_2.replace('\n', '').replace(' ', '') not in respa_1.replace('\n', '').replace(' ', '')) and\
-						   (not get_close_matches(respa_2, rough_paorg_respa_sections_1, cutoff=0.3)):
+	# 		if rough_paorg_respa_sections_1:
+	# 			# Check if any of Attempt 2 in Attempt 1
+	# 			for respa_2 in rough_paorg_respa_sections_2:
+	# 				for respa_1 in rough_paorg_respa_sections_1:
+	# 					if respa_2 and (':' not in respa_2) and\
+	# 					   (respa_2.replace('\n', '').replace(' ', '') not in respa_1.replace('\n', '').replace(' ', '')) and\
+	# 					   (not get_close_matches(respa_2, rough_paorg_respa_sections_1, cutoff=0.3)):
 
-								rough_paorg_respa_sections_1.append(respa_2)
+	# 							rough_paorg_respa_sections_1.append(respa_2)
 
-				rough_paorg_respa_sections = rough_paorg_respa_sections_1
-			else:
-				rough_paorg_respa_sections = rough_paorg_respa_sections_2
+	# 			rough_paorg_respa_sections = rough_paorg_respa_sections_1
+	# 		else:
+	# 			rough_paorg_respa_sections = rough_paorg_respa_sections_2
 			
-		return list(OrderedDict.fromkeys(rough_paorg_respa_sections))
+	# 	return list(OrderedDict.fromkeys(rough_paorg_respa_sections))
 
 	# Get RespA sections contained in decision body 
 	def get_dec_respa_sections(self, txt):
@@ -359,7 +359,7 @@ class Parser(object):
 
 	def get_units_followed_by_respas(self, paorg_pres_decree_txt):
 		paragraph_clf = main.classifier.ParagraphRespAClassifier()
-		respas_threshold = 15
+		respas_threshold = 60
 		units_followed_by_respas = OrderedDict()
 		articles = self.get_articles(paorg_pres_decree_txt)
 		
@@ -368,12 +368,13 @@ class Parser(object):
 			for i, prgrph in enumerate(paragraphs):
 				
 				if paragraph_clf.has_units_followed_by_respas(prgrph) and\
-				   (prgrph[0].isdigit() or prgrph[0].isupper()):
+				   (Helper.remove_list_points(prgrph)[0].isdigit() or Helper.remove_list_points(prgrph)[0].isupper()):
 						
 					if paragraph_clf.has_only_units(Helper.remove_list_points(paragraphs[i-1])):
 						# If previous paragraph has only units, it might be 
 						# the real unit, so add both as unit
-						unit = paragraphs[i-1] + prgrph
+						prev_prgrph = paragraphs[i-1]
+						unit = (prev_prgrph, ' '.join(Helper.get_words(Helper.remove_list_points(prgrph), n=10)))
 					else:
 						unit = ' '.join(Helper.get_words(Helper.remove_list_points(prgrph), n=10))
 					respas = []
@@ -399,7 +400,6 @@ class Parser(object):
 							units_followed_by_respas[unit] = respas
 
 						units_counter += 1
-
 			return 
 
 		if articles:
@@ -510,18 +510,18 @@ class Parser(object):
 		paragraph_clf = main.classifier.ParagraphRespAClassifier()
 		articles = self.get_articles(paorg_pres_decree_txt)
 		additional_respas_threshold = 6
-		units_and_respas = {}
+		units_and_respas = OrderedDict()
 		units_and_respa_sections = []
 		
 		def get_unit_and_respa_paragraphs(paragraphs, additional_respas_threshold):
 			unit_and_respa_sections = []
 			for i, prgrph in enumerate(paragraphs):
 				unit_and_respa_paragraph_criteria = (paragraph_clf.has_units_and_respas(prgrph) or
-												  (paragraph_clf.has_units_followed_by_respas(prgrph) and len(prgrph)>150))
+												  (paragraph_clf.has_units_followed_by_respas(prgrph) and len(prgrph)>150)) and\
+													paragraph_clf.has_units(prgrph.replace('Αρμοδιότητες ', '')[:20])
 				if unit_and_respa_paragraph_criteria:
-					additional_respas_following_criterion = (prgrph[-1] == ':')
+					additional_respas_following_criterion = (prgrph[-1] == ':' or prgrph[-2] == ':')
 					if additional_respas_following_criterion:
-						print('IN HERE!')
 						# Append following paragraphs 
 						# containing additional respas to prgrph
 						for j in range(i+1, i+1+additional_respas_threshold):
@@ -532,15 +532,18 @@ class Parser(object):
 			return unit_and_respa_sections
 
 		def disentangle_units_from_respas(units_and_respa_sections):
-			units_and_respas = {}
 			for unit_and_respa_section in units_and_respa_sections:
 				# Unit assumed to be in 10 first words
 				unit = ' '.join(Helper.get_words(unit_and_respa_section, n=10))
 				respas = unit_and_respa_section
 				# Units starts with uppercase character
-				if unit[0].isupper():
-					units_and_respas[unit] = respas
-			return units_and_respas
+				if unit[0].isupper() or unit[0].isdigit():
+					if unit in units_and_respas and\
+					   any([(respa not in units_and_respas[unit]) for respa in respas]):
+						units_and_respas[unit] += respas
+					else:
+						units_and_respas[unit] = respas
+			return 
 					
 		if articles:
 			if isinstance(articles, dict): articles = list(articles.values())
@@ -553,7 +556,7 @@ class Parser(object):
 			units_and_respa_sections = get_unit_and_respa_paragraphs(paragraphs, additional_respas_threshold)
 
 		unit_and_respa_sections = [x for x in units_and_respa_sections if x]
-		units_and_respas = disentangle_units_from_respas(units_and_respa_sections)
+		disentangle_units_from_respas(units_and_respa_sections)
 
 		return units_and_respas
 
