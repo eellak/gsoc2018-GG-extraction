@@ -307,7 +307,7 @@ class Parser(object):
 
 		return ref_dec_respa_sections
 
-	def get_rough_unit_respa_associations(self, paorg_pres_decree_txt):
+	def get_rough_unit_respa_associations(self, paorg_pres_decree_txt, format=''):
 		units_and_respas = self.get_units_and_respas(paorg_pres_decree_txt)
 		units_followed_by_respas = self.get_units_followed_by_respas(paorg_pres_decree_txt)
 		units_and_respas_following_respas_decl = self.get_units_and_respas_following_respas_decl(paorg_pres_decree_txt)
@@ -315,7 +315,13 @@ class Parser(object):
 		units_and_respas.update(units_followed_by_respas)
 		units_and_respas.update(units_and_respas_following_respas_decl)
 		rough_unit_respa_associations = units_and_respas
-		return rough_unit_respa_associations
+		
+		if format.lower() == 'json':
+			return Helper.get_json(rough_unit_respa_associations, encoding='utf-8')
+		elif format.lower() == 'xml':
+			return Helper.get_xml(rough_unit_respa_associations)
+
+		return rough_unit_respa_associations 
 
 	def get_person_named_entities(self, txt):
 		""" Ideally to be fed 'txt' containing RespA sections """
@@ -380,13 +386,14 @@ class Parser(object):
 				if paragraph_clf.has_units_followed_by_respas(prgrph) and\
 				   (Helper.remove_list_points(prgrph)[0].isdigit() or Helper.remove_list_points(prgrph)[0].isupper()):
 						
-					if paragraph_clf.has_only_units(Helper.remove_list_points(paragraphs[i-1])):
-						# If previous paragraph has only units, it might be 
-						# the real unit, so add both as unit
+					if sum(1 for c in prgrph[:20] if c.isupper()) <= 2 and\
+						paragraph_clf.has_only_units(Helper.remove_list_points(paragraphs[i-1])):
+						# If this paragraph has 2 or less upper characters the unit might be contained in 
+						# the previous paragraph has only units, so: add both as unit
 						prev_prgrph = paragraphs[i-1]
-						unit = (prev_prgrph, ' '.join(Helper.get_words(Helper.remove_list_points(prgrph), n=10)))
+						unit = prev_prgrph + ' '.join(Helper.get_words(Helper.remove_list_points(prgrph), n=20))
 					else:
-						unit = ' '.join(Helper.get_words(Helper.remove_list_points(prgrph), n=10))
+						unit = ' '.join(Helper.get_words(Helper.remove_list_points(prgrph), n=20))
 					respas = []
 					units_counter = 0
 					for j in range(i+1, i+1+respas_threshold):
@@ -447,7 +454,7 @@ class Parser(object):
 							break
 						cur_prgrph = paragraphs[j]
 						respas = []
-						unit = ' '.join(Helper.get_words(Helper.remove_list_points(cur_prgrph), n=10))
+						unit = ' '.join(Helper.get_words(Helper.remove_list_points(cur_prgrph), n=20))
 						
 						if ((paragraph_clf.has_units_and_respas(cur_prgrph) and\
 							paragraph_clf.has_units(cur_prgrph[:20])) or ('Αρμοδιότητες' in cur_prgrph and '.' not in cur_prgrph[:70])) and\
@@ -544,7 +551,7 @@ class Parser(object):
 		def disentangle_units_from_respas(units_and_respa_sections):
 			for unit_and_respa_section in units_and_respa_sections:
 				# Unit assumed to be in 10 first words
-				unit = ' '.join(Helper.get_words(unit_and_respa_section, n=10))
+				unit = ' '.join(Helper.get_words(unit_and_respa_section, n=20))
 				respas = unit_and_respa_section
 				# Units starts with uppercase character
 				if unit[0].isupper() or unit[0].isdigit():
