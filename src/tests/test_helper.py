@@ -284,6 +284,85 @@ class HelperTest(Context):
 
 		for custom_training_data in custom_training_data_of_txts:
 			self.helper.append_rows_into_csv(custom_training_data, self.dummy_csv)
-			
+
+	def test_get_rough_unit_respa_associations_as_json_1(self):
+		pdf_path = self.test_pdfs_dir + '/Presidential_Decree_Issues/'
+		txt_path = self.test_txts_dir + '/'
+
+		txt_1 = self.get_txt('1_Pres_Decree', pdf_path=pdf_path, txt_path=txt_path)
+		txt_2 = self.get_txt('2_Pres_Decree', pdf_path=pdf_path, txt_path=txt_path)
+		txt_3 = self.get_txt('3_Pres_Decree', pdf_path=pdf_path, txt_path=txt_path)
+		txt_4 = self.get_txt('4_Pres_Decree', pdf_path=pdf_path, txt_path=txt_path)
+		txt_5 = self.get_txt('5_Pres_Decree', pdf_path=pdf_path, txt_path=txt_path)
+		txt_6 = self.get_txt('6_Pres_Decree', pdf_path=pdf_path, txt_path=txt_path)
+		txt_7 = self.get_txt('7_Pres_Decree', pdf_path=pdf_path, txt_path=txt_path)
+		txt_8 = self.get_txt('8_Pres_Decree', pdf_path=pdf_path, txt_path=txt_path)
+
+		rough_unit_respa_associations_1 = self.parser.get_rough_unit_respa_associations(txt_1, format='json')
+		rough_unit_respa_associations_2 = self.parser.get_rough_unit_respa_associations(txt_2, format='json')
+		rough_unit_respa_associations_3 = self.parser.get_rough_unit_respa_associations(txt_3, format='json')
+		rough_unit_respa_associations_4 = self.parser.get_rough_unit_respa_associations(txt_4, format='json')
+		rough_unit_respa_associations_5 = self.parser.get_rough_unit_respa_associations(txt_5, format='json')
+		rough_unit_respa_associations_6 = self.parser.get_rough_unit_respa_associations(txt_6, format='json')
+		rough_unit_respa_associations_7 = self.parser.get_rough_unit_respa_associations(txt_7, format='json')
+		rough_unit_respa_associations_8 = self.parser.get_rough_unit_respa_associations(txt_8, format='json')
+
+		dir_path = str(os.path.join(os.environ["HOME"], "Desktop")) + '/Rough_Unit_RespA_Associations/JSON/'
+		self.helper.make_dir(dir_path)
+		self.helper.export_json(rough_unit_respa_associations_1, dir_path + 'rough_unit_respa_associations_1.json', encoding='utf-8')
+		self.helper.export_json(rough_unit_respa_associations_2, dir_path + 'rough_unit_respa_associations_2.json', encoding='utf-8')
+		self.helper.export_json(rough_unit_respa_associations_3, dir_path + 'rough_unit_respa_associations_3.json', encoding='utf-8')
+		self.helper.export_json(rough_unit_respa_associations_4, dir_path + 'rough_unit_respa_associations_4.json', encoding='utf-8')
+		self.helper.export_json(rough_unit_respa_associations_5, dir_path + 'rough_unit_respa_associations_5.json', encoding='utf-8')
+		self.helper.export_json(rough_unit_respa_associations_6, dir_path + 'rough_unit_respa_associations_6.json', encoding='utf-8')
+		self.helper.export_json(rough_unit_respa_associations_7, dir_path + 'rough_unit_respa_associations_7.json', encoding='utf-8')
+		self.helper.export_json(rough_unit_respa_associations_8, dir_path + 'rough_unit_respa_associations_8.json', encoding='utf-8')
+
+	def test_get_rough_unit_respa_associations_as_xml_1(self):
+		pdf_path = self.test_pdfs_dir + '/Presidential_Decree_Issues/'
+		txt_path = self.test_txts_dir + '/'
+
+		txt_1 = self.get_txt('1_Pres_Decree', pdf_path=pdf_path, txt_path=txt_path)
+		txt_2 = self.get_txt('2_Pres_Decree', pdf_path=pdf_path, txt_path=txt_path)
+		txt_3 = self.get_txt('3_Pres_Decree', pdf_path=pdf_path, txt_path=txt_path)
+		txt_4 = self.get_txt('4_Pres_Decree', pdf_path=pdf_path, txt_path=txt_path)
+		txt_5 = self.get_txt('5_Pres_Decree', pdf_path=pdf_path, txt_path=txt_path)
+		txt_6 = self.get_txt('6_Pres_Decree', pdf_path=pdf_path, txt_path=txt_path)
+		txt_7 = self.get_txt('7_Pres_Decree', pdf_path=pdf_path, txt_path=txt_path)
+		txt_8 = self.get_txt('8_Pres_Decree', pdf_path=pdf_path, txt_path=txt_path)
+
+		rough_unit_respa_associations_1 = self.parser.get_rough_unit_respa_associations(txt_1, format='xml')
+		rough_unit_respa_associations_2 = self.parser.get_rough_unit_respa_associations(txt_2, format='xml')
+		rough_unit_respa_associations_3 = self.parser.get_rough_unit_respa_associations(txt_3, format='xml')
+		rough_unit_respa_associations_4 = self.parser.get_rough_unit_respa_associations(txt_4, format='xml')
+		rough_unit_respa_associations_5 = self.parser.get_rough_unit_respa_associations(txt_5, format='xml')
+		rough_unit_respa_associations_6 = self.parser.get_rough_unit_respa_associations(txt_6, format='xml')
+		rough_unit_respa_associations_7 = self.parser.get_rough_unit_respa_associations(txt_7, format='xml')
+		rough_unit_respa_associations_8 = self.parser.get_rough_unit_respa_associations(txt_8, format='xml')
+
+		# print(rough_unit_respa_associations_1)
+		# print(rough_unit_respa_associations_2)
+		# print(rough_unit_respa_associations_3)
+		# print(rough_unit_respa_associations_4)
+		# print(rough_unit_respa_associations_5)
+		# print(rough_unit_respa_associations_6)
+		# print(rough_unit_respa_associations_7)
+		# print(rough_unit_respa_associations_8)
+		
+		dir_path = str(os.path.join(os.environ["HOME"], "Desktop")) + '/Rough_Unit_RespA_Associations/XML/'
+		self.helper.make_dir(dir_path)
+		self.helper.export_xml(rough_unit_respa_associations_1, dir_path + 'rough_unit_respa_associations_1.xml')
+		self.helper.export_xml(rough_unit_respa_associations_2, dir_path + 'rough_unit_respa_associations_2.xml')
+		self.helper.export_xml(rough_unit_respa_associations_3, dir_path + 'rough_unit_respa_associations_3.xml')
+		self.helper.export_xml(rough_unit_respa_associations_4, dir_path + 'rough_unit_respa_associations_4.xml')
+		self.helper.export_xml(rough_unit_respa_associations_5, dir_path + 'rough_unit_respa_associations_5.xml')
+		self.helper.export_xml(rough_unit_respa_associations_6, dir_path + 'rough_unit_respa_associations_6.xml')
+		self.helper.export_xml(rough_unit_respa_associations_7, dir_path + 'rough_unit_respa_associations_7.xml')
+		self.helper.export_xml(rough_unit_respa_associations_8, dir_path + 'rough_unit_respa_associations_8.xml')
+
+
+
+
+
 if __name__ == '__main__':
 	unittest.main()

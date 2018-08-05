@@ -2200,7 +2200,7 @@ class ParserTest(Context):
 		# units_followed_by_respas_7 = [[unit_and_respas[0], ''.join(unit_and_respas[1])] for unit_and_respas in units_followed_by_respas_7]
 		# units_followed_by_respas_8 = [[unit_and_respas[0], ''.join(unit_and_respas[1])] for unit_and_respas in units_followed_by_respas_8]
 		
-		# dir_path = "/home/chrisk/Desktop/Units_followed_by_RespAs/"
+		# dir_path = dir_path = str(os.path.join(os.environ["HOME"], "Desktop")) + "/Units_followed_by_RespAs/CSV/"
 		# self.helper.make_dir(dir_path)
 		# self.helper.append_rows_into_csv(units_followed_by_respas_1, dir_path + "units_followed_by_respas_1.csv")
 		# self.helper.append_rows_into_csv(units_followed_by_respas_2, dir_path + "units_followed_by_respas_2.csv")
@@ -2240,7 +2240,7 @@ class ParserTest(Context):
 		# units_followed_by_respas_3 = [[unit_and_respas[0], ''.join(unit_and_respas[1])] for unit_and_respas in units_followed_by_respas_3]
 		# units_followed_by_respas_4 = [[unit_and_respas[0], ''.join(unit_and_respas[1])] for unit_and_respas in units_followed_by_respas_4]
 		
-		# dir_path = "/home/chrisk/Desktop/Units_followed_by_RespAs/"
+		# dir_path = dir_path = str(os.path.join(os.environ["HOME"], "Desktop")) + "/Units_followed_by_RespAs/CSV/"
 		# self.helper.make_dir(dir_path)
 		# self.helper.append_rows_into_csv(units_followed_by_respas_1, dir_path + "units_followed_by_respas_3.csv")
 		# self.helper.append_rows_into_csv(units_followed_by_respas_2, dir_path + "units_followed_by_respas_4.csv")
@@ -2279,7 +2279,7 @@ class ParserTest(Context):
 		# units_and_respas_7 = list(map(list, units_and_respas_7.items()))
 		# units_and_respas_8 = list(map(list, units_and_respas_8.items()))
 		
-		# dir_path = "/home/chrisk/Desktop/Units_and_RespAs/"
+		# dir_path = dir_path = str(os.path.join(os.environ["HOME"], "Desktop")) + "/Units_and_RespAs/CSV/"
 		# self.helper.make_dir(dir_path)
 		# self.helper.append_rows_into_csv(units_and_respas_1, dir_path + "units_and_respas_1.csv")
 		# self.helper.append_rows_into_csv(units_and_respas_2, dir_path + "units_and_respas_2.csv")
@@ -2325,7 +2325,7 @@ class ParserTest(Context):
 		# units_and_respas_follow_respas_decl_4 = [[units_and_respas_follow_respas_decl[0], ''.join(units_and_respas_follow_respas_decl[1])] for units_and_respas_follow_respas_decl in units_and_respas_follow_respas_decl_4]
 		
 		
-		# dir_path = "/home/chrisk/Desktop/Units_and_RespAs_following_RespA_decl/"
+		# dir_path = dir_path = str(os.path.join(os.environ["HOME"], "Desktop")) + "/Units_and_RespAs_following_RespA_decl/CSV/"
 		# self.helper.make_dir(dir_path)
 		# self.helper.append_rows_into_csv(units_and_respas_follow_respas_decl_1, dir_path + "units_and_respas_follow_respas_decl_1.csv")
 		# self.helper.append_rows_into_csv(units_and_respas_follow_respas_decl_2, dir_path + "units_and_respas_follow_respas_decl_2.csv")
@@ -2351,7 +2351,7 @@ class ParserTest(Context):
 
 		# units_and_respas_follow_respas_decl_list = temp
 		
-		# dir_path = "/home/chrisk/Desktop/Units_and_RespAs_following_RespA_decl/"
+		# dir_path = str(os.path.join(os.environ["HOME"], "Desktop")) + "/Units_and_RespAs_following_RespA_decl/CSV/"
 		# self.helper.make_dir(dir_path)
 		# for i, units_and_respas_follow_respas_decl in enumerate(units_and_respas_follow_respas_decl_list):
 		# 	self.helper.append_rows_into_csv(units_and_respas_follow_respas_decl, dir_path + "units_and_respas_follow_respas_decl_" + str(i+1) + ".csv")
@@ -2404,7 +2404,7 @@ class ParserTest(Context):
 		rough_unit_respa_associations_8 = [[rough_unit_respa_association[0], ''.join(rough_unit_respa_association[1])] for rough_unit_respa_association in rough_unit_respa_associations_8]
 
 
-		dir_path = "/home/chrisk/Desktop/Rough_Unit_RespA_Associations/"
+		dir_path = str(os.path.join(os.environ["HOME"], "Desktop")) + '/Rough_Unit_RespA_Associations/CSV/'
 		self.helper.make_dir(dir_path)
 		self.helper.append_rows_into_csv(rough_unit_respa_associations_1, dir_path + "rough_unit_respa_associations_1.csv")
 		self.helper.append_rows_into_csv(rough_unit_respa_associations_2, dir_path + "rough_unit_respa_associations_2.csv")
@@ -2417,4 +2417,4 @@ class ParserTest(Context):
 
 
 if __name__ == '__main__':
-	unittest.main() 
+	unittest.main()

@@ -11,6 +11,9 @@ import collections
 import datetime
 import re
 import csv
+from json import dumps
+from dicttoxml import dicttoxml
+from xml.dom.minidom import parseString
 from pickle import dump, load, HIGHEST_PROTOCOL
 
 # Helper class that defines useful formatting and file handling functions
@@ -110,6 +113,25 @@ class Helper:
             data = load(handle)
         return data
 
+    @staticmethod
+    def get_json(data, encoding=''):
+        return json.dumps(data) if not encoding else json.dumps(data, indent=4, ensure_ascii=False).encode(encoding)
+
+    @staticmethod
+    def get_xml(data):
+        return dicttoxml(data)
+
+    @staticmethod
+    def export_json(json, jsonfile, encoding=''):
+        with open(jsonfile, 'w') as file:
+            file.write(json if not encoding else json.decode(encoding))
+
+    @staticmethod
+    def export_xml(xml, xmlfile):
+        with open(xmlfile, 'w') as file:
+            reparsed = parseString(xml)
+            file.write(reparsed.toprettyxml())
+
     # Clears wikipedia annotations from a string
     @staticmethod
     def clear_annotations(text):
@@ -120,15 +142,15 @@ class Helper:
         txt = re.sub('[\t ]+', ' ', txt)
         txt = re.sub('\-[\s]+', '', txt)
         txt = re.sub('\−[\s]+', '', txt)
-        return txt
+        return txt.replace("\f", '')
 
     @staticmethod
     def remove_txt_prelims(txt):
         prelim_regex = []
-        prelim_regex.append("\fΤεύχος [Α-Ω].*\nΕΦΗΜΕΡΙ.*\n[0-9]*\n")
-        prelim_regex.append("\f[0-9]*\nΕΦΗΜΕΡΙ.*\nΤεύχος [Α-Ω].*\n")
-        prelim_regex.append("ΕΦΗΜΕΡΙ.*\n[0-9]*\n")
-        prelim_regex.append(".ρθρο [0-9]*\\n")
+        prelim_regex.append("(?:Τεύχος|ΤΕΥΧΟΣ)\s*[Α-Ω].*\nΕΦΗΜΕΡΙ.*\n[0-9]*\n")
+        prelim_regex.append("[0-9]*\s*\nΕΦΗΜΕΡΙ.*\n(?:Τεύχος|ΤΕΥΧΟΣ)\s*[Α-Ω].*\n")
+        prelim_regex.append("ΕΦΗΜΕΡΙ.*\s*\n[0-9]*\s*\n")
+        prelim_regex.append(".ρθρο\s*[0-9]*\s*\n")
         for regex in prelim_regex:
             pat = re.compile(regex)
             txt = pat.sub('', txt)
@@ -344,7 +366,9 @@ class Helper:
         try:
             os.makedirs(path)
         except OSError:
-            pass
+            print(path, ' already exists, remaking...')
+            shutil.rmtree(path)
+            os.makedirs(path)
 
     @staticmethod
     def deintonate_txt(txt):
