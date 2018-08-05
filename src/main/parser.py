@@ -307,6 +307,16 @@ class Parser(object):
 
 		return ref_dec_respa_sections
 
+	def get_rough_unit_respa_associations(self, paorg_pres_decree_txt):
+		units_and_respas = self.get_units_and_respas(paorg_pres_decree_txt)
+		units_followed_by_respas = self.get_units_followed_by_respas(paorg_pres_decree_txt)
+		units_and_respas_following_respas_decl = self.get_units_and_respas_following_respas_decl(paorg_pres_decree_txt)
+
+		units_and_respas.update(units_followed_by_respas)
+		units_and_respas.update(units_and_respas_following_respas_decl)
+		rough_unit_respa_associations = units_and_respas
+		return rough_unit_respa_associations
+
 	def get_person_named_entities(self, txt):
 		""" Ideally to be fed 'txt' containing RespA sections """
 		return list(filter(lambda entity: entity.tag == 'I-PER', Text(txt).entities))
