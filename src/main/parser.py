@@ -19,7 +19,7 @@ from util.helper import Helper
 import main.classifier
 
 class Parser(object):
-	
+	"""Parse text and extract useful (meta)data mainly from GG Decision and Presidential Decree Issues"""
 	def __init__(self):
 		self.src_root = os.getcwd()
 		self.standard_paorg_detect_accuracy = 0.65

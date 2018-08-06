@@ -5,10 +5,11 @@ import main.classifier
 
 
 class Analyzer(object):
-	
+	"""N-gram RespA analysis of GG Presidential Decree Issues containing PAOrgs"""
 	def __init__(self):
 		
-		self.organization_pres_decree_issue_respa_keys = {'primary': ["αρμόδι", "αρμοδι", "αρμοδιότητ", "ευθύνη", "εύθυν"],
+		self.organization_pres_decree_issue_respa_keys = {
+														   'primary': ["αρμόδι", "αρμοδι", "αρμοδιότητ", "ευθύνη", "εύθυν"],
 														   'secondary': ["για", "εξής"],
 														   'common_bigram_pairs': [("αρμόδι", "για"), ("ευθύνη", "για"), ("εύθυν", "για"), 
 														                           ("αρμοδιότητ", "ακόλουθ"), ("αρμοδιότητ", "μεταξύ"), 
@@ -16,13 +17,29 @@ class Analyzer(object):
 														   'common_quadgram_pairs': [("αρμοδιότητ", "έχει"), ("αρμοδιότητ", "εξής"), 
 																				  	    ("αρμοδιότητ", "είναι")]
 														   }
+	def analyze_txt(self, txt):
+			return self.get_respa_kw_analysis_of_paorg_pres_decree_txt(txt)
 
 	def get_respa_kw_analysis_of_paorg_pres_decree_txt(self, txt):
-		""" Ideally to be fed 'txt' containing an article with responsibilities """
+		""" 
+			Return a dictionary of bi- and quad-gram RespA analysis results
+
+			@param txt: GG Presidential Decree Organization Issue
+						e.g. "ΠΡΟΕΔΡΙΚΟ ΔΙΑΤΑΓΜΑ ΥΠ’ ΑΡΙΘΜ. 18 
+							  Οργανισμός Υπουργείου Παιδείας, Έρευνας και 
+							  Θρησκευμάτων.",
+
+							  "ΠΡΟΕΔΡΙΚΟ ΔΙΑΤΑΓΜΑ ΥΠ’ ΑΡΙΘΜ. 4 
+							  Οργανισμός Υπουργείου Πολιτισμού και Αθλη-
+							  τισμού." etc.
+
+			e.g.
+
+		"""
 		def n_gram_is_respa(n_gram, respa_kw_pair): 
 			return ( any([(respa_kw_pair[0] in word) for word in n_gram]) and 
 				     any([(respa_kw_pair[1] in word) for word in n_gram]))
-		def bi_gram_is_respa(bi_gram, special_respa_kw_pair):
+		def bigram_is_respa(bi_gram, special_respa_kw_pair):
 			return ( special_respa_kw_pair[0] in bi_gram[0] and 
 				   	 ## 'τ' == 'τ'ου/ης/ων 
 				   	 special_respa_kw_pair[1][0] == bi_gram[1][0] )
@@ -34,7 +51,6 @@ class Analyzer(object):
 				quad_gram_analysis_data[respa_kw_pair] = occurences
 			return quad_gram_analysis_data
 		def bi_gram_analysis():
-			# 2-gram analysis 
 			word_bi_grams = Helper.get_word_n_grams(txt, 2)
 			bi_gram_analysis_data = OrderedDict()
 			for respa_kw_pair in self.organization_pres_decree_issue_respa_keys['common_bigram_pairs'][:-1]:
@@ -43,7 +59,7 @@ class Analyzer(object):
 			
 			# Manage special ("ρμοδιότητες", "τ") case separately
 			special_respa_kw_pair = self.organization_pres_decree_issue_respa_keys['common_bigram_pairs'][-1]
-			special_occurences = sum([bi_gram_is_respa(bigram, special_respa_kw_pair) for bigram in word_bi_grams])
+			special_occurences = sum([bigram_is_respa(bigram, special_respa_kw_pair) for bigram in word_bi_grams])
 			bi_gram_analysis_data[special_respa_kw_pair] = special_occurences
 
 			return bi_gram_analysis_data
@@ -56,24 +72,68 @@ class Analyzer(object):
 
 		return respa_kw_pair_occurences
 
-	def analyze_txt(self, txt):
-			return self.get_respa_kw_analysis_of_paorg_pres_decree_txt(txt)
-
 	def get_n_gram_analysis_data(self, txts):
+		""" 
+			Return a dictionary of bi- and quad-gram RespA analysis results
+
+			@param txts: Articles, or whole GG Presidential Decree Organization Issues
+		
+			e.g.
+			[
+			 {
+			  'quadgram_analysis': OrderedDict([(('αρμοδιότητ', 'έχει'), 5), (('αρμοδιότητ', 'εξής'), 0), (('αρμοδιότητ', 'είναι'), 26)]), 
+			  'bigram_analysis': OrderedDict([(('αρμόδι', 'για'), 12), (('ευθύνη', 'για'), 12), (('εύθυν', 'για'), 5), (('αρμοδιότητ', 'ακόλουθ'), 3), (('αρμοδιότητ', 'μεταξύ'), 0), (('ρμοδιότητες', 'τ'), 40)])
+			 },
+			 ...
+			] 
+		
+		""" 
 		txts_data = []
 		for txt in txts: 
-			txt_data = self.analyze_txt(txt)
-			print(txt.partition('\n')[0], ':', txt_data)
-			txts_data.append(txt_data)
+			data = self.analyze_txt(txt)
+			# print(txt.partition('\n')[0], ':', data)
+			txts_data.append(data)
 		return txts_data
 
+	def get_n_gram_analysis_data_vector(self, txt):
+		""" 
+			Return a list of bi- and quad-gram RespA analysis raw weights
+
+			@param txt: Article, or whole GG Presidential Decree Organization Issue
+		
+			e.g.
+			[12, 12, 5, 3, 0, 40, 5, 0, 26]
+		
+		""" 
+		data = self.analyze_txt(txt)
+		# print(txt.partition('\n')[0], ':', data)
+		bigram_data_dict, quadgram_data_dict = data['bigram_analysis'],\
+												   data['quadgram_analysis']
+		bigram_data_vector, quadgram_data_vector = [bigram_data_dict[kw_pair] for kw_pair in bigram_data_dict.keys()],\
+		 										   [quadgram_data_dict[kw_pair] for kw_pair in quadgram_data_dict.keys()]
+
+		n_gram_data_vector = bigram_data_vector + quadgram_data_vector
+		return n_gram_data_vector
+
 	def get_n_gram_analysis_data_vectors(self, txts):
+		""" 
+			Return a list of lists of bi- and quad-gram RespA analysis raw weights
+
+			@param txt: Article, or whole GG Presidential Decree Organization Issue
+		
+			e.g.
+			[
+				[12, 12, 5, 3, 0, 40, 5, 0, 26],
+				...
+			]
+		
+		""" 
 		txts_data_vectors = []
 		for txt in txts: 
-			txt_analysis_data = self.analyze_txt(txt)
+			data = self.analyze_txt(txt)
 			# print(txt.partition('\n')[0], ':', txt_analysis_data)
-			bigram_data_dict, quadgram_data_dict = txt_analysis_data['bigram_analysis'],\
-													   txt_analysis_data['quadgram_analysis']
+			bigram_data_dict, quadgram_data_dict = data['bigram_analysis'],\
+													   data['quadgram_analysis']
 			bigram_data_vector, quadgram_data_vector = [bigram_data_dict[kw_pair] for kw_pair in bigram_data_dict.keys()],\
 			 										   [quadgram_data_dict[kw_pair] for kw_pair in quadgram_data_dict.keys()]
 
@@ -83,12 +143,25 @@ class Analyzer(object):
 		return txts_data_vectors
 
 	def get_custom_n_gram_analysis_data_vectors(self, txts):
+		""" 
+			Return a list of lists of bi- and quad-gram RespA analysis raw weights
+			adhering to a custom_condition
+
+			@param txts: Articles, or whole GG Presidential Decree Organization Issues
+		
+			e.g.
+			[
+				[1, 0, 2, 0, 0, 1, 0, 1, 1],
+				...
+			]
+		
+		""" 
 		txts_custom_data_vectors = []
 		for txt in txts: 
 			txt_analysis_data = self.analyze_txt(txt)
 
 			# Change depending on wanted data
-			custom_condition = ( sum(list(txt_analysis_data['bigram_analysis'].values()) + 
+			custom_condition = (sum(list(txt_analysis_data['bigram_analysis'].values()) + 
 									 list(txt_analysis_data['quadgram_analysis'].values())) >= 1)
 								 
 			if custom_condition:
@@ -104,43 +177,23 @@ class Analyzer(object):
 				
 		return txts_custom_data_vectors
 
-	# Possibly not-needed
-	def get_n_gram_analysis_data_sums_vector(self, issue_articles):
-		analysis_data_sums = self.analyze_issue_from_articles(issue_articles)
-		bigram_data_dict, quadgram_data_dict = analysis_data_sums['bigram_analysis_sum'],\
-													   analysis_data_sums['quadgram_analysis_sum']
-		bigram_data_vector, quadgram_data_vector = [bigram_data_dict[kw_pair] for kw_pair in bigram_data_dict.keys()],\
-		 										   [quadgram_data_dict[kw_pair] for kw_pair in quadgram_data_dict.keys()]
-
-		n_gram_data_sums_vector = bigram_data_vector + quadgram_data_vector
-		return n_gram_data_sums_vector
-
-	# Possibly not-needed
-	def analyze_issue_from_articles(self, issue_articles):
-		analysis_data_sums = {'bigram_analysis_sum': OrderedDict([(('αρμόδι', 'για'), 0), (('ευθύνη', 'για'), 0), (('εύθυν', 'για'), 0),
-													  (('αρμοδιότητ', 'ακόλουθ'), 0), (("αρμοδιότητ", "ακόλουθ"), 0), 
-													  (("αρμοδιότητ", "μεταξύ"), 0), (("ρμοδιότητες", "τ"), 0)]),
-							  
-							  'quadgram_analysis_sum': OrderedDict([(('αρμοδιότητ', 'έχει'), 0), (('αρμοδιότητ', 'εξής'), 0), 
-							  										(('αρμοδιότητ', 'είναι'), 0)])
-						 	  }
-
-		for txt in issue_articles:
-			respa_occurences_in_txt = self.get_respa_kw_analysis_of_paorg_pres_decree_txt(txt)
-			# Bigram data
-			for key in analysis_data_sums['bigram_analysis_sum'].keys():
-				analysis_data_sums['bigram_analysis_sum'][key] +=\
-				respa_occurences_in_txt['bigram_analysis'][key]
-			# Quatrogram data
-			for key in analysis_data_sums['quadgram_analysis_sum'].keys():
-				analysis_data_sums['quadgram_analysis_sum'][key] +=\
-				respa_occurences_in_txt['quadgram_analysis'][key]
-		
-		return analysis_data_sums
-
-
 	def get_unit_paragraph_occurences_by_type(self, paorg_pres_decree_txt, type):
+		""" 
+			Return the number of type of Unit-RespA mentioning occurrences 
+
+			@param paorg_pres_decree_txt: GG Presidential Decree Organization Issue
+											e.g. "ΠΡΟΕΔΡΙΚΟ ΔΙΑΤΑΓΜΑ ΥΠ’ ΑΡΙΘΜ. 18 
+												  Οργανισμός Υπουργείου Παιδείας, Έρευνας και 
+												  Θρησκευμάτων.",
+
+												  "ΠΡΟΕΔΡΙΚΟ ΔΙΑΤΑΓΜΑ ΥΠ’ ΑΡΙΘΜ. 4 
+												  Οργανισμός Υπουργείου Πολιτισμού και Αθλη-
+												  τισμού." etc.
 		
+			e.g.
+			(some_txt, 'units_followed_by_respas') -> 16
+		
+		""" 
 		def get_specific_units_clf_func_occurrences(unit_paragraph_occurences, paragraphs):
 			return sum([units_clf_func(prgrh) for prgrh in paragraphs
 			 			if len(prgrh) > 20 and Helper.get_clean_words(prgrh)[:20]])
@@ -149,9 +202,10 @@ class Analyzer(object):
 		parser = main.parser.Parser()
 		if type == 'units_followed_by_respas': units_clf_func = paragraph_clf.has_units_followed_by_respas
 		elif type == 'units_and_respas': units_clf_func = paragraph_clf.has_units_and_respas
+		elif type == 'respas_decl': has_respas_decl = paragraph_clf.has_respas_decl
 		elif type == 'only_units': units_clf_func = paragraph_clf.has_only_units
 		elif type == 'units': units_clf_func = paragraph_clf.has_units
-	
+
 		unit_paragraph_occurences = 0
 		articles = parser.get_articles(paorg_pres_decree_txt)
 		if articles:

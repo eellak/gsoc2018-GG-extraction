@@ -11,7 +11,6 @@ import main.analyzer
 from collections import OrderedDict, defaultdict
 
 class RespAClassifier(object):
-	
 	def __init__(self, training_data_csv_file):
 		self.training_data_csv_file = training_data_csv_file
 		self.csv_column_names = ['A','B','C','D','E','F','G','H','I','RESPA']
@@ -24,9 +23,10 @@ class RespAClassifier(object):
 		self.trained_model = self.train()
 		
 class IssueOrArticleRespAClassifier(RespAClassifier):
-
-	# GG Issue & Article classifier
-	# Predicts whether or not 'issue' contains RespA
+	"""
+		Classification of GG Presidential Decree Organization 
+		Issues or Articles as RespA related or not
+	"""
 	def train(self):
 		return svm.SVC(kernel='linear', C=1).fit(self.X, self.y)
 
@@ -53,13 +53,14 @@ class IssueOrArticleRespAClassifier(RespAClassifier):
 		
 		return avg_score
 
-	# GG Issue & Article classifier
-	# Predicts whether or not 'issue' contains RespA
 	def has_respas(self, data_vector):
 		return self.trained_model.predict([data_vector])
 
 class ParagraphRespAClassifier(object):
-	
+	"""
+		Classification of GG Presidential Decree Organization 
+		Paragraphs as RespA related or not
+	"""
 	def __init__(self, training_data_files = None):
 		if training_data_files is not None:
 			self.training_data_files = training_data_files
@@ -104,6 +105,7 @@ class ParagraphRespAClassifier(object):
 		self.write_train_data(appropriate_key)
 
 	def has_respas(self, paragraph):
+		"""Return unigram and bigram prediction"""
 		words = Helper.get_clean_words(paragraph)[:20]
 		word_bigrams = Helper.get_word_n_grams(words, 2)
 		word_unigrams = Helper.get_word_n_grams(words, 1)
@@ -159,6 +161,7 @@ class ParagraphRespAClassifier(object):
 
 
 	def has_units_and_respas(self, paragraph):
+		"""Does not contain ':' """
 		paragraph = Helper.normalize_txt(paragraph)
 		return any((((unit_kw in paragraph) and\
 					 (resp_kw_trio[0] in paragraph) and\
@@ -168,6 +171,7 @@ class ParagraphRespAClassifier(object):
 				    for resp_kw_trio in self.responsibility_keyword_trios)
 
 	def has_units_followed_by_respas(self, paragraph):
+		"""Contains ':' """
 		paragraph = Helper.normalize_txt(paragraph)
 		return any((((unit_kw in paragraph) and\
 					 (resp_kw_trio[0] in paragraph) and\
@@ -177,6 +181,7 @@ class ParagraphRespAClassifier(object):
 				    for resp_kw_trio in self.responsibility_keyword_trios)
 
 	def has_respas_decl(self, paragraph):
+		"""e.g.  "Οι αρμοδιότητες του Αυτοτελούς Τμήματος είναι οι ακόλουθες:"-> True """
 		paragraph = Helper.normalize_txt(paragraph)
 		return (self.responsibilities_decl_pairs[0][0] in paragraph and\
 			   	self.responsibilities_decl_pairs[0][1] in paragraph) or\
@@ -184,9 +189,7 @@ class ParagraphRespAClassifier(object):
 				 (self.responsibilities_decl_pairs[1][1] == paragraph[-1] or self.responsibilities_decl_pairs[1][1] == paragraph[-2])) or\
 				(self.responsibilities_decl_pairs[2][0] in paragraph and\
 					self.responsibilities_decl_pairs[2][1] in paragraph)
-				   
 				    
-
 	def cosine_similarity(self, dict_1, dict_2):
 		numer = 0
 		den_a = 0
