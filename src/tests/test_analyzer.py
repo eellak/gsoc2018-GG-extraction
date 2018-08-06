@@ -65,25 +65,11 @@ class AnalyzerTest(Context):
 			if isinstance(articles_4, dict): articles_4 = list(articles_4.values())
 			if isinstance(articles_5, dict): articles_5 = list(articles_5.values())
 
-			
-			analysis_txt_1_data_sums = self.analyzer.analyze_issue_from_articles(articles_1)
-			analysis_txt_2_data_sums = self.analyzer.analyze_issue_from_articles(articles_2)
-			analysis_txt_3_data_sums = self.analyzer.analyze_issue_from_articles(articles_3)
-			analysis_txt_4_data_sums = self.analyzer.analyze_issue_from_articles(articles_4)
-			analysis_txt_5_data_sums = self.analyzer.analyze_issue_from_articles(articles_5)
-
-			print(dec_summaries_1, "\n", analysis_txt_1_data_sums, "\n")
-			print(dec_summaries_2, "\n", analysis_txt_2_data_sums, "\n")
-			print(dec_summaries_3, "\n", analysis_txt_3_data_sums, "\n")
-			print(dec_summaries_4, "\n", analysis_txt_4_data_sums, "\n")
-			print(dec_summaries_5, "\n", analysis_txt_5_data_sums, "\n")
-
-			print(self.analyzer.get_n_gram_analysis_data_sums_vector(articles_1))
-			print(self.analyzer.get_n_gram_analysis_data_sums_vector(articles_2))
-			print(self.analyzer.get_n_gram_analysis_data_sums_vector(articles_3))
-			print(self.analyzer.get_n_gram_analysis_data_sums_vector(articles_4))
-			print(self.analyzer.get_n_gram_analysis_data_sums_vector(articles_5))
-
+			print(dec_summaries_1, "\n", self.analyzer.get_n_gram_analysis_data([txt_1]), "\n")
+			print(dec_summaries_2, "\n", self.analyzer.get_n_gram_analysis_data([txt_2]), "\n")
+			print(dec_summaries_3, "\n", self.analyzer.get_n_gram_analysis_data([txt_3]), "\n")
+			print(dec_summaries_4, "\n", self.analyzer.get_n_gram_analysis_data([txt_4]), "\n")
+			print(dec_summaries_5, "\n", self.analyzer.get_n_gram_analysis_data([txt_5]), "\n")
 
 	def test_get_respa_kw_analysis_of_paorg_pres_decree_txts_2(self):
 
@@ -131,17 +117,9 @@ class AnalyzerTest(Context):
 			if isinstance(articles_2, dict): articles_2 = list(articles_2.values())
 			if isinstance(articles_3, dict): articles_3 = list(articles_3.values())
 			
-			analysis_txt_1_data_sums = self.analyzer.analyze_issue_from_articles(articles_1)
-			analysis_txt_2_data_sums = self.analyzer.analyze_issue_from_articles(articles_2)
-			analysis_txt_3_data_sums = self.analyzer.analyze_issue_from_articles(articles_3)
-			
-			print(dec_summaries_1, "\n", analysis_txt_1_data_sums, "\n")
-			print(dec_summaries_2, "\n", analysis_txt_2_data_sums, "\n")
-			print(dec_summaries_3, "\n", analysis_txt_3_data_sums, "\n")
-
-			print(self.analyzer.get_n_gram_analysis_data_sums_vector(articles_1))
-			print(self.analyzer.get_n_gram_analysis_data_sums_vector(articles_2))
-			print(self.analyzer.get_n_gram_analysis_data_sums_vector(articles_3))
+			print(dec_summaries_1, "\n", self.analyzer.get_n_gram_analysis_data([txt_1]), "\n")
+			print(dec_summaries_2, "\n", self.analyzer.get_n_gram_analysis_data([txt_2]), "\n")
+			print(dec_summaries_3, "\n", self.analyzer.get_n_gram_analysis_data([txt_3]), "\n")
 
 	def test_respa_kw_analysis_of_paorg_pres_decree_articles_1(self):
 
@@ -160,7 +138,6 @@ class AnalyzerTest(Context):
 		dec_contents_3 = self.parser.get_dec_contents(txt_3); 
 		dec_contents_4 = self.parser.get_dec_contents(txt_4);
 		dec_contents_5 = self.parser.get_dec_contents(txt_5);
-		
 		
 		## 
 		#  Decision Summaries

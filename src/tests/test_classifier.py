@@ -28,7 +28,17 @@ class ClassifierTest(Context):
 		txt_1 = self.get_txt('1', pdf_path=pdf_path, txt_path=txt_path)
 		txt_2 = self.get_txt('2', pdf_path=pdf_path, txt_path=txt_path)
 		txt_3 = self.get_txt('3', pdf_path=pdf_path, txt_path=txt_path)
-		
+
+		txt_1_data_vec = self.analyzer.get_n_gram_analysis_data_vector(txt_1)
+		txt_2_data_vec = self.analyzer.get_n_gram_analysis_data_vector(txt_2)
+		txt_3_data_vec = self.analyzer.get_n_gram_analysis_data_vector(txt_3)
+
+		# Issue respa classifier results
+		print('Non-RespA Issues clf results:')
+		print(self.issue_clf.has_respas(txt_1_data_vec))
+		print(self.issue_clf.has_respas(txt_2_data_vec))
+		print(self.issue_clf.has_respas(txt_3_data_vec))
+
 		get_articles = self.parser.get_articles
 		articles_1 = get_articles(txt_1)
 		articles_2 = get_articles(txt_2)
@@ -38,16 +48,6 @@ class ClassifierTest(Context):
 		if isinstance(articles_1, dict): articles_1 = list(articles_1.values())
 		if isinstance(articles_2, dict): articles_2 = list(articles_2.values())
 		if isinstance(articles_3, dict): articles_3 = list(articles_3.values())
-
-		txt_1_data_vec = self.analyzer.get_n_gram_analysis_data_sums_vector(articles_1)
-		txt_2_data_vec = self.analyzer.get_n_gram_analysis_data_sums_vector(articles_2)
-		txt_3_data_vec = self.analyzer.get_n_gram_analysis_data_sums_vector(articles_3)
-
-		# Issue respa classifier results
-		print('Non-RespA Issues clf results:')
-		print(self.issue_clf.has_respas(txt_1_data_vec))
-		print(self.issue_clf.has_respas(txt_2_data_vec))
-		print(self.issue_clf.has_respas(txt_3_data_vec))
 
 		articles_1_data_vecs = self.analyzer.get_n_gram_analysis_data_vectors(articles_1)
 		articles_2_data_vecs = self.analyzer.get_n_gram_analysis_data_vectors(articles_2)
@@ -76,7 +76,23 @@ class ClassifierTest(Context):
 		txt_4 = self.get_txt('4', pdf_path=pdf_path, txt_path=txt_path)
 		txt_5 = self.get_txt('5', pdf_path=pdf_path, txt_path=txt_path)
 		txt_6 = self.get_txt('6', pdf_path=pdf_path, txt_path=txt_path)
-		
+
+		txt_1_data_vec = self.analyzer.get_n_gram_analysis_data_vector(txt_1)
+		txt_2_data_vec = self.analyzer.get_n_gram_analysis_data_vector(txt_2)
+		txt_3_data_vec = self.analyzer.get_n_gram_analysis_data_vector(txt_3)
+		txt_4_data_vec = self.analyzer.get_n_gram_analysis_data_vector(txt_4)
+		txt_5_data_vec = self.analyzer.get_n_gram_analysis_data_vector(txt_5)
+		txt_6_data_vec = self.analyzer.get_n_gram_analysis_data_vector(txt_6)
+
+		# Issue respa classifier results
+		print('RespA Issues clf results:')
+		print(self.issue_clf.has_respas(txt_1_data_vec))
+		print(self.issue_clf.has_respas(txt_2_data_vec))
+		print(self.issue_clf.has_respas(txt_3_data_vec))
+		print(self.issue_clf.has_respas(txt_4_data_vec))
+		print(self.issue_clf.has_respas(txt_5_data_vec))
+		print(self.issue_clf.has_respas(txt_6_data_vec))
+
 		get_articles = self.parser.get_articles
 		articles_1 = get_articles(txt_1)
 		articles_2 = get_articles(txt_2)
@@ -93,22 +109,6 @@ class ClassifierTest(Context):
 		if isinstance(articles_5, dict): articles_5 = list(articles_5.values())
 		if isinstance(articles_6, dict): articles_6 = list(articles_6.values())
 
-		txt_1_data_vec = self.analyzer.get_n_gram_analysis_data_sums_vector(articles_1)
-		txt_2_data_vec = self.analyzer.get_n_gram_analysis_data_sums_vector(articles_2)
-		txt_3_data_vec = self.analyzer.get_n_gram_analysis_data_sums_vector(articles_3)
-		txt_4_data_vec = self.analyzer.get_n_gram_analysis_data_sums_vector(articles_4)
-		txt_5_data_vec = self.analyzer.get_n_gram_analysis_data_sums_vector(articles_5)
-		txt_6_data_vec = self.analyzer.get_n_gram_analysis_data_sums_vector(articles_6)
-
-		# Issue respa classifier results
-		print('RespA Issues clf results:')
-		print(self.issue_clf.has_respas(txt_1_data_vec))
-		print(self.issue_clf.has_respas(txt_2_data_vec))
-		print(self.issue_clf.has_respas(txt_3_data_vec))
-		print(self.issue_clf.has_respas(txt_4_data_vec))
-		print(self.issue_clf.has_respas(txt_5_data_vec))
-		print(self.issue_clf.has_respas(txt_6_data_vec))
-
 		articles_1_data_vecs = self.analyzer.get_n_gram_analysis_data_vectors(articles_1)
 		articles_2_data_vecs = self.analyzer.get_n_gram_analysis_data_vectors(articles_2)
 		articles_3_data_vecs = self.analyzer.get_n_gram_analysis_data_vectors(articles_3)
@@ -117,7 +117,7 @@ class ClassifierTest(Context):
 		articles_6_data_vecs = self.analyzer.get_n_gram_analysis_data_vectors(articles_6)
 
 		# Artcl respa classifier results
-		print('Non-RespA Issue Articles clf results:')
+		print('RespA Issue Articles clf results:')
 		for artcl_data_vec in articles_1_data_vecs:
 			print(self.article_clf.has_respas(artcl_data_vec))
 
@@ -322,8 +322,6 @@ class ClassifierTest(Context):
 		self.paragraph_clf.fit(paragraph_4, 0)
 		self.paragraph_clf.fit(paragraph_5, 0)
 		self.paragraph_clf.fit(paragraph_6, 0)
-
-		
 
 if __name__ == '__main__':
 	unittest.main()

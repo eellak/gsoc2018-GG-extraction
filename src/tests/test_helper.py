@@ -161,37 +161,6 @@ class HelperTest(Context):
 		# self.helper.append_rows_into_csv(custom_training_data_2, self.dummy_csv)
 		# self.helper.append_rows_into_csv(custom_training_data_3, self.dummy_csv)
 
-	# def test_insert_training_data_into_csv_3(self):
-	# 		pdf_path = self.test_pdfs_dir + '/Presidential_Decree_Issues/for_training_data/Non-RespAs/'
-	# 		txt_path = self.test_txts_dir + '/for_training_data/Non-RespAs/'
-	# 		get_txt = self.get_txt
-	# 		txts = [get_txt(str(file), pdf_path=pdf_path, txt_path=txt_path)
-	# 		        for file in range(1, 23+1)]
-
-	# 		get_articles = self.parser.get_articles
-
-	# 		articles = [get_articles(txts[i]) for i in range(len(txts))]
-
-	# 		# Convert any dict to list
-	# 		for i in range(len(articles)):
-	# 			if isinstance(articles[i], dict): articles[i] = list(articles[i].values())
-			
-	# 		analyze_issue = self.analyzer.analyze_issue
-	# 		analysis_data_sums_of_txts = [analyze_issue(articles[i])
-	# 		 							  for i in range(len(articles))]
-			
-	# 		get_n_gram_analysis_data_sums_vector = self.analyzer.get_n_gram_analysis_data_sums_vector
-			
-	# 		analysis_data_sums_vectors = [get_n_gram_analysis_data_sums_vector(analysis_data_sums_of_txts[i])
-	# 									  for i in range(len(analysis_data_sums_of_txts))]
-
-	# 		# Append value to Respa column 
-	# 		analysis_data_sums_vectors = list(map(lambda vector: vector + [0], analysis_data_sums_vectors))
-			
-	# 		print(analysis_data_sums_vectors)
-		
-	# 		self.helper.append_rows_into_csv(analysis_data_sums_vectors, self.dummy_csv)
-
 	def test_insert_training_data_into_csv_3(self):
 		pdf_path = self.test_pdfs_dir + '/Presidential_Decree_Issues/'
 		get_txt = self.get_txt
