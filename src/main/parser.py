@@ -54,10 +54,46 @@ class Parser(object):
 		self.article_keys = ["Άρθρο"]
 		self.last_article_keys = ["Έναρξη Ισχύος", "Έναρξη ισχύος", "Η ισχύς του παρόντος", "EΝΑΡΞΗ ΙΣΧΥΟΣ"]
 
-	# @TODO:
-	# - Fine-tune section getters (see specific @TODOs)
-
 	def get_dec_contents(self, txt):
+		"""
+			Return contents string.
+			
+			@param txt: GG Issue containing decisions
+			
+			e.g. 
+			(ΠΕΡΙΕΧΟΜΕΝΑ
+			 ΑΠΟΦΑΣΕΙΣ)
+			"Ανάθεση αρμοδιοτήτων στους Υφυπουργούς Διοικητι−
+			κής Μεταρρύθμισης και Ηλεκτρονικής Διακυβέρνη−
+			σης, Κωνσταντίνο Ρόβλια και Παντελή Τζωρτζάκη. 
+			Ανάθεση αρμοδιοτήτων στον Υφυπουργό Ανάπτυ−
+			ξης, Ανταγωνιστικότητας και Ναυτιλίας Αθανά−
+			σιο Μωραΐτη. ......................................................................................
+			Ανάθεση αρμοδιοτήτων στον Υφυπουργό Ανάπτυξης, 
+			Ανταγωνιστικότητας και Ναυτιλίας Σπυρίδωνα – 
+			Άδωνι Γεωργιάδη. ..........................................................................
+			Καθορισμός αρμοδιοτήτων του Υφυπουργού Περι−
+			βάλλοντος, Ενέργειας και Κλιματικής Αλλαγής 
+			Ιωάννη Μανιάτη. ..............................................................................
+			Ανάθεση αρμοδιοτήτων στον Υφυπουργό Εργασίας 
+			και Κοινωνικής Ασφάλισης Ιωάννη Κουτσούκο. ...
+			Ανάθεση αρμοδιοτήτων στον Υφυπουργό Υγείας και 
+			Κοινωνικής Αλληλεγγύης Μιχαήλ Τιμοσίδη. ...........
+			 Ανάθεση αρμοδιοτήτων στον Υφυπουργό Υγείας και 
+			Κοινωνικής Αλληλεγγύης Μάρκο Μπόλαρη. ...........
+			Ανάθεση αρμοδιοτήτων στους Υφυπουργούς Αγρο−
+			τικής Ανάπτυξης και Τροφίμων Ιωάννη Δριβελέ−
+			γκα και Αστέριο Ροντούλη. ...................................................
+			Ανάθεση αρμοδιοτήτων στον Υφυπουργό Δικαιοσύ−
+			νης, Διαφάνειας και Ανθρωπίνων Δικαιωμάτων 
+			Γεώργιο Πεταλωτή. ......................................................................
+			Ανάθεση αρμοδιοτήτων στον Υφυπουργό Προστα−
+			σίας του Πολίτη Εμμανουήλ Όθωνα. ............................"
+			(ΑΠΟΦΑΣΕΙΣ)
+
+			@TODO:
+			1. Generalize for different issues
+		"""		
 		txt = Helper.clean_up_txt(txt)
 		dec_contents = findall(r"{}(.+?){}".format(self.dec_contents_key, self.decs_key), txt, flags=DOTALL)
 		if dec_contents:
@@ -65,12 +101,24 @@ class Parser(object):
 			dec_contents = dec_contents[0]
 		return dec_contents
 	
-	# @TODO: 
-
-	#		 1. Find a way to always properly separate dec_summaries from each other
-	# 		 2. Manage "ΔΙΟΡΘΩΣΗ ΣΦΑΛΜΑΤΩΝ" section
 	def get_dec_summaries(self, txt):
-		""" Must be fed 'dec_contents' as returned by get_dec_contents() """
+		"""
+			Return a list containing the summaries of each decision.
+			
+			@param txt: GG Issue containing decisions
+
+			e.g.
+			["Σύσταση οργανικών θέσεων με σύμβαση εργασίας ιδιωτικού δικαίου αορίστου χρόνου σε ΟΤΑ α΄ βαθμού. ",
+			"Καθορισμός αμοιβής συμμετεχόντων σε Εκπαιδευτικό Συμβούλιο Διπλωματικής Ακαδημίας Υπουργείου Εξωτερικών. ",
+			"Παροχή της εγγύησης του Δημοσίου προς τις Τράπεζες για τις πιστωτικές διευκολύνσεις προς αποκατάσταση των ζημιών, που προκλήθηκαν από 
+			τις πλημμύρες, που σημειώθηκαν την 18η Ιουνίου 2004 στο Δήμο Σερρών του Ν. Σερρών. ",
+			"Παροχή της εγγύησης του Δημοσίου προς τις Τράπεζες για τις πιστωτικές διευκολύνσεις προς αποκατάσταση των ζημιών, που προκλήθηκαν από το  σεισμό, που σημειώθηκε την 1.3.2004 σε περιοχές του Ν. Μεσσηνίας. ",
+			"Παροχή της εγγύησης του Δημοσίου προς τις Τράπεζες για τις πιστωτικές διευκολύνσεις προς αποκατάσταση των ζημιών, που προκλήθηκαν από τις πλημμύρες, που σημειώθηκαν την 19η Δεκεμβρίου 2004 στο Δήμο Αμαρουσίου του Ν. Αττικής. ",
+			"Επανασυγκρότηση του Διοικητικού Συμβουλίου του Περιφερειακού Ταμείου Ανάπτυξης Βορείου Αιγαίου. "]
+
+			@TODO:
+			1. Generalize for different issues
+		"""
 		txt = Helper.clean_up_txt(txt)
 		dec_contents = self.get_dec_contents(txt)
 
@@ -91,9 +139,23 @@ class Parser(object):
 			assert(len(dec_summaries) == 1)
 		return dec_summaries
 
-	# Nums, meaning e.g. "Αριθμ. [...]"
 	def get_dec_nums(self, txt):
-		""" Must be fed 'dec_summaries' as returned by get_dec_summaries() """
+		"""
+			Return a dictionary containing the number for each decision.
+			
+			@param txt: GG Issue containing decisions
+
+			e.g.
+			{
+				1: "Αριθμ. Φ253/30978/Α5", 
+				2: "Αριθμ. 2212.2-1/4686/2981/2018", 
+				3: "Αριθμ. 17355/2017"
+				...
+			}
+
+			@TODO:
+			1. Generalize for different issues
+		"""
 		txt = Helper.clean_up_txt(txt)
 		dec_summaries = self.get_dec_summaries(txt)
 		dec_nums = []
@@ -111,7 +173,31 @@ class Parser(object):
 		return dec_nums
 
 	def get_dec_prereqs(self, txt):
-		""" Must be fed 'dec_num', currently: len(dec_summaries) """
+		"""
+			Return dictionary (or list if txt is peculiar) of the prerequisites 
+			of each decision.
+				
+			@param txt: GG Issue containing decisions
+
+			e.g.
+			{
+				1: 	(Έχοντας υπόψη:)
+					"1. Τις διατάξεις του άρθρου 280 παρ. Ι του ν.3852/2010, 
+					«Νέα Αρχιτεκτονική της Αυτοδιοίκησης και της Αποκε-
+					ντρωμένης Διοίκησης - Πρόγραμμα Καλλικράτης».
+					2. ... "(αποφασίζουμε:)
+
+				2:  (Έχοντας υπόψη:)
+					"1. Τις διατάξεις του άρθρου 58 του ν.3852/2010 (Φ.Ε.Κ. 
+					87/Α΄) «Νέα Αρχιτεκτονική της Αυτοδιοίκησης και της 
+					Αποκεντρωμένης Διοίκησης - Πρόγραμμα Καλλικράτης».
+					2. ... "(αποφασίζουμε:)
+				...
+			}
+
+			@TODO:
+			1. Generalize for different issues
+		"""
 		txt = Helper.clean_up_txt(txt)
 		
 		dec_prereq_keys = self.dec_prereq_keys
@@ -134,7 +220,37 @@ class Parser(object):
 		return dec_prereqs
 
 	def get_decisions(self, txt):
-		""" Must be fed 'dec_num', currently: len(dec_summaries) """
+		""" 
+			Return a dictionary of decisions (main bodies).
+			
+			@param txt: GG Issue containing decisions
+
+			e.g.
+			{
+				1: (αποφασίζουμε:)
+					"Α. Την υπερωριακή, απογευματινή, απασχόληση μέχρι 
+					120 ώρες ανά υπάλληλο το εξάμηνο, για 290 μόνιμους 
+					και με σύμβαση εργασίας ιδιωτικού δικαίου υπαλλήλους 
+					όλων των υπηρεσιών του Δήμου.
+					Β. Την υπερωριακή απασχόληση κατά τις νυχτερινές 
+					ώρες ή κατά τις Κυριακές και εξαιρέσιμες ημέρες, μέχρι 
+					96 ώρες ανά υπάλληλο το εξάμηνο, για τις νυχτερινές 
+					και μέχρι 96 ώρες ανά υπάλληλο το εξάμηνο, για τις 
+					Κυριακές και εξαιρέσιμες ημέρες για τις υπηρεσίες που 
+					λειτουργούν είτε όλες τις ημέρες του μήνα είτε σε 12ωρη 
+					ή ..."
+				2: "1. Ανακαλούμε την αριθ. 3122.1/4686/01/08-08-2013 
+					απόφαση του Υπουργού Ναυτιλίας και Αιγαίου (ΦΕΚ 2057/
+					Β/23-8-2013) σχετικά με την εγκατάσταση στην Ελλά-
+					δα,  σύμφωνα  με  τις  διατάξεις  των  α.ν.  378/1968  και 
+					ν.  27/1975,  ν.  814/1978,  ν.  2234/1994,  ν.  3752/2009,
+					ν. 4150/2013, γραφείου της εταιρείας «ARISTA SHIPS 
+					INC.» με έδρα στα νησιά ΜΑΡΣΑΛ.
+					2. Η παραπάνω εταιρεία υποχρεώνεται, σύμφωνα με 
+					το άρθρο 23 του ν. 1360/1983, να εκπληρώσει τις κάθε ... "
+				...
+			}
+		"""
 		txt = Helper.clean_up_txt(txt)
 		
 		dec_init_keys = self.dec_init_keys
@@ -153,10 +269,18 @@ class Parser(object):
 	
 		return dec_bodies
 
-	# @TODO: 
-	# 		1. Refine
-	#		2. Make format of final result definite
 	def get_dec_signees(self, txt):
+		"""
+			Return decision signees.
+			
+			@param txt: GG Issue containing decisions
+
+			@TODO: 
+	 		1. Refine
+			2. Make format of final result definite
+			3. Generalize for different issues
+		""" 
+
 		# E.g. "Οι Υπουργοί", "Ο ΠΡΟΕΔΡΕΥΩΝ" etc.
 		dec_signees_general_occup_pattern = "{year}\s*\n\s*{by_order_of}?((?:{gen_occupation}))\s*\n"\
 											.format(year="\s\d{4}", 
@@ -181,12 +305,51 @@ class Parser(object):
 		return dict(zip(dec_signees_general_occup, dec_signees))
 
 	def get_dec_location_and_date(self, txt):
+		"""
+			Return list of location and date of each decision.
+
+			@param txt: GG Issue containing decisions
+			
+			e.g. 
+			['Κομοτηνή, 27 Φεβρουαρίου 2006', 'Καβάλα, 24 Φεβρουαρίου 2006', 'Κατερίνη, 16 Φεβρουαρίου 2006', 
+			 'Χανιά, 17 Φεβρουαρίου 2006', 'Κόρινθος, 13 Φεβρουαρίου 2006', 'Άρτα, 24 Φεβρουαρίου 2006', 
+			 'Άρτα, 24 Φεβρουαρίου 2006', 'Λιβαδειά, 23 Φεβρουαρίου 2006', 'Δράμα, 23 Φεβρουαρίου 2006', 
+			 'Αθήνα, 2 Φεβρουαρίου 2006', 'Αθήνα, 1 Μαρτίου 2006', 'Πειραιάς, 21 Φεβρουαρίου 2006']
+
+			@TODO:
+			1. Add more locations
+			2. Generalize for different issues
+		"""
 		regex_dec_location_and_date = Helper.get_dec_location_and_date_before_signees_regex()
 		dec_location_and_dates = findall(regex_dec_location_and_date, txt)
 		return dec_location_and_dates
 
 	def get_paorgs(self, txt, paorgs_list):
-		""" Must be fed a pre-fetched 'paorgs_list' """
+		""" 
+			Return a list of manually detected Public Administration Organizations
+			contained within a GG Issue.
+			
+			@param txt: GG Issue
+			@param list paorgs_list: List of PAOrgs from fetch_paorgs() of the fetcher module
+
+			e.g. 
+			[{'Υπουργού Οικονομίας': ['ΥΠΟΥΡΓΕΙΟ ΟΙΚΟΝΟΜΙΚΩΝ']}, 
+			 {'Οργανισμός Ενιαίας Ανεξάρτητης Αρχής Δημοσίων Συμβάσεων': ['ΕΝΙΑΙΑ ΑΝΕΞΑΡΤΗΤΗ ΑΡΧΗ ΔΗΜΟΣΙΩΝ ΣΥΜΒΑΣΕΩΝ ']}, 
+			 {'Υπουργού Ανάπτυξης Ανταγωνιστικότητας': ['ΥΠΟΥΡΓΕΙΟ ΑΝΑΠΤΥΞΗΣ ΚΑΙ ΑΝΤΑΓΩΝΙΣΤΙΚΟΤΗΤΑΣ']}, 
+			 {'Ενιαίας Ανεξάρτητης Αρχής Δημοσίων Συμβάσεων': ['ΕΝΙΑΙΑ ΑΝΕΞΑΡΤΗΤΗ ΑΡΧΗ ΔΗΜΟΣΙΩΝ ΣΥΜΒΑΣΕΩΝ ']}, 
+			 {'ΕΝΙΑΙΑ ΑΝΕΞΑΡΤΗΤΗ ΑΡΧΗ ΔΗΜΟΣΙΩΝ ΣΥΜΒΑΣΕΩΝ Έχοντας': ['ΕΝΙΑΙΑ ΑΝΕΞΑΡΤΗΤΗ ΑΡΧΗ ΔΗΜΟΣΙΩΝ ΣΥΜΒΑΣΕΩΝ ']}, 
+			 {'Ενιαία Ανεξάρτητη Αρχή Δημοσίων Συμβάσεων': ['ΕΝΙΑΙΑ ΑΝΕΞΑΡΤΗΤΗ ΑΡΧΗ ΔΗΜΟΣΙΩΝ ΣΥΜΒΑΣΕΩΝ ']}, 
+			 {'Εθνικό Tυπογραφείο': ['ΕΘΝΙΚΟ ΤΥΠΟΓΡΑΦΕΙΟ']}, 
+			 {'Υπουργών Οικονομίας': ['ΥΠΟΥΡΓΕΙΟ ΟΙΚΟΝΟΜΙΚΩΝ']}, 
+			 {'Δημοσίων Συμβάσεων': ['ΔΗΜΟΣ ΣΥΜΗΣ', 'ΔΗΜΟΣ ΣΕΡΡΩΝ']}, 
+			 {'Υπουργού Οικονομίας Ανάπτυξης': ['ΥΠΟΥΡΓΕΙΟ ΟΙΚΟΝΟΜΙΑΣ ΚΑΙ ΑΝΑΠΤΥΞΗΣ', 'ΥΠΟΥΡΓΕΙΟ ΟΙΚΟΝΟΜΙΑΣ, ΑΝΑΠΤΥΞΗΣ ΚΑΙ ΤΟΥΡΙΣΜΟΥ']}, 
+			 {'Το Εθνικό Τυπογραφείο': ['ΕΘΝΙΚΟ ΤΥΠΟΓΡΑΦΕΙΟ']}, 
+			 {'Υπουργείο Διοικητικής Ανασυγκρότησης': ['ΥΠΟΥΡΓΕΙΟ ΔΙΟΙΚΗΤΙΚΗΣ ΑΝΑΣΥΓΚΡΟΤΗΣΗΣ', 'ΥΠΟΥΡΓΕΙΟ ΕΣΩΤΕΡΙΚΩΝ ΚΑΙ ΔΙΟΙΚΗΤΙΚΗΣ ΑΝΑΣΥΓΚΡΟΤΗΣΗΣ']}, 
+			 {'Κανονισμός Λειτουργίας Ενιαίας Ανεξάρτητης Αρχής Δημοσίων Συμβάσεων': ['ΕΝΙΑΙΑ ΑΝΕΞΑΡΤΗΤΗ ΑΡΧΗ ΔΗΜΟΣΙΩΝ ΣΥΜΒΑΣΕΩΝ ']}, 
+			 {'Τον ΚΑΔ': ['ΕΤΟΣ ΚΟΑ']}]
+
+
+		"""
 		txt = Helper.clean_up_for_paorgs_getter(txt)
 		
 		# Match possible PAOrg acronyms 	
@@ -214,10 +377,25 @@ class Parser(object):
 		return matching_paorgs
 
 	def get_articles(self, txt):
-		""" Ideally to be fed 'txt' containing a presidential decree with articles """
-		dec_articles = []
+		""" 
+			Return a dictionary of articles contained within a GG Issue.
+			
+			@param txt: GG Issue containing articles
+
+			e.g. 
+			{
+				1: 'Άρθρο 1\nΑποστολή \nΤο Υπουργείο Ανάπτυξης και Ανταγωνιστικότητας 
+					\nέχει ως αποστολή τη διαμόρφωση της αναπτυξιακής \nπολιτικής της χώρας 
+					που στοχεύει στην προώθηση ...'
+				2: 'Άρθρο 2\nΔΙΑΡΘΡΩΣΗ ΥΠΗΡΕΣΙΩΝ\nΟι υπηρεσίες του Υπουργείου, διαρθρώνονται ως εξής:\n
+					1. α. Πολιτικά Γραφεία Υπουργού και Υφυπουργών\nβ. Γραφεία Γενικών Γραμματέων\nγ. 
+					Γραφείο Ειδικού Γραμματέα\nδ. Αυτοτελές Τμήμα Εσωτερικού Ελέγχου\nε. ...'
+				...
+			} 
+		"""
+		articles = []
 		if txt: 
-			dec_articles = findall(r"({artcl}\s*\d+\s*\n.+?)(?={artcl}\s*\d+\s*\n)"\
+			articles = findall(r"({artcl}\s*\d+\s*\n.+?)(?={artcl}\s*\d+\s*\n)"\
 							.format(artcl=self.article_keys[0]), txt, flags=DOTALL)
 			last_article = findall(r"({artcl}\s*\d+\s*\n(?:{last_article}).+?\.\s*\n)"\
 							.format(artcl=self.article_keys[0], 
@@ -226,8 +404,8 @@ class Parser(object):
 			
 			if last_article:
 				assert(len(last_article) >= 1)
-				dec_articles.append(last_article[0])
-			return dict(zip(range(1, len(dec_articles) + 1), dec_articles))
+				articles.append(last_article[0])
+			return dict(zip(range(1, len(articles) + 1), articles))
 
 	# def get_rough_respas_of_organization_units_from_pres_decree_txt(self, txt):
 	# 	""" Ideally to be fed 'txt' containing an article with responsibilities """
@@ -260,9 +438,19 @@ class Parser(object):
 			
 	# 	return list(OrderedDict.fromkeys(rough_paorg_respa_sections))
 
-	# Get RespA sections contained in decision body 
+	
 	def get_dec_respa_sections(self, txt):
-		""" Ideally to be fed 'txt' containing decision """
+		"""
+			Return a list of Responsibility Assignment (RespA) sections from a decision (main body)
+			contained within a GG Issue (one with decisions regarding RespA (ανάθεση αρμοδιότητων/καθηκόντων))
+			
+			@param txt: GG Issue containing RespA decisions
+
+			@TODO:
+			1. Fix reges (only one attempt)
+			2. Add more keywords for different cases
+			
+		"""
 		dec_respa_sections_in_articles, \
 		dec_respa_sections_not_in_articles_1, \
 		dec_respa_sections_not_in_articles_2 = [], [], []
@@ -290,9 +478,14 @@ class Parser(object):
 
 		return dec_respa_sections
 
-	# Get RespA decisions referred in decision prerequisites
 	def get_referred_dec_respa_sections(self, txt):
-		""" Ideally to be fed 'txt' containing decision prerequisites """
+		"""
+			Return a list of referred Responsibility Assignment (RespA) sections from the 
+			prerequisites of a decision contained within a GG Issue 
+			(one with decisions regarding RespA (ανάθεση αρμοδιότητων/καθηκόντων) or references to them)
+
+			@param txt: GG Issue containing decisions
+		"""
 		ref_dec_respa_sections = []
 
 		respa_key_assignment_verbs = self.respa_keys['assignment_verbs']
@@ -308,6 +501,19 @@ class Parser(object):
 		return ref_dec_respa_sections
 
 	def get_rough_unit_respa_associations(self, paorg_pres_decree_txt, format=''):
+		"""
+			Return a dictionary of rough Organization Unit - RespA associations
+
+			@param paorg_pres_decree_txt: GG Presidential Decree Organization Issue
+										  e.g. "ΠΡΟΕΔΡΙΚΟ ΔΙΑΤΑΓΜΑ ΥΠ’ ΑΡΙΘΜ. 18 
+												Οργανισμός Υπουργείου Παιδείας, Έρευνας και 
+												Θρησκευμάτων.",
+
+												"ΠΡΟΕΔΡΙΚΟ ΔΙΑΤΑΓΜΑ ΥΠ’ ΑΡΙΘΜ. 4 
+												Οργανισμός Υπουργείου Πολιτισμού και Αθλη-
+												τισμού." etc.
+ 		"""
+
 		units_and_respas = self.get_units_and_respas(paorg_pres_decree_txt)
 		units_followed_by_respas = self.get_units_followed_by_respas(paorg_pres_decree_txt)
 		units_and_respas_following_respas_decl = self.get_units_and_respas_following_respas_decl(paorg_pres_decree_txt)
@@ -324,11 +530,9 @@ class Parser(object):
 		return rough_unit_respa_associations 
 
 	def get_person_named_entities(self, txt):
-		""" Ideally to be fed 'txt' containing RespA sections """
 		return list(filter(lambda entity: entity.tag == 'I-PER', Text(txt).entities))
 
 	def get_sentences(self, txt):
-		""" Ideally to be fed 'txt' containing '.' separated sentences """
 		txt = Helper.clean_up_txt(txt)
 		# return Text(txt).sentences
 		return sent_tokenize(txt)
@@ -343,19 +547,45 @@ class Parser(object):
 		return paragraphs
 
 	def get_issue_number(self, txt):
+		""" 
+			@param txt: GG Issue
+
+			e.g. (Αρ. Φύλλου) '195' 
+					
+		"""
 		issue_numbers = findall(r"{issue_number_key}[ ]+(\d+)".format(issue_number_key=self.issue_number_key), txt)
 		return issue_numbers[0] if issue_numbers else issue_numbers
 
 	def get_issue_category(self, txt):
+		""" 
+			@param txt: GG Issue
+
+			e.g. (ΤΕΥΧΟΣ) ΔΕΥΤΕΡΟ
+				
+		"""
 		issue_categories = findall(r"ΤΕΥΧΟΣ[ ]+([\s\S]+?)\n", txt)
 		return issue_categories[0] if issue_categories else issue_categories
 
 	def get_issue_type(self, txt):
+		""" 
+			@param txt: GG Issue
+
+			e.g. "ΑΠΟΦΑΣΕΙΣ", "ΠΡΟΕΔΡΙΚΟ ΔΙΑΤΑΓΜΑ"  etc.
+						
+			@TODO:
+			1. Refine
+			2. Add more keywords
+		"""
 		issue_types = findall(r"\s+((?:{issue_type_keys})[\s\S]+?)\n".\
 								format(issue_type_keys=Helper.get_special_regex_disjunction(self.issue_type_keys)), txt)
 		return issue_types[0] if issue_types else issue_types
 
 	def get_publication_date(self, txt):
+		""" 
+			@param txt: GG Issue
+
+			e.g. "29 Ιανουαρίου 2018" 
+		"""
 		dates = findall(r"{day}[ ]+(?:{months})[ ]+{year}".\
 						 format(day="\d{1,2}", 
 								months=Helper.get_special_regex_disjunction(list(Helper.get_greek_months().keys())),
@@ -365,15 +595,50 @@ class Parser(object):
 		return dates[0] if dates else dates
 
 	def get_serial_number(self, txt):
+		""" 
+			@param txt: GG Issue
+			e.g. (*)"02001952901180008"(*) 
+		"""
 		serial_numbers = findall(r"\*\d{17}\*", txt)
 		return serial_numbers[0] if serial_numbers else serial_numbers
 
 	def get_mentioned_issues_sections(self, txt):
+		""" 
+			@param txt: GG Issue
+			e.g. ( ( )"ΦΕΚ 82 Α/17-4-1968"( ) ) 
+		"""
 		txt = Helper.clean_up_txt(txt)
 		mentioned_issues_sections = findall(r"\((ΦΕΚ[^\)]+)\)", txt)
 		return mentioned_issues_sections
 
 	def get_units_followed_by_respas(self, paorg_pres_decree_txt):
+		"""  
+			Return a dictionary of rough Organization Unit - RespA associations
+			mentioned as a Unit followed by a list of RespAs.
+			
+			@param paorg_pres_decree_txt: GG Presidential Decree Organization Issue
+										  e.g. "ΠΡΟΕΔΡΙΚΟ ΔΙΑΤΑΓΜΑ ΥΠ’ ΑΡΙΘΜ. 18 
+												Οργανισμός Υπουργείου Παιδείας, Έρευνας και 
+												Θρησκευμάτων.",
+
+												"ΠΡΟΕΔΡΙΚΟ ΔΙΑΤΑΓΜΑ ΥΠ’ ΑΡΙΘΜ. 4 
+												Οργανισμός Υπουργείου Πολιτισμού και Αθλη-
+												τισμού." etc.
+
+			e.g.
+			{
+				"Το Τμήμα Α Προγραμματισμού και Τεκμηρίωσης είναι αρμόδιο για": [
+			        "3. Το Τμήμα Α’ Προγραμματισμού και Τεκμηρίωσης \nείναι αρμόδιο για:",
+			        "α) τη διαμόρφωση μεθοδολογικού και θεσμικού \nπλαισίου για τον εσωτερικό έλεγχο των υπηρεσιών του \nΥπουργείου και την καθοδήγηση τους για την ανάπτυξη \nσυστημάτων διαχείρισης κινδύνων,",
+			        "β) την κατάρτιση προγράμματος εσωτερικών ελέγχων \nστις Υπηρεσίες του Υπουργείου, ετήσιου ή μεγαλύτερης \nδιάρκειας, κατόπιν καθορισμού των ελεγκτέων περιοχών διαδικασιών, σε συνδυασμό με την αναγνώριση και αξιολόγηση των κινδύνων και λαμβανομένων υπόψη των \nστρατηγικών και επιχειρησιακών προτεραιοτήτων του \nΥπουργείου, συνεκτιμώντας πάσης φύσεως αναφορές, \nκαταγγελίες, εκθέσεις και κάθε άλλο στοιχείο, τηρουμένων των εκάστοτε ισχυουσών διατάξεων περί προστασίας προσωπικών δεδομένων,",
+			        "γ) την έκδοση εντολών για την διενέργεια προγραμματισμένων και έκτακτων εσωτερικών ελέγχων, όπου \nαυτό απαιτείται,",
+			        "δ) τη διασφάλιση τήρησης των Διεθνών Προτύπων και \nτων ορθών πρακτικών κατά την ελεγκτική διαδικασία, \nτην επεξεργασία των στοιχείων των επί μέρους εκθέσεων εσωτερικού ελέγχου και τη σύνταξη ετήσιας ή/\nκαι ενδιάμεσης έκθεσης, στις οποίες καταγράφονται οι \nδραστηριότητες και τα αποτελέσματα του εσωτερικού \nελέγχου,",
+			        "ε) την υποβολή της έκθεσης εσωτερικού ελέγχου στον \nοικείο Υπουργό με κοινοποίηση στις Υπηρεσίες που \nέχουν αρμοδιότητα για το σχεδιασμό και τη λειτουργία \nτου συστήματος που ελέγχθηκε και την τακτική παρακολούθηση, αξιολόγηση και επιβεβαίωση των διορθωτικών \nή προληπτικών ενεργειών που πραγματοποιούνται από \nτις υπηρεσίες σε συμμόρφωση με τις προτάσεις του εσωτερικού ελέγχου, μέχρι την οριστική υλοποίησή τους,\n στ) την εισήγηση για την κατάρτιση ή αναθεώρηση \nτου Κώδικα Δεοντολογίας Εσωτερικών Ελεγκτών και \nτην εισήγηση για την τροποποίηση του, αν αυτό κριθεί \nαναγκαίο,",
+			        "ζ) τη μέριμνα για την εκπαίδευση και την επιμόρφωση \nτων Εσωτερικών Ελεγκτών, σε συνεργασία με τις καθ΄ \nύλην αρμόδιες υπηρεσίες του Υπουργείου, καθώς και \nτην διερεύνηση και την πρόταση τρόπων ανάπτυξης των \nγνώσεων και των δεξιοτήτων τους,",
+			        "η) τον χειρισμό κάθε άλλου συναφούς θέματος."],
+			    ...
+			}
+		"""
 		paragraph_clf = main.classifier.ParagraphRespAClassifier()
 		respas_threshold = 60
 		units_followed_by_respas = OrderedDict()
@@ -431,6 +696,57 @@ class Parser(object):
 		return units_followed_by_respas
 
 	def get_units_and_respas_following_respas_decl(self, paorg_pres_decree_txt):
+		"""  
+			Return a dictionary of rough Organization Unit - RespA associations
+			mentioned as a RespA declaration followed by a Unit-RespAs list.
+			
+			@param paorg_pres_decree_txt: GG Presidential Decree Organization Issue
+										  e.g. "ΠΡΟΕΔΡΙΚΟ ΔΙΑΤΑΓΜΑ ΥΠ’ ΑΡΙΘΜ. 18 
+												Οργανισμός Υπουργείου Παιδείας, Έρευνας και 
+												Θρησκευμάτων.",
+
+												"ΠΡΟΕΔΡΙΚΟ ΔΙΑΤΑΓΜΑ ΥΠ’ ΑΡΙΘΜ. 4 
+												Οργανισμός Υπουργείου Πολιτισμού και Αθλη-
+												τισμού." etc.
+
+			e.g.
+			{
+				"Τμήμα Διαχείρισης και Ανάπτυξης Ανθρώπινου Δυναμικού Τομέα Εμπορίου Καταναλωτή και Βιομηχανίας": [
+			        "β. Τμήμα Διαχείρισης και Ανάπτυξης Ανθρώπινου Δυναμικού Τομέα Εμπορίου−Καταναλωτή και Βιομηχανίας.",
+			        "αα. Η εφαρμογή της κείμενης νομοθεσίας που αφορά στην υπηρεσιακή κατάσταση και στις υπηρεσιακές \nμεταβολές του πάσης φύσεως προσωπικού.",
+			        "ββ. Η κατανομή των οργανικών θέσεων, η περιγραφή \nκαι ανάλυση των καθηκόντων καθώς και ο καθορισμός \nτων περιγραμμάτων εργασίας\nγγ. Η καταγραφή των υπηρεσιακών αναγκών και η \nστελέχωση (διορισμοί−τοποθετήσεις−μετακινήσεις, αποσπάσεις, μετατάξεις) για την κάλυψη αυτών.",
+			        "δδ. Η στελέχωση των Πολιτικών Γραφείων του Υφυπουργού και των Γενικών ή Ειδικών Γραμματέων του \nΤομέα.",
+			        "εε. Η έκδοση αποφάσεων για μετακινήσεις εκτός \nέδρας στο εσωτερικό και στο εξωτερικό για εκτέλεση \nυπηρεσίας υπαλλήλων.",
+			        "στστ. Η παρακολούθηση και εφαρμογή της κινητικότητας των υπαλλήλων.",
+			        "ζζ. Η αριθμητική καταγραφή και παρακολούθηση του \nπάσης φύσεως προσωπικού και η διαρκής ενημέρωση \nτου Μητρώου Μισθοδοτούμενων καθώς και η σύνταξη \nκαταστάσεων με στοιχεία του προσωπικού (επετηρίδα) \nκαι η τήρηση των προσωπικών μητρώων των υπηρετούντων υπαλλήλων.",
+			        "ηη. Η χορήγηση των πάσης φύσεως αδειών.",
+			        "θθ. Η διαδικασία έγκρισης υπερωριών του πάσης φύσεως προσωπικού.",
+			        "ιι. Η ηλεκτρονική θεώρηση βιβλιαρίων ιατροφαρμακευτικής περίθαλψης των υπαλλήλων.",
+			        "ιαια. Η εφαρμογή των διατάξεων περί αξιολόγησης \nπροσωπικού.",
+			        "ιβιβ. Η εφαρμογή των διατάξεων περί καθορισμού των \nετήσιων στόχων και δεικτών μέτρησης αποδοτικότητας \nκαι αποτελεσματικότητας, η παρακολούθηση υλοποίησης και η αναθεώρησή τους καθώς και η σύνταξη της \nετήσιας έκθεσης απολογισμού και επί μέρους εκθέσεων \nαξιολογήσεων/μετρήσεων για τις Υπηρεσιακές Μονάδες.",
+			        "ιγιγ. Η καταγραφή των αναγκών εκπαίδευσης και επιμόρφωσης του στελεχιακού δυναμικού, η κατάρτιση \nτου ετήσιου εκπαιδευτικού προγράμματος καθώς και \nη διαχείριση μητρώου εκπαιδευθέντων.",
+			        "ιδιδ. Η εφαρμογή του πειθαρχικού δικαίου και των διατάξεων περί αργίας−αναστολής εκτέλεσης καθηκόντων."
+			    ],
+			    "Τμήμα Διοικητικής Υποστήριξης Οργάνωσης και Τεχνικών Υπηρεσιών του Τομέα Ανάπτυξης": [
+			        "α. Τμήμα Διοικητικής Υποστήριξης, Οργάνωσης και \nΤεχνικών Υπηρεσιών του Τομέα Ανάπτυξης.",
+			        "αα. Η μέριμνα για την τήρηση του ωραρίου μέσω των \nκαρτών προσέλευσης−αναχώρησης του προσωπικού.",
+			        "ββ. Η τήρηση του Γενικού Πρωτοκόλλου (φυσικού ή \nκαι ηλεκτρονικού) του Τομέα.",
+			        "γγ. Η διεκπεραίωση της απλής και διαβαθμισμένης \nαλληλογραφίας και του λοιπού έντυπου και ηλεκτρονικού υλικού.",
+			        "δδ. Η επικύρωση αντιγράφων, εγγράφων και η βεβαίωση του γνησίου της υπογραφής, σύμφωνα με το 1 του Ν. 4250/2014 (Α΄ 74).",
+			        "εε. Η επίδοση εγγράφων και λοιπού έντυπου υλικού \nεντός και εκτός του Τομέα.",
+			        "στστ. Η ευθύνη για τις διαδικασίες αναπαραγωγής \nζζ. Η ευθύνη για την κίνηση των υπηρεσιακών οχηεγγράφων.",
+			        "μάτων.\nηη. Οι ενέργειες για τη χωροταξική κατανομή και στέγαση των Υπηρεσιών του Υπουργείου σε συνάρτηση με \nτο αντικείμενό τους και την εξυπηρέτηση του πολίτη \nκαθώς και η μέριμνα για την ορθολογική διαχείριση και \nεξοικονόμηση ενέργειας στα κτίρια του Υπουργείου.",
+			        "θθ. Η ευθύνη για την ομαλή λειτουργία των τηλεφωνικών κέντρων.",
+			        "ιι. Η υλοποίηση, επίβλεψη και συντονισμός των διαδικασιών για τη συντήρηση, βελτίωση, φύλαξη και \nπυρασφάλεια των χώρων και των εγκαταστάσεων, τη \nφροντίδα για την καθαριότητα των καταστημάτων του \nΥπουργείου καθώς και τη λειτουργία των FAX, μέσων \nεπικοινωνίας και των φωτοτυπικών μηχανημάτων.",
+			        "ιαια. Οι μελέτες και προτάσεις προς το Τμήμα Κατάρτισης και Εκτέλεσης Προγράμματος Προμηθειών για \nτην προμήθεια υλικού και εξοπλισμού της Κεντρικής \nΥπηρεσίας καθώς και για κάθε είδους προμήθειες που \nαφορούν τον Τομέα, όπως επίσης και ο προγραμματισμός για τεχνικά έργα.",
+			        "ιβιβ. Η διενέργεια της επίβλεψης−καταμέτρησηςπαραλαβής τεχνικών εργασιών σε συνεργασία με τη Διεύθυνση Προμηθειών, Υποδομών και Διαχείρισης Υλικού \nτου Υπουργείου.",
+			        "ιγιγ. Η λειτουργία και εφαρμογή των σύγχρονων εργαλείων διαχείρισης των Βιβλιοθηκών, η διασύνδεση και \nανταπόκριση στα αιτήματα των εργαζομένων.",
+			        "ιδιδ. Η ευθύνη της μελέτης, υπόδειξης και παρακολούθησης εφαρμογής μέτρων για την απλούστευση \nγραφειοκρατικών τύπων και την καθιέρωση προσφορότερων μεθόδων εργασίας για την αύξηση της παραγωγικότητας.",
+			        "ιειε. Η εξυπηρέτηση−πληροφόρηση του πολίτη.",
+			        "ιστιστ. Η εξασφάλιση της προσβασιμότητας και λοιπών διευκολύνσεων για τα άτομα με αναπηρίες στους \nχώρους λειτουργίας του Υπουργείου."
+			    ],
+			}
+		"""
 		paragraph_clf = main.classifier.ParagraphRespAClassifier()
 		articles = self.get_articles(paorg_pres_decree_txt)
 		units_and_respas_following_respas_decl = OrderedDict()
@@ -524,6 +840,39 @@ class Parser(object):
 		return units_and_respas_following_respas_decl
 
 	def get_units_and_respas(self, paorg_pres_decree_txt):
+		""" 
+			Return dictionary of rough Organization Unit - RespA associations
+			mentioned in single paragraphs.
+			
+			@param paorg_pres_decree_txt: GG Presidential Decree Organization Issue
+										  e.g. "ΠΡΟΕΔΡΙΚΟ ΔΙΑΤΑΓΜΑ ΥΠ’ ΑΡΙΘΜ. 18 
+												Οργανισμός Υπουργείου Παιδείας, Έρευνας και 
+												Θρησκευμάτων.",
+
+												"ΠΡΟΕΔΡΙΚΟ ΔΙΑΤΑΓΜΑ ΥΠ’ ΑΡΙΘΜ. 4 
+												Οργανισμός Υπουργείου Πολιτισμού και Αθλη-
+												τισμού." etc.
+
+			e.g. 
+			{ 
+				'Το Γραφείο Φύλαξης Πληροφόρησης είναι αρμόδιο για τον προγραμματισμό και':
+
+			    'Το Γραφείο Φύλαξης Πληροφόρησης είναι αρμόδιο 
+				για τον προγραμματισμό και έλεγχο της φύλαξης των 
+				Μουσείων, αποθηκών αρχαίων, αρχαιολογικών χώρων 
+				και εν γένει αρχαιολογικών εγκαταστάσεων, την τήρηση και εποπτεία της φύλαξης κατά τις ημέρες των 
+				εξαιρέσιμων και αργιών και τη σύνταξη των σχετικών 
+				καταστάσεων για την αποζημίωση των προσφερομένων 
+				υπηρεσιών κατά τις ημέρες αυτές, οι οποίες εγκρίνονται 
+				από τον Προϊστάμενο. Επιπλέον μεριμνά για την ευταξία αρχαιολογικών χώρων και μουσείων και εν γένει για 
+				την εύρυθμη λειτουργία τους, καθώς και για την ευπρεπή συμπεριφορά του αρχαιοφυλακτικού προσωπικού, 
+				όπως επίσης συντονίζει τους ορισμένους υπεύθυνους 
+				αρχιφύλακες.',
+				
+				...
+			}
+
+		"""
 		paragraph_clf = main.classifier.ParagraphRespAClassifier()
 		articles = self.get_articles(paorg_pres_decree_txt)
 		additional_respas_threshold = 6
