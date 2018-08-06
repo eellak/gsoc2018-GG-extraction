@@ -89,11 +89,11 @@ class HelperTest(Context):
 		print(custom_training_data_4)
 		print(custom_training_data_5)
 		
-		self.helper.append_rows_into_csv(custom_training_data_1, self.dummy_csv)
-		self.helper.append_rows_into_csv(custom_training_data_2, self.dummy_csv)
-		self.helper.append_rows_into_csv(custom_training_data_3, self.dummy_csv)
-		self.helper.append_rows_into_csv(custom_training_data_4, self.dummy_csv)
-		self.helper.append_rows_into_csv(custom_training_data_5, self.dummy_csv)
+		# self.helper.append_rows_into_csv(custom_training_data_1, self.dummy_csv)
+		# self.helper.append_rows_into_csv(custom_training_data_2, self.dummy_csv)
+		# self.helper.append_rows_into_csv(custom_training_data_3, self.dummy_csv)
+		# self.helper.append_rows_into_csv(custom_training_data_4, self.dummy_csv)
+		# self.helper.append_rows_into_csv(custom_training_data_5, self.dummy_csv)
 
 	def test_insert_training_data_into_csv_2(self):
 
@@ -149,17 +149,17 @@ class HelperTest(Context):
 		# custom_training_data_3 = list(filter(lambda vector: sum(vector) > 0, custom_training_data_3))
 
 		# Append '0' ('non-respa') value to Respa column 
-		custom_training_data_1 = list(map(lambda vector: vector + [1], custom_training_data_1))
-		custom_training_data_2 = list(map(lambda vector: vector + [1], custom_training_data_2))
-		custom_training_data_3 = list(map(lambda vector: vector + [1], custom_training_data_3))
+		# custom_training_data_1 = list(map(lambda vector: vector + [1], custom_training_data_1))
+		# custom_training_data_2 = list(map(lambda vector: vector + [1], custom_training_data_2))
+		# custom_training_data_3 = list(map(lambda vector: vector + [1], custom_training_data_3))
 
-		print(custom_training_data_1)
-		print(custom_training_data_2)
-		print(custom_training_data_3)
+		# print(custom_training_data_1)
+		# print(custom_training_data_2)
+		# print(custom_training_data_3)
 		
-		self.helper.append_rows_into_csv(custom_training_data_1, self.dummy_csv)
-		self.helper.append_rows_into_csv(custom_training_data_2, self.dummy_csv)
-		self.helper.append_rows_into_csv(custom_training_data_3, self.dummy_csv)
+		# self.helper.append_rows_into_csv(custom_training_data_1, self.dummy_csv)
+		# self.helper.append_rows_into_csv(custom_training_data_2, self.dummy_csv)
+		# self.helper.append_rows_into_csv(custom_training_data_3, self.dummy_csv)
 
 	# def test_insert_training_data_into_csv_3(self):
 	# 		pdf_path = self.test_pdfs_dir + '/Presidential_Decree_Issues/for_training_data/Non-RespAs/'
@@ -232,15 +232,17 @@ class HelperTest(Context):
 		custom_training_data_6 = list(map(lambda vector: vector + [1], custom_training_data_6))
 		custom_training_data_7 = list(map(lambda vector: vector + [1], custom_training_data_7))
 		custom_training_data_8 = list(map(lambda vector: vector + [1], custom_training_data_8))
+		
+		# EXPORT
 
-		self.helper.append_rows_into_csv(custom_training_data_1, self.dummy_csv)
-		self.helper.append_rows_into_csv(custom_training_data_2, self.dummy_csv)
-		self.helper.append_rows_into_csv(custom_training_data_3, self.dummy_csv)
-		self.helper.append_rows_into_csv(custom_training_data_4, self.dummy_csv)
-		self.helper.append_rows_into_csv(custom_training_data_5, self.dummy_csv)
-		self.helper.append_rows_into_csv(custom_training_data_6, self.dummy_csv)
-		self.helper.append_rows_into_csv(custom_training_data_7, self.dummy_csv)
-		self.helper.append_rows_into_csv(custom_training_data_8, self.dummy_csv)
+		# self.helper.append_rows_into_csv(custom_training_data_1, self.dummy_csv)
+		# self.helper.append_rows_into_csv(custom_training_data_2, self.dummy_csv)
+		# self.helper.append_rows_into_csv(custom_training_data_3, self.dummy_csv)
+		# self.helper.append_rows_into_csv(custom_training_data_4, self.dummy_csv)
+		# self.helper.append_rows_into_csv(custom_training_data_5, self.dummy_csv)
+		# self.helper.append_rows_into_csv(custom_training_data_6, self.dummy_csv)
+		# self.helper.append_rows_into_csv(custom_training_data_7, self.dummy_csv)
+		# self.helper.append_rows_into_csv(custom_training_data_8, self.dummy_csv)
 
 
 	def test_insert_training_data_into_csv_4(self):
@@ -260,9 +262,10 @@ class HelperTest(Context):
  
 		custom_training_data_of_txts = [list(map(lambda vector: vector + [1], custom_training_data))
 										for custom_training_data in custom_training_data_of_txts]
+		# EXPORT
 
-		for custom_training_data in custom_training_data_of_txts:
-			self.helper.append_rows_into_csv(custom_training_data, self.dummy_csv)
+		# for custom_training_data in custom_training_data_of_txts:
+		# 	self.helper.append_rows_into_csv(custom_training_data, self.dummy_csv)
 
 	def test_insert_training_data_into_csv_5(self):
 		pdf_path = self.test_pdfs_dir + '/Presidential_Decree_Issues/for_training_data/RespAs/'
@@ -281,9 +284,10 @@ class HelperTest(Context):
  
 		custom_training_data_of_txts = [list(map(lambda vector: vector + [1], custom_training_data))
 										for custom_training_data in custom_training_data_of_txts]
+		# EXPORT
 
-		for custom_training_data in custom_training_data_of_txts:
-			self.helper.append_rows_into_csv(custom_training_data, self.dummy_csv)
+		# for custom_training_data in custom_training_data_of_txts:
+		# 	self.helper.append_rows_into_csv(custom_training_data, self.dummy_csv)
 
 	def test_get_rough_unit_respa_associations_as_json_1(self):
 		pdf_path = self.test_pdfs_dir + '/Presidential_Decree_Issues/'
@@ -307,16 +311,18 @@ class HelperTest(Context):
 		rough_unit_respa_associations_7 = self.parser.get_rough_unit_respa_associations(txt_7, format='json')
 		rough_unit_respa_associations_8 = self.parser.get_rough_unit_respa_associations(txt_8, format='json')
 
-		dir_path = str(os.path.join(os.environ["HOME"], "Desktop")) + '/Rough_Unit_RespA_Associations/JSON/'
-		self.helper.make_dir(dir_path)
-		self.helper.export_json(rough_unit_respa_associations_1, dir_path + 'rough_unit_respa_associations_1.json', encoding='utf-8')
-		self.helper.export_json(rough_unit_respa_associations_2, dir_path + 'rough_unit_respa_associations_2.json', encoding='utf-8')
-		self.helper.export_json(rough_unit_respa_associations_3, dir_path + 'rough_unit_respa_associations_3.json', encoding='utf-8')
-		self.helper.export_json(rough_unit_respa_associations_4, dir_path + 'rough_unit_respa_associations_4.json', encoding='utf-8')
-		self.helper.export_json(rough_unit_respa_associations_5, dir_path + 'rough_unit_respa_associations_5.json', encoding='utf-8')
-		self.helper.export_json(rough_unit_respa_associations_6, dir_path + 'rough_unit_respa_associations_6.json', encoding='utf-8')
-		self.helper.export_json(rough_unit_respa_associations_7, dir_path + 'rough_unit_respa_associations_7.json', encoding='utf-8')
-		self.helper.export_json(rough_unit_respa_associations_8, dir_path + 'rough_unit_respa_associations_8.json', encoding='utf-8')
+		# EXPORT
+
+		# dir_path = str(os.path.join(os.environ["HOME"], "Desktop")) + '/Rough_Unit_RespA_Associations/JSON/'
+		# self.helper.make_dir(dir_path)
+		# self.helper.export_json(rough_unit_respa_associations_1, dir_path + 'rough_unit_respa_associations_1.json', encoding='utf-8')
+		# self.helper.export_json(rough_unit_respa_associations_2, dir_path + 'rough_unit_respa_associations_2.json', encoding='utf-8')
+		# self.helper.export_json(rough_unit_respa_associations_3, dir_path + 'rough_unit_respa_associations_3.json', encoding='utf-8')
+		# self.helper.export_json(rough_unit_respa_associations_4, dir_path + 'rough_unit_respa_associations_4.json', encoding='utf-8')
+		# self.helper.export_json(rough_unit_respa_associations_5, dir_path + 'rough_unit_respa_associations_5.json', encoding='utf-8')
+		# self.helper.export_json(rough_unit_respa_associations_6, dir_path + 'rough_unit_respa_associations_6.json', encoding='utf-8')
+		# self.helper.export_json(rough_unit_respa_associations_7, dir_path + 'rough_unit_respa_associations_7.json', encoding='utf-8')
+		# self.helper.export_json(rough_unit_respa_associations_8, dir_path + 'rough_unit_respa_associations_8.json', encoding='utf-8')
 
 	def test_get_rough_unit_respa_associations_as_xml_1(self):
 		pdf_path = self.test_pdfs_dir + '/Presidential_Decree_Issues/'
@@ -339,29 +345,19 @@ class HelperTest(Context):
 		rough_unit_respa_associations_6 = self.parser.get_rough_unit_respa_associations(txt_6, format='xml')
 		rough_unit_respa_associations_7 = self.parser.get_rough_unit_respa_associations(txt_7, format='xml')
 		rough_unit_respa_associations_8 = self.parser.get_rough_unit_respa_associations(txt_8, format='xml')
-
-		# print(rough_unit_respa_associations_1)
-		# print(rough_unit_respa_associations_2)
-		# print(rough_unit_respa_associations_3)
-		# print(rough_unit_respa_associations_4)
-		# print(rough_unit_respa_associations_5)
-		# print(rough_unit_respa_associations_6)
-		# print(rough_unit_respa_associations_7)
-		# print(rough_unit_respa_associations_8)
 		
-		dir_path = str(os.path.join(os.environ["HOME"], "Desktop")) + '/Rough_Unit_RespA_Associations/XML/'
-		self.helper.make_dir(dir_path)
-		self.helper.export_xml(rough_unit_respa_associations_1, dir_path + 'rough_unit_respa_associations_1.xml')
-		self.helper.export_xml(rough_unit_respa_associations_2, dir_path + 'rough_unit_respa_associations_2.xml')
-		self.helper.export_xml(rough_unit_respa_associations_3, dir_path + 'rough_unit_respa_associations_3.xml')
-		self.helper.export_xml(rough_unit_respa_associations_4, dir_path + 'rough_unit_respa_associations_4.xml')
-		self.helper.export_xml(rough_unit_respa_associations_5, dir_path + 'rough_unit_respa_associations_5.xml')
-		self.helper.export_xml(rough_unit_respa_associations_6, dir_path + 'rough_unit_respa_associations_6.xml')
-		self.helper.export_xml(rough_unit_respa_associations_7, dir_path + 'rough_unit_respa_associations_7.xml')
-		self.helper.export_xml(rough_unit_respa_associations_8, dir_path + 'rough_unit_respa_associations_8.xml')
+		# EXPORT
 
-
-
+		# dir_path = str(os.path.join(os.environ["HOME"], "Desktop")) + '/Rough_Unit_RespA_Associations/XML/'
+		# self.helper.make_dir(dir_path)
+		# self.helper.export_xml(rough_unit_respa_associations_1, dir_path + 'rough_unit_respa_associations_1.xml')
+		# self.helper.export_xml(rough_unit_respa_associations_2, dir_path + 'rough_unit_respa_associations_2.xml')
+		# self.helper.export_xml(rough_unit_respa_associations_3, dir_path + 'rough_unit_respa_associations_3.xml')
+		# self.helper.export_xml(rough_unit_respa_associations_4, dir_path + 'rough_unit_respa_associations_4.xml')
+		# self.helper.export_xml(rough_unit_respa_associations_5, dir_path + 'rough_unit_respa_associations_5.xml')
+		# self.helper.export_xml(rough_unit_respa_associations_6, dir_path + 'rough_unit_respa_associations_6.xml')
+		# self.helper.export_xml(rough_unit_respa_associations_7, dir_path + 'rough_unit_respa_associations_7.xml')
+		# self.helper.export_xml(rough_unit_respa_associations_8, dir_path + 'rough_unit_respa_associations_8.xml')
 
 
 if __name__ == '__main__':

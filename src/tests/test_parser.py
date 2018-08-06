@@ -1427,7 +1427,7 @@ class ParserTest(Context):
 
 		print(len(articles_1))
 		print(len(articles_2))
-		print(len(articles_3))
+		print(articles_3)
 
 	# def test_get_articles_1(self):
 	# 		pdf_path = self.test_pdfs_dir + '/Presidential_Decree_Issues/for_training_data/Non-RespAs/'
@@ -2385,35 +2385,35 @@ class ParserTest(Context):
 		rough_unit_respa_associations_8 = self.parser.get_rough_unit_respa_associations(txt_8)
 
 		# To csv for visualization
-		rough_unit_respa_associations_1 = list(map(list, rough_unit_respa_associations_1.items()))
-		rough_unit_respa_associations_2 = list(map(list, rough_unit_respa_associations_2.items()))
-		rough_unit_respa_associations_3 = list(map(list, rough_unit_respa_associations_3.items()))
-		rough_unit_respa_associations_4 = list(map(list, rough_unit_respa_associations_4.items()))
-		rough_unit_respa_associations_5 = list(map(list, rough_unit_respa_associations_5.items()))
-		rough_unit_respa_associations_6 = list(map(list, rough_unit_respa_associations_6.items()))
-		rough_unit_respa_associations_7 = list(map(list, rough_unit_respa_associations_7.items()))
-		rough_unit_respa_associations_8 = list(map(list, rough_unit_respa_associations_8.items()))
+		# rough_unit_respa_associations_1 = list(map(list, rough_unit_respa_associations_1.items()))
+		# rough_unit_respa_associations_2 = list(map(list, rough_unit_respa_associations_2.items()))
+		# rough_unit_respa_associations_3 = list(map(list, rough_unit_respa_associations_3.items()))
+		# rough_unit_respa_associations_4 = list(map(list, rough_unit_respa_associations_4.items()))
+		# rough_unit_respa_associations_5 = list(map(list, rough_unit_respa_associations_5.items()))
+		# rough_unit_respa_associations_6 = list(map(list, rough_unit_respa_associations_6.items()))
+		# rough_unit_respa_associations_7 = list(map(list, rough_unit_respa_associations_7.items()))
+		# rough_unit_respa_associations_8 = list(map(list, rough_unit_respa_associations_8.items()))
 		
-		rough_unit_respa_associations_1 = [[rough_unit_respa_association[0], ''.join(rough_unit_respa_association[1])] for rough_unit_respa_association in rough_unit_respa_associations_1]
-		rough_unit_respa_associations_2 = [[rough_unit_respa_association[0], ''.join(rough_unit_respa_association[1])] for rough_unit_respa_association in rough_unit_respa_associations_2]
-		rough_unit_respa_associations_3 = [[rough_unit_respa_association[0], ''.join(rough_unit_respa_association[1])] for rough_unit_respa_association in rough_unit_respa_associations_3]
-		rough_unit_respa_associations_4 = [[rough_unit_respa_association[0], ''.join(rough_unit_respa_association[1])] for rough_unit_respa_association in rough_unit_respa_associations_4]
-		rough_unit_respa_associations_5 = [[rough_unit_respa_association[0], ''.join(rough_unit_respa_association[1])] for rough_unit_respa_association in rough_unit_respa_associations_5]
-		rough_unit_respa_associations_6 = [[rough_unit_respa_association[0], ''.join(rough_unit_respa_association[1])] for rough_unit_respa_association in rough_unit_respa_associations_6]
-		rough_unit_respa_associations_7 = [[rough_unit_respa_association[0], ''.join(rough_unit_respa_association[1])] for rough_unit_respa_association in rough_unit_respa_associations_7]
-		rough_unit_respa_associations_8 = [[rough_unit_respa_association[0], ''.join(rough_unit_respa_association[1])] for rough_unit_respa_association in rough_unit_respa_associations_8]
+		# rough_unit_respa_associations_1 = [[rough_unit_respa_association[0], ''.join(rough_unit_respa_association[1])] for rough_unit_respa_association in rough_unit_respa_associations_1]
+		# rough_unit_respa_associations_2 = [[rough_unit_respa_association[0], ''.join(rough_unit_respa_association[1])] for rough_unit_respa_association in rough_unit_respa_associations_2]
+		# rough_unit_respa_associations_3 = [[rough_unit_respa_association[0], ''.join(rough_unit_respa_association[1])] for rough_unit_respa_association in rough_unit_respa_associations_3]
+		# rough_unit_respa_associations_4 = [[rough_unit_respa_association[0], ''.join(rough_unit_respa_association[1])] for rough_unit_respa_association in rough_unit_respa_associations_4]
+		# rough_unit_respa_associations_5 = [[rough_unit_respa_association[0], ''.join(rough_unit_respa_association[1])] for rough_unit_respa_association in rough_unit_respa_associations_5]
+		# rough_unit_respa_associations_6 = [[rough_unit_respa_association[0], ''.join(rough_unit_respa_association[1])] for rough_unit_respa_association in rough_unit_respa_associations_6]
+		# rough_unit_respa_associations_7 = [[rough_unit_respa_association[0], ''.join(rough_unit_respa_association[1])] for rough_unit_respa_association in rough_unit_respa_associations_7]
+		# rough_unit_respa_associations_8 = [[rough_unit_respa_association[0], ''.join(rough_unit_respa_association[1])] for rough_unit_respa_association in rough_unit_respa_associations_8]
 
 
-		dir_path = str(os.path.join(os.environ["HOME"], "Desktop")) + '/Rough_Unit_RespA_Associations/CSV/'
-		self.helper.make_dir(dir_path)
-		self.helper.append_rows_into_csv(rough_unit_respa_associations_1, dir_path + "rough_unit_respa_associations_1.csv")
-		self.helper.append_rows_into_csv(rough_unit_respa_associations_2, dir_path + "rough_unit_respa_associations_2.csv")
-		self.helper.append_rows_into_csv(rough_unit_respa_associations_3, dir_path + "rough_unit_respa_associations_3.csv")
-		self.helper.append_rows_into_csv(rough_unit_respa_associations_4, dir_path + "rough_unit_respa_associations_4.csv")
-		self.helper.append_rows_into_csv(rough_unit_respa_associations_5, dir_path + "rough_unit_respa_associations_5.csv")
-		self.helper.append_rows_into_csv(rough_unit_respa_associations_6, dir_path + "rough_unit_respa_associations_6.csv")
-		self.helper.append_rows_into_csv(rough_unit_respa_associations_7, dir_path + "rough_unit_respa_associations_7.csv")
-		self.helper.append_rows_into_csv(rough_unit_respa_associations_8, dir_path + "rough_unit_respa_associations_8.csv")
+		# dir_path = str(os.path.join(os.environ["HOME"], "Desktop")) + '/Rough_Unit_RespA_Associations/CSV/'
+		# self.helper.make_dir(dir_path)
+		# self.helper.append_rows_into_csv(rough_unit_respa_associations_1, dir_path + "rough_unit_respa_associations_1.csv")
+		# self.helper.append_rows_into_csv(rough_unit_respa_associations_2, dir_path + "rough_unit_respa_associations_2.csv")
+		# self.helper.append_rows_into_csv(rough_unit_respa_associations_3, dir_path + "rough_unit_respa_associations_3.csv")
+		# self.helper.append_rows_into_csv(rough_unit_respa_associations_4, dir_path + "rough_unit_respa_associations_4.csv")
+		# self.helper.append_rows_into_csv(rough_unit_respa_associations_5, dir_path + "rough_unit_respa_associations_5.csv")
+		# self.helper.append_rows_into_csv(rough_unit_respa_associations_6, dir_path + "rough_unit_respa_associations_6.csv")
+		# self.helper.append_rows_into_csv(rough_unit_respa_associations_7, dir_path + "rough_unit_respa_associations_7.csv")
+		# self.helper.append_rows_into_csv(rough_unit_respa_associations_8, dir_path + "rough_unit_respa_associations_8.csv")
 
 
 if __name__ == '__main__':
