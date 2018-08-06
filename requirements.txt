@@ -1,3 +1,4 @@
+pdfminer.six
 selenium
 bs4
 openpyxl
