@@ -16,20 +16,16 @@ from main.classifier import IssueOrArticleRespAClassifier, ParagraphRespAClassif
 from util.helper 	import Helper
 
 class Context(unittest.TestCase):
-	test_pdfs_dir = '/data/test_PDFs'
-	test_txts_dir = '/data/test_TXTs'
+	test_pdfs_dir = '../data/test_PDFs'
+	test_txts_dir = '../data/test_TXTs'
 	issue_search_platform_src_url = "http://www.et.gr/idocs-nph/search/fekForm.html"
 	dummy_csv = getcwd() + "/../data/respa_clf_models/dummy.csv"
-	issue_clf_data_csv = getcwd() + "/../data/respa_clf_models/issue_respa_classifier_data.csv"
-	artcl_clf_data_csv = getcwd() + "/../data/respa_clf_models/article_respa_classifier_data.csv"
-	paragraph_clf_data_files = OrderedDict([('non_respa', getcwd() + "/../data/respa_clf_models/paragraph_respa_classifier_data/non_respa_paragraphs_dict.pkl"),
-											 ('respa', getcwd() + "/../data/respa_clf_models/paragraph_respa_classifier_data/respa_paragraphs_dict.pkl")]) 
 
 	parser = Parser()
 	analyzer = Analyzer()
-	issue_clf = IssueOrArticleRespAClassifier(issue_clf_data_csv)
-	article_clf = IssueOrArticleRespAClassifier(artcl_clf_data_csv)
-	paragraph_clf = ParagraphRespAClassifier(paragraph_clf_data_files)
+	issue_clf = IssueOrArticleRespAClassifier('Issue')
+	article_clf = IssueOrArticleRespAClassifier('Article')
+	paragraph_clf = ParagraphRespAClassifier()
 	helper = Helper()
 
 	def make_dir(test_txts_dir):
