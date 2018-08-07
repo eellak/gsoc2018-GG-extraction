@@ -6,13 +6,20 @@ from sklearn.model_selection import cross_val_score
 from sklearn.tree import DecisionTreeClassifier
 from numpy import mean
 from math import sqrt
+from os import getcwd
 from util.helper import Helper
 import main.analyzer
 from collections import OrderedDict, defaultdict
 
 class RespAClassifier(object):
-	def __init__(self, training_data_csv_file):
-		self.training_data_csv_file = training_data_csv_file
+	def __init__(self, type):
+		if type.lower() == 'issue':
+			self.training_data_csv_file = getcwd() + "/../data/respa_clf_models/issue_respa_classifier_data.csv"
+		elif type.lower() == 'article':
+			self.training_data_csv_file = getcwd() + "/../data/respa_clf_models/article_respa_classifier_data.csv"
+		else:
+			raise Exception("type must be 'article' or 'issue'")
+		
 		self.csv_column_names = ['A','B','C','D','E','F','G','H','I','RESPA']
 		self.features = ['A','B', 'C','D','E','F','G','H','I']
 		self.target_var = 'RESPA'
@@ -61,12 +68,12 @@ class ParagraphRespAClassifier(object):
 		Classification of GG Presidential Decree Organization 
 		Paragraphs as RespA related or not
 	"""
-	def __init__(self, training_data_files = None):
-		if training_data_files is not None:
-			self.training_data_files = training_data_files
-			self.training_data = OrderedDict() 
-			self.load_train_data('non_respa')
-			self.load_train_data('respa')
+	def __init__(self):	
+		self.training_data_files = OrderedDict([('non_respa', getcwd() + "/../data/respa_clf_models/paragraph_respa_classifier_data/non_respa_paragraphs_dict.pkl"),
+											    ('respa', getcwd() + "/../data/respa_clf_models/paragraph_respa_classifier_data/respa_paragraphs_dict.pkl")]) 
+		self.training_data = OrderedDict()
+		self.load_train_data('non_respa')
+		self.load_train_data('respa')
 
 		self.unit_keywords = ["ΤΜΗΜΑ", "ΓΡΑΦΕΙΟ ", "ΓΡΑΦΕΙΑ ", "ΑΥΤΟΤΕΛΕΣ ", "ΑΥΤΟΤΕΛΗ ", "ΔΙΕΥΘΥΝΣ", "ΥΠΗΡΕΣΙΑ ", 
 							  "ΣΥΜΒΟΥΛΙ", 'ΓΡΑΜΜΑΤΕIA ', "ΥΠΟΥΡΓ", "ΕΙΔΙΚΟΣ ΛΟΓΑΡΙΑΣΜΟΣ", "MONAΔ", "ΠΕΡΙΦΕΡΕΙ"]
