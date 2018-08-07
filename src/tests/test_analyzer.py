@@ -298,7 +298,7 @@ class AnalyzerTest(Context):
 		pickle_file = 'non_respa_paragraphs_dict.pkl'
 
 		rel_non_respa_paragraphs_path = '..' + txt_path
-		rel_pickle_file_path = '..' + '/data/PAOrg_issue_RespA_classifier_resources/paragraph_respa_classifier_data/' + pickle_file
+		rel_pickle_file_path = '..' + '/data/respa_clf_models/paragraph_respa_classifier_data/' + pickle_file
 
 		non_respa_paragraphs = []
 		for i in range(1, 669+1):
@@ -361,7 +361,7 @@ class AnalyzerTest(Context):
 		pickle_file = 'respa_paragraphs_dict.pkl'
 
 		rel_respa_paragraphs_path = '..' + txt_path
-		rel_pickle_file_path = '..' + '/data/PAOrg_issue_RespA_classifier_resources/paragraph_respa_classifier_data/' + pickle_file
+		rel_pickle_file_path = '..' + '/data/respa_clf_models/paragraph_respa_classifier_data/' + pickle_file
 		
 		respa_paragraphs = []
 		for i in range(1, 569+1):
