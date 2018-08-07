@@ -1241,12 +1241,12 @@ class ParserTest(Context):
 		txt_path = self.test_txts_dir + '/for_training_data/Non-RespAs/'
 		get_txt = self.get_txt
 		txts = [get_txt(str(file), pdf_path=pdf_path, txt_path=txt_path)
-		        for file in range(1, 23+1)]
+				for file in range(1, 23+1)]
 
 		get_paragraphs = self.parser.get_paragraphs
 
 		paragraphs_of_txts = [get_paragraphs(txts[i])
-		              		  for i in range(len(txts))]
+							  for i in range(len(txts))]
 		
 		for i in range(len(txts)): print(len(paragraphs_of_txts[i]))
 
@@ -1255,12 +1255,12 @@ class ParserTest(Context):
 		txt_path = self.test_txts_dir + '/for_training_data/RespAs/'
 		get_txt = self.get_txt
 		txts = [get_txt(str(file), pdf_path=pdf_path, txt_path=txt_path)
-		        for file in range(1, 50+1)]
+				for file in range(1, 50+1)]
 
 		get_paragraphs = self.parser.get_paragraphs
 
 		paragraphs_of_txts = [get_paragraphs(txts[i])
-		              		  for i in range(len(txts))]
+							  for i in range(len(txts))]
 		
 		for i in range(len(txts)): print(len(paragraphs_of_txts[i]))
 
@@ -2453,6 +2453,34 @@ class ParserTest(Context):
 
 		data = self.parser.request_nlp_data(txt)
 		pprint(data)
+
+	def test_get_spacy_nlp_instance_1(self):
+		txt = 	u"Μάνα με τους εννιά σου γιους και με τη μια σου κόρη,\
+				την κόρη τη μονάκριβη την πολυαγαπημένη,\
+				την είχες δώδεκα χρονώ κι ήλιος δε σου την είδε!\
+				Στα σκοτεινά την έλουζε, στ' άφεγγα τη χτενίζει,\
+				στ' άστρι και τον αυγερινό έπλεκε τα μαλλιά της.\
+				Προξενητάδες ήρθανε από τη Βαβυλώνα,\
+				να πάρουνε την Αρετή πολύ μακριά στα ξένα.\
+				Οι οχτώ αδερφοί δε θέλουνε κι ο Κωσταντίνος θέλει.\
+				«Μάνα μου, κι ας τη δώσομε την Αρετή στα ξένα,\
+				στα ξένα κει που περπατώ, στα ξένα που πηγαίνω,\
+				αν πάμ' εμείς στην ξενιτιά, ξένοι να μην περνούμε.\
+				— Φρόνιμος είσαι, Κωσταντή, μ' άσκημα απιλογήθης.\
+				Κι α μόρτει, γιε μου, θάνατος, κι α μόρτει, γιε μου, αρρώστια,\
+				κι αν τύχει πίκρα γή χαρά, ποιος πάει να μου τη φέρει;\
+				— Βάλλω τον ουρανό κριτή και τους αγιούς μαρτύρους,\
+				αν τύχει κι έρτει θάνατος, αν τύχει κι έρτει αρρώστια,\
+				αν τύχει πίκρα γή χαρά, εγώ να σου τη φέρω»."
+
+		doc = self.parser.get_spacy_nlp_instance(txt)
+		
+		# Perform spacy NLP tasks
+		for token in doc: 
+			print([token.text])
+		
+		# etc.
+
 
 if __name__ == '__main__':
 	unittest.main()
