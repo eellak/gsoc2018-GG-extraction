@@ -17,6 +17,8 @@ from difflib import get_close_matches, SequenceMatcher
 # from polyglot.text import Text
 from collections import OrderedDict
 from util.helper import Helper
+import spacy
+import el_core_web_sm
 import main.classifier
 
 class Parser(object):
@@ -1000,7 +1002,8 @@ class Parser(object):
 
 			->
 
-			{'category': 'Τέχνες\n',
+			{
+			 'category': 'Τέχνες\n',
 			 'keywords': 'κρονίδη, ανδράγαθες, θείος, τρομερό, ροβόλησε, αρπάγμα, αρχή, '
 			             'ατρείδης, θεά, σκύλων',
 			 'language': 'Greek',
@@ -1197,9 +1200,8 @@ class Parser(object):
 			                    'ο',
 			                    'θείος',
 			                    'Αχιλλέας',
-	                    '.']}
-
-
+	                    		'.']
+	        }
 		"""
 		txt = Helper.clean_up_txt(txt)
 		txt = txt.replace('\n', ' ')
@@ -1210,3 +1212,8 @@ class Parser(object):
 		except KeyError:
 			nlp_data = r.json()
 		return nlp_data
+
+	def get_spacy_nlp_instance(self, txt):
+		txt = Helper.clean_up_txt(txt)
+		nlp = el_core_web_sm.load()
+		return nlp(txt)
