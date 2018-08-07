@@ -6,11 +6,11 @@ class AnalyzerTest(Context):
 	def test_get_respa_kw_analysis_of_paorg_pres_decree_txts_1(self):
 
 			ref_respa_pdf_path = self.test_pdfs_dir + '/Presidential_Decree_Issues/'
-			txt_1 = self.get_txt('1_Pres_Decree', pdf_path=ref_respa_pdf_path)
-			txt_2 = self.get_txt('2_Pres_Decree', pdf_path=ref_respa_pdf_path)
-			txt_3 = self.get_txt('3_Pres_Decree', pdf_path=ref_respa_pdf_path)
-			txt_4 = self.get_txt('4_Pres_Decree', pdf_path=ref_respa_pdf_path)
-			txt_5 = self.get_txt('5_Pres_Decree', pdf_path=ref_respa_pdf_path)
+			txt_1 = self.parser.get_txt('1_Pres_Decree', pdf_path=ref_respa_pdf_path)
+			txt_2 = self.parser.get_txt('2_Pres_Decree', pdf_path=ref_respa_pdf_path)
+			txt_3 = self.parser.get_txt('3_Pres_Decree', pdf_path=ref_respa_pdf_path)
+			txt_4 = self.parser.get_txt('4_Pres_Decree', pdf_path=ref_respa_pdf_path)
+			txt_5 = self.parser.get_txt('5_Pres_Decree', pdf_path=ref_respa_pdf_path)
 
 			## 
 			#  Decision Contents
@@ -74,9 +74,9 @@ class AnalyzerTest(Context):
 	def test_get_respa_kw_analysis_of_paorg_pres_decree_txts_2(self):
 
 			ref_respa_pdf_path = self.test_pdfs_dir + '/Presidential_Decree_Issues/'
-			txt_1 = self.get_txt('6_Pres_Decree', pdf_path=ref_respa_pdf_path)
-			txt_2 = self.get_txt('7_Pres_Decree', pdf_path=ref_respa_pdf_path)
-			txt_3 = self.get_txt('8_Pres_Decree', pdf_path=ref_respa_pdf_path)
+			txt_1 = self.parser.get_txt('6_Pres_Decree', pdf_path=ref_respa_pdf_path)
+			txt_2 = self.parser.get_txt('7_Pres_Decree', pdf_path=ref_respa_pdf_path)
+			txt_3 = self.parser.get_txt('8_Pres_Decree', pdf_path=ref_respa_pdf_path)
 
 			## 
 			#  Decision Contents
@@ -124,11 +124,11 @@ class AnalyzerTest(Context):
 	def test_respa_kw_analysis_of_paorg_pres_decree_articles_1(self):
 
 		ref_respa_pdf_path = self.test_pdfs_dir + '/Presidential_Decree_Issues/'
-		txt_1 = self.get_txt('1_Pres_Decree', pdf_path=ref_respa_pdf_path)
-		txt_2 = self.get_txt('2_Pres_Decree', pdf_path=ref_respa_pdf_path)
-		txt_3 = self.get_txt('3_Pres_Decree', pdf_path=ref_respa_pdf_path)
-		txt_4 = self.get_txt('4_Pres_Decree', pdf_path=ref_respa_pdf_path)
-		txt_5 = self.get_txt('5_Pres_Decree', pdf_path=ref_respa_pdf_path)
+		txt_1 = self.parser.get_txt('1_Pres_Decree', pdf_path=ref_respa_pdf_path)
+		txt_2 = self.parser.get_txt('2_Pres_Decree', pdf_path=ref_respa_pdf_path)
+		txt_3 = self.parser.get_txt('3_Pres_Decree', pdf_path=ref_respa_pdf_path)
+		txt_4 = self.parser.get_txt('4_Pres_Decree', pdf_path=ref_respa_pdf_path)
+		txt_5 = self.parser.get_txt('5_Pres_Decree', pdf_path=ref_respa_pdf_path)
 
 		## 
 		#  Decision Contents
@@ -186,9 +186,9 @@ class AnalyzerTest(Context):
 	def test_respa_kw_analysis_of_paorg_pres_decree_articles_2(self):
 
 		ref_respa_pdf_path = self.test_pdfs_dir + '/Presidential_Decree_Issues/'
-		txt_1 = self.get_txt('6_Pres_Decree', pdf_path=ref_respa_pdf_path)
-		txt_2 = self.get_txt('7_Pres_Decree', pdf_path=ref_respa_pdf_path)
-		txt_3 = self.get_txt('8_Pres_Decree', pdf_path=ref_respa_pdf_path)
+		txt_1 = self.parser.get_txt('6_Pres_Decree', pdf_path=ref_respa_pdf_path)
+		txt_2 = self.parser.get_txt('7_Pres_Decree', pdf_path=ref_respa_pdf_path)
+		txt_3 = self.parser.get_txt('8_Pres_Decree', pdf_path=ref_respa_pdf_path)
 
 		## 
 		#  Decision Contents
@@ -232,7 +232,7 @@ class AnalyzerTest(Context):
 
 	def test_respa_kw_analysis_of_paorg_pres_decree_paragraphs_1(self):
 		pdf_path = self.test_pdfs_dir + '/Presidential_Decree_Issues/'
-		get_txt = self.get_txt
+		get_txt = self.parser.get_txt
 		txt_1 = get_txt('1_Pres_Decree', pdf_path=pdf_path)
 		txt_2 = get_txt('2_Pres_Decree', pdf_path=pdf_path)
 		txt_3 = get_txt('3_Pres_Decree', pdf_path=pdf_path)
@@ -264,7 +264,7 @@ class AnalyzerTest(Context):
 	def test_respa_kw_analysis_of_paorg_pres_decree_paragraphs_2(self):
 		pdf_path = self.test_pdfs_dir + '/Presidential_Decree_Issues/for_training_data/Non-RespAs/'
 		txt_path = self.test_txts_dir + '/for_training_data/Non-RespAs/'
-		get_txt = self.get_txt
+		get_txt = self.parser.get_txt
 		txts = [get_txt(str(file), pdf_path=pdf_path, txt_path=txt_path)
 				for file in range(1, 23+1)]
 
@@ -279,7 +279,7 @@ class AnalyzerTest(Context):
 	def test_respa_kw_analysis_of_paorg_pres_decree_paragraphs_3(self):
 		pdf_path = self.test_pdfs_dir + '/Presidential_Decree_Issues/for_training_data/RespAs/'
 		txt_path = self.test_txts_dir + '/for_training_data/RespAs/'
-		get_txt = self.get_txt
+		get_txt = self.parser.get_txt
 		txts = [get_txt(str(file), pdf_path=pdf_path, txt_path=txt_path)
 				for file in range(1, 50+1)]
 
@@ -425,14 +425,14 @@ class AnalyzerTest(Context):
 		pdf_path = self.test_pdfs_dir + '/Presidential_Decree_Issues/'
 		txt_path = self.test_txts_dir + '/'
 		
-		txt_1 = self.get_txt('1_Pres_Decree', pdf_path=pdf_path, txt_path=txt_path)
-		txt_2 = self.get_txt('2_Pres_Decree', pdf_path=pdf_path, txt_path=txt_path)
-		txt_3 = self.get_txt('3_Pres_Decree', pdf_path=pdf_path, txt_path=txt_path)
-		txt_4 = self.get_txt('4_Pres_Decree', pdf_path=pdf_path, txt_path=txt_path)
-		txt_5 = self.get_txt('5_Pres_Decree', pdf_path=pdf_path, txt_path=txt_path)
-		txt_6 = self.get_txt('6_Pres_Decree', pdf_path=pdf_path, txt_path=txt_path)
-		txt_7 = self.get_txt('7_Pres_Decree', pdf_path=pdf_path, txt_path=txt_path)
-		txt_8 = self.get_txt('8_Pres_Decree', pdf_path=pdf_path, txt_path=txt_path)
+		txt_1 = self.parser.get_txt('1_Pres_Decree', pdf_path=pdf_path, txt_path=txt_path)
+		txt_2 = self.parser.get_txt('2_Pres_Decree', pdf_path=pdf_path, txt_path=txt_path)
+		txt_3 = self.parser.get_txt('3_Pres_Decree', pdf_path=pdf_path, txt_path=txt_path)
+		txt_4 = self.parser.get_txt('4_Pres_Decree', pdf_path=pdf_path, txt_path=txt_path)
+		txt_5 = self.parser.get_txt('5_Pres_Decree', pdf_path=pdf_path, txt_path=txt_path)
+		txt_6 = self.parser.get_txt('6_Pres_Decree', pdf_path=pdf_path, txt_path=txt_path)
+		txt_7 = self.parser.get_txt('7_Pres_Decree', pdf_path=pdf_path, txt_path=txt_path)
+		txt_8 = self.parser.get_txt('8_Pres_Decree', pdf_path=pdf_path, txt_path=txt_path)
 		
 		units_followed_by_respas_occurs_1 = self.analyzer.get_unit_paragraph_occurences_by_type(txt_1, 'units_followed_by_respas')
 		units_followed_by_respas_occurs_2 = self.analyzer.get_unit_paragraph_occurences_by_type(txt_2, 'units_followed_by_respas')

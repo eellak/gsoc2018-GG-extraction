@@ -8,7 +8,7 @@ class ParserTest(Context):
 		
 		def paorgs_mentioned_in_txt(file_name):
 			fetcher = Fetcher(Context.issue_search_platform_src_url)
-			text = self.get_txt(file_name)
+			text = self.parser.get_txt(file_name)
 			paorgs = fetcher.fetch_paorgs(['DIAVGEIA_ORGS.xlsx', 
 										   '20170615_organosi_mhtrooy_foreon_2017.xlsx'])
 
@@ -23,20 +23,19 @@ class ParserTest(Context):
 
 	def test_simple_pdf_to_txt(self): 
 		texts = []
-	
-		texts.append(self.get_txt('1'))
-		texts.append(self.get_txt('2'))
-		texts.append(self.get_txt('3'))
-		texts.append(self.get_txt('4'))
-		texts.append(self.get_txt('5'))
-		texts.append(self.get_txt('6'))
+		texts.append(self.parser.get_txt('1'))
+		texts.append(self.parser.get_txt('2'))
+		texts.append(self.parser.get_txt('3'))
+		texts.append(self.parser.get_txt('4'))
+		texts.append(self.parser.get_txt('5'))
+		texts.append(self.parser.get_txt('6'))
 
 		# print(texts[0])
 		# print(texts[1])
 		self.assertTrue(all(text is not '' for text in texts))
 
 	def test_deintonate_txt(self):
-		txt_1 = self.get_txt('1')
+		txt_1 = self.parser.get_txt('1')
 		txt_1 = self.helper.deintonate_txt(txt_1)
 
 		print(txt_1)
@@ -47,9 +46,9 @@ class ParserTest(Context):
 		#  Issues w only one decision  #
 		################################
 
-		txt_1 = self.get_txt('1')
-		txt_2 = self.get_txt('2')
-		txt_3 = self.get_txt('3')
+		txt_1 = self.parser.get_txt('1')
+		txt_2 = self.parser.get_txt('2')
+		txt_3 = self.parser.get_txt('3')
 
 		## 
 		#  Decision Contents
@@ -124,9 +123,9 @@ class ParserTest(Context):
 		#    Issues w many decisions   #
 		################################
 
-		txt_4 = self.get_txt('4')
-		txt_5 = self.get_txt('5')
-		txt_6 = self.get_txt('6')
+		txt_4 = self.parser.get_txt('4')
+		txt_5 = self.parser.get_txt('5')
+		txt_6 = self.parser.get_txt('6')
 
 		## 
 		#  Decision Contents
@@ -227,8 +226,8 @@ class ParserTest(Context):
 		#  Issues w only one decision  #
 		################################
 
-		txt_1 = self.get_txt('7')
-		txt_2 = self.get_txt('8')
+		txt_1 = self.parser.get_txt('7')
+		txt_2 = self.parser.get_txt('8')
 
 		## 
 		#  Decision Contents
@@ -286,10 +285,10 @@ class ParserTest(Context):
 		#    Issues w many decisions   #
 		################################
 
-		txt_3 = self.get_txt('9')
-		txt_4 = self.get_txt('10')
-		txt_5 = self.get_txt('11')
-		txt_6 = self.get_txt('12')
+		txt_3 = self.parser.get_txt('9')
+		txt_4 = self.parser.get_txt('10')
+		txt_5 = self.parser.get_txt('11')
+		txt_6 = self.parser.get_txt('12')
 
 		## 
 		#  Decision Contents
@@ -403,10 +402,10 @@ class ParserTest(Context):
 	def test_get_dec_sections_from_txts_3(self):
 				
 		respa_pdf_path = self.test_pdfs_dir + '/RespA_Dec_Issues/w_RespA_Decisions/'
-		txt_1 = self.get_txt('1_w_RespA_Decisions', pdf_path=respa_pdf_path)
-		txt_2 = self.get_txt('2_w_RespA_Decisions', pdf_path=respa_pdf_path)
-		txt_3 = self.get_txt('3_w_RespA_Decisions', pdf_path=respa_pdf_path)
-		txt_4 = self.get_txt('4_w_RespA_Decisions', pdf_path=respa_pdf_path)
+		txt_1 = self.parser.get_txt('1_w_RespA_Decisions', pdf_path=respa_pdf_path)
+		txt_2 = self.parser.get_txt('2_w_RespA_Decisions', pdf_path=respa_pdf_path)
+		txt_3 = self.parser.get_txt('3_w_RespA_Decisions', pdf_path=respa_pdf_path)
+		txt_4 = self.parser.get_txt('4_w_RespA_Decisions', pdf_path=respa_pdf_path)
 		print(txt_1)
 		## 
 		#  Decision Contents
@@ -517,13 +516,13 @@ class ParserTest(Context):
 	def test_get_dec_sections_from_txts_4(self):
 				
 		respa_pdf_path = self.test_pdfs_dir + '/RespA_Dec_Issues/w_RespA_Decisions/'
-		txt_1 = self.get_txt('5_w_RespA_Decisions', pdf_path=respa_pdf_path)
-		txt_2 = self.get_txt('6_w_RespA_Decisions', pdf_path=respa_pdf_path)
-		txt_3 = self.get_txt('7_w_RespA_Decisions', pdf_path=respa_pdf_path)
-		txt_4 = self.get_txt('8_w_RespA_Decisions', pdf_path=respa_pdf_path)
-		txt_5 = self.get_txt('9_w_RespA_Decisions', pdf_path=respa_pdf_path)
-		txt_6 = self.get_txt('10_w_RespA_Decisions', pdf_path=respa_pdf_path)
-		txt_7 = self.get_txt('11_w_RespA_Decisions', pdf_path=respa_pdf_path)
+		txt_1 = self.parser.get_txt('5_w_RespA_Decisions', pdf_path=respa_pdf_path)
+		txt_2 = self.parser.get_txt('6_w_RespA_Decisions', pdf_path=respa_pdf_path)
+		txt_3 = self.parser.get_txt('7_w_RespA_Decisions', pdf_path=respa_pdf_path)
+		txt_4 = self.parser.get_txt('8_w_RespA_Decisions', pdf_path=respa_pdf_path)
+		txt_5 = self.parser.get_txt('9_w_RespA_Decisions', pdf_path=respa_pdf_path)
+		txt_6 = self.parser.get_txt('10_w_RespA_Decisions', pdf_path=respa_pdf_path)
+		txt_7 = self.parser.get_txt('11_w_RespA_Decisions', pdf_path=respa_pdf_path)
 		
 		## 
 		#  Decision Contents
@@ -685,10 +684,10 @@ class ParserTest(Context):
 	def test_get_dec_sections_from_txts_5(self):
 		
 		respa_pdf_path = self.test_pdfs_dir + '/RespA_Dec_Issues/w_Referenced_RespA_Decisions/'
-		txt_1 = self.get_txt('1_w_Ref_RespA_Decisions', pdf_path=respa_pdf_path)
-		txt_2 = self.get_txt('2_w_Ref_RespA_Decisions', pdf_path=respa_pdf_path)
-		txt_3 = self.get_txt('3_w_Ref_RespA_Decisions', pdf_path=respa_pdf_path)
-		txt_4 = self.get_txt('4_w_Ref_RespA_Decisions', pdf_path=respa_pdf_path)
+		txt_1 = self.parser.get_txt('1_w_Ref_RespA_Decisions', pdf_path=respa_pdf_path)
+		txt_2 = self.parser.get_txt('2_w_Ref_RespA_Decisions', pdf_path=respa_pdf_path)
+		txt_3 = self.parser.get_txt('3_w_Ref_RespA_Decisions', pdf_path=respa_pdf_path)
+		txt_4 = self.parser.get_txt('4_w_Ref_RespA_Decisions', pdf_path=respa_pdf_path)
 		
 		## 
 		#  Decision Contents
@@ -800,10 +799,10 @@ class ParserTest(Context):
 	def test_get_dec_sections_from_txts_6(self):
 		
 		respa_pdf_path = self.test_pdfs_dir + '/RespA_Dec_Issues/w_Referenced_RespA_Decisions/'
-		txt_1 = self.get_txt('5_w_Ref_RespA_Decisions', pdf_path=respa_pdf_path)
-		txt_2 = self.get_txt('6_w_Ref_RespA_Decisions', pdf_path=respa_pdf_path)
-		txt_3 = self.get_txt('7_w_Ref_RespA_Decisions', pdf_path=respa_pdf_path)
-		txt_4 = self.get_txt('8_w_Ref_RespA_Decisions', pdf_path=respa_pdf_path)
+		txt_1 = self.parser.get_txt('5_w_Ref_RespA_Decisions', pdf_path=respa_pdf_path)
+		txt_2 = self.parser.get_txt('6_w_Ref_RespA_Decisions', pdf_path=respa_pdf_path)
+		txt_3 = self.parser.get_txt('7_w_Ref_RespA_Decisions', pdf_path=respa_pdf_path)
+		txt_4 = self.parser.get_txt('8_w_Ref_RespA_Decisions', pdf_path=respa_pdf_path)
 		
 		## 
 		#  Decision Contents
@@ -913,10 +912,10 @@ class ParserTest(Context):
 		
 	def test_get_respa_sections_from_txts_1(self):
 		respa_pdf_path = self.test_pdfs_dir + '/RespA_Dec_Issues/w_RespA_Decisions/'
-		txt_1 = self.get_txt('1_w_RespA_Decisions', pdf_path=respa_pdf_path)
-		txt_2 = self.get_txt('2_w_RespA_Decisions', pdf_path=respa_pdf_path)
-		txt_3 = self.get_txt('3_w_RespA_Decisions', pdf_path=respa_pdf_path)
-		txt_4 = self.get_txt('4_w_RespA_Decisions', pdf_path=respa_pdf_path)
+		txt_1 = self.parser.get_txt('1_w_RespA_Decisions', pdf_path=respa_pdf_path)
+		txt_2 = self.parser.get_txt('2_w_RespA_Decisions', pdf_path=respa_pdf_path)
+		txt_3 = self.parser.get_txt('3_w_RespA_Decisions', pdf_path=respa_pdf_path)
+		txt_4 = self.parser.get_txt('4_w_RespA_Decisions', pdf_path=respa_pdf_path)
 
 		## 
 		#  Decision Contents
@@ -972,13 +971,13 @@ class ParserTest(Context):
 	def test_get_respa_sections_from_txts_2(self):
 		
 		ref_respa_pdf_path = self.test_pdfs_dir + '/RespA_Dec_Issues/w_RespA_Decisions/'
-		txt_1 = self.get_txt('5_w_RespA_Decisions', pdf_path=ref_respa_pdf_path)
-		txt_2 = self.get_txt('6_w_RespA_Decisions', pdf_path=ref_respa_pdf_path)
-		txt_3 = self.get_txt('7_w_RespA_Decisions', pdf_path=ref_respa_pdf_path)
-		txt_4 = self.get_txt('8_w_RespA_Decisions', pdf_path=ref_respa_pdf_path)
-		txt_5 = self.get_txt('9_w_RespA_Decisions', pdf_path=ref_respa_pdf_path)
-		txt_6 = self.get_txt('10_w_RespA_Decisions', pdf_path=ref_respa_pdf_path)
-		txt_7 = self.get_txt('11_w_RespA_Decisions', pdf_path=ref_respa_pdf_path)
+		txt_1 = self.parser.get_txt('5_w_RespA_Decisions', pdf_path=ref_respa_pdf_path)
+		txt_2 = self.parser.get_txt('6_w_RespA_Decisions', pdf_path=ref_respa_pdf_path)
+		txt_3 = self.parser.get_txt('7_w_RespA_Decisions', pdf_path=ref_respa_pdf_path)
+		txt_4 = self.parser.get_txt('8_w_RespA_Decisions', pdf_path=ref_respa_pdf_path)
+		txt_5 = self.parser.get_txt('9_w_RespA_Decisions', pdf_path=ref_respa_pdf_path)
+		txt_6 = self.parser.get_txt('10_w_RespA_Decisions', pdf_path=ref_respa_pdf_path)
+		txt_7 = self.parser.get_txt('11_w_RespA_Decisions', pdf_path=ref_respa_pdf_path)
 
 		## 
 		#  Decision Contents
@@ -1055,10 +1054,10 @@ class ParserTest(Context):
 	def test_get_ref_respa_sections_from_txts_1(self):
 		
 		ref_respa_pdf_path = self.test_pdfs_dir + '/RespA_Dec_Issues/w_Referenced_RespA_Decisions/'
-		txt_1 = self.get_txt('1_w_Ref_RespA_Decisions', pdf_path=ref_respa_pdf_path)
-		txt_2 = self.get_txt('2_w_Ref_RespA_Decisions', pdf_path=ref_respa_pdf_path)
-		txt_3 = self.get_txt('3_w_Ref_RespA_Decisions', pdf_path=ref_respa_pdf_path)
-		txt_4 = self.get_txt('4_w_Ref_RespA_Decisions', pdf_path=ref_respa_pdf_path)
+		txt_1 = self.parser.get_txt('1_w_Ref_RespA_Decisions', pdf_path=ref_respa_pdf_path)
+		txt_2 = self.parser.get_txt('2_w_Ref_RespA_Decisions', pdf_path=ref_respa_pdf_path)
+		txt_3 = self.parser.get_txt('3_w_Ref_RespA_Decisions', pdf_path=ref_respa_pdf_path)
+		txt_4 = self.parser.get_txt('4_w_Ref_RespA_Decisions', pdf_path=ref_respa_pdf_path)
 		
 		## 
 		#  Decision Contents
@@ -1110,10 +1109,10 @@ class ParserTest(Context):
 
 	def test_get_ref_respa_sections_from_txts_2(self):
 		ref_respa_pdf_path = self.test_pdfs_dir + '/RespA_Dec_Issues/w_Referenced_RespA_Decisions/'
-		txt_1 = self.get_txt('5_w_Ref_RespA_Decisions', pdf_path=ref_respa_pdf_path)
-		txt_2 = self.get_txt('6_w_Ref_RespA_Decisions', pdf_path=ref_respa_pdf_path)
-		txt_3 = self.get_txt('7_w_Ref_RespA_Decisions', pdf_path=ref_respa_pdf_path)
-		txt_4 = self.get_txt('8_w_Ref_RespA_Decisions', pdf_path=ref_respa_pdf_path)
+		txt_1 = self.parser.get_txt('5_w_Ref_RespA_Decisions', pdf_path=ref_respa_pdf_path)
+		txt_2 = self.parser.get_txt('6_w_Ref_RespA_Decisions', pdf_path=ref_respa_pdf_path)
+		txt_3 = self.parser.get_txt('7_w_Ref_RespA_Decisions', pdf_path=ref_respa_pdf_path)
+		txt_4 = self.parser.get_txt('8_w_Ref_RespA_Decisions', pdf_path=ref_respa_pdf_path)
 		
 		## 
 		#  Decision Contents
@@ -1200,7 +1199,7 @@ class ParserTest(Context):
 	# 	print(persons)
 
 	# def test_breaking_txt_into_sentences(self):
-	# 	txt_1 = self.get_txt('1')
+	# 	txt_1 = self.parser.get_txt('1')
 
 	# 	txt_1 = self.helper.clean_up_txt(txt_1)
 	# 	print([txt_1])
@@ -1208,7 +1207,7 @@ class ParserTest(Context):
 
 	def test_get_paragraphs_1(self):
 		pdf_path = self.test_pdfs_dir + '/Presidential_Decree_Issues/'
-		get_txt = self.get_txt
+		get_txt = self.parser.get_txt
 		txt_1 = get_txt('1_Pres_Decree', pdf_path=pdf_path)
 		txt_2 = get_txt('2_Pres_Decree', pdf_path=pdf_path)
 		txt_3 = get_txt('3_Pres_Decree', pdf_path=pdf_path)
@@ -1239,7 +1238,7 @@ class ParserTest(Context):
 	def test_get_paragraphs_2(self):
 		pdf_path = self.test_pdfs_dir + '/Presidential_Decree_Issues/for_training_data/Non-RespAs/'
 		txt_path = self.test_txts_dir + '/for_training_data/Non-RespAs/'
-		get_txt = self.get_txt
+		get_txt = self.parser.get_txt
 		txts = [get_txt(str(file), pdf_path=pdf_path, txt_path=txt_path)
 				for file in range(1, 23+1)]
 
@@ -1253,7 +1252,7 @@ class ParserTest(Context):
 	def test_get_paragraphs_3(self):
 		pdf_path = self.test_pdfs_dir + '/Presidential_Decree_Issues/for_training_data/RespAs/'
 		txt_path = self.test_txts_dir + '/for_training_data/RespAs/'
-		get_txt = self.get_txt
+		get_txt = self.parser.get_txt
 		txts = [get_txt(str(file), pdf_path=pdf_path, txt_path=txt_path)
 				for file in range(1, 50+1)]
 
@@ -1266,7 +1265,7 @@ class ParserTest(Context):
 
 	def test_get_clean_words_1(self):
 		pdf_path = self.test_pdfs_dir + '/Presidential_Decree_Issues/'
-		get_txt = self.get_txt
+		get_txt = self.parser.get_txt
 		txt_1 = get_txt('1_Pres_Decree', pdf_path=pdf_path)
 		txt_2 = get_txt('2_Pres_Decree', pdf_path=pdf_path)
 		txt_3 = get_txt('3_Pres_Decree', pdf_path=pdf_path)
@@ -1296,11 +1295,11 @@ class ParserTest(Context):
 
 	def test_get_articles_from_pres_decree_txts_1(self):
 		ref_respa_pdf_path = self.test_pdfs_dir + '/Presidential_Decree_Issues/'
-		txt_1 = self.get_txt('1_Pres_Decree', pdf_path=ref_respa_pdf_path)
-		txt_2 = self.get_txt('2_Pres_Decree', pdf_path=ref_respa_pdf_path)
-		txt_3 = self.get_txt('3_Pres_Decree', pdf_path=ref_respa_pdf_path)
-		txt_4 = self.get_txt('4_Pres_Decree', pdf_path=ref_respa_pdf_path)
-		txt_5 = self.get_txt('5_Pres_Decree', pdf_path=ref_respa_pdf_path)
+		txt_1 = self.parser.get_txt('1_Pres_Decree', pdf_path=ref_respa_pdf_path)
+		txt_2 = self.parser.get_txt('2_Pres_Decree', pdf_path=ref_respa_pdf_path)
+		txt_3 = self.parser.get_txt('3_Pres_Decree', pdf_path=ref_respa_pdf_path)
+		txt_4 = self.parser.get_txt('4_Pres_Decree', pdf_path=ref_respa_pdf_path)
+		txt_5 = self.parser.get_txt('5_Pres_Decree', pdf_path=ref_respa_pdf_path)
 
 		## 
 		#  Decision Contents
@@ -1372,9 +1371,9 @@ class ParserTest(Context):
 
 	def test_get_articles_from_pres_decree_txts_2(self):
 		ref_respa_pdf_path = self.test_pdfs_dir + '/Presidential_Decree_Issues/'
-		txt_1 = self.get_txt('6_Pres_Decree', pdf_path=ref_respa_pdf_path)
-		txt_2 = self.get_txt('7_Pres_Decree', pdf_path=ref_respa_pdf_path)
-		txt_3 = self.get_txt('8_Pres_Decree', pdf_path=ref_respa_pdf_path)
+		txt_1 = self.parser.get_txt('6_Pres_Decree', pdf_path=ref_respa_pdf_path)
+		txt_2 = self.parser.get_txt('7_Pres_Decree', pdf_path=ref_respa_pdf_path)
+		txt_3 = self.parser.get_txt('8_Pres_Decree', pdf_path=ref_respa_pdf_path)
 
 		## 
 		#  Decision Contents
@@ -1433,7 +1432,7 @@ class ParserTest(Context):
 	# def test_get_articles_1(self):
 	# 		pdf_path = self.test_pdfs_dir + '/Presidential_Decree_Issues/for_training_data/Non-RespAs/'
 	# 		txt_path = self.test_txts_dir + '/for_training_data/Non-RespAs/'
-	# 		get_txt = self.get_txt
+	# 		get_txt = self.parser.get_txt
 	# 		txts = [get_txt(str(file), pdf_path=pdf_path, txt_path=txt_path)
 	# 		        for file in range(1, 23+1)]
 
@@ -1447,7 +1446,7 @@ class ParserTest(Context):
 	# def test_get_articles_2(self):
 	# 		pdf_path = self.test_pdfs_dir + '/Presidential_Decree_Issues/for_training_data/RespAs/'
 	# 		txt_path = self.test_txts_dir + '/for_training_data/RespAs/'
-	# 		get_txt = self.get_txt
+	# 		get_txt = self.parser.get_txt
 	# 		txts = [get_txt(str(file), pdf_path=pdf_path, txt_path=txt_path)
 	# 		        for file in range(1, 50+1)]
 
@@ -1461,11 +1460,11 @@ class ParserTest(Context):
 
 	def test_get_respas_of_organization_units_from_pres_decree_txts_1(self):
 		ref_respa_pdf_path = self.test_pdfs_dir + '/Presidential_Decree_Issues/'
-		txt_1 = self.get_txt('1_Pres_Decree', pdf_path=ref_respa_pdf_path)
-		txt_2 = self.get_txt('2_Pres_Decree', pdf_path=ref_respa_pdf_path)
-		txt_3 = self.get_txt('3_Pres_Decree', pdf_path=ref_respa_pdf_path)
-		txt_4 = self.get_txt('4_Pres_Decree', pdf_path=ref_respa_pdf_path)
-		txt_5 = self.get_txt('5_Pres_Decree', pdf_path=ref_respa_pdf_path)
+		txt_1 = self.parser.get_txt('1_Pres_Decree', pdf_path=ref_respa_pdf_path)
+		txt_2 = self.parser.get_txt('2_Pres_Decree', pdf_path=ref_respa_pdf_path)
+		txt_3 = self.parser.get_txt('3_Pres_Decree', pdf_path=ref_respa_pdf_path)
+		txt_4 = self.parser.get_txt('4_Pres_Decree', pdf_path=ref_respa_pdf_path)
+		txt_5 = self.parser.get_txt('5_Pres_Decree', pdf_path=ref_respa_pdf_path)
 
 		## 
 		#  Decision Contents
@@ -1538,14 +1537,14 @@ class ParserTest(Context):
 		if isinstance(articles_5, dict): articles_5 = list(articles_5.values())
 
 	def test_get_issue_num_and_publ_date_1(self):
-		txt_1 = self.get_txt('1')
-		txt_2 = self.get_txt('2')
-		txt_3 = self.get_txt('3')
-		txt_4 = self.get_txt('4')
-		txt_5 = self.get_txt('5')
-		txt_6 = self.get_txt('6')
-		txt_7 = self.get_txt('7')
-		txt_8 = self.get_txt('8')
+		txt_1 = self.parser.get_txt('1')
+		txt_2 = self.parser.get_txt('2')
+		txt_3 = self.parser.get_txt('3')
+		txt_4 = self.parser.get_txt('4')
+		txt_5 = self.parser.get_txt('5')
+		txt_6 = self.parser.get_txt('6')
+		txt_7 = self.parser.get_txt('7')
+		txt_8 = self.parser.get_txt('8')
 
 		issue_num_1, pub_date_1 = self.parser.get_issue_number(txt_1), self.parser.get_publication_date(txt_1)
 		issue_num_2, pub_date_2 = self.parser.get_issue_number(txt_2), self.parser.get_publication_date(txt_2)
@@ -1567,17 +1566,17 @@ class ParserTest(Context):
 
 	def test_get_issue_num_and_publ_date_2(self):
 		respa_pdf_path = self.test_pdfs_dir + '/RespA_Dec_Issues/w_RespA_Decisions/'
-		txt_1 = self.get_txt('1_w_RespA_Decisions', pdf_path=respa_pdf_path)
-		txt_2 = self.get_txt('2_w_RespA_Decisions', pdf_path=respa_pdf_path)
-		txt_3 = self.get_txt('3_w_RespA_Decisions', pdf_path=respa_pdf_path)
-		txt_4 = self.get_txt('4_w_RespA_Decisions', pdf_path=respa_pdf_path)
-		txt_5 = self.get_txt('5_w_RespA_Decisions', pdf_path=respa_pdf_path)
-		txt_6 = self.get_txt('6_w_RespA_Decisions', pdf_path=respa_pdf_path)
-		txt_7 = self.get_txt('7_w_RespA_Decisions', pdf_path=respa_pdf_path)
-		txt_8 = self.get_txt('8_w_RespA_Decisions', pdf_path=respa_pdf_path)
-		txt_9 = self.get_txt('9_w_RespA_Decisions', pdf_path=respa_pdf_path)
-		txt_10 = self.get_txt('10_w_RespA_Decisions', pdf_path=respa_pdf_path)
-		txt_11 = self.get_txt('11_w_RespA_Decisions', pdf_path=respa_pdf_path)
+		txt_1 = self.parser.get_txt('1_w_RespA_Decisions', pdf_path=respa_pdf_path)
+		txt_2 = self.parser.get_txt('2_w_RespA_Decisions', pdf_path=respa_pdf_path)
+		txt_3 = self.parser.get_txt('3_w_RespA_Decisions', pdf_path=respa_pdf_path)
+		txt_4 = self.parser.get_txt('4_w_RespA_Decisions', pdf_path=respa_pdf_path)
+		txt_5 = self.parser.get_txt('5_w_RespA_Decisions', pdf_path=respa_pdf_path)
+		txt_6 = self.parser.get_txt('6_w_RespA_Decisions', pdf_path=respa_pdf_path)
+		txt_7 = self.parser.get_txt('7_w_RespA_Decisions', pdf_path=respa_pdf_path)
+		txt_8 = self.parser.get_txt('8_w_RespA_Decisions', pdf_path=respa_pdf_path)
+		txt_9 = self.parser.get_txt('9_w_RespA_Decisions', pdf_path=respa_pdf_path)
+		txt_10 = self.parser.get_txt('10_w_RespA_Decisions', pdf_path=respa_pdf_path)
+		txt_11 = self.parser.get_txt('11_w_RespA_Decisions', pdf_path=respa_pdf_path)
 
 		issue_num_1, pub_date_1 = self.parser.get_issue_number(txt_1), self.parser.get_publication_date(txt_1)
 		issue_num_2, pub_date_2 = self.parser.get_issue_number(txt_2), self.parser.get_publication_date(txt_2)
@@ -1605,14 +1604,14 @@ class ParserTest(Context):
 
 	def test_get_issue_num_and_publ_date_3(self):
 		respa_pdf_path = self.test_pdfs_dir + '/RespA_Dec_Issues/w_Referenced_RespA_Decisions/'
-		txt_1 = self.get_txt('1_w_Ref_RespA_Decisions', pdf_path=respa_pdf_path)
-		txt_2 = self.get_txt('2_w_Ref_RespA_Decisions', pdf_path=respa_pdf_path)
-		txt_3 = self.get_txt('3_w_Ref_RespA_Decisions', pdf_path=respa_pdf_path)
-		txt_4 = self.get_txt('4_w_Ref_RespA_Decisions', pdf_path=respa_pdf_path)
-		txt_5 = self.get_txt('5_w_Ref_RespA_Decisions', pdf_path=respa_pdf_path)
-		txt_6 = self.get_txt('6_w_Ref_RespA_Decisions', pdf_path=respa_pdf_path)
-		txt_7 = self.get_txt('7_w_Ref_RespA_Decisions', pdf_path=respa_pdf_path)
-		txt_8 = self.get_txt('8_w_Ref_RespA_Decisions', pdf_path=respa_pdf_path)
+		txt_1 = self.parser.get_txt('1_w_Ref_RespA_Decisions', pdf_path=respa_pdf_path)
+		txt_2 = self.parser.get_txt('2_w_Ref_RespA_Decisions', pdf_path=respa_pdf_path)
+		txt_3 = self.parser.get_txt('3_w_Ref_RespA_Decisions', pdf_path=respa_pdf_path)
+		txt_4 = self.parser.get_txt('4_w_Ref_RespA_Decisions', pdf_path=respa_pdf_path)
+		txt_5 = self.parser.get_txt('5_w_Ref_RespA_Decisions', pdf_path=respa_pdf_path)
+		txt_6 = self.parser.get_txt('6_w_Ref_RespA_Decisions', pdf_path=respa_pdf_path)
+		txt_7 = self.parser.get_txt('7_w_Ref_RespA_Decisions', pdf_path=respa_pdf_path)
+		txt_8 = self.parser.get_txt('8_w_Ref_RespA_Decisions', pdf_path=respa_pdf_path)
 
 		issue_num_1, pub_date_1 = self.parser.get_issue_number(txt_1), self.parser.get_publication_date(txt_1)
 		issue_num_2, pub_date_2 = self.parser.get_issue_number(txt_2), self.parser.get_publication_date(txt_2)
@@ -1635,9 +1634,9 @@ class ParserTest(Context):
 	def test_get_issue_num_and_publ_date_4(self):
 		pdf_path = self.test_pdfs_dir + '/Presidential_Decree_Issues/for_test_data/Non-RespAs/'
 		txt_path = self.test_txts_dir + '/for_test_data/Non-RespAs/'
-		txt_1 = self.get_txt('1', pdf_path=pdf_path, txt_path=txt_path)
-		txt_2 = self.get_txt('2', pdf_path=pdf_path, txt_path=txt_path)
-		txt_3 = self.get_txt('3', pdf_path=pdf_path, txt_path=txt_path)
+		txt_1 = self.parser.get_txt('1', pdf_path=pdf_path, txt_path=txt_path)
+		txt_2 = self.parser.get_txt('2', pdf_path=pdf_path, txt_path=txt_path)
+		txt_3 = self.parser.get_txt('3', pdf_path=pdf_path, txt_path=txt_path)
 
 		issue_num_1, pub_date_1 = self.parser.get_issue_number(txt_1), self.parser.get_publication_date(txt_1)
 		issue_num_2, pub_date_2 = self.parser.get_issue_number(txt_2), self.parser.get_publication_date(txt_2)
@@ -1650,12 +1649,12 @@ class ParserTest(Context):
 	def test_get_issue_num_and_publ_date_5(self):
 		pdf_path = self.test_pdfs_dir + '/Presidential_Decree_Issues/for_test_data/RespAs/'
 		txt_path = self.test_txts_dir + '/for_test_data/RespAs/'
-		txt_1 = self.get_txt('1', pdf_path=pdf_path, txt_path=txt_path)
-		txt_2 = self.get_txt('2', pdf_path=pdf_path, txt_path=txt_path)
-		txt_3 = self.get_txt('3', pdf_path=pdf_path, txt_path=txt_path)
-		txt_4 = self.get_txt('4', pdf_path=pdf_path, txt_path=txt_path)
-		txt_5 = self.get_txt('5', pdf_path=pdf_path, txt_path=txt_path)
-		txt_6 = self.get_txt('6', pdf_path=pdf_path, txt_path=txt_path)
+		txt_1 = self.parser.get_txt('1', pdf_path=pdf_path, txt_path=txt_path)
+		txt_2 = self.parser.get_txt('2', pdf_path=pdf_path, txt_path=txt_path)
+		txt_3 = self.parser.get_txt('3', pdf_path=pdf_path, txt_path=txt_path)
+		txt_4 = self.parser.get_txt('4', pdf_path=pdf_path, txt_path=txt_path)
+		txt_5 = self.parser.get_txt('5', pdf_path=pdf_path, txt_path=txt_path)
+		txt_6 = self.parser.get_txt('6', pdf_path=pdf_path, txt_path=txt_path)
 
 		issue_num_1, pub_date_1 = self.parser.get_issue_number(txt_1), self.parser.get_publication_date(txt_1)
 		issue_num_2, pub_date_2 = self.parser.get_issue_number(txt_2), self.parser.get_publication_date(txt_2)
@@ -1674,7 +1673,7 @@ class ParserTest(Context):
 	def test_get_issue_num_and_publ_date_6(self):
 		pdf_path = self.test_pdfs_dir + '/Presidential_Decree_Issues/for_training_data/Non-RespAs/'
 		txt_path = self.test_txts_dir + '/for_training_data/Non-RespAs/'
-		get_txt = self.get_txt
+		get_txt = self.parser.get_txt
 		txts = [get_txt(str(i), pdf_path=pdf_path, txt_path=txt_path) for i in range(1, 25+1)]
 		get_issue_num = self.parser.get_issue_number
 		get_pub_date = self.parser.get_publication_date
@@ -1686,7 +1685,7 @@ class ParserTest(Context):
 	def test_get_issue_num_and_publ_date_7(self):
 		pdf_path = self.test_pdfs_dir + '/Presidential_Decree_Issues/for_training_data/RespAs/'
 		txt_path = self.test_txts_dir + '/for_training_data/RespAs/'
-		get_txt = self.get_txt
+		get_txt = self.parser.get_txt
 		txts = [get_txt(str(i), pdf_path=pdf_path, txt_path=txt_path) for i in range(1, 50+1)]
 		get_issue_num = self.parser.get_issue_number
 		get_pub_date = self.parser.get_publication_date
@@ -1696,14 +1695,14 @@ class ParserTest(Context):
 		print(pub_dates)
 
 	def test_get_issue_category_and_type_1(self):
-		txt_1 = self.get_txt('1')
-		txt_2 = self.get_txt('2')
-		txt_3 = self.get_txt('3')
-		txt_4 = self.get_txt('4')
-		txt_5 = self.get_txt('5')
-		txt_6 = self.get_txt('6')
-		txt_7 = self.get_txt('7')
-		txt_8 = self.get_txt('8')
+		txt_1 = self.parser.get_txt('1')
+		txt_2 = self.parser.get_txt('2')
+		txt_3 = self.parser.get_txt('3')
+		txt_4 = self.parser.get_txt('4')
+		txt_5 = self.parser.get_txt('5')
+		txt_6 = self.parser.get_txt('6')
+		txt_7 = self.parser.get_txt('7')
+		txt_8 = self.parser.get_txt('8')
 
 		issue_category_1, issue_type_1 = self.parser.get_issue_category(txt_1), self.parser.get_issue_type(txt_1)
 		issue_category_2, issue_type_2 = self.parser.get_issue_category(txt_2), self.parser.get_issue_type(txt_2)
@@ -1725,17 +1724,17 @@ class ParserTest(Context):
 
 	def test_get_issue_category_and_type_2(self):
 		respa_pdf_path = self.test_pdfs_dir + '/RespA_Dec_Issues/w_RespA_Decisions/'
-		txt_1 = self.get_txt('1_w_RespA_Decisions', pdf_path=respa_pdf_path)
-		txt_2 = self.get_txt('2_w_RespA_Decisions', pdf_path=respa_pdf_path)
-		txt_3 = self.get_txt('3_w_RespA_Decisions', pdf_path=respa_pdf_path)
-		txt_4 = self.get_txt('4_w_RespA_Decisions', pdf_path=respa_pdf_path)
-		txt_5 = self.get_txt('5_w_RespA_Decisions', pdf_path=respa_pdf_path)
-		txt_6 = self.get_txt('6_w_RespA_Decisions', pdf_path=respa_pdf_path)
-		txt_7 = self.get_txt('7_w_RespA_Decisions', pdf_path=respa_pdf_path)
-		txt_8 = self.get_txt('8_w_RespA_Decisions', pdf_path=respa_pdf_path)
-		txt_9 = self.get_txt('9_w_RespA_Decisions', pdf_path=respa_pdf_path)
-		txt_10 = self.get_txt('10_w_RespA_Decisions', pdf_path=respa_pdf_path)
-		txt_11 = self.get_txt('11_w_RespA_Decisions', pdf_path=respa_pdf_path)
+		txt_1 = self.parser.get_txt('1_w_RespA_Decisions', pdf_path=respa_pdf_path)
+		txt_2 = self.parser.get_txt('2_w_RespA_Decisions', pdf_path=respa_pdf_path)
+		txt_3 = self.parser.get_txt('3_w_RespA_Decisions', pdf_path=respa_pdf_path)
+		txt_4 = self.parser.get_txt('4_w_RespA_Decisions', pdf_path=respa_pdf_path)
+		txt_5 = self.parser.get_txt('5_w_RespA_Decisions', pdf_path=respa_pdf_path)
+		txt_6 = self.parser.get_txt('6_w_RespA_Decisions', pdf_path=respa_pdf_path)
+		txt_7 = self.parser.get_txt('7_w_RespA_Decisions', pdf_path=respa_pdf_path)
+		txt_8 = self.parser.get_txt('8_w_RespA_Decisions', pdf_path=respa_pdf_path)
+		txt_9 = self.parser.get_txt('9_w_RespA_Decisions', pdf_path=respa_pdf_path)
+		txt_10 = self.parser.get_txt('10_w_RespA_Decisions', pdf_path=respa_pdf_path)
+		txt_11 = self.parser.get_txt('11_w_RespA_Decisions', pdf_path=respa_pdf_path)
 
 		issue_category_1, issue_type_1 = self.parser.get_issue_category(txt_1), self.parser.get_issue_type(txt_1)
 		issue_category_2, issue_type_2 = self.parser.get_issue_category(txt_2), self.parser.get_issue_type(txt_2)
@@ -1763,14 +1762,14 @@ class ParserTest(Context):
 	
 	def test_get_issue_category_and_type_3(self):
 		respa_pdf_path = self.test_pdfs_dir + '/RespA_Dec_Issues/w_Referenced_RespA_Decisions/'
-		txt_1 = self.get_txt('1_w_Ref_RespA_Decisions', pdf_path=respa_pdf_path)
-		txt_2 = self.get_txt('2_w_Ref_RespA_Decisions', pdf_path=respa_pdf_path)
-		txt_3 = self.get_txt('3_w_Ref_RespA_Decisions', pdf_path=respa_pdf_path)
-		txt_4 = self.get_txt('4_w_Ref_RespA_Decisions', pdf_path=respa_pdf_path)
-		txt_5 = self.get_txt('5_w_Ref_RespA_Decisions', pdf_path=respa_pdf_path)
-		txt_6 = self.get_txt('6_w_Ref_RespA_Decisions', pdf_path=respa_pdf_path)
-		txt_7 = self.get_txt('7_w_Ref_RespA_Decisions', pdf_path=respa_pdf_path)
-		txt_8 = self.get_txt('8_w_Ref_RespA_Decisions', pdf_path=respa_pdf_path)
+		txt_1 = self.parser.get_txt('1_w_Ref_RespA_Decisions', pdf_path=respa_pdf_path)
+		txt_2 = self.parser.get_txt('2_w_Ref_RespA_Decisions', pdf_path=respa_pdf_path)
+		txt_3 = self.parser.get_txt('3_w_Ref_RespA_Decisions', pdf_path=respa_pdf_path)
+		txt_4 = self.parser.get_txt('4_w_Ref_RespA_Decisions', pdf_path=respa_pdf_path)
+		txt_5 = self.parser.get_txt('5_w_Ref_RespA_Decisions', pdf_path=respa_pdf_path)
+		txt_6 = self.parser.get_txt('6_w_Ref_RespA_Decisions', pdf_path=respa_pdf_path)
+		txt_7 = self.parser.get_txt('7_w_Ref_RespA_Decisions', pdf_path=respa_pdf_path)
+		txt_8 = self.parser.get_txt('8_w_Ref_RespA_Decisions', pdf_path=respa_pdf_path)
 
 		issue_category_1, issue_type_1 = self.parser.get_issue_category(txt_1), self.parser.get_issue_type(txt_1)
 		issue_category_2, issue_type_2 = self.parser.get_issue_category(txt_2), self.parser.get_issue_type(txt_2)
@@ -1793,9 +1792,9 @@ class ParserTest(Context):
 	def test_get_issue_category_and_type_4(self):
 		pdf_path = self.test_pdfs_dir + '/Presidential_Decree_Issues/for_test_data/Non-RespAs/'
 		txt_path = self.test_txts_dir + '/for_test_data/Non-RespAs/'
-		txt_1 = self.get_txt('1', pdf_path=pdf_path, txt_path=txt_path)
-		txt_2 = self.get_txt('2', pdf_path=pdf_path, txt_path=txt_path)
-		txt_3 = self.get_txt('3', pdf_path=pdf_path, txt_path=txt_path)
+		txt_1 = self.parser.get_txt('1', pdf_path=pdf_path, txt_path=txt_path)
+		txt_2 = self.parser.get_txt('2', pdf_path=pdf_path, txt_path=txt_path)
+		txt_3 = self.parser.get_txt('3', pdf_path=pdf_path, txt_path=txt_path)
 
 		issue_category_1, issue_type_1 = self.parser.get_issue_category(txt_1), self.parser.get_issue_type(txt_1)
 		issue_category_2, issue_type_2 = self.parser.get_issue_category(txt_2), self.parser.get_issue_type(txt_2)
@@ -1808,12 +1807,12 @@ class ParserTest(Context):
 	def test_get_issue_category_and_type_5(self):
 		pdf_path = self.test_pdfs_dir + '/Presidential_Decree_Issues/for_test_data/RespAs/'
 		txt_path = self.test_txts_dir + '/for_test_data/RespAs/'
-		txt_1 = self.get_txt('1', pdf_path=pdf_path, txt_path=txt_path)
-		txt_2 = self.get_txt('2', pdf_path=pdf_path, txt_path=txt_path)
-		txt_3 = self.get_txt('3', pdf_path=pdf_path, txt_path=txt_path)
-		txt_4 = self.get_txt('4', pdf_path=pdf_path, txt_path=txt_path)
-		txt_5 = self.get_txt('5', pdf_path=pdf_path, txt_path=txt_path)
-		txt_6 = self.get_txt('6', pdf_path=pdf_path, txt_path=txt_path)
+		txt_1 = self.parser.get_txt('1', pdf_path=pdf_path, txt_path=txt_path)
+		txt_2 = self.parser.get_txt('2', pdf_path=pdf_path, txt_path=txt_path)
+		txt_3 = self.parser.get_txt('3', pdf_path=pdf_path, txt_path=txt_path)
+		txt_4 = self.parser.get_txt('4', pdf_path=pdf_path, txt_path=txt_path)
+		txt_5 = self.parser.get_txt('5', pdf_path=pdf_path, txt_path=txt_path)
+		txt_6 = self.parser.get_txt('6', pdf_path=pdf_path, txt_path=txt_path)
 
 		issue_category_1, issue_type_1 = self.parser.get_issue_category(txt_1), self.parser.get_issue_type(txt_1)
 		issue_category_2, issue_type_2 = self.parser.get_issue_category(txt_2), self.parser.get_issue_type(txt_2)
@@ -1832,7 +1831,7 @@ class ParserTest(Context):
 	def test_get_issue_category_and_type_6(self):
 		pdf_path = self.test_pdfs_dir + '/Presidential_Decree_Issues/for_training_data/Non-RespAs/'
 		txt_path = self.test_txts_dir + '/for_training_data/Non-RespAs/'
-		get_txt = self.get_txt
+		get_txt = self.parser.get_txt
 		get_issue_category = self.parser.get_issue_category
 		get_issue_type = self.parser.get_issue_type
 		txts = [get_txt(str(i), pdf_path=pdf_path, txt_path=txt_path) for i in range(1, 25+1)]
@@ -1845,7 +1844,7 @@ class ParserTest(Context):
 	def test_get_issue_category_and_type_7(self):
 		pdf_path = self.test_pdfs_dir + '/Presidential_Decree_Issues/for_training_data/RespAs/'
 		txt_path = self.test_txts_dir + '/for_training_data/RespAs/'
-		get_txt = self.get_txt
+		get_txt = self.parser.get_txt
 		get_issue_category = self.parser.get_issue_category
 		get_issue_type = self.parser.get_issue_type
 		txts = [get_txt(str(i), pdf_path=pdf_path, txt_path=txt_path) for i in range(1, 50+1)]
@@ -1856,14 +1855,14 @@ class ParserTest(Context):
 		print(issue_types)
 
 	def test_get_serial_number_1(self):
-		txt_1 = self.get_txt('1')
-		txt_2 = self.get_txt('2')
-		txt_3 = self.get_txt('3')
-		txt_4 = self.get_txt('4')
-		txt_5 = self.get_txt('5')
-		txt_6 = self.get_txt('6')
-		txt_7 = self.get_txt('7')
-		txt_8 = self.get_txt('8')
+		txt_1 = self.parser.get_txt('1')
+		txt_2 = self.parser.get_txt('2')
+		txt_3 = self.parser.get_txt('3')
+		txt_4 = self.parser.get_txt('4')
+		txt_5 = self.parser.get_txt('5')
+		txt_6 = self.parser.get_txt('6')
+		txt_7 = self.parser.get_txt('7')
+		txt_8 = self.parser.get_txt('8')
 
 		serial_num_1 = self.parser.get_serial_number(txt_1)
 		serial_num_2 = self.parser.get_serial_number(txt_2)
@@ -1885,17 +1884,17 @@ class ParserTest(Context):
 	
 	def test_get_serial_number_2(self):
 		respa_pdf_path = self.test_pdfs_dir + '/RespA_Dec_Issues/w_RespA_Decisions/'
-		txt_1 = self.get_txt('1_w_RespA_Decisions', pdf_path=respa_pdf_path)
-		txt_2 = self.get_txt('2_w_RespA_Decisions', pdf_path=respa_pdf_path)
-		txt_3 = self.get_txt('3_w_RespA_Decisions', pdf_path=respa_pdf_path)
-		txt_4 = self.get_txt('4_w_RespA_Decisions', pdf_path=respa_pdf_path)
-		txt_5 = self.get_txt('5_w_RespA_Decisions', pdf_path=respa_pdf_path)
-		txt_6 = self.get_txt('6_w_RespA_Decisions', pdf_path=respa_pdf_path)
-		txt_7 = self.get_txt('7_w_RespA_Decisions', pdf_path=respa_pdf_path)
-		txt_8 = self.get_txt('8_w_RespA_Decisions', pdf_path=respa_pdf_path)
-		txt_9 = self.get_txt('9_w_RespA_Decisions', pdf_path=respa_pdf_path)
-		txt_10 = self.get_txt('10_w_RespA_Decisions', pdf_path=respa_pdf_path)
-		txt_11 = self.get_txt('11_w_RespA_Decisions', pdf_path=respa_pdf_path)
+		txt_1 = self.parser.get_txt('1_w_RespA_Decisions', pdf_path=respa_pdf_path)
+		txt_2 = self.parser.get_txt('2_w_RespA_Decisions', pdf_path=respa_pdf_path)
+		txt_3 = self.parser.get_txt('3_w_RespA_Decisions', pdf_path=respa_pdf_path)
+		txt_4 = self.parser.get_txt('4_w_RespA_Decisions', pdf_path=respa_pdf_path)
+		txt_5 = self.parser.get_txt('5_w_RespA_Decisions', pdf_path=respa_pdf_path)
+		txt_6 = self.parser.get_txt('6_w_RespA_Decisions', pdf_path=respa_pdf_path)
+		txt_7 = self.parser.get_txt('7_w_RespA_Decisions', pdf_path=respa_pdf_path)
+		txt_8 = self.parser.get_txt('8_w_RespA_Decisions', pdf_path=respa_pdf_path)
+		txt_9 = self.parser.get_txt('9_w_RespA_Decisions', pdf_path=respa_pdf_path)
+		txt_10 = self.parser.get_txt('10_w_RespA_Decisions', pdf_path=respa_pdf_path)
+		txt_11 = self.parser.get_txt('11_w_RespA_Decisions', pdf_path=respa_pdf_path)
 
 		serial_num_1 = self.parser.get_serial_number(txt_1)
 		serial_num_2 = self.parser.get_serial_number(txt_2)
@@ -1923,14 +1922,14 @@ class ParserTest(Context):
 
 	def test_get_serial_number_3(self):
 		respa_pdf_path = self.test_pdfs_dir + '/RespA_Dec_Issues/w_Referenced_RespA_Decisions/'
-		txt_1 = self.get_txt('1_w_Ref_RespA_Decisions', pdf_path=respa_pdf_path)
-		txt_2 = self.get_txt('2_w_Ref_RespA_Decisions', pdf_path=respa_pdf_path)
-		txt_3 = self.get_txt('3_w_Ref_RespA_Decisions', pdf_path=respa_pdf_path)
-		txt_4 = self.get_txt('4_w_Ref_RespA_Decisions', pdf_path=respa_pdf_path)
-		txt_5 = self.get_txt('5_w_Ref_RespA_Decisions', pdf_path=respa_pdf_path)
-		txt_6 = self.get_txt('6_w_Ref_RespA_Decisions', pdf_path=respa_pdf_path)
-		txt_7 = self.get_txt('7_w_Ref_RespA_Decisions', pdf_path=respa_pdf_path)
-		txt_8 = self.get_txt('8_w_Ref_RespA_Decisions', pdf_path=respa_pdf_path)
+		txt_1 = self.parser.get_txt('1_w_Ref_RespA_Decisions', pdf_path=respa_pdf_path)
+		txt_2 = self.parser.get_txt('2_w_Ref_RespA_Decisions', pdf_path=respa_pdf_path)
+		txt_3 = self.parser.get_txt('3_w_Ref_RespA_Decisions', pdf_path=respa_pdf_path)
+		txt_4 = self.parser.get_txt('4_w_Ref_RespA_Decisions', pdf_path=respa_pdf_path)
+		txt_5 = self.parser.get_txt('5_w_Ref_RespA_Decisions', pdf_path=respa_pdf_path)
+		txt_6 = self.parser.get_txt('6_w_Ref_RespA_Decisions', pdf_path=respa_pdf_path)
+		txt_7 = self.parser.get_txt('7_w_Ref_RespA_Decisions', pdf_path=respa_pdf_path)
+		txt_8 = self.parser.get_txt('8_w_Ref_RespA_Decisions', pdf_path=respa_pdf_path)
 
 		serial_num_1 = self.parser.get_serial_number(txt_1)
 		serial_num_2 = self.parser.get_serial_number(txt_2)
@@ -1953,9 +1952,9 @@ class ParserTest(Context):
 	def test_get_serial_number_4(self):
 		pdf_path = self.test_pdfs_dir + '/Presidential_Decree_Issues/for_test_data/Non-RespAs/'
 		txt_path = self.test_txts_dir + '/for_test_data/Non-RespAs/'
-		txt_1 = self.get_txt('1', pdf_path=pdf_path, txt_path=txt_path)
-		txt_2 = self.get_txt('2', pdf_path=pdf_path, txt_path=txt_path)
-		txt_3 = self.get_txt('3', pdf_path=pdf_path, txt_path=txt_path)
+		txt_1 = self.parser.get_txt('1', pdf_path=pdf_path, txt_path=txt_path)
+		txt_2 = self.parser.get_txt('2', pdf_path=pdf_path, txt_path=txt_path)
+		txt_3 = self.parser.get_txt('3', pdf_path=pdf_path, txt_path=txt_path)
 
 		serial_num_1 = self.parser.get_serial_number(txt_1)
 		serial_num_2 = self.parser.get_serial_number(txt_2)
@@ -1968,12 +1967,12 @@ class ParserTest(Context):
 	def test_get_serial_number_5(self):
 		pdf_path = self.test_pdfs_dir + '/Presidential_Decree_Issues/for_test_data/RespAs/'
 		txt_path = self.test_txts_dir + '/for_test_data/RespAs/'
-		txt_1 = self.get_txt('1', pdf_path=pdf_path, txt_path=txt_path)
-		txt_2 = self.get_txt('2', pdf_path=pdf_path, txt_path=txt_path)
-		txt_3 = self.get_txt('3', pdf_path=pdf_path, txt_path=txt_path)
-		txt_4 = self.get_txt('4', pdf_path=pdf_path, txt_path=txt_path)
-		txt_5 = self.get_txt('5', pdf_path=pdf_path, txt_path=txt_path)
-		txt_6 = self.get_txt('6', pdf_path=pdf_path, txt_path=txt_path)
+		txt_1 = self.parser.get_txt('1', pdf_path=pdf_path, txt_path=txt_path)
+		txt_2 = self.parser.get_txt('2', pdf_path=pdf_path, txt_path=txt_path)
+		txt_3 = self.parser.get_txt('3', pdf_path=pdf_path, txt_path=txt_path)
+		txt_4 = self.parser.get_txt('4', pdf_path=pdf_path, txt_path=txt_path)
+		txt_5 = self.parser.get_txt('5', pdf_path=pdf_path, txt_path=txt_path)
+		txt_6 = self.parser.get_txt('6', pdf_path=pdf_path, txt_path=txt_path)
 
 		serial_num_1 = self.parser.get_serial_number(txt_1)
 		serial_num_2 = self.parser.get_serial_number(txt_2)
@@ -1992,7 +1991,7 @@ class ParserTest(Context):
 	def test_get_serial_number_6(self):
 		pdf_path = self.test_pdfs_dir + '/Presidential_Decree_Issues/for_training_data/Non-RespAs/'
 		txt_path = self.test_txts_dir + '/for_training_data/Non-RespAs/'
-		get_txt = self.get_txt
+		get_txt = self.parser.get_txt
 		get_serial_num = self.parser.get_serial_number
 		txts = [get_txt(str(i), pdf_path=pdf_path, txt_path=txt_path) for i in range(1, 25+1)]
 		serial_nums = [get_serial_num(txt) for txt in txts]
@@ -2002,7 +2001,7 @@ class ParserTest(Context):
 	def test_get_serial_number_7(self):
 		pdf_path = self.test_pdfs_dir + '/Presidential_Decree_Issues/for_training_data/RespAs/'
 		txt_path = self.test_txts_dir + '/for_training_data/RespAs/'
-		get_txt = self.get_txt
+		get_txt = self.parser.get_txt
 		get_serial_num = self.parser.get_serial_number
 		txts = [get_txt(str(i), pdf_path=pdf_path, txt_path=txt_path) for i in range(1, 50+1)]
 		serial_nums = [get_serial_num(txt) for txt in txts]
@@ -2010,14 +2009,14 @@ class ParserTest(Context):
 		print(serial_nums)
 
 	def test_get_mentioned_issues_sections_1(self):
-		txt_1 = self.get_txt('1')
-		txt_2 = self.get_txt('2')
-		txt_3 = self.get_txt('3')
-		txt_4 = self.get_txt('4')
-		txt_5 = self.get_txt('5')
-		txt_6 = self.get_txt('6')
-		txt_7 = self.get_txt('7')
-		txt_8 = self.get_txt('8')
+		txt_1 = self.parser.get_txt('1')
+		txt_2 = self.parser.get_txt('2')
+		txt_3 = self.parser.get_txt('3')
+		txt_4 = self.parser.get_txt('4')
+		txt_5 = self.parser.get_txt('5')
+		txt_6 = self.parser.get_txt('6')
+		txt_7 = self.parser.get_txt('7')
+		txt_8 = self.parser.get_txt('8')
 
 		mentioned_issues_sections_1 = self.parser.get_mentioned_issues_sections(txt_1)
 		mentioned_issues_sections_2 = self.parser.get_mentioned_issues_sections(txt_2)
@@ -2039,17 +2038,17 @@ class ParserTest(Context):
 
 	def test_get_mentioned_issues_sections_2(self):
 		respa_pdf_path = self.test_pdfs_dir + '/RespA_Dec_Issues/w_RespA_Decisions/'
-		txt_1 = self.get_txt('1_w_RespA_Decisions', pdf_path=respa_pdf_path)
-		txt_2 = self.get_txt('2_w_RespA_Decisions', pdf_path=respa_pdf_path)
-		txt_3 = self.get_txt('3_w_RespA_Decisions', pdf_path=respa_pdf_path)
-		txt_4 = self.get_txt('4_w_RespA_Decisions', pdf_path=respa_pdf_path)
-		txt_5 = self.get_txt('5_w_RespA_Decisions', pdf_path=respa_pdf_path)
-		txt_6 = self.get_txt('6_w_RespA_Decisions', pdf_path=respa_pdf_path)
-		txt_7 = self.get_txt('7_w_RespA_Decisions', pdf_path=respa_pdf_path)
-		txt_8 = self.get_txt('8_w_RespA_Decisions', pdf_path=respa_pdf_path)
-		txt_9 = self.get_txt('9_w_RespA_Decisions', pdf_path=respa_pdf_path)
-		txt_10 = self.get_txt('10_w_RespA_Decisions', pdf_path=respa_pdf_path)
-		txt_11 = self.get_txt('11_w_RespA_Decisions', pdf_path=respa_pdf_path)
+		txt_1 = self.parser.get_txt('1_w_RespA_Decisions', pdf_path=respa_pdf_path)
+		txt_2 = self.parser.get_txt('2_w_RespA_Decisions', pdf_path=respa_pdf_path)
+		txt_3 = self.parser.get_txt('3_w_RespA_Decisions', pdf_path=respa_pdf_path)
+		txt_4 = self.parser.get_txt('4_w_RespA_Decisions', pdf_path=respa_pdf_path)
+		txt_5 = self.parser.get_txt('5_w_RespA_Decisions', pdf_path=respa_pdf_path)
+		txt_6 = self.parser.get_txt('6_w_RespA_Decisions', pdf_path=respa_pdf_path)
+		txt_7 = self.parser.get_txt('7_w_RespA_Decisions', pdf_path=respa_pdf_path)
+		txt_8 = self.parser.get_txt('8_w_RespA_Decisions', pdf_path=respa_pdf_path)
+		txt_9 = self.parser.get_txt('9_w_RespA_Decisions', pdf_path=respa_pdf_path)
+		txt_10 = self.parser.get_txt('10_w_RespA_Decisions', pdf_path=respa_pdf_path)
+		txt_11 = self.parser.get_txt('11_w_RespA_Decisions', pdf_path=respa_pdf_path)
 
 		mentioned_issues_sections_1 = self.parser.get_mentioned_issues_sections(txt_1)
 		mentioned_issues_sections_2 = self.parser.get_mentioned_issues_sections(txt_2)
@@ -2077,14 +2076,14 @@ class ParserTest(Context):
 
 	def test_get_mentioned_issues_sections_3(self):
 		respa_pdf_path = self.test_pdfs_dir + '/RespA_Dec_Issues/w_Referenced_RespA_Decisions/'
-		txt_1 = self.get_txt('1_w_Ref_RespA_Decisions', pdf_path=respa_pdf_path)
-		txt_2 = self.get_txt('2_w_Ref_RespA_Decisions', pdf_path=respa_pdf_path)
-		txt_3 = self.get_txt('3_w_Ref_RespA_Decisions', pdf_path=respa_pdf_path)
-		txt_4 = self.get_txt('4_w_Ref_RespA_Decisions', pdf_path=respa_pdf_path)
-		txt_5 = self.get_txt('5_w_Ref_RespA_Decisions', pdf_path=respa_pdf_path)
-		txt_6 = self.get_txt('6_w_Ref_RespA_Decisions', pdf_path=respa_pdf_path)
-		txt_7 = self.get_txt('7_w_Ref_RespA_Decisions', pdf_path=respa_pdf_path)
-		txt_8 = self.get_txt('8_w_Ref_RespA_Decisions', pdf_path=respa_pdf_path)
+		txt_1 = self.parser.get_txt('1_w_Ref_RespA_Decisions', pdf_path=respa_pdf_path)
+		txt_2 = self.parser.get_txt('2_w_Ref_RespA_Decisions', pdf_path=respa_pdf_path)
+		txt_3 = self.parser.get_txt('3_w_Ref_RespA_Decisions', pdf_path=respa_pdf_path)
+		txt_4 = self.parser.get_txt('4_w_Ref_RespA_Decisions', pdf_path=respa_pdf_path)
+		txt_5 = self.parser.get_txt('5_w_Ref_RespA_Decisions', pdf_path=respa_pdf_path)
+		txt_6 = self.parser.get_txt('6_w_Ref_RespA_Decisions', pdf_path=respa_pdf_path)
+		txt_7 = self.parser.get_txt('7_w_Ref_RespA_Decisions', pdf_path=respa_pdf_path)
+		txt_8 = self.parser.get_txt('8_w_Ref_RespA_Decisions', pdf_path=respa_pdf_path)
 
 		mentioned_issues_sections_1 = self.parser.get_mentioned_issues_sections(txt_1)
 		mentioned_issues_sections_2 = self.parser.get_mentioned_issues_sections(txt_2)
@@ -2107,9 +2106,9 @@ class ParserTest(Context):
 	def test_get_mentioned_issues_sections_4(self):
 		pdf_path = self.test_pdfs_dir + '/Presidential_Decree_Issues/for_test_data/Non-RespAs/'
 		txt_path = self.test_txts_dir + '/for_test_data/Non-RespAs/'
-		txt_1 = self.get_txt('1', pdf_path=pdf_path, txt_path=txt_path)
-		txt_2 = self.get_txt('2', pdf_path=pdf_path, txt_path=txt_path)
-		txt_3 = self.get_txt('3', pdf_path=pdf_path, txt_path=txt_path)
+		txt_1 = self.parser.get_txt('1', pdf_path=pdf_path, txt_path=txt_path)
+		txt_2 = self.parser.get_txt('2', pdf_path=pdf_path, txt_path=txt_path)
+		txt_3 = self.parser.get_txt('3', pdf_path=pdf_path, txt_path=txt_path)
 
 		mentioned_issues_sections_1 = self.parser.get_mentioned_issues_sections(txt_1)
 		mentioned_issues_sections_2 = self.parser.get_mentioned_issues_sections(txt_2)
@@ -2122,12 +2121,12 @@ class ParserTest(Context):
 	def test_get_mentioned_issues_sections_5(self):
 		pdf_path = self.test_pdfs_dir + '/Presidential_Decree_Issues/for_test_data/RespAs/'
 		txt_path = self.test_txts_dir + '/for_test_data/RespAs/'
-		txt_1 = self.get_txt('1', pdf_path=pdf_path, txt_path=txt_path)
-		txt_2 = self.get_txt('2', pdf_path=pdf_path, txt_path=txt_path)
-		txt_3 = self.get_txt('3', pdf_path=pdf_path, txt_path=txt_path)
-		txt_4 = self.get_txt('4', pdf_path=pdf_path, txt_path=txt_path)
-		txt_5 = self.get_txt('5', pdf_path=pdf_path, txt_path=txt_path)
-		txt_6 = self.get_txt('6', pdf_path=pdf_path, txt_path=txt_path)
+		txt_1 = self.parser.get_txt('1', pdf_path=pdf_path, txt_path=txt_path)
+		txt_2 = self.parser.get_txt('2', pdf_path=pdf_path, txt_path=txt_path)
+		txt_3 = self.parser.get_txt('3', pdf_path=pdf_path, txt_path=txt_path)
+		txt_4 = self.parser.get_txt('4', pdf_path=pdf_path, txt_path=txt_path)
+		txt_5 = self.parser.get_txt('5', pdf_path=pdf_path, txt_path=txt_path)
+		txt_6 = self.parser.get_txt('6', pdf_path=pdf_path, txt_path=txt_path)
 
 		mentioned_issues_sections_1 = self.parser.get_mentioned_issues_sections(txt_1)
 		mentioned_issues_sections_2 = self.parser.get_mentioned_issues_sections(txt_2)
@@ -2144,7 +2143,7 @@ class ParserTest(Context):
 	def test_get_mentioned_issues_sections_6(self):
 		pdf_path = self.test_pdfs_dir + '/Presidential_Decree_Issues/for_training_data/Non-RespAs/'
 		txt_path = self.test_txts_dir + '/for_training_data/Non-RespAs/'
-		get_txt = self.get_txt
+		get_txt = self.parser.get_txt
 		get_mentioned_issues_sections = self.parser.get_mentioned_issues_sections
 		txts = [get_txt(str(i), pdf_path=pdf_path, txt_path=txt_path) for i in range(1, 25+1)]
 		mentioned_issues_sections = [get_mentioned_issues_sections(txt) for txt in txts]
@@ -2154,7 +2153,7 @@ class ParserTest(Context):
 	def test_get_mentioned_issues_sections_7(self):
 		pdf_path = self.test_pdfs_dir + '/Presidential_Decree_Issues/for_training_data/RespAs/'
 		txt_path = self.test_txts_dir + '/for_training_data/RespAs/'
-		get_txt = self.get_txt
+		get_txt = self.parser.get_txt
 		get_mentioned_issues_sections = self.parser.get_mentioned_issues_sections
 		txts = [get_txt(str(i), pdf_path=pdf_path, txt_path=txt_path) for i in range(1, 50+1)]
 		mentioned_issues_sections = [get_mentioned_issues_sections(txt) for txt in txts]
@@ -2164,14 +2163,14 @@ class ParserTest(Context):
 		pdf_path = self.test_pdfs_dir + '/Presidential_Decree_Issues/'
 		txt_path = self.test_txts_dir + '/'
 		
-		txt_1 = self.get_txt('1_Pres_Decree', pdf_path=pdf_path, txt_path=txt_path)
-		txt_2 = self.get_txt('2_Pres_Decree', pdf_path=pdf_path, txt_path=txt_path)
-		txt_3 = self.get_txt('3_Pres_Decree', pdf_path=pdf_path, txt_path=txt_path)
-		txt_4 = self.get_txt('4_Pres_Decree', pdf_path=pdf_path, txt_path=txt_path)
-		txt_5 = self.get_txt('5_Pres_Decree', pdf_path=pdf_path, txt_path=txt_path)
-		txt_6 = self.get_txt('6_Pres_Decree', pdf_path=pdf_path, txt_path=txt_path)
-		txt_7 = self.get_txt('7_Pres_Decree', pdf_path=pdf_path, txt_path=txt_path)
-		txt_8 = self.get_txt('8_Pres_Decree', pdf_path=pdf_path, txt_path=txt_path)
+		txt_1 = self.parser.get_txt('1_Pres_Decree', pdf_path=pdf_path, txt_path=txt_path)
+		txt_2 = self.parser.get_txt('2_Pres_Decree', pdf_path=pdf_path, txt_path=txt_path)
+		txt_3 = self.parser.get_txt('3_Pres_Decree', pdf_path=pdf_path, txt_path=txt_path)
+		txt_4 = self.parser.get_txt('4_Pres_Decree', pdf_path=pdf_path, txt_path=txt_path)
+		txt_5 = self.parser.get_txt('5_Pres_Decree', pdf_path=pdf_path, txt_path=txt_path)
+		txt_6 = self.parser.get_txt('6_Pres_Decree', pdf_path=pdf_path, txt_path=txt_path)
+		txt_7 = self.parser.get_txt('7_Pres_Decree', pdf_path=pdf_path, txt_path=txt_path)
+		txt_8 = self.parser.get_txt('8_Pres_Decree', pdf_path=pdf_path, txt_path=txt_path)
 		
 		units_followed_by_respas_1 = self.parser.get_units_followed_by_respas(txt_1)
 		units_followed_by_respas_2 = self.parser.get_units_followed_by_respas(txt_2)
@@ -2216,10 +2215,10 @@ class ParserTest(Context):
 		pdf_path = self.test_pdfs_dir + '/Presidential_Decree_Issues/for_training_data/RespAs/'
 		txt_path = self.test_txts_dir + '/for_training_data/RespAs/'
 		
-		txt_1 = self.get_txt('6', pdf_path=pdf_path, txt_path=txt_path)
-		txt_2 = self.get_txt('50', pdf_path=pdf_path, txt_path=txt_path)
-		txt_3 = self.get_txt('19', pdf_path=pdf_path, txt_path=txt_path)
-		txt_4 = self.get_txt('24', pdf_path=pdf_path, txt_path=txt_path)
+		txt_1 = self.parser.get_txt('6', pdf_path=pdf_path, txt_path=txt_path)
+		txt_2 = self.parser.get_txt('50', pdf_path=pdf_path, txt_path=txt_path)
+		txt_3 = self.parser.get_txt('19', pdf_path=pdf_path, txt_path=txt_path)
+		txt_4 = self.parser.get_txt('24', pdf_path=pdf_path, txt_path=txt_path)
 
 		
 		units_followed_by_respas_1 = self.parser.get_units_followed_by_respas(txt_1)
@@ -2252,14 +2251,14 @@ class ParserTest(Context):
 		pdf_path = self.test_pdfs_dir + '/Presidential_Decree_Issues/'
 		txt_path = self.test_txts_dir + '/'
 
-		txt_1 = self.get_txt('1_Pres_Decree', pdf_path=pdf_path, txt_path=txt_path)
-		txt_2 = self.get_txt('2_Pres_Decree', pdf_path=pdf_path, txt_path=txt_path)
-		txt_3 = self.get_txt('3_Pres_Decree', pdf_path=pdf_path, txt_path=txt_path)
-		txt_4 = self.get_txt('4_Pres_Decree', pdf_path=pdf_path, txt_path=txt_path)
-		txt_5 = self.get_txt('5_Pres_Decree', pdf_path=pdf_path, txt_path=txt_path)
-		txt_6 = self.get_txt('6_Pres_Decree', pdf_path=pdf_path, txt_path=txt_path)
-		txt_7 = self.get_txt('7_Pres_Decree', pdf_path=pdf_path, txt_path=txt_path)
-		txt_8 = self.get_txt('8_Pres_Decree', pdf_path=pdf_path, txt_path=txt_path)
+		txt_1 = self.parser.get_txt('1_Pres_Decree', pdf_path=pdf_path, txt_path=txt_path)
+		txt_2 = self.parser.get_txt('2_Pres_Decree', pdf_path=pdf_path, txt_path=txt_path)
+		txt_3 = self.parser.get_txt('3_Pres_Decree', pdf_path=pdf_path, txt_path=txt_path)
+		txt_4 = self.parser.get_txt('4_Pres_Decree', pdf_path=pdf_path, txt_path=txt_path)
+		txt_5 = self.parser.get_txt('5_Pres_Decree', pdf_path=pdf_path, txt_path=txt_path)
+		txt_6 = self.parser.get_txt('6_Pres_Decree', pdf_path=pdf_path, txt_path=txt_path)
+		txt_7 = self.parser.get_txt('7_Pres_Decree', pdf_path=pdf_path, txt_path=txt_path)
+		txt_8 = self.parser.get_txt('8_Pres_Decree', pdf_path=pdf_path, txt_path=txt_path)
 
 		units_and_respas_1 = self.parser.get_units_and_respas(txt_1)
 		units_and_respas_2 = self.parser.get_units_and_respas(txt_2)
@@ -2295,7 +2294,7 @@ class ParserTest(Context):
 		pdf_path = self.test_pdfs_dir + '/Presidential_Decree_Issues/for_training_data/RespAs/'
 		txt_path = self.test_txts_dir + '/for_training_data/RespAs/'
 		
-		txt_1 = self.get_txt('2', pdf_path=pdf_path, txt_path=txt_path)
+		txt_1 = self.parser.get_txt('2', pdf_path=pdf_path, txt_path=txt_path)
 
 		units_and_respas_1 = self.parser.get_units_and_respas(txt_1)
 		print(units_and_respas_1)
@@ -2304,10 +2303,10 @@ class ParserTest(Context):
 		pdf_path = self.test_pdfs_dir + '/Presidential_Decree_Issues/'
 		txt_path = self.test_txts_dir + '/'
 
-		txt_1 = self.get_txt('3_Pres_Decree', pdf_path=pdf_path, txt_path=txt_path)
-		txt_2 = self.get_txt('4_Pres_Decree', pdf_path=pdf_path, txt_path=txt_path)
-		txt_3 = self.get_txt('6_Pres_Decree', pdf_path=pdf_path, txt_path=txt_path)
-		txt_4 = self.get_txt('8_Pres_Decree', pdf_path=pdf_path, txt_path=txt_path)
+		txt_1 = self.parser.get_txt('3_Pres_Decree', pdf_path=pdf_path, txt_path=txt_path)
+		txt_2 = self.parser.get_txt('4_Pres_Decree', pdf_path=pdf_path, txt_path=txt_path)
+		txt_3 = self.parser.get_txt('6_Pres_Decree', pdf_path=pdf_path, txt_path=txt_path)
+		txt_4 = self.parser.get_txt('8_Pres_Decree', pdf_path=pdf_path, txt_path=txt_path)
 
 		units_and_respas_follow_respas_decl_1 = self.parser.get_units_and_respas_following_respas_decl(txt_1)
 		units_and_respas_follow_respas_decl_2 = self.parser.get_units_and_respas_following_respas_decl(txt_2)
@@ -2336,7 +2335,7 @@ class ParserTest(Context):
 	def test_get_units_and_respas_following_respas_decl_2(self):
 		pdf_path = self.test_pdfs_dir + '/Presidential_Decree_Issues/for_training_data/RespAs/'
 		txt_path = self.test_txts_dir + '/for_training_data/RespAs/'
-		get_txt = self.get_txt
+		get_txt = self.parser.get_txt
 		txts = [get_txt(str(i), pdf_path=pdf_path, txt_path=txt_path) for i in range(1, 50+1)]
 		get_units_and_respas_following_respas_decl = self.parser.get_units_and_respas_following_respas_decl
 		units_and_respas_follow_respas_decl_list = [get_units_and_respas_following_respas_decl(txt)
@@ -2360,21 +2359,21 @@ class ParserTest(Context):
 	def test_get_units_and_respas_following_respas_decl_3(self):
 		pdf_path = self.test_pdfs_dir + '/Presidential_Decree_Issues/for_training_data/RespAs/'
 		txt_path = self.test_txts_dir + '/for_training_data/RespAs/'
-		txt_1 = self.get_txt('48', pdf_path=pdf_path, txt_path=txt_path)
+		txt_1 = self.parser.get_txt('48', pdf_path=pdf_path, txt_path=txt_path)
 		units_and_respas_follow_respas_decl_1 = self.parser.get_units_and_respas_following_respas_decl(txt_1)
 
 	def test_get_rough_unit_respa_associations_1(self):
 		pdf_path = self.test_pdfs_dir + '/Presidential_Decree_Issues/'
 		txt_path = self.test_txts_dir + '/'
 
-		txt_1 = self.get_txt('1_Pres_Decree', pdf_path=pdf_path, txt_path=txt_path)
-		txt_2 = self.get_txt('2_Pres_Decree', pdf_path=pdf_path, txt_path=txt_path)
-		txt_3 = self.get_txt('3_Pres_Decree', pdf_path=pdf_path, txt_path=txt_path)
-		txt_4 = self.get_txt('4_Pres_Decree', pdf_path=pdf_path, txt_path=txt_path)
-		txt_5 = self.get_txt('5_Pres_Decree', pdf_path=pdf_path, txt_path=txt_path)
-		txt_6 = self.get_txt('6_Pres_Decree', pdf_path=pdf_path, txt_path=txt_path)
-		txt_7 = self.get_txt('7_Pres_Decree', pdf_path=pdf_path, txt_path=txt_path)
-		txt_8 = self.get_txt('8_Pres_Decree', pdf_path=pdf_path, txt_path=txt_path)
+		txt_1 = self.parser.get_txt('1_Pres_Decree', pdf_path=pdf_path, txt_path=txt_path)
+		txt_2 = self.parser.get_txt('2_Pres_Decree', pdf_path=pdf_path, txt_path=txt_path)
+		txt_3 = self.parser.get_txt('3_Pres_Decree', pdf_path=pdf_path, txt_path=txt_path)
+		txt_4 = self.parser.get_txt('4_Pres_Decree', pdf_path=pdf_path, txt_path=txt_path)
+		txt_5 = self.parser.get_txt('5_Pres_Decree', pdf_path=pdf_path, txt_path=txt_path)
+		txt_6 = self.parser.get_txt('6_Pres_Decree', pdf_path=pdf_path, txt_path=txt_path)
+		txt_7 = self.parser.get_txt('7_Pres_Decree', pdf_path=pdf_path, txt_path=txt_path)
+		txt_8 = self.parser.get_txt('8_Pres_Decree', pdf_path=pdf_path, txt_path=txt_path)
 
 		rough_unit_respa_associations_1 = self.parser.get_rough_unit_respa_associations(txt_1)
 		rough_unit_respa_associations_2 = self.parser.get_rough_unit_respa_associations(txt_2)

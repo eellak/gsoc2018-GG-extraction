@@ -929,9 +929,14 @@ class Parser(object):
 
 		return units_and_respas
 
-	def get_simple_pdf_text(self, file_name, txt_name):
-		
-		def clean_up_text(text, txt_name):
+	def get_pdf_text(self, in_pdf, out_txt):
+		"""
+			Return cleaned-up text of pdf using pdfminer.six's pdf2txt.py
+			
+			@param in_pdf: The input pdf file
+			@param out_txt: The output txt file
+		"""
+		def clean_up_text(text, out_txt):
 			cid_occurs = findall(r'\(cid:\d+\)', text)
 		
 			# Ignore cid occurences for now
@@ -940,49 +945,66 @@ class Parser(object):
 				# cid_int = int(''.join(filter(str.isdigit, cid)))
 			
 			# Overwrite .txt 
-			with StringIO(text) as in_file, open(txt_name, 'w') as out_file:
+			with StringIO(text) as in_file, open(out_txt, 'w') as out_file:
 				for line in in_file:
 					if not line.strip(): continue # skip empty lines
 					out_file.write(line)
 			
 			# Read .txt locally again
 			text = ''
-			with open(txt_name) as out_file:
+			with open(out_txt) as out_file:
 				text = out_file.read()
 
 			return text
 
 		try:
-			text = self.simple_pdf_to_text(file_name, txt_name)
-			text = clean_up_text(text, txt_name)
+			text = self.pdf_to_text(in_pdf, out_txt)
+			text = clean_up_text(text, out_txt)
 		except OSError:
 			raise
 
 		return text
 
-	def simple_pdf_to_text(self, file_name, txt_name):
-		if not os.path.exists(file_name):
-			print("'{}' does not exist!".format(file_name))
+	def pdf_to_text(self, in_pdf, out_txt):
+		"""
+			Return raw text of pdf using pdfminer.six's pdf2txt.py
+			
+			@param in_pdf: The input pdf file
+			@param out_txt: The output txt file
+		"""
+		if not os.path.exists(in_pdf):
+			print("'{}' does not exist!".format(in_pdf))
 		
-		if os.path.exists(txt_name):
-			print("'{}' already exists! Fetching text anyway...".format(txt_name))
+		if os.path.exists(out_txt):
+			print("'{}' already exists! Fetching text anyway...".format(out_txt))
 		else:
-			rel_in =  escape(file_name)
-			rel_out = escape(txt_name)
+			rel_in =  escape(in_pdf)
+			rel_out = escape(out_txt)
 			
 			# Convert
 			cmd = 'pdf2txt.py {} > {}'.format(rel_in, rel_out)
-			print("'{}' -> '{}':".format(file_name, txt_name), end="")
+			print("'{}' -> '{}':".format(in_pdf, out_txt), end="")
 			call(cmd, shell=True)
 
 		# Read .txt locally
 		text = ''
-		with open(txt_name) as out_file:
+		with open(out_txt) as out_file:
 			text = out_file.read()
 
 		print("DONE.")
 
 		return text
+
+	def get_txt(self, file_name, pdf_path='../data/test_PDFs/Decision_Issues/', txt_path='../data/test_TXTs/'):
+			"""
+				Return cleaned-up text of pdf using pdfminer.six's pdf2txt.py
+				
+				@param file_name: The input pdf file name (extensionless)
+				@param pdf_path: The input pdf's dir path
+				@param txt_path: The output txt's dir path
+			"""
+			return self.get_pdf_text(pdf_path + file_name + '.pdf', 
+		  				 			 txt_path + file_name + '.txt')		
 
 	def request_nlp_data(self, txt, category = ''):
 		"""
@@ -1214,6 +1236,12 @@ class Parser(object):
 		return nlp_data
 
 	def get_spacy_nlp_instance(self, txt):
+		"""
+			Return an spacy nlp object that can be used for various NLP tasks
+			described here: https://spacy.io/usage/
+
+			@param txt: Any text
+		"""
 		txt = Helper.clean_up_txt(txt)
 		nlp = el_core_web_sm.load()
 		return nlp(txt)

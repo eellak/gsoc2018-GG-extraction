@@ -25,9 +25,9 @@ class ClassifierTest(Context):
 		pdf_path = self.test_pdfs_dir + '/Presidential_Decree_Issues/for_test_data/Non-RespAs/'
 		txt_path = self.test_txts_dir + '/for_test_data/Non-RespAs/'
 		
-		txt_1 = self.get_txt('1', pdf_path=pdf_path, txt_path=txt_path)
-		txt_2 = self.get_txt('2', pdf_path=pdf_path, txt_path=txt_path)
-		txt_3 = self.get_txt('3', pdf_path=pdf_path, txt_path=txt_path)
+		txt_1 = self.parser.get_txt('1', pdf_path=pdf_path, txt_path=txt_path)
+		txt_2 = self.parser.get_txt('2', pdf_path=pdf_path, txt_path=txt_path)
+		txt_3 = self.parser.get_txt('3', pdf_path=pdf_path, txt_path=txt_path)
 
 		txt_1_data_vec = self.analyzer.get_n_gram_analysis_data_vector(txt_1)
 		txt_2_data_vec = self.analyzer.get_n_gram_analysis_data_vector(txt_2)
@@ -70,12 +70,12 @@ class ClassifierTest(Context):
 		pdf_path = self.test_pdfs_dir + '/Presidential_Decree_Issues/for_test_data/RespAs/'
 		txt_path = self.test_txts_dir + '/for_test_data/RespAs/'
 		
-		txt_1 = self.get_txt('1', pdf_path=pdf_path, txt_path=txt_path)
-		txt_2 = self.get_txt('2', pdf_path=pdf_path, txt_path=txt_path)
-		txt_3 = self.get_txt('3', pdf_path=pdf_path, txt_path=txt_path)
-		txt_4 = self.get_txt('4', pdf_path=pdf_path, txt_path=txt_path)
-		txt_5 = self.get_txt('5', pdf_path=pdf_path, txt_path=txt_path)
-		txt_6 = self.get_txt('6', pdf_path=pdf_path, txt_path=txt_path)
+		txt_1 = self.parser.get_txt('1', pdf_path=pdf_path, txt_path=txt_path)
+		txt_2 = self.parser.get_txt('2', pdf_path=pdf_path, txt_path=txt_path)
+		txt_3 = self.parser.get_txt('3', pdf_path=pdf_path, txt_path=txt_path)
+		txt_4 = self.parser.get_txt('4', pdf_path=pdf_path, txt_path=txt_path)
+		txt_5 = self.parser.get_txt('5', pdf_path=pdf_path, txt_path=txt_path)
+		txt_6 = self.parser.get_txt('6', pdf_path=pdf_path, txt_path=txt_path)
 
 		txt_1_data_vec = self.analyzer.get_n_gram_analysis_data_vector(txt_1)
 		txt_2_data_vec = self.analyzer.get_n_gram_analysis_data_vector(txt_2)
