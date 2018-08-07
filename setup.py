@@ -1,41 +1,11 @@
 import sqlite3
 import os
 import errno
-from sys import argv as args
+from sys import argv as args, path
 import platform
 import zipfile
-from subprocess import call 
+from subprocess import call
 from src.util.helper import Helper
-
-
-def install_dependencies(DEPENDENCIES = ['selenium', 'bs4', 'pdfminer.six', 'openpyxl']):
-    # Check if pip is installed 
-    try:
-        import pip
-    except ImportError as e:
-        raise e
-    
-    if(len(DEPENDENCIES)>1):
-        # Write to requirements file
-        with open('requirements', "w") as out_file:
-            out_file.write("\n".join(DEPENDENCIES))
-        
-        # Make install cmd        
-        cmd = 'pip3 install -r requirements'
-        
-        # pip install 
-        call(cmd, shell=True)
-
-        # Remove requirements file
-        rmv_reqs_cmd = 'rm -f requirements'
-        call(rmv_reqs_cmd, shell=True)
-
-    else:
-        # Make install cmd        
-        cmd = "pip3 install {}".format(DEPENDENCIES)
-        
-        # pip install 
-        call(cmd, shell=True)
 
 def init_db():
     if len(args) > 1:
@@ -129,9 +99,9 @@ def init_chromedriver():
         print('Downloading chromedriver for selenium failed.')    
     
 def setup():
-    # install_dependencies()
     init_db()
     init_chromedriver()
+    call("make -C scripts", shell=True)
 
 if __name__ == '__main__':
     setup()
