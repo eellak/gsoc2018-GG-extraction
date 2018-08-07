@@ -11,6 +11,7 @@ from subprocess import call
 from glob import glob
 from itertools import zip_longest
 from PIL import Image
+from requests import post
 from nltk.tokenize import sent_tokenize
 from difflib import get_close_matches, SequenceMatcher
 # from polyglot.text import Text
@@ -980,3 +981,232 @@ class Parser(object):
 		print("DONE.")
 
 		return text
+
+	def request_nlp_data(self, txt, category = ''):
+		"""
+			Returns a json or one of its values containing nlp analysis data of the given txt
+			
+			@param txt: Any text
+			@param category: Any valid category of the final json data
+			
+			e.g. 
+			txt =  'Ψάλλε θεά, τον τρομερό θυμόν του Αχιλλέως
+					Πώς έγινε στους Αχαιούς αρχή πολλών δακρύων.
+					Που ανδράγαθες ροβόλησε πολλές ψυχές στον Άδη
+					ηρώων, κι έδωκεν αυτούς αρπάγματα των σκύλων
+					και των ορνέων – και η βουλή γενόταν του Κρονίδη,
+					απ’ ότ’, εφιλονίκησαν κι εχωρισθήκαν πρώτα
+					ο Ατρείδης, άρχος των ανδρών, και ο θείος Αχιλλέας.'
+
+			->
+
+			{'category': 'Τέχνες\n',
+			 'keywords': 'κρονίδη, ανδράγαθες, θείος, τρομερό, ροβόλησε, αρπάγμα, αρχή, '
+			             'ατρείδης, θεά, σκύλων',
+			 'language': 'Greek',
+			 'lemmatized_sentences': ['ψάλλε θεά , τον τρομερό θυμόν του αχιλλέως πώς '
+			                          'έγινε στους αχαιούς αρχή πολλών δακρύων .',
+			                          'που ανδράγαθες ροβόλησε πολλος ψυχή στον άδη ηρώων '
+			                          ', και έδωκεν αυτούς αρπάγμα των σκύλων και των '
+			                          'ορνέων – και η βουλή γενόταν του κρονίδη , απ’ ότ’ '
+			                          ', εφιλονίκησαν και εχωρισθήκαν πρώτα ο ατρείδης , '
+			                          'άρχος των ανδρών , και ο θείος αχιλλέας .'],
+			 'named_entities': {'location': [],
+			                    'organization': [],
+			                    'person': ['Αχιλλέως Πώς', 'Κρονίδη', 'Ατρείδης']},
+			 'part_of_speech': {'adjectives': ['τρομερό',
+			                                   'στους',
+			                                   'πολλές',
+			                                   'έδωκεν',
+			                                   'θείος'],
+			                    'nouns': ['Ψάλλε',
+			                              'θεά',
+			                              'θυμόν',
+			                              'αρχή',
+			                              'πολλών',
+			                              'δακρύων',
+			                              'ψυχές',
+			                              'ηρώων',
+			                              'αρπάγματα',
+			                              'σκύλων',
+			                              'ορνέων',
+			                              'βουλή',
+			                              'Κρονίδη',
+			                              'άρχος',
+			                              'ανδρών'],
+			                    'verbs': ['έγινε',
+			                              'ροβόλησε',
+			                              'γενόταν',
+			                              'εφιλονίκησαν',
+			                              'εχωρισθήκαν']},
+			 'sentences': ['Ψάλλε θεά, τον τρομερό θυμόν του Αχιλλέως Πώς έγινε στους '
+			               'Αχαιούς αρχή πολλών δακρύων.',
+			               'Που ανδράγαθες ροβόλησε πολλές ψυχές στον Άδη ηρώων, κι έδωκεν '
+			               'αυτούς αρπάγματα των σκύλων και των ορνέων – και η βουλή '
+			               'γενόταν του Κρονίδη, απ’ ότ’, εφιλονίκησαν κι εχωρισθήκαν '
+			               'πρώτα ο Ατρείδης, άρχος των ανδρών, και ο θείος Αχιλλέας.'],
+			 'summary': '',
+			 'text': '<span class="tooltip" data-content="POS: NOUN<br> LEMMA: ψάλλε<br> '
+			         'DEP: obl" >Ψάλλε </span><span class="tooltip" data-content="POS: '
+			         'NOUN<br> LEMMA: θεά<br> DEP: cop" >θεά </span><span class="tooltip" '
+			         'data-content="POS: PUNCT<br> LEMMA: ,<br> DEP: punct" >, '
+			         '</span><span class="tooltip" data-content="POS: DET<br> LEMMA: '
+			         'τον<br> DEP: det" >τον </span><span class="tooltip" '
+			         'data-content="POS: ADJ<br> LEMMA: τρομερό<br> DEP: amod" >τρομερό '
+			         '</span><span class="tooltip" data-content="POS: NOUN<br> LEMMA: '
+			         'θυμόν<br> DEP: nsubj" >θυμόν </span><span class="tooltip" '
+			         'data-content="POS: DET<br> LEMMA: του<br> DEP: det" >του '
+			         '</span><span class="tooltip" data-content="POS: PROPN<br> LEMMA: '
+			         'αχιλλέως<br> DEP: nmod" style="color: red;" >Αχιλλέως </span><span '
+			         'class="tooltip" data-content="POS: X<br> LEMMA: πώς<br> DEP: flat" '
+			         'style="color: red;" >Πώς </span><span class="tooltip" '
+			         'data-content="POS: VERB<br> LEMMA: έγινε<br> DEP: ROOT" >έγινε '
+			         '</span><span class="tooltip" data-content="POS: ADJ<br> LEMMA: '
+			         'στους<br> DEP: amod" >στους </span><span class="tooltip" '
+			         'data-content="POS: PROPN<br> LEMMA: αχαιούς<br> DEP: nmod" >Αχαιούς '
+			         '</span><span class="tooltip" data-content="POS: NOUN<br> LEMMA: '
+			         'αρχή<br> DEP: nsubj" >αρχή </span><span class="tooltip" '
+			         'data-content="POS: NOUN<br> LEMMA: πολλών<br> DEP: xcomp" >πολλών '
+			         '</span><span class="tooltip" data-content="POS: NOUN<br> LEMMA: '
+			         'δακρύων<br> DEP: nmod" >δακρύων </span><span class="tooltip" '
+			         'data-content="POS: PUNCT<br> LEMMA: .<br> DEP: punct" >. '
+			         '</span><span class="tooltip" data-content="POS: PRON<br> LEMMA: '
+			         'που<br> DEP: nsubj" >Που </span><span class="tooltip" '
+			         'data-content="POS: ADV<br> LEMMA: ανδράγαθες<br> DEP: advmod" '
+			         '>ανδράγαθες </span><span class="tooltip" data-content="POS: VERB<br> '
+			         'LEMMA: ροβόλησε<br> DEP: advcl" >ροβόλησε </span><span '
+			         'class="tooltip" data-content="POS: ADJ<br> LEMMA: πολλος<br> DEP: '
+			         'amod" >πολλές </span><span class="tooltip" data-content="POS: '
+			         'NOUN<br> LEMMA: ψυχή<br> DEP: obj" >ψυχές </span><span '
+			         'class="tooltip" data-content="POS: ADV<br> LEMMA: στον<br> DEP: '
+			         'advmod" >στον </span><span class="tooltip" data-content="POS: '
+			         'NUM<br> LEMMA: άδη<br> DEP: amod" >Άδη </span><span class="tooltip" '
+			         'data-content="POS: NOUN<br> LEMMA: ηρώων<br> DEP: obl" >ηρώων '
+			         '</span><span class="tooltip" data-content="POS: PUNCT<br> LEMMA: '
+			         ',<br> DEP: punct" >, </span><span class="tooltip" data-content="POS: '
+			         'CCONJ<br> LEMMA: και<br> DEP: cc" >κι </span><span class="tooltip" '
+			         'data-content="POS: ADJ<br> LEMMA: έδωκεν<br> DEP: conj" >έδωκεν '
+			         '</span><span class="tooltip" data-content="POS: PRON<br> LEMMA: '
+			         'αυτούς<br> DEP: det" >αυτούς </span><span class="tooltip" '
+			         'data-content="POS: NOUN<br> LEMMA: αρπάγμα<br> DEP: obj" >αρπάγματα '
+			         '</span><span class="tooltip" data-content="POS: DET<br> LEMMA: '
+			         'των<br> DEP: det" >των </span><span class="tooltip" '
+			         'data-content="POS: NOUN<br> LEMMA: σκύλων<br> DEP: nmod" >σκύλων '
+			         '</span><span class="tooltip" data-content="POS: CCONJ<br> LEMMA: '
+			         'και<br> DEP: cc" >και </span><span class="tooltip" '
+			         'data-content="POS: DET<br> LEMMA: των<br> DEP: det" >των '
+			         '</span><span class="tooltip" data-content="POS: NOUN<br> LEMMA: '
+			         'ορνέων<br> DEP: conj" >ορνέων </span><span class="tooltip" '
+			         'data-content="POS: PUNCT<br> LEMMA: –<br> DEP: punct" >– '
+			         '</span><span class="tooltip" data-content="POS: CCONJ<br> LEMMA: '
+			         'και<br> DEP: cc" >και </span><span class="tooltip" '
+			         'data-content="POS: DET<br> LEMMA: η<br> DEP: det" >η </span><span '
+			         'class="tooltip" data-content="POS: NOUN<br> LEMMA: βουλή<br> DEP: '
+			         'nsubj" >βουλή </span><span class="tooltip" data-content="POS: '
+			         'VERB<br> LEMMA: γενόταν<br> DEP: conj" >γενόταν </span><span '
+			         'class="tooltip" data-content="POS: DET<br> LEMMA: του<br> DEP: det" '
+			         '>του </span><span class="tooltip" data-content="POS: NOUN<br> LEMMA: '
+			         'κρονίδη<br> DEP: obl" style="color: red;" >Κρονίδη </span><span '
+			         'class="tooltip" data-content="POS: PUNCT<br> LEMMA: ,<br> DEP: '
+			         'punct" >, </span><span class="tooltip" data-content="POS: ADP<br> '
+			         'LEMMA: απ’<br> DEP: case" >απ’ </span><span class="tooltip" '
+			         'data-content="POS: SCONJ<br> LEMMA: ότ’<br> DEP: obl" >ότ’ '
+			         '</span><span class="tooltip" data-content="POS: PUNCT<br> LEMMA: '
+			         ',<br> DEP: punct" >, </span><span class="tooltip" data-content="POS: '
+			         'VERB<br> LEMMA: εφιλονίκησαν<br> DEP: advcl" >εφιλονίκησαν '
+			         '</span><span class="tooltip" data-content="POS: CCONJ<br> LEMMA: '
+			         'και<br> DEP: cc" >κι </span><span class="tooltip" data-content="POS: '
+			         'VERB<br> LEMMA: εχωρισθήκαν<br> DEP: conj" >εχωρισθήκαν </span><span '
+			         'class="tooltip" data-content="POS: ADV<br> LEMMA: πρώτα<br> DEP: '
+			         'advmod" >πρώτα </span><span class="tooltip" data-content="POS: '
+			         'DET<br> LEMMA: ο<br> DEP: det" >ο </span><span class="tooltip" '
+			         'data-content="POS: PROPN<br> LEMMA: ατρείδης<br> DEP: nsubj" '
+			         'style="color: red;" >Ατρείδης </span><span class="tooltip" '
+			         'data-content="POS: PUNCT<br> LEMMA: ,<br> DEP: punct" >, '
+			         '</span><span class="tooltip" data-content="POS: NOUN<br> LEMMA: '
+			         'άρχος<br> DEP: appos" >άρχος </span><span class="tooltip" '
+			         'data-content="POS: DET<br> LEMMA: των<br> DEP: det" >των '
+			         '</span><span class="tooltip" data-content="POS: NOUN<br> LEMMA: '
+			         'ανδρών<br> DEP: nmod" >ανδρών </span><span class="tooltip" '
+			         'data-content="POS: PUNCT<br> LEMMA: ,<br> DEP: punct" >, '
+			         '</span><span class="tooltip" data-content="POS: CCONJ<br> LEMMA: '
+			         'και<br> DEP: cc" >και </span><span class="tooltip" '
+			         'data-content="POS: DET<br> LEMMA: ο<br> DEP: det" >ο </span><span '
+			         'class="tooltip" data-content="POS: ADJ<br> LEMMA: θείος<br> DEP: '
+			         'nmod" >θείος </span><span class="tooltip" data-content="POS: '
+			         'PROPN<br> LEMMA: αχιλλέας<br> DEP: conj" >Αχιλλέας </span><span '
+			         'class="tooltip" data-content="POS: PUNCT<br> LEMMA: .<br> DEP: '
+			         'punct" >. </span>',
+			 'text_tokenized': ['Ψάλλε',
+			                    'θεά',
+			                    ',',
+			                    'τον',
+			                    'τρομερό',
+			                    'θυμόν',
+			                    'του',
+			                    'Αχιλλέως',
+			                    'Πώς',
+			                    'έγινε',
+			                    'στους',
+			                    'Αχαιούς',
+			                    'αρχή',
+			                    'πολλών',
+			                    'δακρύων',
+			                    '.',
+			                    'Που',
+			                    'ανδράγαθες',
+			                    'ροβόλησε',
+			                    'πολλές',
+			                    'ψυχές',
+			                    'στον',
+			                    'Άδη',
+			                    'ηρώων',
+			                    ',',
+			                    'κι',
+			                    'έδωκεν',
+			                    'αυτούς',
+			                    'αρπάγματα',
+			                    'των',
+			                    'σκύλων',
+			                    'και',
+			                    'των',
+			                    'ορνέων',
+			                    '–',
+			                    'και',
+			                    'η',
+			                    'βουλή',
+			                    'γενόταν',
+			                    'του',
+			                    'Κρονίδη',
+			                    ',',
+			                    'απ’',
+			                    'ότ’',
+			                    ',',
+			                    'εφιλονίκησαν',
+			                    'κι',
+			                    'εχωρισθήκαν',
+			                    'πρώτα',
+			                    'ο',
+			                    'Ατρείδης',
+			                    ',',
+			                    'άρχος',
+			                    'των',
+			                    'ανδρών',
+			                    ',',
+			                    'και',
+			                    'ο',
+			                    'θείος',
+			                    'Αχιλλέας',
+	                    '.']}
+
+
+		"""
+		txt = Helper.clean_up_txt(txt)
+		txt = txt.replace('\n', ' ')
+		data = { txt : 'junk' }
+		r = post('http://nlp.wordgames.gr/api/analyze', data) 
+		try:
+			nlp_data = r.json() if not category else r.json()[category]
+		except KeyError:
+			nlp_data = r.json()
+		return nlp_data
