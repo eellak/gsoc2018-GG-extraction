@@ -12,14 +12,17 @@ import main.analyzer
 from collections import OrderedDict, defaultdict
 
 class RespAClassifier(object):
-	def __init__(self, type):
-		if type.lower() == 'issue':
-			self.training_data_csv_file = getcwd() + "/../data/respa_clf_models/issue_respa_classifier_data.csv"
-		elif type.lower() == 'article':
-			self.training_data_csv_file = getcwd() + "/../data/respa_clf_models/article_respa_classifier_data.csv"
-		else:
-			raise Exception("type must be 'article' or 'issue'")
+	def __init__(self, type=None):
 		
+		if type is not None:
+			self.type = type.lower()
+			if self.type == 'issue':
+				self.training_data_csv_file = getcwd() + "/../data/respa_clf_models/issue_respa_classifier_data.csv"
+			elif self.type == 'article':
+				self.training_data_csv_file = getcwd() + "/../data/respa_clf_models/article_respa_classifier_data.csv"
+			else:
+				raise Exception("type must be 'article' or 'issue'")
+			
 		self.csv_column_names = ['A','B','C','D','E','F','G','H','I','RESPA']
 		self.features = ['A','B', 'C','D','E','F','G','H','I']
 		self.target_var = 'RESPA'
@@ -39,9 +42,9 @@ class IssueOrArticleRespAClassifier(RespAClassifier):
 
 	def fit(self, txt, is_respa):
 		txt_analysis_feature_vector = main.analyzer.Analyzer().get_n_gram_analysis_data_vectors([txt])
-		Helper.append_rows_into_csv(txt_analysis_feature_vector + [is_respa], self.training_data_csv_file)
+		Helper.append_rows_into_csv([txt_analysis_feature_vector[0] + [int(is_respa)]], self.training_data_csv_file)
 		# Update instance data
-		self.__init__(self.training_data_csv_file)
+		self.__init__()
 
 	def cross_validate(self, test_size):
 		X_train, X_test, y_train, y_test = train_test_split(self.X, self.y, test_size=test_size)
