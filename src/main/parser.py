@@ -902,8 +902,8 @@ class Parser(object):
 
 		def disentangle_units_from_respas(units_and_respa_sections):
 			for unit_and_respa_section in units_and_respa_sections:
-				# Unit assumed to be in 10 first words
-				unit = ' '.join(Helper.get_words(unit_and_respa_section, n=20))
+				# Unit assumed to be in 20 first words
+				unit = ' '.join(Helper.get_words(Helper.remove_list_points(unit_and_respa_section), n=20))
 				respas = unit_and_respa_section
 				# Units starts with uppercase character
 				if unit[0].isupper() or unit[0].isdigit():
