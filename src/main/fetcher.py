@@ -39,7 +39,7 @@ class Fetcher:
         self.download_links = []
         self.download_folder = os.path.join(os.getcwd(), self.download_folder)
 
-        chromeOptions = self.set_download_def_dir_prefs()
+        chromeOptions = self.set_chromeOptions()
         self.set_driver(chromeOptions)
         
         self.__issue_handler = IssueHandler()
@@ -55,8 +55,11 @@ class Fetcher:
     def set_download_folder(self, download_dir):
         self.download_folder = os.path.join(os.getcwd(), download_dir)
 
-    def set_download_def_dir_prefs(self):
+    def set_chromeOptions(self):
         chromeOptions = webdriver.ChromeOptions()
+        chromeOptions.add_argument('--headless')
+        chromeOptions.add_argument('--no-sandbox')
+        chromeOptions.add_argument('--disable-dev-shm-usage')
         prefs = {"download.default_directory": os.getcwd() + "\\" + self.download_folder}
         chromeOptions.add_experimental_option("prefs", prefs)
         return chromeOptions
