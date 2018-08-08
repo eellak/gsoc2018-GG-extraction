@@ -10,8 +10,12 @@ from os import getcwd
 from util.helper import Helper
 import main.analyzer
 from collections import OrderedDict, defaultdict
-
-class RespAClassifier(object):
+		
+class IssueOrArticleRespAClassifier():
+	"""
+		Classification of GG Presidential Decree Organization 
+		Issues or Articles as RespA related or not
+	"""
 	def __init__(self, type=None):
 		
 		if type is not None:
@@ -31,16 +35,17 @@ class RespAClassifier(object):
 		self.y = self.df[self.target_var]
 		self.specialy = self.df[[self.target_var]]
 		self.trained_model = self.train()
-		
-class IssueOrArticleRespAClassifier(RespAClassifier):
-	"""
-		Classification of GG Presidential Decree Organization 
-		Issues or Articles as RespA related or not
-	"""
+
 	def train(self):
 		return svm.SVC(kernel='linear', C=1).fit(self.X, self.y)
 
 	def fit(self, txt, is_respa):
+		"""
+			Fits txt into RespA or non-RespA training data (csv) depending on is_respa
+			
+			@param txt: Any RespA or non-RespA related paragraph
+			@param is_respa: True or 1 if txt is RespA related, False or 0 if otherwise
+		"""
 		txt_analysis_feature_vector = main.analyzer.Analyzer().get_n_gram_analysis_data_vectors([txt])
 		Helper.append_rows_into_csv([txt_analysis_feature_vector[0] + [int(is_respa)]], self.training_data_csv_file)
 		# Update instance data
@@ -88,12 +93,28 @@ class ParagraphRespAClassifier(object):
 		self.responsibilities_decl_pairs = [("ΑΡΜΟΔΙΟΤΗΤ", ":"), ("ΑΡΜΟΔΙΟΤΗΤ", "."), ('ΑΡΜΟΔΙΟΤΗΤΕΣ', 'ΥΠΗΡΕΣΙΩΝ')]
 														                         
 	def load_train_data(self, tag):
+		"""
+			Unpickle data (a dictionary of a pair of RespA or Non-RespA 'unigrams' and 'bigrams' dictionaries)
+
+			@param tag: Either 'respa' or 'non_respa'
+		"""
 		self.training_data[tag] = Helper.load_pickle_file(self.training_data_files[tag])
 
 	def write_train_data(self, tag):
+		"""
+			Pickle data (a dictionary of a pair of RespA or Non-RespA 'unigrams' and 'bigrams' dictionaries)
+
+			@param tag: Either 'respa' or 'non_respa'
+		"""
 		Helper.write_to_pickle_file(self.training_data[tag], self.training_data_files[tag])
 
 	def fit(self, paragraph, is_respa):
+		"""
+			Fits paragraph into RespA or non-RespA training data (pickled dictionary) depending on is_respa
+			
+			@param paragraph: Any RespA or non-RespA related paragraph
+			@param is_respa: True or 1 if paragraph is RespA related, False or 0 if otherwise
+		"""
 		words = Helper.get_clean_words(paragraph)[:20]
 		word_bigrams = Helper.get_word_n_grams(words, 2)
 		word_unigrams = Helper.get_word_n_grams(words, 1)
@@ -115,7 +136,18 @@ class ParagraphRespAClassifier(object):
 		self.write_train_data(appropriate_key)
 
 	def has_respas(self, paragraph):
-		"""Return unigram and bigram prediction"""
+		"""
+			Return unigram and bigram prediction
+			
+			@param paragraph: Any RespA or non-RespA related paragraph
+
+			e.g.
+			
+			(True, False)
+			(False, False)
+			...
+		
+		"""
 		words = Helper.get_clean_words(paragraph)[:20]
 		word_bigrams = Helper.get_word_n_grams(words, 2)
 		word_unigrams = Helper.get_word_n_grams(words, 1)
@@ -156,11 +188,28 @@ class ParagraphRespAClassifier(object):
 				(weighted_pos_cosine > weighted_neg_cosine)]
 
 	def has_units(self, paragraph):
+		"""
+			Returns True if paragraph contains units.
+			
+			@param paragraph: Any RespA or non-RespA related paragraph
+
+			e.g.
+
+		"""
 		paragraph = Helper.normalize_txt(paragraph)
 		return any(unit_kw in paragraph
 				   for unit_kw in self.unit_keywords)
 
 	def has_only_units(self, paragraph):
+		"""
+			Returns True if paragraph contains only units, without 
+			anything RespA related or containing ':'.
+			
+			@param paragraph: Any RespA or non-RespA related paragraph
+
+			e.g.
+
+		"""
 		paragraph = Helper.normalize_txt(paragraph)
 		return any((((unit_kw in paragraph) and\
 					 (resp_kw_trio[0] not in paragraph) and\
@@ -171,7 +220,15 @@ class ParagraphRespAClassifier(object):
 
 
 	def has_units_and_respas(self, paragraph):
-		"""Does not contain ':' """
+		"""
+			Returns True if paragraph contains units, something RespA-related
+			and does not contain ':'.
+			
+			@param paragraph: Any RespA or non-RespA related paragraph
+
+			e.g.
+
+		"""
 		paragraph = Helper.normalize_txt(paragraph)
 		return any((((unit_kw in paragraph) and\
 					 (resp_kw_trio[0] in paragraph) and\
@@ -181,7 +238,15 @@ class ParagraphRespAClassifier(object):
 				    for resp_kw_trio in self.responsibility_keyword_trios)
 
 	def has_units_followed_by_respas(self, paragraph):
-		"""Contains ':' """
+		"""
+			Returns True if paragraph contains units, ':' 
+			and something RespA-related.
+			
+			@param paragraph: Any RespA or non-RespA related paragraph
+
+			e.g.
+
+		"""
 		paragraph = Helper.normalize_txt(paragraph)
 		return any((((unit_kw in paragraph) and\
 					 (resp_kw_trio[0] in paragraph) and\
@@ -191,7 +256,15 @@ class ParagraphRespAClassifier(object):
 				    for resp_kw_trio in self.responsibility_keyword_trios)
 
 	def has_respas_decl(self, paragraph):
-		"""e.g.  "Οι αρμοδιότητες του Αυτοτελούς Τμήματος είναι οι ακόλουθες:"-> True """
+		"""
+			Returns True if paragraph contains respas_decl (respa-list initiator).
+			
+			@param paragraph: Any RespA or non-RespA related paragraph
+
+			e.g.  
+			
+			"Οι αρμοδιότητες του Αυτοτελούς Τμήματος είναι οι ακόλουθες:" 
+		"""
 		paragraph = Helper.normalize_txt(paragraph)
 		return (self.responsibilities_decl_pairs[0][0] in paragraph and\
 			   	self.responsibilities_decl_pairs[0][1] in paragraph) or\
@@ -201,6 +274,13 @@ class ParagraphRespAClassifier(object):
 					self.responsibilities_decl_pairs[2][1] in paragraph)
 				    
 	def cosine_similarity(self, dict_1, dict_2):
+		"""
+			Returns a cosine similarity metric 
+			of two dictionaries
+
+			@param dict_1: First dictionary
+			@param dict_2: Second dictionary
+		"""
 		numer = 0
 		den_a = 0
 		
