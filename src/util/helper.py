@@ -95,9 +95,9 @@ class Helper:
                 file_name = get_file_name(r)
 
             file_path = os.path.join(folder, file_name)
-            print(os.path.exists(file_path))
+            print(file_path)
             with open(file_path, 'wb') as f:
-                print('@@@@@@@@@@@@', file_path, r.status)
+                # print('@@@@@@@@@@@@', file_path, r.status)
                 shutil.copyfileobj(r, f)
         finally:
             r.close()
