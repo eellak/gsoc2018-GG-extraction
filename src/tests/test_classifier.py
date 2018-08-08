@@ -137,7 +137,31 @@ class ClassifierTest(Context):
 			print(self.article_clf.has_respas(artcl_data_vec))
 
 	def test_respa_issue_and_article_classifiers_fit(self):
-		pass
+		# Fit non-respa article
+		non_respa_article_1 = 'Άρθρο 1\
+								Πεδίο εφαρμογής\
+								Η παρούσα απόφαση καθορίζει το περιεχόμενο και τη \
+								διαδικασία α) χορήγησης της έγκρισης εγκατάστασης \
+								β) της γνωστοποίησης των Κέντρων Αποθήκευσης και \
+								Διανομής και κάθε άλλο σχετικό θέμα αναφορικά με τις \
+								δραστηριότητες που ασκούνται εντός αυτών, όπως αυ-\
+								τές ορίζονται στο άρθρο 48ΣΤ του ν. 4442/2016 (Α’ 230) \
+								και εξειδικεύονται στο Παράρτημα Ι της παρούσας, το \
+								οποίο αποτελεί αναπόσπαστο τμήμα αυτής.\
+								Το περιεχόμενο και η διαδικασία που περιγράφονται \
+								στη παρούσα εφαρμόζονται και για την εγκατάσταση \
+								και λειτουργία Κέντρων Διανομής Τσιμέντου και Αστικών \
+								Κέντρων Ενοποίησης Εμπορευμάτων.'
+
+		self.article_clf.fit(non_respa_article_1, is_respa=False)
+
+		# Fit non-respa issue
+		pdf_path = self.test_pdfs_dir + '/Decision_Issues/'
+		txt_path = self.test_txts_dir + '/'
+		
+		non_respa_issue_1 = self.parser.get_txt('1', pdf_path=pdf_path, txt_path=txt_path)
+		
+		self.issue_clf.fit(non_respa_issue_1, is_respa=False)
 
 	def test_paragraph_classifier_1(self):
 		
