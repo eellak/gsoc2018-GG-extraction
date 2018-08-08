@@ -28,12 +28,4 @@ class Context(unittest.TestCase):
 	paragraph_clf = ParagraphRespAClassifier()
 	helper = Helper()
 
-	def make_dir(test_txts_dir):
-		try:
-			os.makedirs('..' + test_txts_dir)
-		except OSError as e:
-			if e.errno != errno.EEXIST:
-				raise	
-
-	make_dir(test_txts_dir)
-
+	helper.make_dir(test_txts_dir)
