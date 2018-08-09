@@ -307,6 +307,14 @@ class Fetcher:
 
     @staticmethod
     def fetch_paorgs(local_files):
+        """
+            Return a list of detected paorgs with their approximation
+
+            @param local_files: A list of local .xlsx files, currently hardcoded as:
+                                            ['../data/NE_resources/DIAVGEIA_ORGS.xlsx', 
+                                            '../data/NE_resources/20170615_organosi_mhtrooy_foreon_2017.xlsx']
+                                            @ Parser.get_paorgs
+        """
         # Fetch public administration organizations
         try:
             paorgs = Fetcher.scrape_paorgs(local_files)
