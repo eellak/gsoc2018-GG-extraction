@@ -162,7 +162,6 @@ class Fetcher:
                     time.sleep(1)
 
     def handle_download(self, download_page, params):
-
         try:
             # First we get the redirect link from the download page
             html = Helper.get_url_contents(download_page)
@@ -227,7 +226,6 @@ class Fetcher:
             self.handle_download(download_link, params)
 
     def scrape_pdfs(self, year_start=2016, year_end=2017, issue_types = [], input_dir = '../data'):
-
         # Set custom download_folder & reset pre-existing settings 
         if year_end > year_start:
             download_dir = str(year_start) + '_to_' + str(year_end) + '_' + 'issues'
@@ -257,13 +255,12 @@ class Fetcher:
                     if issue_id in self.__possible_issues.values():
                         self.download_all_issues(issue_id, year)
 
-    def scrape_paorgs(self, local_files):
+    @staticmethod
+    def scrape_paorgs(local_files):
         # From local data 
-        files_location = '../data/NE_resources' 
         local_PAOrgs = []
         for file in local_files:
-            file_path = files_location + '/' + file
-            wb = load_workbook(filename=file_path)
+            wb = load_workbook(filename=file)
             ws = wb.active
             # PAOrgs in col C for currently tested xlsx docs
             PAOrg_col = ws['C']
@@ -281,7 +278,7 @@ class Fetcher:
             local_PAOrgs = list(set(local_PAOrgs))
 
         # From web data
-        src_html = urlopen(self.__paorg_source)
+        src_html = urlopen(Fetcher.__paorg_source)
         soup = BeautifulSoup(src_html, 'html.parser')
 
         web_PAOrgs = []
@@ -308,11 +305,12 @@ class Fetcher:
 
         return list(set(local_PAOrgs + web_PAOrgs))
 
-    # Fetch public administration organizations
-    def fetch_paorgs(self, local_files):
+    @staticmethod
+    def fetch_paorgs(local_files):
+        # Fetch public administration organizations
         try:
-            PAOrgs = self.scrape_paorgs(local_files)
+            paorgs = Fetcher.scrape_paorgs(local_files)
         except FileNotFoundError:
             raise
 
-        return PAOrgs
+        return paorgs
