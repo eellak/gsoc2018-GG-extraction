@@ -23,7 +23,7 @@ class Analyzer(object):
 		"""
 			Return a dictionary described @ get_respa_kw_analysis(self, txt)
 		"""
-			return self.get_respa_kw_analysis(txt)
+		return self.get_respa_kw_analysis(txt)
 
 	def get_respa_kw_analysis(self, txt):
 		""" 
