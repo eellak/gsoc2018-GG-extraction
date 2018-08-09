@@ -5,21 +5,10 @@ from shutil import rmtree
 class ParserTest(Context):
 
 	def test_get_paorgs_mentioned_in_txt(self):
-		
-		def paorgs_mentioned_in_txt(file_name):
-			fetcher = Fetcher(Context.issue_search_platform_src_url)
-			text = self.parser.get_txt(file_name)
-			paorgs = fetcher.fetch_paorgs(['DIAVGEIA_ORGS.xlsx', 
-										   '20170615_organosi_mhtrooy_foreon_2017.xlsx'])
-
-			return self.parser.get_paorgs(text, paorgs)
-
-		text_1 = '2'
-		print("Getting paorgs for")
-		print(text_1 + '.pdf')
-		paorgs_mentioned_in_text_1 = paorgs_mentioned_in_txt(text_1)
+		text = self.parser.get_txt('2')
+		paorgs_mentioned_in_text = self.parser.get_paorgs(text)
 		print("Results (format: '{mentioned_str_containing_PAOrg: list_of_possible_PAOrgs}'):")
-		print(text_1, ':\n', paorgs_mentioned_in_text_1)
+		print(text, ':\n', paorgs_mentioned_in_text)
 
 	def test_simple_pdf_to_txt(self): 
 		texts = []
