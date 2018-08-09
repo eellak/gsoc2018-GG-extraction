@@ -17,6 +17,7 @@ from difflib import get_close_matches, SequenceMatcher
 # from polyglot.text import Text
 from collections import OrderedDict
 from util.helper import Helper
+from main.fetcher import Fetcher
 import spacy
 import el_core_web_sm
 import main.classifier
@@ -327,13 +328,12 @@ class Parser(object):
 		dec_location_and_dates = findall(regex_dec_location_and_date, txt)
 		return dec_location_and_dates
 
-	def get_paorgs(self, txt, paorgs_list):
+	def get_paorgs(self, txt):
 		""" 
 			Return a list of manually detected Public Administration Organizations
 			contained within a GG Issue.
 			
 			@param txt: GG Issue
-			@param list paorgs_list: List of PAOrgs from fetch_paorgs() of the fetcher module
 
 			e.g. 
 			[{'Υπουργού Οικονομίας': ['ΥΠΟΥΡΓΕΙΟ ΟΙΚΟΝΟΜΙΚΩΝ']}, 
@@ -354,7 +354,8 @@ class Parser(object):
 
 		"""
 		txt = Helper.clean_up_for_paorgs_getter(txt)
-		
+		paorgs_list = Fetcher.fetch_paorgs(['../data/NE_resources/DIAVGEIA_ORGS.xlsx', 
+									        '../data/NE_resources/20170615_organosi_mhtrooy_foreon_2017.xlsx'])
 		# Match possible PAOrg acronyms 	
 		possible_paorg_acronyms_regex = compile('([Α-ΩΆ-ΏA-Z](?=\.[Α-ΩΆ-ΏA-Z])(?:\.[Α-ΩΆ-ΏA-Z])+)') 
 		possible_paorg_acronyms = findall(possible_paorg_acronyms_regex, txt)
@@ -451,7 +452,8 @@ class Parser(object):
 
 			@TODO:
 			1. Fix reges (only one attempt)
-			2. Add more keywords for different cases
+			2. Refine
+			3. Add more keywords for different cases
 			
 		"""
 		dec_respa_sections_in_articles, \
@@ -488,6 +490,9 @@ class Parser(object):
 			(one with decisions regarding RespA (ανάθεση αρμοδιότητων/καθηκόντων) or references to them)
 
 			@param txt: GG Issue containing decisions
+
+			@TODO:
+			1. Refine
 		"""
 		ref_dec_respa_sections = []
 
