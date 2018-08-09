@@ -26,6 +26,8 @@ class IssueOrArticleRespAClassifier():
 				self.training_data_csv_file = getcwd() + "/../data/respa_clf_models/article_respa_classifier_data.csv"
 			else:
 				raise Exception("type must be 'article' or 'issue'")
+
+			self.analyzer = main.analyzer.Analyzer()
 			
 		self.csv_column_names = ['A','B','C','D','E','F','G','H','I','RESPA']
 		self.features = ['A','B', 'C','D','E','F','G','H','I']
@@ -46,8 +48,8 @@ class IssueOrArticleRespAClassifier():
 			@param txt: Any RespA or non-RespA related paragraph
 			@param is_respa: True or 1 if txt is RespA related, False or 0 if otherwise
 		"""
-		txt_analysis_feature_vector = main.analyzer.Analyzer().get_n_gram_analysis_data_vectors([txt])
-		Helper.append_rows_into_csv([txt_analysis_feature_vector[0] + [int(is_respa)]], self.training_data_csv_file)
+		txt_analysis_feature_vector = self.analyzer.get_n_gram_analysis_data_vector(txt)
+		Helper.append_rows_into_csv([txt_analysis_feature_vector + [int(is_respa)]], self.training_data_csv_file)
 		# Update instance data
 		self.__init__()
 
@@ -68,8 +70,9 @@ class IssueOrArticleRespAClassifier():
 		
 		return avg_score
 
-	def has_respas(self, data_vector):
-		return self.trained_model.predict([data_vector])
+	def has_respas(self, txt):
+		data_vec = self.analyzer.get_n_gram_analysis_data_vector(txt)
+		return self.trained_model.predict([data_vec])
 
 class ParagraphRespAClassifier(object):
 	"""
