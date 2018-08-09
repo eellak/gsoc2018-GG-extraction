@@ -9,7 +9,7 @@ A [GFOSS – Open Technologies Alliance](https://gfoss.eu/) project as part of [
 The objective of this project was the identification and linkage of Government Directorates and Divisions with the responsibilities assigned to them, the types of services they are required to provide according to their legal framework published in http://www.et.gr/ and the extraction of this information with related metadata.
 
 <p align="center">
-  <img src="/docs/main_objective_schema.png"/>
+  <img src="/docs/README_pics/main_objective_schema.png"/>
 </p>
 
 The aim was to link assigned roles and services per management unit (Directorates, Divisions & Sections) and codify this specific information into a machine readable format.
@@ -17,7 +17,7 @@ The aim was to link assigned roles and services per management unit (Directorate
 The Issue type out of which this information can be extracted is Public Administration Organization Presidential Decrees, **such as**: 
 
 <p align="center">
-  <img src="/docs/PAOrg_Pres_Decree_Example.png"/>
+  <img src="/docs/README_pics/PAOrg_Pres_Decree_Example.png"/>
 </p>
 
 During the course of the project Responsibility Assignment (RespA) classifiers were formulated and trained on and for the above issues of interest at the level of Issues, Articles and Paragraph-Sentence chunks of text. 
