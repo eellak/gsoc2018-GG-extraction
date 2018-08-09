@@ -74,7 +74,7 @@ class IssueOrArticleRespAClassifier():
 class ParagraphRespAClassifier(object):
 	"""
 		Classification of GG Presidential Decree Organization 
-		Paragraphs as RespA related or not
+		Paragraph-Sentence chunks as RespA related or not
 	"""
 	def __init__(self):	
 		self.training_data_files = OrderedDict([('non_respa', getcwd() + "/../data/respa_clf_models/paragraph_respa_classifier_data/non_respa_paragraphs_dict.pkl"),
@@ -88,8 +88,6 @@ class ParagraphRespAClassifier(object):
 		self.responsibility_keyword_trios = [("ΑΡΜΟΔ", "ΓΙΑ", ":"), ("ΩΣ", "ΣΚΟΠΟ", ":"), ("ΑΡΜΟΔΙΟΤ", "ΕΧΕΙ", ":"), ("ΑΡΜΟΔΙΟΤ", "ΕΞΗΣ", ":"), ("ΑΡΜΟΔΙΟΤ", "ΠΟΥ", ":"),
 										("ΑΡΜΟΔΙΟΤ", "ΕΙΝΑΙ", ":"), ("ΑΡΜΟΔΙΟΤ", "ΤΟΥ", ":"), ("ΑΡΜΟΔΙΟΤ", "ΑΚΟΛΟΥΘ", ":"), ("ΑΡΜΟΔΙΟΤ", "ΜΕΤΑΞΥ", ":"), ("ΑΡΜΟΔΙΟΤ", "ΕΠΙ", ":"), 
 										("ΑΡΜΟΔΙΟΤ", "ΣΕ", ":"), ("ΑΡΜΟΔΙΟΤ", "ΠΕΡΙΛΑΜΒ", ":")]
-		# self.specific_resp_keywords = ['αρμόδιο για', 'αρμόδια για', 'αρμόδιο ιδίως', 'αρμόδια ιδίως', 'ως αρμοδιότητ', 'αρμοδιότητα τ', 'αρμοδιότητες τ',
-		#  								'ιδίως αρμόδι', 'έχει ως σκοπό', 'μεριμνά για']
 		self.responsibilities_decl_pairs = [("ΑΡΜΟΔΙΟΤΗΤ", ":"), ("ΑΡΜΟΔΙΟΤΗΤ", "."), ('ΑΡΜΟΔΙΟΤΗΤΕΣ', 'ΥΠΗΡΕΣΙΩΝ')]
 														                         
 	def load_train_data(self, tag):
@@ -293,5 +291,3 @@ class ParagraphRespAClassifier(object):
 			den_b += val_2 * val_2
 		
 		return numer/sqrt(den_a * den_b)
-		 
-   

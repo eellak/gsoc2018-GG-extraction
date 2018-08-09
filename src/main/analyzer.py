@@ -5,9 +5,11 @@ import main.classifier
 
 
 class Analyzer(object):
-	"""N-gram RespA analysis of GG Presidential Decree Issues containing PAOrgs"""
+	"""
+		N-gram Responsibility Assignment (RespA) analysis of GG Presidential Decree Issues
+		of Public Administration Organizations (PAOrgs)
+	"""
 	def __init__(self):
-		
 		self.organization_pres_decree_issue_respa_keys = {
 														   'primary': ["αρμόδι", "αρμοδι", "αρμοδιότητ", "ευθύνη", "εύθυν"],
 														   'secondary': ["για", "εξής"],
@@ -18,9 +20,12 @@ class Analyzer(object):
 																				  	    ("αρμοδιότητ", "είναι")]
 														   }
 	def analyze_txt(self, txt):
-			return self.get_respa_kw_analysis_of_paorg_pres_decree_txt(txt)
+		"""
+			Return a dictionary described @ get_respa_kw_analysis(self, txt)
+		"""
+			return self.get_respa_kw_analysis(txt)
 
-	def get_respa_kw_analysis_of_paorg_pres_decree_txt(self, txt):
+	def get_respa_kw_analysis(self, txt):
 		""" 
 			Return a dictionary of bi- and quad-gram RespA analysis results
 
@@ -191,7 +196,7 @@ class Analyzer(object):
 												  τισμού." etc.
 		
 			e.g.
-			(some_txt, 'units_followed_by_respas') -> 16
+			(some_txt, 'units_followed_by_respas') -> 16 occurrences
 		
 		""" 
 		def get_specific_units_clf_func_occurrences(unit_paragraph_occurences, paragraphs):
