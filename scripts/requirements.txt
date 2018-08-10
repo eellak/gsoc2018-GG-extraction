@@ -5,4 +5,5 @@ openpyxl
 sklearn
 pandas
 scipy
+spacy
 dicttoxml
