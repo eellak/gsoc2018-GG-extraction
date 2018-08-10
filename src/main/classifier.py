@@ -1,3 +1,6 @@
+import os
+import sys
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from pandas import read_csv
 from sklearn.model_selection import train_test_split
 from sklearn import svm
