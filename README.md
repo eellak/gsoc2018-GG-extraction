@@ -4,9 +4,27 @@
 # NER & Metadata Extraction from the Greek Government Gazette 
 
 A module for NER and Metadata extraction.
-Extract Responsibility Assignments (RespA) to units of Public Administration Organizations (PAOrgs)) and other useful data from Greek Government Gazette documents.
+Extract Responsibility Assignments (RespA) to units of Public Administration Organizations (PAOrgs) and other useful data from Greek Government Gazette documents.
 
 A [GFOSS – Open Technologies Alliance](https://gfoss.eu/) project as part of [Google's SoC 2018](https://summerofcode.withgoogle.com/).
+
+---
+
+**Participant**: [Chris Karageorgiou Kaneen](https://github.com/ckarageorgkaneen)
+
+**Mentors**: 
+  - [Iraklis Varlamis](https://www.dit.hua.gr/~varlamis/)
+  - [Theodoros Karounos](https://www.linkedin.com/in/tgkarounos/) 
+  - [Sarantos Kapidakis](http://thalassa.ionio.gr/staff/sarantos/homepage2.html)
+
+|Contents|
+| ------------- |
+|**Project**: [Description](https://github.com/eellak/gsoc2018-GG-extraction/wiki/Description/), [Implementation](https://github.com/eellak/gsoc2018-GG-extraction/wiki/Implementation/) | 
+|**CLI Tools**: [Fetch](https://github.com/eellak/gsoc2018-GG-extraction/wiki/Fetch/), [Convert](https://github.com/eellak/gsoc2018-GG-extraction/wiki/Convert/) |
+| **Operation**: [Install](https://github.com/eellak/gsoc2018-GG-extraction/wiki/Install/), [Use](https://github.com/eellak/gsoc2018-GG-extraction/wiki/Use/), [API](https://github.com/eellak/gsoc2018-GG-extraction/wiki/API/) |
+|**Future Work**: [Ideas](https://github.com/eellak/gsoc2018-GG-extraction/wiki/Ideas/), [Contribute](https://github.com/eellak/gsoc2018-GG-extraction/wiki/Ideas/) |
+
+---
 
 The objective of this project was the identification and linkage of Government Directorates and Divisions with the responsibilities assigned to them, the types of services they are required to provide according to their legal framework published in http://www.et.gr/ and the extraction of this information with related metadata.
 
