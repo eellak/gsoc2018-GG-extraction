@@ -196,11 +196,11 @@ For more info: https://github.com/eellak/gsoc2018-GG-extraction/wiki/Fetch
     optional.add_argument(
         '--chromedriver',
         help='Chrome driver executable')
-    optional.add_argument(
-        '--upload',
-        help='Upload to database',
-        action='store_true'
-    )
+    # optional.add_argument(
+    #     '--upload',
+    #     help='Upload to database',
+    #     action='store_true'
+    # )
     optional.add_argument(
         '--type',
         help="Government Gazette document type (Teychos)\nPossible types (default='Α'):\
