@@ -3,8 +3,7 @@
 
 # NER & Metadata Extraction from the Greek Government Gazette 
 
-A module for NER and Metadata extraction.
-Extract Responsibility Assignments (RespA) to units of Public Administration Organizations (PAOrgs) and other useful data from Greek Government Gazette documents.
+Extract Responsibility Assignments (RespA) to units of Public Administration Organizations (PAOrgs) and other useful data / metadata from Greek Government Gazette documents.
 
 A [GFOSS – Open Technologies Alliance](https://gfoss.eu/) project as part of [Google's SoC 2018](https://summerofcode.withgoogle.com/).
 
@@ -85,4 +84,7 @@ As OrderedDict data, JSON or XML formats.
 
 A set of data and metadata extractors was also implemented to extract useful sections and bits of information such as decision contents, summaries, bodies, etc. from Decision Issues as well as articles, issue dates, numbers, serial numbers etc. from different kinds of Issues.
 
-More info: [Wiki](https://github.com/eellak/gsoc2018-GG-extraction/wiki)
+---
+An outline of my progress can be found here: [Projects](https://github.com/eellak/gsoc2018-GG-extraction/projects)
+
+More info regarding Implementation, Usage, Future Work etc. can be found here: [Wiki](https://github.com/eellak/gsoc2018-GG-extraction/wiki)
