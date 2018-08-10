@@ -1,0 +1,749 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: module parser</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>parser</strong></big></big></font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:/home/chrisk/Software/GFOSS/gsoc2018-GG-extraction/src/main/parser.py">/home/chrisk/Software/GFOSS/gsoc2018-GG-extraction/src/main/parser.py</a></font></td></tr></table>
+    <p><tt>#&nbsp;-*-&nbsp;coding:&nbsp;utf-8&nbsp;-*-</tt></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#aa55cc">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Modules</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="PIL.Image.html">PIL.Image</a><br>
+<a href="el_core_web_sm.html">el_core_web_sm</a><br>
+</td><td width="25%" valign=top><a href="main.html">main</a><br>
+<a href="os.html">os</a><br>
+</td><td width="25%" valign=top><a href="spacy.html">spacy</a><br>
+<a href="sys.html">sys</a><br>
+</td><td width="25%" valign=top></td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ee77aa">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Classes</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#ee77aa"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl>
+<dt><font face="helvetica, arial"><a href="builtins.html#object">builtins.object</a>
+</font></dt><dd>
+<dl>
+<dt><font face="helvetica, arial"><a href="parser.html#Parser">Parser</a>
+</font></dt></dl>
+</dd>
+</dl>
+ <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="Parser">class <strong>Parser</strong></a>(<a href="builtins.html#object">builtins.object</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>Parse&nbsp;text&nbsp;and&nbsp;extract&nbsp;useful&nbsp;(meta)data&nbsp;mainly&nbsp;from&nbsp;GG&nbsp;Decision&nbsp;and&nbsp;Presidential&nbsp;Decree&nbsp;Issues<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="Parser-__init__"><strong>__init__</strong></a>(self)</dt><dd><tt>Initialize&nbsp;self.&nbsp;&nbsp;See&nbsp;help(type(self))&nbsp;for&nbsp;accurate&nbsp;signature.</tt></dd></dl>
+
+<dl><dt><a name="Parser-get_articles"><strong>get_articles</strong></a>(self, txt)</dt><dd><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Return&nbsp;a&nbsp;dictionary&nbsp;of&nbsp;articles&nbsp;contained&nbsp;within&nbsp;a&nbsp;GG&nbsp;Issue.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@param&nbsp;txt:&nbsp;GG&nbsp;Issue&nbsp;containing&nbsp;articles<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;e.g.&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1:&nbsp;'Άρθρο&nbsp;1<br>
+Αποστολή&nbsp;<br>
+Το&nbsp;Υπουργείο&nbsp;Ανάπτυξης&nbsp;και&nbsp;Ανταγωνιστικότητας&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+έχει&nbsp;ως&nbsp;αποστολή&nbsp;τη&nbsp;διαμόρφωση&nbsp;της&nbsp;αναπτυξιακής&nbsp;<br>
+πολιτικής&nbsp;της&nbsp;χώρας&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;που&nbsp;στοχεύει&nbsp;στην&nbsp;προώθηση&nbsp;...'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2:&nbsp;'Άρθρο&nbsp;2<br>
+ΔΙΑΡΘΡΩΣΗ&nbsp;ΥΠΗΡΕΣΙΩΝ<br>
+Οι&nbsp;υπηρεσίες&nbsp;του&nbsp;Υπουργείου,&nbsp;διαρθρώνονται&nbsp;ως&nbsp;εξής:<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1.&nbsp;α.&nbsp;Πολιτικά&nbsp;Γραφεία&nbsp;Υπουργού&nbsp;και&nbsp;Υφυπουργών<br>
+β.&nbsp;Γραφεία&nbsp;Γενικών&nbsp;Γραμματέων<br>
+γ.&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Γραφείο&nbsp;Ειδικού&nbsp;Γραμματέα<br>
+δ.&nbsp;Αυτοτελές&nbsp;Τμήμα&nbsp;Εσωτερικού&nbsp;Ελέγχου<br>
+ε.&nbsp;...'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</tt></dd></dl>
+
+<dl><dt><a name="Parser-get_dec_contents"><strong>get_dec_contents</strong></a>(self, txt)</dt><dd><tt>Return&nbsp;contents&nbsp;string.<br>
+&nbsp;<br>
+@param&nbsp;txt:&nbsp;GG&nbsp;Issue&nbsp;containing&nbsp;decisions<br>
+&nbsp;<br>
+e.g.&nbsp;<br>
+(ΠΕΡΙΕΧΟΜΕΝΑ<br>
+&nbsp;ΑΠΟΦΑΣΕΙΣ)<br>
+"Ανάθεση&nbsp;αρμοδιοτήτων&nbsp;στους&nbsp;Υφυπουργούς&nbsp;Διοικητι−<br>
+κής&nbsp;Μεταρρύθμισης&nbsp;και&nbsp;Ηλεκτρονικής&nbsp;Διακυβέρνη−<br>
+σης,&nbsp;Κωνσταντίνο&nbsp;Ρόβλια&nbsp;και&nbsp;Παντελή&nbsp;Τζωρτζάκη.&nbsp;<br>
+Ανάθεση&nbsp;αρμοδιοτήτων&nbsp;στον&nbsp;Υφυπουργό&nbsp;Ανάπτυ−<br>
+ξης,&nbsp;Ανταγωνιστικότητας&nbsp;και&nbsp;Ναυτιλίας&nbsp;Αθανά−<br>
+σιο&nbsp;Μωραΐτη.&nbsp;......................................................................................<br>
+Ανάθεση&nbsp;αρμοδιοτήτων&nbsp;στον&nbsp;Υφυπουργό&nbsp;Ανάπτυξης,&nbsp;<br>
+Ανταγωνιστικότητας&nbsp;και&nbsp;Ναυτιλίας&nbsp;Σπυρίδωνα&nbsp;–&nbsp;<br>
+Άδωνι&nbsp;Γεωργιάδη.&nbsp;..........................................................................<br>
+Καθορισμός&nbsp;αρμοδιοτήτων&nbsp;του&nbsp;Υφυπουργού&nbsp;Περι−<br>
+βάλλοντος,&nbsp;Ενέργειας&nbsp;και&nbsp;Κλιματικής&nbsp;Αλλαγής&nbsp;<br>
+Ιωάννη&nbsp;Μανιάτη.&nbsp;..............................................................................<br>
+Ανάθεση&nbsp;αρμοδιοτήτων&nbsp;στον&nbsp;Υφυπουργό&nbsp;Εργασίας&nbsp;<br>
+και&nbsp;Κοινωνικής&nbsp;Ασφάλισης&nbsp;Ιωάννη&nbsp;Κουτσούκο.&nbsp;...<br>
+Ανάθεση&nbsp;αρμοδιοτήτων&nbsp;στον&nbsp;Υφυπουργό&nbsp;Υγείας&nbsp;και&nbsp;<br>
+Κοινωνικής&nbsp;Αλληλεγγύης&nbsp;Μιχαήλ&nbsp;Τιμοσίδη.&nbsp;...........<br>
+&nbsp;Ανάθεση&nbsp;αρμοδιοτήτων&nbsp;στον&nbsp;Υφυπουργό&nbsp;Υγείας&nbsp;και&nbsp;<br>
+Κοινωνικής&nbsp;Αλληλεγγύης&nbsp;Μάρκο&nbsp;Μπόλαρη.&nbsp;...........<br>
+Ανάθεση&nbsp;αρμοδιοτήτων&nbsp;στους&nbsp;Υφυπουργούς&nbsp;Αγρο−<br>
+τικής&nbsp;Ανάπτυξης&nbsp;και&nbsp;Τροφίμων&nbsp;Ιωάννη&nbsp;Δριβελέ−<br>
+γκα&nbsp;και&nbsp;Αστέριο&nbsp;Ροντούλη.&nbsp;...................................................<br>
+Ανάθεση&nbsp;αρμοδιοτήτων&nbsp;στον&nbsp;Υφυπουργό&nbsp;Δικαιοσύ−<br>
+νης,&nbsp;Διαφάνειας&nbsp;και&nbsp;Ανθρωπίνων&nbsp;Δικαιωμάτων&nbsp;<br>
+Γεώργιο&nbsp;Πεταλωτή.&nbsp;......................................................................<br>
+Ανάθεση&nbsp;αρμοδιοτήτων&nbsp;στον&nbsp;Υφυπουργό&nbsp;Προστα−<br>
+σίας&nbsp;του&nbsp;Πολίτη&nbsp;Εμμανουήλ&nbsp;Όθωνα.&nbsp;............................"<br>
+(ΑΠΟΦΑΣΕΙΣ)<br>
+&nbsp;<br>
+@TODO:<br>
+1.&nbsp;Generalize&nbsp;for&nbsp;different&nbsp;issues</tt></dd></dl>
+
+<dl><dt><a name="Parser-get_dec_location_and_date"><strong>get_dec_location_and_date</strong></a>(self, txt)</dt><dd><tt>Return&nbsp;list&nbsp;of&nbsp;location&nbsp;and&nbsp;date&nbsp;of&nbsp;each&nbsp;decision.<br>
+&nbsp;<br>
+@param&nbsp;txt:&nbsp;GG&nbsp;Issue&nbsp;containing&nbsp;decisions<br>
+&nbsp;<br>
+e.g.&nbsp;<br>
+['Κομοτηνή,&nbsp;27&nbsp;Φεβρουαρίου&nbsp;2006',&nbsp;'Καβάλα,&nbsp;24&nbsp;Φεβρουαρίου&nbsp;2006',&nbsp;'Κατερίνη,&nbsp;16&nbsp;Φεβρουαρίου&nbsp;2006',&nbsp;<br>
+&nbsp;'Χανιά,&nbsp;17&nbsp;Φεβρουαρίου&nbsp;2006',&nbsp;'Κόρινθος,&nbsp;13&nbsp;Φεβρουαρίου&nbsp;2006',&nbsp;'Άρτα,&nbsp;24&nbsp;Φεβρουαρίου&nbsp;2006',&nbsp;<br>
+&nbsp;'Άρτα,&nbsp;24&nbsp;Φεβρουαρίου&nbsp;2006',&nbsp;'Λιβαδειά,&nbsp;23&nbsp;Φεβρουαρίου&nbsp;2006',&nbsp;'Δράμα,&nbsp;23&nbsp;Φεβρουαρίου&nbsp;2006',&nbsp;<br>
+&nbsp;'Αθήνα,&nbsp;2&nbsp;Φεβρουαρίου&nbsp;2006',&nbsp;'Αθήνα,&nbsp;1&nbsp;Μαρτίου&nbsp;2006',&nbsp;'Πειραιάς,&nbsp;21&nbsp;Φεβρουαρίου&nbsp;2006']<br>
+&nbsp;<br>
+@TODO:<br>
+1.&nbsp;Add&nbsp;more&nbsp;locations<br>
+2.&nbsp;Generalize&nbsp;for&nbsp;different&nbsp;issues</tt></dd></dl>
+
+<dl><dt><a name="Parser-get_dec_nums"><strong>get_dec_nums</strong></a>(self, txt)</dt><dd><tt>Return&nbsp;a&nbsp;dictionary&nbsp;containing&nbsp;the&nbsp;number&nbsp;for&nbsp;each&nbsp;decision.<br>
+&nbsp;<br>
+@param&nbsp;txt:&nbsp;GG&nbsp;Issue&nbsp;containing&nbsp;decisions<br>
+&nbsp;<br>
+e.g.<br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1:&nbsp;"Αριθμ.&nbsp;Φ253/30978/Α5",&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2:&nbsp;"Αριθμ.&nbsp;2212.2-1/4686/2981/2018",&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3:&nbsp;"Αριθμ.&nbsp;17355/2017"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...<br>
+}<br>
+&nbsp;<br>
+@TODO:<br>
+1.&nbsp;Generalize&nbsp;for&nbsp;different&nbsp;issues</tt></dd></dl>
+
+<dl><dt><a name="Parser-get_dec_prereqs"><strong>get_dec_prereqs</strong></a>(self, txt)</dt><dd><tt>Return&nbsp;dictionary&nbsp;(or&nbsp;list&nbsp;if&nbsp;txt&nbsp;is&nbsp;peculiar)&nbsp;of&nbsp;the&nbsp;prerequisites&nbsp;<br>
+of&nbsp;each&nbsp;decision.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+@param&nbsp;txt:&nbsp;GG&nbsp;Issue&nbsp;containing&nbsp;decisions<br>
+&nbsp;<br>
+e.g.<br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(Έχοντας&nbsp;υπόψη:)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"1.&nbsp;Τις&nbsp;διατάξεις&nbsp;του&nbsp;άρθρου&nbsp;280&nbsp;παρ.&nbsp;Ι&nbsp;του&nbsp;ν.3852/2010,&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;«Νέα&nbsp;Αρχιτεκτονική&nbsp;της&nbsp;Αυτοδιοίκησης&nbsp;και&nbsp;της&nbsp;Αποκε-<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ντρωμένης&nbsp;Διοίκησης&nbsp;-&nbsp;Πρόγραμμα&nbsp;Καλλικράτης».<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2.&nbsp;...&nbsp;"(αποφασίζουμε:)<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2:&nbsp;&nbsp;(Έχοντας&nbsp;υπόψη:)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"1.&nbsp;Τις&nbsp;διατάξεις&nbsp;του&nbsp;άρθρου&nbsp;58&nbsp;του&nbsp;ν.3852/2010&nbsp;(Φ.Ε.Κ.&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;87/Α΄)&nbsp;«Νέα&nbsp;Αρχιτεκτονική&nbsp;της&nbsp;Αυτοδιοίκησης&nbsp;και&nbsp;της&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Αποκεντρωμένης&nbsp;Διοίκησης&nbsp;-&nbsp;Πρόγραμμα&nbsp;Καλλικράτης».<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2.&nbsp;...&nbsp;"(αποφασίζουμε:)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...<br>
+}<br>
+&nbsp;<br>
+@TODO:<br>
+1.&nbsp;Generalize&nbsp;for&nbsp;different&nbsp;issues</tt></dd></dl>
+
+<dl><dt><a name="Parser-get_dec_respa_sections"><strong>get_dec_respa_sections</strong></a>(self, txt)</dt><dd><tt>Return&nbsp;a&nbsp;list&nbsp;of&nbsp;Responsibility&nbsp;Assignment&nbsp;(RespA)&nbsp;sections&nbsp;from&nbsp;a&nbsp;decision&nbsp;(main&nbsp;body)<br>
+contained&nbsp;within&nbsp;a&nbsp;GG&nbsp;Issue&nbsp;(one&nbsp;with&nbsp;decisions&nbsp;regarding&nbsp;RespA&nbsp;(ανάθεση&nbsp;αρμοδιότητων/καθηκόντων))<br>
+&nbsp;<br>
+@param&nbsp;txt:&nbsp;GG&nbsp;Issue&nbsp;containing&nbsp;RespA&nbsp;decisions<br>
+&nbsp;<br>
+@TODO:<br>
+1.&nbsp;Fix&nbsp;reges&nbsp;(only&nbsp;one&nbsp;attempt)<br>
+2.&nbsp;Refine<br>
+3.&nbsp;Add&nbsp;more&nbsp;keywords&nbsp;for&nbsp;different&nbsp;cases</tt></dd></dl>
+
+<dl><dt><a name="Parser-get_dec_signees"><strong>get_dec_signees</strong></a>(self, txt)</dt><dd><tt>Return&nbsp;decision&nbsp;signees.<br>
+&nbsp;<br>
+@param&nbsp;txt:&nbsp;GG&nbsp;Issue&nbsp;containing&nbsp;decisions<br>
+&nbsp;<br>
+@TODO:&nbsp;<br>
+1.&nbsp;Refine<br>
+2.&nbsp;Make&nbsp;format&nbsp;of&nbsp;final&nbsp;result&nbsp;definite<br>
+3.&nbsp;Generalize&nbsp;for&nbsp;different&nbsp;issues</tt></dd></dl>
+
+<dl><dt><a name="Parser-get_dec_summaries"><strong>get_dec_summaries</strong></a>(self, txt)</dt><dd><tt>Return&nbsp;a&nbsp;list&nbsp;containing&nbsp;the&nbsp;summaries&nbsp;of&nbsp;each&nbsp;decision.<br>
+&nbsp;<br>
+@param&nbsp;txt:&nbsp;GG&nbsp;Issue&nbsp;containing&nbsp;decisions<br>
+&nbsp;<br>
+e.g.<br>
+["Σύσταση&nbsp;οργανικών&nbsp;θέσεων&nbsp;με&nbsp;σύμβαση&nbsp;εργασίας&nbsp;ιδιωτικού&nbsp;δικαίου&nbsp;αορίστου&nbsp;χρόνου&nbsp;σε&nbsp;ΟΤΑ&nbsp;α΄&nbsp;βαθμού.&nbsp;",<br>
+"Καθορισμός&nbsp;αμοιβής&nbsp;συμμετεχόντων&nbsp;σε&nbsp;Εκπαιδευτικό&nbsp;Συμβούλιο&nbsp;Διπλωματικής&nbsp;Ακαδημίας&nbsp;Υπουργείου&nbsp;Εξωτερικών.&nbsp;",<br>
+"Παροχή&nbsp;της&nbsp;εγγύησης&nbsp;του&nbsp;Δημοσίου&nbsp;προς&nbsp;τις&nbsp;Τράπεζες&nbsp;για&nbsp;τις&nbsp;πιστωτικές&nbsp;διευκολύνσεις&nbsp;προς&nbsp;αποκατάσταση&nbsp;των&nbsp;ζημιών,&nbsp;που&nbsp;προκλήθηκαν&nbsp;από&nbsp;<br>
+τις&nbsp;πλημμύρες,&nbsp;που&nbsp;σημειώθηκαν&nbsp;την&nbsp;18η&nbsp;Ιουνίου&nbsp;2004&nbsp;στο&nbsp;Δήμο&nbsp;Σερρών&nbsp;του&nbsp;Ν.&nbsp;Σερρών.&nbsp;",<br>
+"Παροχή&nbsp;της&nbsp;εγγύησης&nbsp;του&nbsp;Δημοσίου&nbsp;προς&nbsp;τις&nbsp;Τράπεζες&nbsp;για&nbsp;τις&nbsp;πιστωτικές&nbsp;διευκολύνσεις&nbsp;προς&nbsp;αποκατάσταση&nbsp;των&nbsp;ζημιών,&nbsp;που&nbsp;προκλήθηκαν&nbsp;από&nbsp;το&nbsp;&nbsp;σεισμό,&nbsp;που&nbsp;σημειώθηκε&nbsp;την&nbsp;1.3.2004&nbsp;σε&nbsp;περιοχές&nbsp;του&nbsp;Ν.&nbsp;Μεσσηνίας.&nbsp;",<br>
+"Παροχή&nbsp;της&nbsp;εγγύησης&nbsp;του&nbsp;Δημοσίου&nbsp;προς&nbsp;τις&nbsp;Τράπεζες&nbsp;για&nbsp;τις&nbsp;πιστωτικές&nbsp;διευκολύνσεις&nbsp;προς&nbsp;αποκατάσταση&nbsp;των&nbsp;ζημιών,&nbsp;που&nbsp;προκλήθηκαν&nbsp;από&nbsp;τις&nbsp;πλημμύρες,&nbsp;που&nbsp;σημειώθηκαν&nbsp;την&nbsp;19η&nbsp;Δεκεμβρίου&nbsp;2004&nbsp;στο&nbsp;Δήμο&nbsp;Αμαρουσίου&nbsp;του&nbsp;Ν.&nbsp;Αττικής.&nbsp;",<br>
+"Επανασυγκρότηση&nbsp;του&nbsp;Διοικητικού&nbsp;Συμβουλίου&nbsp;του&nbsp;Περιφερειακού&nbsp;Ταμείου&nbsp;Ανάπτυξης&nbsp;Βορείου&nbsp;Αιγαίου.&nbsp;"]<br>
+&nbsp;<br>
+@TODO:<br>
+1.&nbsp;Generalize&nbsp;for&nbsp;different&nbsp;issues</tt></dd></dl>
+
+<dl><dt><a name="Parser-get_decisions"><strong>get_decisions</strong></a>(self, txt)</dt><dd><tt>Return&nbsp;a&nbsp;dictionary&nbsp;of&nbsp;decisions&nbsp;(main&nbsp;bodies).<br>
+&nbsp;<br>
+@param&nbsp;txt:&nbsp;GG&nbsp;Issue&nbsp;containing&nbsp;decisions<br>
+&nbsp;<br>
+e.g.<br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1:&nbsp;(αποφασίζουμε:)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"Α.&nbsp;Την&nbsp;υπερωριακή,&nbsp;απογευματινή,&nbsp;απασχόληση&nbsp;μέχρι&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;120&nbsp;ώρες&nbsp;ανά&nbsp;υπάλληλο&nbsp;το&nbsp;εξάμηνο,&nbsp;για&nbsp;290&nbsp;μόνιμους&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;και&nbsp;με&nbsp;σύμβαση&nbsp;εργασίας&nbsp;ιδιωτικού&nbsp;δικαίου&nbsp;υπαλλήλους&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;όλων&nbsp;των&nbsp;υπηρεσιών&nbsp;του&nbsp;Δήμου.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Β.&nbsp;Την&nbsp;υπερωριακή&nbsp;απασχόληση&nbsp;κατά&nbsp;τις&nbsp;νυχτερινές&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ώρες&nbsp;ή&nbsp;κατά&nbsp;τις&nbsp;Κυριακές&nbsp;και&nbsp;εξαιρέσιμες&nbsp;ημέρες,&nbsp;μέχρι&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;96&nbsp;ώρες&nbsp;ανά&nbsp;υπάλληλο&nbsp;το&nbsp;εξάμηνο,&nbsp;για&nbsp;τις&nbsp;νυχτερινές&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;και&nbsp;μέχρι&nbsp;96&nbsp;ώρες&nbsp;ανά&nbsp;υπάλληλο&nbsp;το&nbsp;εξάμηνο,&nbsp;για&nbsp;τις&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Κυριακές&nbsp;και&nbsp;εξαιρέσιμες&nbsp;ημέρες&nbsp;για&nbsp;τις&nbsp;υπηρεσίες&nbsp;που&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;λειτουργούν&nbsp;είτε&nbsp;όλες&nbsp;τις&nbsp;ημέρες&nbsp;του&nbsp;μήνα&nbsp;είτε&nbsp;σε&nbsp;12ωρη&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ή&nbsp;..."<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2:&nbsp;"1.&nbsp;Ανακαλούμε&nbsp;την&nbsp;αριθ.&nbsp;3122.1/4686/01/08-08-2013&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;απόφαση&nbsp;του&nbsp;Υπουργού&nbsp;Ναυτιλίας&nbsp;και&nbsp;Αιγαίου&nbsp;(ΦΕΚ&nbsp;2057/<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Β/23-8-2013)&nbsp;σχετικά&nbsp;με&nbsp;την&nbsp;εγκατάσταση&nbsp;στην&nbsp;Ελλά-<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;δα,&nbsp;&nbsp;σύμφωνα&nbsp;&nbsp;με&nbsp;&nbsp;τις&nbsp;&nbsp;διατάξεις&nbsp;&nbsp;των&nbsp;&nbsp;α.ν.&nbsp;&nbsp;378/1968&nbsp;&nbsp;και&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ν.&nbsp;&nbsp;27/1975,&nbsp;&nbsp;ν.&nbsp;&nbsp;814/1978,&nbsp;&nbsp;ν.&nbsp;&nbsp;2234/1994,&nbsp;&nbsp;ν.&nbsp;&nbsp;3752/2009,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ν.&nbsp;4150/2013,&nbsp;γραφείου&nbsp;της&nbsp;εταιρείας&nbsp;«ARISTA&nbsp;SHIPS&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;INC.»&nbsp;με&nbsp;έδρα&nbsp;στα&nbsp;νησιά&nbsp;ΜΑΡΣΑΛ.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2.&nbsp;Η&nbsp;παραπάνω&nbsp;εταιρεία&nbsp;υποχρεώνεται,&nbsp;σύμφωνα&nbsp;με&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;το&nbsp;άρθρο&nbsp;23&nbsp;του&nbsp;ν.&nbsp;1360/1983,&nbsp;να&nbsp;εκπληρώσει&nbsp;τις&nbsp;κάθε&nbsp;...&nbsp;"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...<br>
+}</tt></dd></dl>
+
+<dl><dt><a name="Parser-get_issue_category"><strong>get_issue_category</strong></a>(self, txt)</dt><dd><tt>@param&nbsp;txt:&nbsp;GG&nbsp;Issue<br>
+&nbsp;<br>
+e.g.&nbsp;(ΤΕΥΧΟΣ)&nbsp;ΔΕΥΤΕΡΟ</tt></dd></dl>
+
+<dl><dt><a name="Parser-get_issue_number"><strong>get_issue_number</strong></a>(self, txt)</dt><dd><tt>@param&nbsp;txt:&nbsp;GG&nbsp;Issue<br>
+&nbsp;<br>
+e.g.&nbsp;(Αρ.&nbsp;Φύλλου)&nbsp;'195'</tt></dd></dl>
+
+<dl><dt><a name="Parser-get_issue_type"><strong>get_issue_type</strong></a>(self, txt)</dt><dd><tt>@param&nbsp;txt:&nbsp;GG&nbsp;Issue<br>
+&nbsp;<br>
+e.g.&nbsp;"ΑΠΟΦΑΣΕΙΣ",&nbsp;"ΠΡΟΕΔΡΙΚΟ&nbsp;ΔΙΑΤΑΓΜΑ"&nbsp;&nbsp;etc.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+@TODO:<br>
+1.&nbsp;Refine<br>
+2.&nbsp;Add&nbsp;more&nbsp;keywords</tt></dd></dl>
+
+<dl><dt><a name="Parser-get_mentioned_issues_sections"><strong>get_mentioned_issues_sections</strong></a>(self, txt)</dt><dd><tt>@param&nbsp;txt:&nbsp;GG&nbsp;Issue<br>
+e.g.&nbsp;(&nbsp;(&nbsp;)"ΦΕΚ&nbsp;82&nbsp;Α/17-4-1968"(&nbsp;)&nbsp;)</tt></dd></dl>
+
+<dl><dt><a name="Parser-get_paorgs"><strong>get_paorgs</strong></a>(self, txt)</dt><dd><tt>Return&nbsp;a&nbsp;list&nbsp;of&nbsp;manually&nbsp;detected&nbsp;Public&nbsp;Administration&nbsp;Organizations<br>
+contained&nbsp;within&nbsp;a&nbsp;GG&nbsp;Issue.<br>
+&nbsp;<br>
+@param&nbsp;txt:&nbsp;GG&nbsp;Issue<br>
+&nbsp;<br>
+e.g.&nbsp;<br>
+[{'Υπουργού&nbsp;Οικονομίας':&nbsp;['ΥΠΟΥΡΓΕΙΟ&nbsp;ΟΙΚΟΝΟΜΙΚΩΝ']},&nbsp;<br>
+&nbsp;{'Οργανισμός&nbsp;Ενιαίας&nbsp;Ανεξάρτητης&nbsp;Αρχής&nbsp;Δημοσίων&nbsp;Συμβάσεων':&nbsp;['ΕΝΙΑΙΑ&nbsp;ΑΝΕΞΑΡΤΗΤΗ&nbsp;ΑΡΧΗ&nbsp;ΔΗΜΟΣΙΩΝ&nbsp;ΣΥΜΒΑΣΕΩΝ&nbsp;']},&nbsp;<br>
+&nbsp;{'Υπουργού&nbsp;Ανάπτυξης&nbsp;Ανταγωνιστικότητας':&nbsp;['ΥΠΟΥΡΓΕΙΟ&nbsp;ΑΝΑΠΤΥΞΗΣ&nbsp;ΚΑΙ&nbsp;ΑΝΤΑΓΩΝΙΣΤΙΚΟΤΗΤΑΣ']},&nbsp;<br>
+&nbsp;{'Ενιαίας&nbsp;Ανεξάρτητης&nbsp;Αρχής&nbsp;Δημοσίων&nbsp;Συμβάσεων':&nbsp;['ΕΝΙΑΙΑ&nbsp;ΑΝΕΞΑΡΤΗΤΗ&nbsp;ΑΡΧΗ&nbsp;ΔΗΜΟΣΙΩΝ&nbsp;ΣΥΜΒΑΣΕΩΝ&nbsp;']},&nbsp;<br>
+&nbsp;{'ΕΝΙΑΙΑ&nbsp;ΑΝΕΞΑΡΤΗΤΗ&nbsp;ΑΡΧΗ&nbsp;ΔΗΜΟΣΙΩΝ&nbsp;ΣΥΜΒΑΣΕΩΝ&nbsp;Έχοντας':&nbsp;['ΕΝΙΑΙΑ&nbsp;ΑΝΕΞΑΡΤΗΤΗ&nbsp;ΑΡΧΗ&nbsp;ΔΗΜΟΣΙΩΝ&nbsp;ΣΥΜΒΑΣΕΩΝ&nbsp;']},&nbsp;<br>
+&nbsp;{'Ενιαία&nbsp;Ανεξάρτητη&nbsp;Αρχή&nbsp;Δημοσίων&nbsp;Συμβάσεων':&nbsp;['ΕΝΙΑΙΑ&nbsp;ΑΝΕΞΑΡΤΗΤΗ&nbsp;ΑΡΧΗ&nbsp;ΔΗΜΟΣΙΩΝ&nbsp;ΣΥΜΒΑΣΕΩΝ&nbsp;']},&nbsp;<br>
+&nbsp;{'Εθνικό&nbsp;Tυπογραφείο':&nbsp;['ΕΘΝΙΚΟ&nbsp;ΤΥΠΟΓΡΑΦΕΙΟ']},&nbsp;<br>
+&nbsp;{'Υπουργών&nbsp;Οικονομίας':&nbsp;['ΥΠΟΥΡΓΕΙΟ&nbsp;ΟΙΚΟΝΟΜΙΚΩΝ']},&nbsp;<br>
+&nbsp;{'Δημοσίων&nbsp;Συμβάσεων':&nbsp;['ΔΗΜΟΣ&nbsp;ΣΥΜΗΣ',&nbsp;'ΔΗΜΟΣ&nbsp;ΣΕΡΡΩΝ']},&nbsp;<br>
+&nbsp;{'Υπουργού&nbsp;Οικονομίας&nbsp;Ανάπτυξης':&nbsp;['ΥΠΟΥΡΓΕΙΟ&nbsp;ΟΙΚΟΝΟΜΙΑΣ&nbsp;ΚΑΙ&nbsp;ΑΝΑΠΤΥΞΗΣ',&nbsp;'ΥΠΟΥΡΓΕΙΟ&nbsp;ΟΙΚΟΝΟΜΙΑΣ,&nbsp;ΑΝΑΠΤΥΞΗΣ&nbsp;ΚΑΙ&nbsp;ΤΟΥΡΙΣΜΟΥ']},&nbsp;<br>
+&nbsp;{'Το&nbsp;Εθνικό&nbsp;Τυπογραφείο':&nbsp;['ΕΘΝΙΚΟ&nbsp;ΤΥΠΟΓΡΑΦΕΙΟ']},&nbsp;<br>
+&nbsp;{'Υπουργείο&nbsp;Διοικητικής&nbsp;Ανασυγκρότησης':&nbsp;['ΥΠΟΥΡΓΕΙΟ&nbsp;ΔΙΟΙΚΗΤΙΚΗΣ&nbsp;ΑΝΑΣΥΓΚΡΟΤΗΣΗΣ',&nbsp;'ΥΠΟΥΡΓΕΙΟ&nbsp;ΕΣΩΤΕΡΙΚΩΝ&nbsp;ΚΑΙ&nbsp;ΔΙΟΙΚΗΤΙΚΗΣ&nbsp;ΑΝΑΣΥΓΚΡΟΤΗΣΗΣ']},&nbsp;<br>
+&nbsp;{'Κανονισμός&nbsp;Λειτουργίας&nbsp;Ενιαίας&nbsp;Ανεξάρτητης&nbsp;Αρχής&nbsp;Δημοσίων&nbsp;Συμβάσεων':&nbsp;['ΕΝΙΑΙΑ&nbsp;ΑΝΕΞΑΡΤΗΤΗ&nbsp;ΑΡΧΗ&nbsp;ΔΗΜΟΣΙΩΝ&nbsp;ΣΥΜΒΑΣΕΩΝ&nbsp;']},&nbsp;<br>
+&nbsp;{'Τον&nbsp;ΚΑΔ':&nbsp;['ΕΤΟΣ&nbsp;ΚΟΑ']}]</tt></dd></dl>
+
+<dl><dt><a name="Parser-get_paragraphs"><strong>get_paragraphs</strong></a>(self, txt)</dt></dl>
+
+<dl><dt><a name="Parser-get_pdf_text"><strong>get_pdf_text</strong></a>(self, in_pdf, out_txt)</dt><dd><tt>Return&nbsp;cleaned-up&nbsp;text&nbsp;of&nbsp;pdf&nbsp;using&nbsp;pdfminer.six's&nbsp;pdf2txt.py<br>
+&nbsp;<br>
+@param&nbsp;in_pdf:&nbsp;The&nbsp;input&nbsp;pdf&nbsp;file<br>
+@param&nbsp;out_txt:&nbsp;The&nbsp;output&nbsp;txt&nbsp;file</tt></dd></dl>
+
+<dl><dt><a name="Parser-get_person_named_entities"><strong>get_person_named_entities</strong></a>(self, txt)</dt></dl>
+
+<dl><dt><a name="Parser-get_publication_date"><strong>get_publication_date</strong></a>(self, txt)</dt><dd><tt>@param&nbsp;txt:&nbsp;GG&nbsp;Issue<br>
+&nbsp;<br>
+e.g.&nbsp;"29&nbsp;Ιανουαρίου&nbsp;2018"</tt></dd></dl>
+
+<dl><dt><a name="Parser-get_referred_dec_respa_sections"><strong>get_referred_dec_respa_sections</strong></a>(self, txt)</dt><dd><tt>Return&nbsp;a&nbsp;list&nbsp;of&nbsp;referred&nbsp;Responsibility&nbsp;Assignment&nbsp;(RespA)&nbsp;sections&nbsp;from&nbsp;the&nbsp;<br>
+prerequisites&nbsp;of&nbsp;a&nbsp;decision&nbsp;contained&nbsp;within&nbsp;a&nbsp;GG&nbsp;Issue&nbsp;<br>
+(one&nbsp;with&nbsp;decisions&nbsp;regarding&nbsp;RespA&nbsp;(ανάθεση&nbsp;αρμοδιότητων/καθηκόντων)&nbsp;or&nbsp;references&nbsp;to&nbsp;them)<br>
+&nbsp;<br>
+@param&nbsp;txt:&nbsp;GG&nbsp;Issue&nbsp;containing&nbsp;decisions<br>
+&nbsp;<br>
+@TODO:<br>
+1.&nbsp;Refine</tt></dd></dl>
+
+<dl><dt><a name="Parser-get_rough_unit_respa_associations"><strong>get_rough_unit_respa_associations</strong></a>(self, paorg_pres_decree_txt, format='')</dt><dd><tt>Return&nbsp;a&nbsp;dictionary&nbsp;of&nbsp;rough&nbsp;Organization&nbsp;Unit&nbsp;-&nbsp;RespA&nbsp;associations<br>
+&nbsp;<br>
+@param&nbsp;paorg_pres_decree_txt:&nbsp;GG&nbsp;Presidential&nbsp;Decree&nbsp;Organization&nbsp;Issue<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;e.g.&nbsp;"ΠΡΟΕΔΡΙΚΟ&nbsp;ΔΙΑΤΑΓΜΑ&nbsp;ΥΠ’&nbsp;ΑΡΙΘΜ.&nbsp;18&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Οργανισμός&nbsp;Υπουργείου&nbsp;Παιδείας,&nbsp;Έρευνας&nbsp;και&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Θρησκευμάτων.",<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"ΠΡΟΕΔΡΙΚΟ&nbsp;ΔΙΑΤΑΓΜΑ&nbsp;ΥΠ’&nbsp;ΑΡΙΘΜ.&nbsp;4&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Οργανισμός&nbsp;Υπουργείου&nbsp;Πολιτισμού&nbsp;και&nbsp;Αθλη-<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;τισμού."&nbsp;etc.</tt></dd></dl>
+
+<dl><dt><a name="Parser-get_sentences"><strong>get_sentences</strong></a>(self, txt)</dt></dl>
+
+<dl><dt><a name="Parser-get_serial_number"><strong>get_serial_number</strong></a>(self, txt)</dt><dd><tt>@param&nbsp;txt:&nbsp;GG&nbsp;Issue<br>
+e.g.&nbsp;(*)"02001952901180008"(*)</tt></dd></dl>
+
+<dl><dt><a name="Parser-get_spacy_nlp_instance"><strong>get_spacy_nlp_instance</strong></a>(self, txt)</dt><dd><tt>Return&nbsp;an&nbsp;spacy&nbsp;nlp&nbsp;<a href="builtins.html#object">object</a>&nbsp;that&nbsp;can&nbsp;be&nbsp;used&nbsp;for&nbsp;various&nbsp;NLP&nbsp;tasks<br>
+described&nbsp;here:&nbsp;https://spacy.io/usage/<br>
+&nbsp;<br>
+@param&nbsp;txt:&nbsp;Any&nbsp;text</tt></dd></dl>
+
+<dl><dt><a name="Parser-get_txt"><strong>get_txt</strong></a>(self, file_name, pdf_path='../data/test_PDFs/Decision_Issues/', txt_path='../data/test_TXTs/')</dt><dd><tt>Return&nbsp;cleaned-up&nbsp;text&nbsp;of&nbsp;pdf&nbsp;using&nbsp;pdfminer.six's&nbsp;pdf2txt.py<br>
+&nbsp;<br>
+@param&nbsp;file_name:&nbsp;The&nbsp;input&nbsp;pdf&nbsp;file&nbsp;name&nbsp;(extensionless)<br>
+@param&nbsp;pdf_path:&nbsp;The&nbsp;input&nbsp;pdf's&nbsp;dir&nbsp;path<br>
+@param&nbsp;txt_path:&nbsp;The&nbsp;output&nbsp;txt's&nbsp;dir&nbsp;path</tt></dd></dl>
+
+<dl><dt><a name="Parser-get_units_and_respas"><strong>get_units_and_respas</strong></a>(self, paorg_pres_decree_txt)</dt><dd><tt>Return&nbsp;dictionary&nbsp;of&nbsp;rough&nbsp;Organization&nbsp;Unit&nbsp;-&nbsp;RespA&nbsp;associations<br>
+mentioned&nbsp;in&nbsp;single&nbsp;paragraphs.<br>
+&nbsp;<br>
+@param&nbsp;paorg_pres_decree_txt:&nbsp;GG&nbsp;Presidential&nbsp;Decree&nbsp;Organization&nbsp;Issue<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;e.g.&nbsp;"ΠΡΟΕΔΡΙΚΟ&nbsp;ΔΙΑΤΑΓΜΑ&nbsp;ΥΠ’&nbsp;ΑΡΙΘΜ.&nbsp;18&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Οργανισμός&nbsp;Υπουργείου&nbsp;Παιδείας,&nbsp;Έρευνας&nbsp;και&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Θρησκευμάτων.",<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"ΠΡΟΕΔΡΙΚΟ&nbsp;ΔΙΑΤΑΓΜΑ&nbsp;ΥΠ’&nbsp;ΑΡΙΘΜ.&nbsp;4&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Οργανισμός&nbsp;Υπουργείου&nbsp;Πολιτισμού&nbsp;και&nbsp;Αθλη-<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;τισμού."&nbsp;etc.<br>
+&nbsp;<br>
+e.g.&nbsp;<br>
+{&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'Το&nbsp;Γραφείο&nbsp;Φύλαξης&nbsp;Πληροφόρησης&nbsp;είναι&nbsp;αρμόδιο&nbsp;για&nbsp;τον&nbsp;προγραμματισμό&nbsp;και':<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'Το&nbsp;Γραφείο&nbsp;Φύλαξης&nbsp;Πληροφόρησης&nbsp;είναι&nbsp;αρμόδιο&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;για&nbsp;τον&nbsp;προγραμματισμό&nbsp;και&nbsp;έλεγχο&nbsp;της&nbsp;φύλαξης&nbsp;των&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Μουσείων,&nbsp;αποθηκών&nbsp;αρχαίων,&nbsp;αρχαιολογικών&nbsp;χώρων&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;και&nbsp;εν&nbsp;γένει&nbsp;αρχαιολογικών&nbsp;εγκαταστάσεων,&nbsp;την&nbsp;τήρηση&nbsp;και&nbsp;εποπτεία&nbsp;της&nbsp;φύλαξης&nbsp;κατά&nbsp;τις&nbsp;ημέρες&nbsp;των&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;εξαιρέσιμων&nbsp;και&nbsp;αργιών&nbsp;και&nbsp;τη&nbsp;σύνταξη&nbsp;των&nbsp;σχετικών&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;καταστάσεων&nbsp;για&nbsp;την&nbsp;αποζημίωση&nbsp;των&nbsp;προσφερομένων&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;υπηρεσιών&nbsp;κατά&nbsp;τις&nbsp;ημέρες&nbsp;αυτές,&nbsp;οι&nbsp;οποίες&nbsp;εγκρίνονται&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;από&nbsp;τον&nbsp;Προϊστάμενο.&nbsp;Επιπλέον&nbsp;μεριμνά&nbsp;για&nbsp;την&nbsp;ευταξία&nbsp;αρχαιολογικών&nbsp;χώρων&nbsp;και&nbsp;μουσείων&nbsp;και&nbsp;εν&nbsp;γένει&nbsp;για&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;την&nbsp;εύρυθμη&nbsp;λειτουργία&nbsp;τους,&nbsp;καθώς&nbsp;και&nbsp;για&nbsp;την&nbsp;ευπρεπή&nbsp;συμπεριφορά&nbsp;του&nbsp;αρχαιοφυλακτικού&nbsp;προσωπικού,&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;όπως&nbsp;επίσης&nbsp;συντονίζει&nbsp;τους&nbsp;ορισμένους&nbsp;υπεύθυνους&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;αρχιφύλακες.',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...<br>
+}</tt></dd></dl>
+
+<dl><dt><a name="Parser-get_units_and_respas_following_respas_decl"><strong>get_units_and_respas_following_respas_decl</strong></a>(self, paorg_pres_decree_txt)</dt><dd><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Return&nbsp;a&nbsp;dictionary&nbsp;of&nbsp;rough&nbsp;Organization&nbsp;Unit&nbsp;-&nbsp;RespA&nbsp;associations<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mentioned&nbsp;as&nbsp;a&nbsp;RespA&nbsp;declaration&nbsp;followed&nbsp;by&nbsp;a&nbsp;Unit-RespAs&nbsp;list.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@param&nbsp;paorg_pres_decree_txt:&nbsp;GG&nbsp;Presidential&nbsp;Decree&nbsp;Organization&nbsp;Issue<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;e.g.&nbsp;"ΠΡΟΕΔΡΙΚΟ&nbsp;ΔΙΑΤΑΓΜΑ&nbsp;ΥΠ’&nbsp;ΑΡΙΘΜ.&nbsp;18&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Οργανισμός&nbsp;Υπουργείου&nbsp;Παιδείας,&nbsp;Έρευνας&nbsp;και&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Θρησκευμάτων.",<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"ΠΡΟΕΔΡΙΚΟ&nbsp;ΔΙΑΤΑΓΜΑ&nbsp;ΥΠ’&nbsp;ΑΡΙΘΜ.&nbsp;4&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Οργανισμός&nbsp;Υπουργείου&nbsp;Πολιτισμού&nbsp;και&nbsp;Αθλη-<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;τισμού."&nbsp;etc.<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;e.g.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"Τμήμα&nbsp;Διαχείρισης&nbsp;και&nbsp;Ανάπτυξης&nbsp;Ανθρώπινου&nbsp;Δυναμικού&nbsp;Τομέα&nbsp;Εμπορίου&nbsp;Καταναλωτή&nbsp;και&nbsp;Βιομηχανίας":&nbsp;[<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"β.&nbsp;Τμήμα&nbsp;Διαχείρισης&nbsp;και&nbsp;Ανάπτυξης&nbsp;Ανθρώπινου&nbsp;Δυναμικού&nbsp;Τομέα&nbsp;Εμπορίου−Καταναλωτή&nbsp;και&nbsp;Βιομηχανίας.",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"αα.&nbsp;Η&nbsp;εφαρμογή&nbsp;της&nbsp;κείμενης&nbsp;νομοθεσίας&nbsp;που&nbsp;αφορά&nbsp;στην&nbsp;υπηρεσιακή&nbsp;κατάσταση&nbsp;και&nbsp;στις&nbsp;υπηρεσιακές&nbsp;<br>
+μεταβολές&nbsp;του&nbsp;πάσης&nbsp;φύσεως&nbsp;προσωπικού.",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"ββ.&nbsp;Η&nbsp;κατανομή&nbsp;των&nbsp;οργανικών&nbsp;θέσεων,&nbsp;η&nbsp;περιγραφή&nbsp;<br>
+και&nbsp;ανάλυση&nbsp;των&nbsp;καθηκόντων&nbsp;καθώς&nbsp;και&nbsp;ο&nbsp;καθορισμός&nbsp;<br>
+των&nbsp;περιγραμμάτων&nbsp;εργασίας<br>
+γγ.&nbsp;Η&nbsp;καταγραφή&nbsp;των&nbsp;υπηρεσιακών&nbsp;αναγκών&nbsp;και&nbsp;η&nbsp;<br>
+στελέχωση&nbsp;(διορισμοί−τοποθετήσεις−μετακινήσεις,&nbsp;αποσπάσεις,&nbsp;μετατάξεις)&nbsp;για&nbsp;την&nbsp;κάλυψη&nbsp;αυτών.",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"δδ.&nbsp;Η&nbsp;στελέχωση&nbsp;των&nbsp;Πολιτικών&nbsp;Γραφείων&nbsp;του&nbsp;Υφυπουργού&nbsp;και&nbsp;των&nbsp;Γενικών&nbsp;ή&nbsp;Ειδικών&nbsp;Γραμματέων&nbsp;του&nbsp;<br>
+Τομέα.",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"εε.&nbsp;Η&nbsp;έκδοση&nbsp;αποφάσεων&nbsp;για&nbsp;μετακινήσεις&nbsp;εκτός&nbsp;<br>
+έδρας&nbsp;στο&nbsp;εσωτερικό&nbsp;και&nbsp;στο&nbsp;εξωτερικό&nbsp;για&nbsp;εκτέλεση&nbsp;<br>
+υπηρεσίας&nbsp;υπαλλήλων.",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"στστ.&nbsp;Η&nbsp;παρακολούθηση&nbsp;και&nbsp;εφαρμογή&nbsp;της&nbsp;κινητικότητας&nbsp;των&nbsp;υπαλλήλων.",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"ζζ.&nbsp;Η&nbsp;αριθμητική&nbsp;καταγραφή&nbsp;και&nbsp;παρακολούθηση&nbsp;του&nbsp;<br>
+πάσης&nbsp;φύσεως&nbsp;προσωπικού&nbsp;και&nbsp;η&nbsp;διαρκής&nbsp;ενημέρωση&nbsp;<br>
+του&nbsp;Μητρώου&nbsp;Μισθοδοτούμενων&nbsp;καθώς&nbsp;και&nbsp;η&nbsp;σύνταξη&nbsp;<br>
+καταστάσεων&nbsp;με&nbsp;στοιχεία&nbsp;του&nbsp;προσωπικού&nbsp;(επετηρίδα)&nbsp;<br>
+και&nbsp;η&nbsp;τήρηση&nbsp;των&nbsp;προσωπικών&nbsp;μητρώων&nbsp;των&nbsp;υπηρετούντων&nbsp;υπαλλήλων.",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"ηη.&nbsp;Η&nbsp;χορήγηση&nbsp;των&nbsp;πάσης&nbsp;φύσεως&nbsp;αδειών.",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"θθ.&nbsp;Η&nbsp;διαδικασία&nbsp;έγκρισης&nbsp;υπερωριών&nbsp;του&nbsp;πάσης&nbsp;φύσεως&nbsp;προσωπικού.",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"ιι.&nbsp;Η&nbsp;ηλεκτρονική&nbsp;θεώρηση&nbsp;βιβλιαρίων&nbsp;ιατροφαρμακευτικής&nbsp;περίθαλψης&nbsp;των&nbsp;υπαλλήλων.",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"ιαια.&nbsp;Η&nbsp;εφαρμογή&nbsp;των&nbsp;διατάξεων&nbsp;περί&nbsp;αξιολόγησης&nbsp;<br>
+προσωπικού.",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"ιβιβ.&nbsp;Η&nbsp;εφαρμογή&nbsp;των&nbsp;διατάξεων&nbsp;περί&nbsp;καθορισμού&nbsp;των&nbsp;<br>
+ετήσιων&nbsp;στόχων&nbsp;και&nbsp;δεικτών&nbsp;μέτρησης&nbsp;αποδοτικότητας&nbsp;<br>
+και&nbsp;αποτελεσματικότητας,&nbsp;η&nbsp;παρακολούθηση&nbsp;υλοποίησης&nbsp;και&nbsp;η&nbsp;αναθεώρησή&nbsp;τους&nbsp;καθώς&nbsp;και&nbsp;η&nbsp;σύνταξη&nbsp;της&nbsp;<br>
+ετήσιας&nbsp;έκθεσης&nbsp;απολογισμού&nbsp;και&nbsp;επί&nbsp;μέρους&nbsp;εκθέσεων&nbsp;<br>
+αξιολογήσεων/μετρήσεων&nbsp;για&nbsp;τις&nbsp;Υπηρεσιακές&nbsp;Μονάδες.",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"ιγιγ.&nbsp;Η&nbsp;καταγραφή&nbsp;των&nbsp;αναγκών&nbsp;εκπαίδευσης&nbsp;και&nbsp;επιμόρφωσης&nbsp;του&nbsp;στελεχιακού&nbsp;δυναμικού,&nbsp;η&nbsp;κατάρτιση&nbsp;<br>
+του&nbsp;ετήσιου&nbsp;εκπαιδευτικού&nbsp;προγράμματος&nbsp;καθώς&nbsp;και&nbsp;<br>
+η&nbsp;διαχείριση&nbsp;μητρώου&nbsp;εκπαιδευθέντων.",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"ιδιδ.&nbsp;Η&nbsp;εφαρμογή&nbsp;του&nbsp;πειθαρχικού&nbsp;δικαίου&nbsp;και&nbsp;των&nbsp;διατάξεων&nbsp;περί&nbsp;αργίας−αναστολής&nbsp;εκτέλεσης&nbsp;καθηκόντων."<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;],<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"Τμήμα&nbsp;Διοικητικής&nbsp;Υποστήριξης&nbsp;Οργάνωσης&nbsp;και&nbsp;Τεχνικών&nbsp;Υπηρεσιών&nbsp;του&nbsp;Τομέα&nbsp;Ανάπτυξης":&nbsp;[<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"α.&nbsp;Τμήμα&nbsp;Διοικητικής&nbsp;Υποστήριξης,&nbsp;Οργάνωσης&nbsp;και&nbsp;<br>
+Τεχνικών&nbsp;Υπηρεσιών&nbsp;του&nbsp;Τομέα&nbsp;Ανάπτυξης.",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"αα.&nbsp;Η&nbsp;μέριμνα&nbsp;για&nbsp;την&nbsp;τήρηση&nbsp;του&nbsp;ωραρίου&nbsp;μέσω&nbsp;των&nbsp;<br>
+καρτών&nbsp;προσέλευσης−αναχώρησης&nbsp;του&nbsp;προσωπικού.",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"ββ.&nbsp;Η&nbsp;τήρηση&nbsp;του&nbsp;Γενικού&nbsp;Πρωτοκόλλου&nbsp;(φυσικού&nbsp;ή&nbsp;<br>
+και&nbsp;ηλεκτρονικού)&nbsp;του&nbsp;Τομέα.",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"γγ.&nbsp;Η&nbsp;διεκπεραίωση&nbsp;της&nbsp;απλής&nbsp;και&nbsp;διαβαθμισμένης&nbsp;<br>
+αλληλογραφίας&nbsp;και&nbsp;του&nbsp;λοιπού&nbsp;έντυπου&nbsp;και&nbsp;ηλεκτρονικού&nbsp;υλικού.",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"δδ.&nbsp;Η&nbsp;επικύρωση&nbsp;αντιγράφων,&nbsp;εγγράφων&nbsp;και&nbsp;η&nbsp;βεβαίωση&nbsp;του&nbsp;γνησίου&nbsp;της&nbsp;υπογραφής,&nbsp;σύμφωνα&nbsp;με&nbsp;το&nbsp;1&nbsp;του&nbsp;Ν. 4250/2014&nbsp;(Α΄ 74).",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"εε.&nbsp;Η&nbsp;επίδοση&nbsp;εγγράφων&nbsp;και&nbsp;λοιπού&nbsp;έντυπου&nbsp;υλικού&nbsp;<br>
+εντός&nbsp;και&nbsp;εκτός&nbsp;του&nbsp;Τομέα.",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"στστ.&nbsp;Η&nbsp;ευθύνη&nbsp;για&nbsp;τις&nbsp;διαδικασίες&nbsp;αναπαραγωγής&nbsp;<br>
+ζζ.&nbsp;Η&nbsp;ευθύνη&nbsp;για&nbsp;την&nbsp;κίνηση&nbsp;των&nbsp;υπηρεσιακών&nbsp;οχηεγγράφων.",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"μάτων.<br>
+ηη.&nbsp;Οι&nbsp;ενέργειες&nbsp;για&nbsp;τη&nbsp;χωροταξική&nbsp;κατανομή&nbsp;και&nbsp;στέγαση&nbsp;των&nbsp;Υπηρεσιών&nbsp;του&nbsp;Υπουργείου&nbsp;σε&nbsp;συνάρτηση&nbsp;με&nbsp;<br>
+το&nbsp;αντικείμενό&nbsp;τους&nbsp;και&nbsp;την&nbsp;εξυπηρέτηση&nbsp;του&nbsp;πολίτη&nbsp;<br>
+καθώς&nbsp;και&nbsp;η&nbsp;μέριμνα&nbsp;για&nbsp;την&nbsp;ορθολογική&nbsp;διαχείριση&nbsp;και&nbsp;<br>
+εξοικονόμηση&nbsp;ενέργειας&nbsp;στα&nbsp;κτίρια&nbsp;του&nbsp;Υπουργείου.",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"θθ.&nbsp;Η&nbsp;ευθύνη&nbsp;για&nbsp;την&nbsp;ομαλή&nbsp;λειτουργία&nbsp;των&nbsp;τηλεφωνικών&nbsp;κέντρων.",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"ιι.&nbsp;Η&nbsp;υλοποίηση,&nbsp;επίβλεψη&nbsp;και&nbsp;συντονισμός&nbsp;των&nbsp;διαδικασιών&nbsp;για&nbsp;τη&nbsp;συντήρηση,&nbsp;βελτίωση,&nbsp;φύλαξη&nbsp;και&nbsp;<br>
+πυρασφάλεια&nbsp;των&nbsp;χώρων&nbsp;και&nbsp;των&nbsp;εγκαταστάσεων,&nbsp;τη&nbsp;<br>
+φροντίδα&nbsp;για&nbsp;την&nbsp;καθαριότητα&nbsp;των&nbsp;καταστημάτων&nbsp;του&nbsp;<br>
+Υπουργείου&nbsp;καθώς&nbsp;και&nbsp;τη&nbsp;λειτουργία&nbsp;των&nbsp;FAX,&nbsp;μέσων&nbsp;<br>
+επικοινωνίας&nbsp;και&nbsp;των&nbsp;φωτοτυπικών&nbsp;μηχανημάτων.",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"ιαια.&nbsp;Οι&nbsp;μελέτες&nbsp;και&nbsp;προτάσεις&nbsp;προς&nbsp;το&nbsp;Τμήμα&nbsp;Κατάρτισης&nbsp;και&nbsp;Εκτέλεσης&nbsp;Προγράμματος&nbsp;Προμηθειών&nbsp;για&nbsp;<br>
+την&nbsp;προμήθεια&nbsp;υλικού&nbsp;και&nbsp;εξοπλισμού&nbsp;της&nbsp;Κεντρικής&nbsp;<br>
+Υπηρεσίας&nbsp;καθώς&nbsp;και&nbsp;για&nbsp;κάθε&nbsp;είδους&nbsp;προμήθειες&nbsp;που&nbsp;<br>
+αφορούν&nbsp;τον&nbsp;Τομέα,&nbsp;όπως&nbsp;επίσης&nbsp;και&nbsp;ο&nbsp;προγραμματισμός&nbsp;για&nbsp;τεχνικά&nbsp;έργα.",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"ιβιβ.&nbsp;Η&nbsp;διενέργεια&nbsp;της&nbsp;επίβλεψης−καταμέτρησηςπαραλαβής&nbsp;τεχνικών&nbsp;εργασιών&nbsp;σε&nbsp;συνεργασία&nbsp;με&nbsp;τη&nbsp;Διεύθυνση&nbsp;Προμηθειών,&nbsp;Υποδομών&nbsp;και&nbsp;Διαχείρισης&nbsp;Υλικού&nbsp;<br>
+του&nbsp;Υπουργείου.",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"ιγιγ.&nbsp;Η&nbsp;λειτουργία&nbsp;και&nbsp;εφαρμογή&nbsp;των&nbsp;σύγχρονων&nbsp;εργαλείων&nbsp;διαχείρισης&nbsp;των&nbsp;Βιβλιοθηκών,&nbsp;η&nbsp;διασύνδεση&nbsp;και&nbsp;<br>
+ανταπόκριση&nbsp;στα&nbsp;αιτήματα&nbsp;των&nbsp;εργαζομένων.",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"ιδιδ.&nbsp;Η&nbsp;ευθύνη&nbsp;της&nbsp;μελέτης,&nbsp;υπόδειξης&nbsp;και&nbsp;παρακολούθησης&nbsp;εφαρμογής&nbsp;μέτρων&nbsp;για&nbsp;την&nbsp;απλούστευση&nbsp;<br>
+γραφειοκρατικών&nbsp;τύπων&nbsp;και&nbsp;την&nbsp;καθιέρωση&nbsp;προσφορότερων&nbsp;μεθόδων&nbsp;εργασίας&nbsp;για&nbsp;την&nbsp;αύξηση&nbsp;της&nbsp;παραγωγικότητας.",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"ιειε.&nbsp;Η&nbsp;εξυπηρέτηση−πληροφόρηση&nbsp;του&nbsp;πολίτη.",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"ιστιστ.&nbsp;Η&nbsp;εξασφάλιση&nbsp;της&nbsp;προσβασιμότητας&nbsp;και&nbsp;λοιπών&nbsp;διευκολύνσεων&nbsp;για&nbsp;τα&nbsp;άτομα&nbsp;με&nbsp;αναπηρίες&nbsp;στους&nbsp;<br>
+χώρους&nbsp;λειτουργίας&nbsp;του&nbsp;Υπουργείου."<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;],<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</tt></dd></dl>
+
+<dl><dt><a name="Parser-get_units_followed_by_respas"><strong>get_units_followed_by_respas</strong></a>(self, paorg_pres_decree_txt)</dt><dd><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Return&nbsp;a&nbsp;dictionary&nbsp;of&nbsp;rough&nbsp;Organization&nbsp;Unit&nbsp;-&nbsp;RespA&nbsp;associations<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mentioned&nbsp;as&nbsp;a&nbsp;Unit&nbsp;followed&nbsp;by&nbsp;a&nbsp;list&nbsp;of&nbsp;RespAs.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@param&nbsp;paorg_pres_decree_txt:&nbsp;GG&nbsp;Presidential&nbsp;Decree&nbsp;Organization&nbsp;Issue<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;e.g.&nbsp;"ΠΡΟΕΔΡΙΚΟ&nbsp;ΔΙΑΤΑΓΜΑ&nbsp;ΥΠ’&nbsp;ΑΡΙΘΜ.&nbsp;18&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Οργανισμός&nbsp;Υπουργείου&nbsp;Παιδείας,&nbsp;Έρευνας&nbsp;και&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Θρησκευμάτων.",<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"ΠΡΟΕΔΡΙΚΟ&nbsp;ΔΙΑΤΑΓΜΑ&nbsp;ΥΠ’&nbsp;ΑΡΙΘΜ.&nbsp;4&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Οργανισμός&nbsp;Υπουργείου&nbsp;Πολιτισμού&nbsp;και&nbsp;Αθλη-<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;τισμού."&nbsp;etc.<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;e.g.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"Το&nbsp;Τμήμα&nbsp;Α&nbsp;Προγραμματισμού&nbsp;και&nbsp;Τεκμηρίωσης&nbsp;είναι&nbsp;αρμόδιο&nbsp;για":&nbsp;[<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"3.&nbsp;Το&nbsp;Τμήμα&nbsp;Α’&nbsp;Προγραμματισμού&nbsp;και&nbsp;Τεκμηρίωσης&nbsp;<br>
+είναι&nbsp;αρμόδιο&nbsp;για:",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"α)&nbsp;τη&nbsp;διαμόρφωση&nbsp;μεθοδολογικού&nbsp;και&nbsp;θεσμικού&nbsp;<br>
+πλαισίου&nbsp;για&nbsp;τον&nbsp;εσωτερικό&nbsp;έλεγχο&nbsp;των&nbsp;υπηρεσιών&nbsp;του&nbsp;<br>
+Υπουργείου&nbsp;και&nbsp;την&nbsp;καθοδήγηση&nbsp;τους&nbsp;για&nbsp;την&nbsp;ανάπτυξη&nbsp;<br>
+συστημάτων&nbsp;διαχείρισης&nbsp;κινδύνων,",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"β)&nbsp;την&nbsp;κατάρτιση&nbsp;προγράμματος&nbsp;εσωτερικών&nbsp;ελέγχων&nbsp;<br>
+στις&nbsp;Υπηρεσίες&nbsp;του&nbsp;Υπουργείου,&nbsp;ετήσιου&nbsp;ή&nbsp;μεγαλύτερης&nbsp;<br>
+διάρκειας,&nbsp;κατόπιν&nbsp;καθορισμού&nbsp;των&nbsp;ελεγκτέων&nbsp;περιοχών&nbsp;διαδικασιών,&nbsp;σε&nbsp;συνδυασμό&nbsp;με&nbsp;την&nbsp;αναγνώριση&nbsp;και&nbsp;αξιολόγηση&nbsp;των&nbsp;κινδύνων&nbsp;και&nbsp;λαμβανομένων&nbsp;υπόψη&nbsp;των&nbsp;<br>
+στρατηγικών&nbsp;και&nbsp;επιχειρησιακών&nbsp;προτεραιοτήτων&nbsp;του&nbsp;<br>
+Υπουργείου,&nbsp;συνεκτιμώντας&nbsp;πάσης&nbsp;φύσεως&nbsp;αναφορές,&nbsp;<br>
+καταγγελίες,&nbsp;εκθέσεις&nbsp;και&nbsp;κάθε&nbsp;άλλο&nbsp;στοιχείο,&nbsp;τηρουμένων&nbsp;των&nbsp;εκάστοτε&nbsp;ισχυουσών&nbsp;διατάξεων&nbsp;περί&nbsp;προστασίας&nbsp;προσωπικών&nbsp;δεδομένων,",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"γ)&nbsp;την&nbsp;έκδοση&nbsp;εντολών&nbsp;για&nbsp;την&nbsp;διενέργεια&nbsp;προγραμματισμένων&nbsp;και&nbsp;έκτακτων&nbsp;εσωτερικών&nbsp;ελέγχων,&nbsp;όπου&nbsp;<br>
+αυτό&nbsp;απαιτείται,",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"δ)&nbsp;τη&nbsp;διασφάλιση&nbsp;τήρησης&nbsp;των&nbsp;Διεθνών&nbsp;Προτύπων&nbsp;και&nbsp;<br>
+των&nbsp;ορθών&nbsp;πρακτικών&nbsp;κατά&nbsp;την&nbsp;ελεγκτική&nbsp;διαδικασία,&nbsp;<br>
+την&nbsp;επεξεργασία&nbsp;των&nbsp;στοιχείων&nbsp;των&nbsp;επί&nbsp;μέρους&nbsp;εκθέσεων&nbsp;εσωτερικού&nbsp;ελέγχου&nbsp;και&nbsp;τη&nbsp;σύνταξη&nbsp;ετήσιας&nbsp;ή/<br>
+και&nbsp;ενδιάμεσης&nbsp;έκθεσης,&nbsp;στις&nbsp;οποίες&nbsp;καταγράφονται&nbsp;οι&nbsp;<br>
+δραστηριότητες&nbsp;και&nbsp;τα&nbsp;αποτελέσματα&nbsp;του&nbsp;εσωτερικού&nbsp;<br>
+ελέγχου,",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"ε)&nbsp;την&nbsp;υποβολή&nbsp;της&nbsp;έκθεσης&nbsp;εσωτερικού&nbsp;ελέγχου&nbsp;στον&nbsp;<br>
+οικείο&nbsp;Υπουργό&nbsp;με&nbsp;κοινοποίηση&nbsp;στις&nbsp;Υπηρεσίες&nbsp;που&nbsp;<br>
+έχουν&nbsp;αρμοδιότητα&nbsp;για&nbsp;το&nbsp;σχεδιασμό&nbsp;και&nbsp;τη&nbsp;λειτουργία&nbsp;<br>
+του&nbsp;συστήματος&nbsp;που&nbsp;ελέγχθηκε&nbsp;και&nbsp;την&nbsp;τακτική&nbsp;παρακολούθηση,&nbsp;αξιολόγηση&nbsp;και&nbsp;επιβεβαίωση&nbsp;των&nbsp;διορθωτικών&nbsp;<br>
+ή&nbsp;προληπτικών&nbsp;ενεργειών&nbsp;που&nbsp;πραγματοποιούνται&nbsp;από&nbsp;<br>
+τις&nbsp;υπηρεσίες&nbsp;σε&nbsp;συμμόρφωση&nbsp;με&nbsp;τις&nbsp;προτάσεις&nbsp;του&nbsp;εσωτερικού&nbsp;ελέγχου,&nbsp;μέχρι&nbsp;την&nbsp;οριστική&nbsp;υλοποίησή&nbsp;τους,<br>
+&nbsp;στ)&nbsp;την&nbsp;εισήγηση&nbsp;για&nbsp;την&nbsp;κατάρτιση&nbsp;ή&nbsp;αναθεώρηση&nbsp;<br>
+του&nbsp;Κώδικα&nbsp;Δεοντολογίας&nbsp;Εσωτερικών&nbsp;Ελεγκτών&nbsp;και&nbsp;<br>
+την&nbsp;εισήγηση&nbsp;για&nbsp;την&nbsp;τροποποίηση&nbsp;του,&nbsp;αν&nbsp;αυτό&nbsp;κριθεί&nbsp;<br>
+αναγκαίο,",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"ζ)&nbsp;τη&nbsp;μέριμνα&nbsp;για&nbsp;την&nbsp;εκπαίδευση&nbsp;και&nbsp;την&nbsp;επιμόρφωση&nbsp;<br>
+των&nbsp;Εσωτερικών&nbsp;Ελεγκτών,&nbsp;σε&nbsp;συνεργασία&nbsp;με&nbsp;τις&nbsp;καθ΄&nbsp;<br>
+ύλην&nbsp;αρμόδιες&nbsp;υπηρεσίες&nbsp;του&nbsp;Υπουργείου,&nbsp;καθώς&nbsp;και&nbsp;<br>
+την&nbsp;διερεύνηση&nbsp;και&nbsp;την&nbsp;πρόταση&nbsp;τρόπων&nbsp;ανάπτυξης&nbsp;των&nbsp;<br>
+γνώσεων&nbsp;και&nbsp;των&nbsp;δεξιοτήτων&nbsp;τους,",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"η)&nbsp;τον&nbsp;χειρισμό&nbsp;κάθε&nbsp;άλλου&nbsp;συναφούς&nbsp;θέματος."],<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</tt></dd></dl>
+
+<dl><dt><a name="Parser-pdf_to_text"><strong>pdf_to_text</strong></a>(self, in_pdf, out_txt)</dt><dd><tt>Return&nbsp;raw&nbsp;text&nbsp;of&nbsp;pdf&nbsp;using&nbsp;pdfminer.six's&nbsp;pdf2txt.py<br>
+&nbsp;<br>
+@param&nbsp;in_pdf:&nbsp;The&nbsp;input&nbsp;pdf&nbsp;file<br>
+@param&nbsp;out_txt:&nbsp;The&nbsp;output&nbsp;txt&nbsp;file</tt></dd></dl>
+
+<dl><dt><a name="Parser-request_nlp_data"><strong>request_nlp_data</strong></a>(self, txt, category='')</dt><dd><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns&nbsp;a&nbsp;json&nbsp;or&nbsp;one&nbsp;of&nbsp;its&nbsp;values&nbsp;containing&nbsp;nlp&nbsp;analysis&nbsp;data&nbsp;of&nbsp;the&nbsp;given&nbsp;txt<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@param&nbsp;txt:&nbsp;Any&nbsp;text<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@param&nbsp;category:&nbsp;Any&nbsp;valid&nbsp;category&nbsp;of&nbsp;the&nbsp;final&nbsp;json&nbsp;data<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;e.g.&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;txt&nbsp;=&nbsp;&nbsp;'Ψάλλε&nbsp;θεά,&nbsp;τον&nbsp;τρομερό&nbsp;θυμόν&nbsp;του&nbsp;Αχιλλέως<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Πώς&nbsp;έγινε&nbsp;στους&nbsp;Αχαιούς&nbsp;αρχή&nbsp;πολλών&nbsp;δακρύων.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Που&nbsp;ανδράγαθες&nbsp;ροβόλησε&nbsp;πολλές&nbsp;ψυχές&nbsp;στον&nbsp;Άδη<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ηρώων,&nbsp;κι&nbsp;έδωκεν&nbsp;αυτούς&nbsp;αρπάγματα&nbsp;των&nbsp;σκύλων<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;και&nbsp;των&nbsp;ορνέων&nbsp;–&nbsp;και&nbsp;η&nbsp;βουλή&nbsp;γενόταν&nbsp;του&nbsp;Κρονίδη,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;απ’&nbsp;ότ’,&nbsp;εφιλονίκησαν&nbsp;κι&nbsp;εχωρισθήκαν&nbsp;πρώτα<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ο&nbsp;Ατρείδης,&nbsp;άρχος&nbsp;των&nbsp;ανδρών,&nbsp;και&nbsp;ο&nbsp;θείος&nbsp;Αχιλλέας.'<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&gt;<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'category':&nbsp;'Τέχνες<br>
+',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'keywords':&nbsp;'κρονίδη,&nbsp;ανδράγαθες,&nbsp;θείος,&nbsp;τρομερό,&nbsp;ροβόλησε,&nbsp;αρπάγμα,&nbsp;αρχή,&nbsp;'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'ατρείδης,&nbsp;θεά,&nbsp;σκύλων',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'language':&nbsp;'Greek',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'lemmatized_sentences':&nbsp;['ψάλλε&nbsp;θεά&nbsp;,&nbsp;τον&nbsp;τρομερό&nbsp;θυμόν&nbsp;του&nbsp;αχιλλέως&nbsp;πώς&nbsp;'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'έγινε&nbsp;στους&nbsp;αχαιούς&nbsp;αρχή&nbsp;πολλών&nbsp;δακρύων&nbsp;.',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'που&nbsp;ανδράγαθες&nbsp;ροβόλησε&nbsp;πολλος&nbsp;ψυχή&nbsp;στον&nbsp;άδη&nbsp;ηρώων&nbsp;'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;',&nbsp;και&nbsp;έδωκεν&nbsp;αυτούς&nbsp;αρπάγμα&nbsp;των&nbsp;σκύλων&nbsp;και&nbsp;των&nbsp;'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'ορνέων&nbsp;–&nbsp;και&nbsp;η&nbsp;βουλή&nbsp;γενόταν&nbsp;του&nbsp;κρονίδη&nbsp;,&nbsp;απ’&nbsp;ότ’&nbsp;'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;',&nbsp;εφιλονίκησαν&nbsp;και&nbsp;εχωρισθήκαν&nbsp;πρώτα&nbsp;ο&nbsp;ατρείδης&nbsp;,&nbsp;'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'άρχος&nbsp;των&nbsp;ανδρών&nbsp;,&nbsp;και&nbsp;ο&nbsp;θείος&nbsp;αχιλλέας&nbsp;.'],<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'named_entities':&nbsp;{'location':&nbsp;[],<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'organization':&nbsp;[],<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'person':&nbsp;['Αχιλλέως&nbsp;Πώς',&nbsp;'Κρονίδη',&nbsp;'Ατρείδης']},<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'part_of_speech':&nbsp;{'adjectives':&nbsp;['τρομερό',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'στους',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'πολλές',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'έδωκεν',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'θείος'],<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'nouns':&nbsp;['Ψάλλε',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'θεά',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'θυμόν',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'αρχή',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'πολλών',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'δακρύων',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'ψυχές',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'ηρώων',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'αρπάγματα',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'σκύλων',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'ορνέων',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'βουλή',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'Κρονίδη',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'άρχος',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'ανδρών'],<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'verbs':&nbsp;['έγινε',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'ροβόλησε',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'γενόταν',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'εφιλονίκησαν',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'εχωρισθήκαν']},<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'sentences':&nbsp;['Ψάλλε&nbsp;θεά,&nbsp;τον&nbsp;τρομερό&nbsp;θυμόν&nbsp;του&nbsp;Αχιλλέως&nbsp;Πώς&nbsp;έγινε&nbsp;στους&nbsp;'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'Αχαιούς&nbsp;αρχή&nbsp;πολλών&nbsp;δακρύων.',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'Που&nbsp;ανδράγαθες&nbsp;ροβόλησε&nbsp;πολλές&nbsp;ψυχές&nbsp;στον&nbsp;Άδη&nbsp;ηρώων,&nbsp;κι&nbsp;έδωκεν&nbsp;'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'αυτούς&nbsp;αρπάγματα&nbsp;των&nbsp;σκύλων&nbsp;και&nbsp;των&nbsp;ορνέων&nbsp;–&nbsp;και&nbsp;η&nbsp;βουλή&nbsp;'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'γενόταν&nbsp;του&nbsp;Κρονίδη,&nbsp;απ’&nbsp;ότ’,&nbsp;εφιλονίκησαν&nbsp;κι&nbsp;εχωρισθήκαν&nbsp;'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'πρώτα&nbsp;ο&nbsp;Ατρείδης,&nbsp;άρχος&nbsp;των&nbsp;ανδρών,&nbsp;και&nbsp;ο&nbsp;θείος&nbsp;Αχιλλέας.'],<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'summary':&nbsp;'',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'text':&nbsp;'&lt;span&nbsp;class="tooltip"&nbsp;data-content="POS:&nbsp;NOUN&lt;br&gt;&nbsp;LEMMA:&nbsp;ψάλλε&lt;br&gt;&nbsp;'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'DEP:&nbsp;obl"&nbsp;&gt;Ψάλλε&nbsp;&lt;/span&gt;&lt;span&nbsp;class="tooltip"&nbsp;data-content="POS:&nbsp;'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'NOUN&lt;br&gt;&nbsp;LEMMA:&nbsp;θεά&lt;br&gt;&nbsp;DEP:&nbsp;cop"&nbsp;&gt;θεά&nbsp;&lt;/span&gt;&lt;span&nbsp;class="tooltip"&nbsp;'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'data-content="POS:&nbsp;PUNCT&lt;br&gt;&nbsp;LEMMA:&nbsp;,&lt;br&gt;&nbsp;DEP:&nbsp;punct"&nbsp;&gt;,&nbsp;'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'&lt;/span&gt;&lt;span&nbsp;class="tooltip"&nbsp;data-content="POS:&nbsp;DET&lt;br&gt;&nbsp;LEMMA:&nbsp;'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'τον&lt;br&gt;&nbsp;DEP:&nbsp;det"&nbsp;&gt;τον&nbsp;&lt;/span&gt;&lt;span&nbsp;class="tooltip"&nbsp;'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'data-content="POS:&nbsp;ADJ&lt;br&gt;&nbsp;LEMMA:&nbsp;τρομερό&lt;br&gt;&nbsp;DEP:&nbsp;amod"&nbsp;&gt;τρομερό&nbsp;'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'&lt;/span&gt;&lt;span&nbsp;class="tooltip"&nbsp;data-content="POS:&nbsp;NOUN&lt;br&gt;&nbsp;LEMMA:&nbsp;'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'θυμόν&lt;br&gt;&nbsp;DEP:&nbsp;nsubj"&nbsp;&gt;θυμόν&nbsp;&lt;/span&gt;&lt;span&nbsp;class="tooltip"&nbsp;'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'data-content="POS:&nbsp;DET&lt;br&gt;&nbsp;LEMMA:&nbsp;του&lt;br&gt;&nbsp;DEP:&nbsp;det"&nbsp;&gt;του&nbsp;'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'&lt;/span&gt;&lt;span&nbsp;class="tooltip"&nbsp;data-content="POS:&nbsp;PROPN&lt;br&gt;&nbsp;LEMMA:&nbsp;'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'αχιλλέως&lt;br&gt;&nbsp;DEP:&nbsp;nmod"&nbsp;style="color:&nbsp;red;"&nbsp;&gt;Αχιλλέως&nbsp;&lt;/span&gt;&lt;span&nbsp;'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'class="tooltip"&nbsp;data-content="POS:&nbsp;X&lt;br&gt;&nbsp;LEMMA:&nbsp;πώς&lt;br&gt;&nbsp;DEP:&nbsp;flat"&nbsp;'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'style="color:&nbsp;red;"&nbsp;&gt;Πώς&nbsp;&lt;/span&gt;&lt;span&nbsp;class="tooltip"&nbsp;'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'data-content="POS:&nbsp;VERB&lt;br&gt;&nbsp;LEMMA:&nbsp;έγινε&lt;br&gt;&nbsp;DEP:&nbsp;ROOT"&nbsp;&gt;έγινε&nbsp;'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'&lt;/span&gt;&lt;span&nbsp;class="tooltip"&nbsp;data-content="POS:&nbsp;ADJ&lt;br&gt;&nbsp;LEMMA:&nbsp;'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'στους&lt;br&gt;&nbsp;DEP:&nbsp;amod"&nbsp;&gt;στους&nbsp;&lt;/span&gt;&lt;span&nbsp;class="tooltip"&nbsp;'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'data-content="POS:&nbsp;PROPN&lt;br&gt;&nbsp;LEMMA:&nbsp;αχαιούς&lt;br&gt;&nbsp;DEP:&nbsp;nmod"&nbsp;&gt;Αχαιούς&nbsp;'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'&lt;/span&gt;&lt;span&nbsp;class="tooltip"&nbsp;data-content="POS:&nbsp;NOUN&lt;br&gt;&nbsp;LEMMA:&nbsp;'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'αρχή&lt;br&gt;&nbsp;DEP:&nbsp;nsubj"&nbsp;&gt;αρχή&nbsp;&lt;/span&gt;&lt;span&nbsp;class="tooltip"&nbsp;'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'data-content="POS:&nbsp;NOUN&lt;br&gt;&nbsp;LEMMA:&nbsp;πολλών&lt;br&gt;&nbsp;DEP:&nbsp;xcomp"&nbsp;&gt;πολλών&nbsp;'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'&lt;/span&gt;&lt;span&nbsp;class="tooltip"&nbsp;data-content="POS:&nbsp;NOUN&lt;br&gt;&nbsp;LEMMA:&nbsp;'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'δακρύων&lt;br&gt;&nbsp;DEP:&nbsp;nmod"&nbsp;&gt;δακρύων&nbsp;&lt;/span&gt;&lt;span&nbsp;class="tooltip"&nbsp;'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'data-content="POS:&nbsp;PUNCT&lt;br&gt;&nbsp;LEMMA:&nbsp;.&lt;br&gt;&nbsp;DEP:&nbsp;punct"&nbsp;&gt;.&nbsp;'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'&lt;/span&gt;&lt;span&nbsp;class="tooltip"&nbsp;data-content="POS:&nbsp;PRON&lt;br&gt;&nbsp;LEMMA:&nbsp;'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'που&lt;br&gt;&nbsp;DEP:&nbsp;nsubj"&nbsp;&gt;Που&nbsp;&lt;/span&gt;&lt;span&nbsp;class="tooltip"&nbsp;'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'data-content="POS:&nbsp;ADV&lt;br&gt;&nbsp;LEMMA:&nbsp;ανδράγαθες&lt;br&gt;&nbsp;DEP:&nbsp;advmod"&nbsp;'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'&gt;ανδράγαθες&nbsp;&lt;/span&gt;&lt;span&nbsp;class="tooltip"&nbsp;data-content="POS:&nbsp;VERB&lt;br&gt;&nbsp;'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'LEMMA:&nbsp;ροβόλησε&lt;br&gt;&nbsp;DEP:&nbsp;advcl"&nbsp;&gt;ροβόλησε&nbsp;&lt;/span&gt;&lt;span&nbsp;'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'class="tooltip"&nbsp;data-content="POS:&nbsp;ADJ&lt;br&gt;&nbsp;LEMMA:&nbsp;πολλος&lt;br&gt;&nbsp;DEP:&nbsp;'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'amod"&nbsp;&gt;πολλές&nbsp;&lt;/span&gt;&lt;span&nbsp;class="tooltip"&nbsp;data-content="POS:&nbsp;'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'NOUN&lt;br&gt;&nbsp;LEMMA:&nbsp;ψυχή&lt;br&gt;&nbsp;DEP:&nbsp;obj"&nbsp;&gt;ψυχές&nbsp;&lt;/span&gt;&lt;span&nbsp;'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'class="tooltip"&nbsp;data-content="POS:&nbsp;ADV&lt;br&gt;&nbsp;LEMMA:&nbsp;στον&lt;br&gt;&nbsp;DEP:&nbsp;'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'advmod"&nbsp;&gt;στον&nbsp;&lt;/span&gt;&lt;span&nbsp;class="tooltip"&nbsp;data-content="POS:&nbsp;'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'NUM&lt;br&gt;&nbsp;LEMMA:&nbsp;άδη&lt;br&gt;&nbsp;DEP:&nbsp;amod"&nbsp;&gt;Άδη&nbsp;&lt;/span&gt;&lt;span&nbsp;class="tooltip"&nbsp;'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'data-content="POS:&nbsp;NOUN&lt;br&gt;&nbsp;LEMMA:&nbsp;ηρώων&lt;br&gt;&nbsp;DEP:&nbsp;obl"&nbsp;&gt;ηρώων&nbsp;'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'&lt;/span&gt;&lt;span&nbsp;class="tooltip"&nbsp;data-content="POS:&nbsp;PUNCT&lt;br&gt;&nbsp;LEMMA:&nbsp;'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;',&lt;br&gt;&nbsp;DEP:&nbsp;punct"&nbsp;&gt;,&nbsp;&lt;/span&gt;&lt;span&nbsp;class="tooltip"&nbsp;data-content="POS:&nbsp;'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'CCONJ&lt;br&gt;&nbsp;LEMMA:&nbsp;και&lt;br&gt;&nbsp;DEP:&nbsp;cc"&nbsp;&gt;κι&nbsp;&lt;/span&gt;&lt;span&nbsp;class="tooltip"&nbsp;'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'data-content="POS:&nbsp;ADJ&lt;br&gt;&nbsp;LEMMA:&nbsp;έδωκεν&lt;br&gt;&nbsp;DEP:&nbsp;conj"&nbsp;&gt;έδωκεν&nbsp;'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'&lt;/span&gt;&lt;span&nbsp;class="tooltip"&nbsp;data-content="POS:&nbsp;PRON&lt;br&gt;&nbsp;LEMMA:&nbsp;'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'αυτούς&lt;br&gt;&nbsp;DEP:&nbsp;det"&nbsp;&gt;αυτούς&nbsp;&lt;/span&gt;&lt;span&nbsp;class="tooltip"&nbsp;'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'data-content="POS:&nbsp;NOUN&lt;br&gt;&nbsp;LEMMA:&nbsp;αρπάγμα&lt;br&gt;&nbsp;DEP:&nbsp;obj"&nbsp;&gt;αρπάγματα&nbsp;'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'&lt;/span&gt;&lt;span&nbsp;class="tooltip"&nbsp;data-content="POS:&nbsp;DET&lt;br&gt;&nbsp;LEMMA:&nbsp;'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'των&lt;br&gt;&nbsp;DEP:&nbsp;det"&nbsp;&gt;των&nbsp;&lt;/span&gt;&lt;span&nbsp;class="tooltip"&nbsp;'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'data-content="POS:&nbsp;NOUN&lt;br&gt;&nbsp;LEMMA:&nbsp;σκύλων&lt;br&gt;&nbsp;DEP:&nbsp;nmod"&nbsp;&gt;σκύλων&nbsp;'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'&lt;/span&gt;&lt;span&nbsp;class="tooltip"&nbsp;data-content="POS:&nbsp;CCONJ&lt;br&gt;&nbsp;LEMMA:&nbsp;'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'και&lt;br&gt;&nbsp;DEP:&nbsp;cc"&nbsp;&gt;και&nbsp;&lt;/span&gt;&lt;span&nbsp;class="tooltip"&nbsp;'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'data-content="POS:&nbsp;DET&lt;br&gt;&nbsp;LEMMA:&nbsp;των&lt;br&gt;&nbsp;DEP:&nbsp;det"&nbsp;&gt;των&nbsp;'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'&lt;/span&gt;&lt;span&nbsp;class="tooltip"&nbsp;data-content="POS:&nbsp;NOUN&lt;br&gt;&nbsp;LEMMA:&nbsp;'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'ορνέων&lt;br&gt;&nbsp;DEP:&nbsp;conj"&nbsp;&gt;ορνέων&nbsp;&lt;/span&gt;&lt;span&nbsp;class="tooltip"&nbsp;'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'data-content="POS:&nbsp;PUNCT&lt;br&gt;&nbsp;LEMMA:&nbsp;–&lt;br&gt;&nbsp;DEP:&nbsp;punct"&nbsp;&gt;–&nbsp;'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'&lt;/span&gt;&lt;span&nbsp;class="tooltip"&nbsp;data-content="POS:&nbsp;CCONJ&lt;br&gt;&nbsp;LEMMA:&nbsp;'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'και&lt;br&gt;&nbsp;DEP:&nbsp;cc"&nbsp;&gt;και&nbsp;&lt;/span&gt;&lt;span&nbsp;class="tooltip"&nbsp;'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'data-content="POS:&nbsp;DET&lt;br&gt;&nbsp;LEMMA:&nbsp;η&lt;br&gt;&nbsp;DEP:&nbsp;det"&nbsp;&gt;η&nbsp;&lt;/span&gt;&lt;span&nbsp;'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'class="tooltip"&nbsp;data-content="POS:&nbsp;NOUN&lt;br&gt;&nbsp;LEMMA:&nbsp;βουλή&lt;br&gt;&nbsp;DEP:&nbsp;'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'nsubj"&nbsp;&gt;βουλή&nbsp;&lt;/span&gt;&lt;span&nbsp;class="tooltip"&nbsp;data-content="POS:&nbsp;'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'VERB&lt;br&gt;&nbsp;LEMMA:&nbsp;γενόταν&lt;br&gt;&nbsp;DEP:&nbsp;conj"&nbsp;&gt;γενόταν&nbsp;&lt;/span&gt;&lt;span&nbsp;'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'class="tooltip"&nbsp;data-content="POS:&nbsp;DET&lt;br&gt;&nbsp;LEMMA:&nbsp;του&lt;br&gt;&nbsp;DEP:&nbsp;det"&nbsp;'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'&gt;του&nbsp;&lt;/span&gt;&lt;span&nbsp;class="tooltip"&nbsp;data-content="POS:&nbsp;NOUN&lt;br&gt;&nbsp;LEMMA:&nbsp;'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'κρονίδη&lt;br&gt;&nbsp;DEP:&nbsp;obl"&nbsp;style="color:&nbsp;red;"&nbsp;&gt;Κρονίδη&nbsp;&lt;/span&gt;&lt;span&nbsp;'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'class="tooltip"&nbsp;data-content="POS:&nbsp;PUNCT&lt;br&gt;&nbsp;LEMMA:&nbsp;,&lt;br&gt;&nbsp;DEP:&nbsp;'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'punct"&nbsp;&gt;,&nbsp;&lt;/span&gt;&lt;span&nbsp;class="tooltip"&nbsp;data-content="POS:&nbsp;ADP&lt;br&gt;&nbsp;'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'LEMMA:&nbsp;απ’&lt;br&gt;&nbsp;DEP:&nbsp;case"&nbsp;&gt;απ’&nbsp;&lt;/span&gt;&lt;span&nbsp;class="tooltip"&nbsp;'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'data-content="POS:&nbsp;SCONJ&lt;br&gt;&nbsp;LEMMA:&nbsp;ότ’&lt;br&gt;&nbsp;DEP:&nbsp;obl"&nbsp;&gt;ότ’&nbsp;'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'&lt;/span&gt;&lt;span&nbsp;class="tooltip"&nbsp;data-content="POS:&nbsp;PUNCT&lt;br&gt;&nbsp;LEMMA:&nbsp;'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;',&lt;br&gt;&nbsp;DEP:&nbsp;punct"&nbsp;&gt;,&nbsp;&lt;/span&gt;&lt;span&nbsp;class="tooltip"&nbsp;data-content="POS:&nbsp;'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'VERB&lt;br&gt;&nbsp;LEMMA:&nbsp;εφιλονίκησαν&lt;br&gt;&nbsp;DEP:&nbsp;advcl"&nbsp;&gt;εφιλονίκησαν&nbsp;'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'&lt;/span&gt;&lt;span&nbsp;class="tooltip"&nbsp;data-content="POS:&nbsp;CCONJ&lt;br&gt;&nbsp;LEMMA:&nbsp;'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'και&lt;br&gt;&nbsp;DEP:&nbsp;cc"&nbsp;&gt;κι&nbsp;&lt;/span&gt;&lt;span&nbsp;class="tooltip"&nbsp;data-content="POS:&nbsp;'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'VERB&lt;br&gt;&nbsp;LEMMA:&nbsp;εχωρισθήκαν&lt;br&gt;&nbsp;DEP:&nbsp;conj"&nbsp;&gt;εχωρισθήκαν&nbsp;&lt;/span&gt;&lt;span&nbsp;'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'class="tooltip"&nbsp;data-content="POS:&nbsp;ADV&lt;br&gt;&nbsp;LEMMA:&nbsp;πρώτα&lt;br&gt;&nbsp;DEP:&nbsp;'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'advmod"&nbsp;&gt;πρώτα&nbsp;&lt;/span&gt;&lt;span&nbsp;class="tooltip"&nbsp;data-content="POS:&nbsp;'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'DET&lt;br&gt;&nbsp;LEMMA:&nbsp;ο&lt;br&gt;&nbsp;DEP:&nbsp;det"&nbsp;&gt;ο&nbsp;&lt;/span&gt;&lt;span&nbsp;class="tooltip"&nbsp;'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'data-content="POS:&nbsp;PROPN&lt;br&gt;&nbsp;LEMMA:&nbsp;ατρείδης&lt;br&gt;&nbsp;DEP:&nbsp;nsubj"&nbsp;'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'style="color:&nbsp;red;"&nbsp;&gt;Ατρείδης&nbsp;&lt;/span&gt;&lt;span&nbsp;class="tooltip"&nbsp;'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'data-content="POS:&nbsp;PUNCT&lt;br&gt;&nbsp;LEMMA:&nbsp;,&lt;br&gt;&nbsp;DEP:&nbsp;punct"&nbsp;&gt;,&nbsp;'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'&lt;/span&gt;&lt;span&nbsp;class="tooltip"&nbsp;data-content="POS:&nbsp;NOUN&lt;br&gt;&nbsp;LEMMA:&nbsp;'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'άρχος&lt;br&gt;&nbsp;DEP:&nbsp;appos"&nbsp;&gt;άρχος&nbsp;&lt;/span&gt;&lt;span&nbsp;class="tooltip"&nbsp;'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'data-content="POS:&nbsp;DET&lt;br&gt;&nbsp;LEMMA:&nbsp;των&lt;br&gt;&nbsp;DEP:&nbsp;det"&nbsp;&gt;των&nbsp;'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'&lt;/span&gt;&lt;span&nbsp;class="tooltip"&nbsp;data-content="POS:&nbsp;NOUN&lt;br&gt;&nbsp;LEMMA:&nbsp;'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'ανδρών&lt;br&gt;&nbsp;DEP:&nbsp;nmod"&nbsp;&gt;ανδρών&nbsp;&lt;/span&gt;&lt;span&nbsp;class="tooltip"&nbsp;'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'data-content="POS:&nbsp;PUNCT&lt;br&gt;&nbsp;LEMMA:&nbsp;,&lt;br&gt;&nbsp;DEP:&nbsp;punct"&nbsp;&gt;,&nbsp;'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'&lt;/span&gt;&lt;span&nbsp;class="tooltip"&nbsp;data-content="POS:&nbsp;CCONJ&lt;br&gt;&nbsp;LEMMA:&nbsp;'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'και&lt;br&gt;&nbsp;DEP:&nbsp;cc"&nbsp;&gt;και&nbsp;&lt;/span&gt;&lt;span&nbsp;class="tooltip"&nbsp;'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'data-content="POS:&nbsp;DET&lt;br&gt;&nbsp;LEMMA:&nbsp;ο&lt;br&gt;&nbsp;DEP:&nbsp;det"&nbsp;&gt;ο&nbsp;&lt;/span&gt;&lt;span&nbsp;'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'class="tooltip"&nbsp;data-content="POS:&nbsp;ADJ&lt;br&gt;&nbsp;LEMMA:&nbsp;θείος&lt;br&gt;&nbsp;DEP:&nbsp;'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'nmod"&nbsp;&gt;θείος&nbsp;&lt;/span&gt;&lt;span&nbsp;class="tooltip"&nbsp;data-content="POS:&nbsp;'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'PROPN&lt;br&gt;&nbsp;LEMMA:&nbsp;αχιλλέας&lt;br&gt;&nbsp;DEP:&nbsp;conj"&nbsp;&gt;Αχιλλέας&nbsp;&lt;/span&gt;&lt;span&nbsp;'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'class="tooltip"&nbsp;data-content="POS:&nbsp;PUNCT&lt;br&gt;&nbsp;LEMMA:&nbsp;.&lt;br&gt;&nbsp;DEP:&nbsp;'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'punct"&nbsp;&gt;.&nbsp;&lt;/span&gt;',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'text_tokenized':&nbsp;['Ψάλλε',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'θεά',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;',',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'τον',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'τρομερό',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'θυμόν',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'του',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'Αχιλλέως',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'Πώς',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'έγινε',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'στους',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'Αχαιούς',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'αρχή',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'πολλών',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'δακρύων',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'.',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'Που',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'ανδράγαθες',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'ροβόλησε',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'πολλές',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'ψυχές',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'στον',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'Άδη',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'ηρώων',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;',',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'κι',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'έδωκεν',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'αυτούς',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'αρπάγματα',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'των',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'σκύλων',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'και',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'των',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'ορνέων',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'–',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'και',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'η',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'βουλή',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'γενόταν',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'του',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'Κρονίδη',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;',',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'απ’',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'ότ’',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;',',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'εφιλονίκησαν',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'κι',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'εχωρισθήκαν',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'πρώτα',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'ο',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'Ατρείδης',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;',',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'άρχος',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'των',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'ανδρών',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;',',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'και',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'ο',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'θείος',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'Αχιλλέας',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'.']<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</tt></dd></dl>
+
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+</td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#eeaa77">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Functions</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#eeaa77"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl><dt><a name="-time"><strong>time</strong></a>(...)</dt><dd><tt><a href="#-time">time</a>()&nbsp;-&gt;&nbsp;floating&nbsp;point&nbsp;number<br>
+&nbsp;<br>
+Return&nbsp;the&nbsp;current&nbsp;time&nbsp;in&nbsp;seconds&nbsp;since&nbsp;the&nbsp;Epoch.<br>
+Fractions&nbsp;of&nbsp;a&nbsp;second&nbsp;may&nbsp;be&nbsp;present&nbsp;if&nbsp;the&nbsp;system&nbsp;clock&nbsp;provides&nbsp;them.</tt></dd></dl>
+</td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#55aa55">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Data</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#55aa55"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><strong>DOTALL</strong> = 16</td></tr></table>
+</body></html>

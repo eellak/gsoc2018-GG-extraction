@@ -1,0 +1,208 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: module helper</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>helper</strong></big></big></font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:/home/chrisk/Software/GFOSS/gsoc2018-GG-extraction/src/util/helper.py">/home/chrisk/Software/GFOSS/gsoc2018-GG-extraction/src/util/helper.py</a></font></td></tr></table>
+    <p><tt>#&nbsp;-*-&nbsp;coding:&nbsp;utf-8&nbsp;-*-</tt></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#aa55cc">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Modules</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="collections.html">collections</a><br>
+<a href="csv.html">csv</a><br>
+<a href="datetime.html">datetime</a><br>
+</td><td width="25%" valign=top><a href="json.html">json</a><br>
+<a href="os.html">os</a><br>
+<a href="re.html">re</a><br>
+</td><td width="25%" valign=top><a href="shutil.html">shutil</a><br>
+<a href="sys.html">sys</a><br>
+<a href="urllib.html">urllib</a><br>
+</td><td width="25%" valign=top></td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ee77aa">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Classes</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#ee77aa"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl>
+<dt><font face="helvetica, arial"><a href="builtins.html#object">builtins.object</a>
+</font></dt><dd>
+<dl>
+<dt><font face="helvetica, arial"><a href="helper.html#Helper">Helper</a>
+</font></dt></dl>
+</dd>
+</dl>
+ <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="Helper">class <strong>Helper</strong></a>(<a href="builtins.html#object">builtins.object</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>#&nbsp;<a href="#Helper">Helper</a>&nbsp;class&nbsp;that&nbsp;defines&nbsp;useful&nbsp;formatting&nbsp;and&nbsp;file&nbsp;handling&nbsp;functions<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%">Static methods defined here:<br>
+<dl><dt><a name="Helper-append_rows_into_csv"><strong>append_rows_into_csv</strong></a>(rows, csvfile)</dt><dd><tt>'rows':&nbsp;list&nbsp;of&nbsp;lists</tt></dd></dl>
+
+<dl><dt><a name="Helper-clean_up_for_paorgs_getter"><strong>clean_up_for_paorgs_getter</strong></a>(txt)</dt></dl>
+
+<dl><dt><a name="Helper-clean_up_txt"><strong>clean_up_txt</strong></a>(txt)</dt></dl>
+
+<dl><dt><a name="Helper-clean_up_word_list"><strong>clean_up_word_list</strong></a>(word_list)</dt></dl>
+
+<dl><dt><a name="Helper-clear_annotations"><strong>clear_annotations</strong></a>(text)</dt><dd><tt>#&nbsp;Clears&nbsp;wikipedia&nbsp;annotations&nbsp;from&nbsp;a&nbsp;string</tt></dd></dl>
+
+<dl><dt><a name="Helper-codify_list_points"><strong>codify_list_points</strong></a>(txt)</dt></dl>
+
+<dl><dt><a name="Helper-contains_list_points"><strong>contains_list_points</strong></a>(txt)</dt></dl>
+
+<dl><dt><a name="Helper-date_match"><strong>date_match</strong></a>(year=0)</dt><dd><tt>#&nbsp;Returns&nbsp;a&nbsp;compiled&nbsp;regex&nbsp;<a href="builtins.html#object">object</a>&nbsp;to&nbsp;find&nbsp;dates&nbsp;in&nbsp;text</tt></dd></dl>
+
+<dl><dt><a name="Helper-date_to_unix_timestamp"><strong>date_to_unix_timestamp</strong></a>(date, lang='el')</dt><dd><tt>#&nbsp;Converts&nbsp;a&nbsp;textual&nbsp;date&nbsp;to&nbsp;a&nbsp;unix&nbsp;timestamp</tt></dd></dl>
+
+<dl><dt><a name="Helper-deintonate_txt"><strong>deintonate_txt</strong></a>(txt)</dt></dl>
+
+<dl><dt><a name="Helper-download"><strong>download</strong></a>(url, file_name=None, folder='/home/chrisk/Software/GFOSS/gsoc2018-GG-extraction/src/util')</dt></dl>
+
+<dl><dt><a name="Helper-export_json"><strong>export_json</strong></a>(json, jsonfile, encoding='')</dt></dl>
+
+<dl><dt><a name="Helper-export_xml"><strong>export_xml</strong></a>(xml, xmlfile)</dt></dl>
+
+<dl><dt><a name="Helper-find_all"><strong>find_all</strong></a>(key, string)</dt><dd><tt>#&nbsp;Finds&nbsp;all&nbsp;occurences&nbsp;of&nbsp;a&nbsp;substring&nbsp;in&nbsp;a&nbsp;string<br>
+#&nbsp;@return&nbsp;The&nbsp;indexes&nbsp;of&nbsp;all&nbsp;matched&nbsp;substrings.</tt></dd></dl>
+
+<dl><dt><a name="Helper-format_role"><strong>format_role</strong></a>(text)</dt><dd><tt>#&nbsp;Formats&nbsp;roles&nbsp;extracted&nbsp;from&nbsp;pdfs.&nbsp;Specifically,&nbsp;splits&nbsp;separate&nbsp;words&nbsp;that&nbsp;are&nbsp;stuck&nbsp;together</tt></dd></dl>
+
+<dl><dt><a name="Helper-get_clean_words"><strong>get_clean_words</strong></a>(txt, n=0)</dt></dl>
+
+<dl><dt><a name="Helper-get_dec_location_and_date_before_signees_regex"><strong>get_dec_location_and_date_before_signees_regex</strong></a>()</dt><dd><tt>#&nbsp;@TODO:&nbsp;Add&nbsp;Attica&nbsp;Prefectures</tt></dd></dl>
+
+<dl><dt><a name="Helper-get_greek_cities"><strong>get_greek_cities</strong></a>()</dt></dl>
+
+<dl><dt><a name="Helper-get_greek_intonations"><strong>get_greek_intonations</strong></a>()</dt></dl>
+
+<dl><dt><a name="Helper-get_greek_months"><strong>get_greek_months</strong></a>()</dt></dl>
+
+<dl><dt><a name="Helper-get_greek_stopwords"><strong>get_greek_stopwords</strong></a>()</dt></dl>
+
+<dl><dt><a name="Helper-get_json"><strong>get_json</strong></a>(data, encoding='')</dt></dl>
+
+<dl><dt><a name="Helper-get_special_regex_disjunction"><strong>get_special_regex_disjunction</strong></a>(key_list)</dt></dl>
+
+<dl><dt><a name="Helper-get_url_contents"><strong>get_url_contents</strong></a>(link, content_type='')</dt></dl>
+
+<dl><dt><a name="Helper-get_word_n_grams"><strong>get_word_n_grams</strong></a>(inpt, n)</dt></dl>
+
+<dl><dt><a name="Helper-get_words"><strong>get_words</strong></a>(txt, n=0)</dt></dl>
+
+<dl><dt><a name="Helper-get_xml"><strong>get_xml</strong></a>(data)</dt></dl>
+
+<dl><dt><a name="Helper-hasNumbers"><strong>hasNumbers</strong></a>(strng)</dt></dl>
+
+<dl><dt><a name="Helper-load_pickle_file"><strong>load_pickle_file</strong></a>(pickle_file)</dt></dl>
+
+<dl><dt><a name="Helper-make_dir"><strong>make_dir</strong></a>(path, remake_if_exists=False)</dt></dl>
+
+<dl><dt><a name="Helper-normalize_greek_name"><strong>normalize_greek_name</strong></a>(name)</dt><dd><tt>#&nbsp;Converts&nbsp;upper&nbsp;/&nbsp;lowercase&nbsp;text&nbsp;with&nbsp;possible&nbsp;ambiguous&nbsp;latin&nbsp;characters&nbsp;to&nbsp;a&nbsp;fully&nbsp;greek&nbsp;uppercase&nbsp;word&nbsp;with<br>
+#&nbsp;no&nbsp;accents.<br>
+#&nbsp;@todo:&nbsp;Use&nbsp;regex&nbsp;or&nbsp;other&nbsp;way&nbsp;to&nbsp;speed&nbsp;up</tt></dd></dl>
+
+<dl><dt><a name="Helper-normalize_txt"><strong>normalize_txt</strong></a>(txt)</dt></dl>
+
+<dl><dt><a name="Helper-qsort_by_dict_value"><strong>qsort_by_dict_value</strong></a>(inlist, dict_key)</dt><dd><tt>#&nbsp;Orders&nbsp;a&nbsp;list&nbsp;of&nbsp;dicts&nbsp;by&nbsp;a&nbsp;value&nbsp;inside&nbsp;the&nbsp;dicts</tt></dd></dl>
+
+<dl><dt><a name="Helper-remove_list_points"><strong>remove_list_points</strong></a>(txt)</dt></dl>
+
+<dl><dt><a name="Helper-remove_txt_prelims"><strong>remove_txt_prelims</strong></a>(txt)</dt></dl>
+
+<dl><dt><a name="Helper-write_to_pickle_file"><strong>write_to_pickle_file</strong></a>(data, pickle_file)</dt></dl>
+
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<hr>
+Data and other attributes defined here:<br>
+<dl><dt><strong>camel_case_patteren</strong> = re.compile('([α-ωά-ώ])([Α-ΩΆ-Ώ])')</dl>
+
+<dl><dt><strong>date_patterns</strong> = {}</dl>
+
+<dl><dt><strong>final_s_pattern</strong> = re.compile('(ς)([Α-ΩΆ-Ώα-ωά-ώ])')</dl>
+
+<dl><dt><strong>u_pattern</strong> = re.compile('(ύ)(και)')</dl>
+
+<dl><dt><strong>upper_s_pattern</strong> = re.compile('(Σ)(ΚΑΙ)')</dl>
+
+</td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#eeaa77">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Functions</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#eeaa77"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl><dt><a name="-dump"><strong>dump</strong></a>(obj, file, protocol=None, *, fix_imports=True)</dt><dd><tt>Write&nbsp;a&nbsp;pickled&nbsp;representation&nbsp;of&nbsp;obj&nbsp;to&nbsp;the&nbsp;open&nbsp;file&nbsp;<a href="builtins.html#object">object</a>&nbsp;file.<br>
+&nbsp;<br>
+This&nbsp;is&nbsp;equivalent&nbsp;to&nbsp;``Pickler(file,&nbsp;protocol).<a href="#-dump">dump</a>(obj)``,&nbsp;but&nbsp;may<br>
+be&nbsp;more&nbsp;efficient.<br>
+&nbsp;<br>
+The&nbsp;optional&nbsp;*protocol*&nbsp;argument&nbsp;tells&nbsp;the&nbsp;pickler&nbsp;to&nbsp;use&nbsp;the&nbsp;given<br>
+protocol&nbsp;supported&nbsp;protocols&nbsp;are&nbsp;0,&nbsp;1,&nbsp;2,&nbsp;3&nbsp;and&nbsp;4.&nbsp;&nbsp;The&nbsp;default<br>
+protocol&nbsp;is&nbsp;3;&nbsp;a&nbsp;backward-incompatible&nbsp;protocol&nbsp;designed&nbsp;for&nbsp;Python&nbsp;3.<br>
+&nbsp;<br>
+Specifying&nbsp;a&nbsp;negative&nbsp;protocol&nbsp;version&nbsp;selects&nbsp;the&nbsp;highest&nbsp;protocol<br>
+version&nbsp;supported.&nbsp;&nbsp;The&nbsp;higher&nbsp;the&nbsp;protocol&nbsp;used,&nbsp;the&nbsp;more&nbsp;recent&nbsp;the<br>
+version&nbsp;of&nbsp;Python&nbsp;needed&nbsp;to&nbsp;read&nbsp;the&nbsp;pickle&nbsp;produced.<br>
+&nbsp;<br>
+The&nbsp;*file*&nbsp;argument&nbsp;must&nbsp;have&nbsp;a&nbsp;write()&nbsp;method&nbsp;that&nbsp;accepts&nbsp;a&nbsp;single<br>
+bytes&nbsp;argument.&nbsp;&nbsp;It&nbsp;can&nbsp;thus&nbsp;be&nbsp;a&nbsp;file&nbsp;<a href="builtins.html#object">object</a>&nbsp;opened&nbsp;for&nbsp;binary<br>
+writing,&nbsp;an&nbsp;io.BytesIO&nbsp;instance,&nbsp;or&nbsp;any&nbsp;other&nbsp;custom&nbsp;<a href="builtins.html#object">object</a>&nbsp;that&nbsp;meets<br>
+this&nbsp;interface.<br>
+&nbsp;<br>
+If&nbsp;*fix_imports*&nbsp;is&nbsp;True&nbsp;and&nbsp;protocol&nbsp;is&nbsp;less&nbsp;than&nbsp;3,&nbsp;pickle&nbsp;will&nbsp;try<br>
+to&nbsp;map&nbsp;the&nbsp;new&nbsp;Python&nbsp;3&nbsp;names&nbsp;to&nbsp;the&nbsp;old&nbsp;module&nbsp;names&nbsp;used&nbsp;in&nbsp;Python<br>
+2,&nbsp;so&nbsp;that&nbsp;the&nbsp;pickle&nbsp;data&nbsp;stream&nbsp;is&nbsp;readable&nbsp;with&nbsp;Python&nbsp;2.</tt></dd></dl>
+ <dl><dt><a name="-load"><strong>load</strong></a>(file, *, fix_imports=True, encoding='ASCII', errors='strict')</dt><dd><tt>Read&nbsp;and&nbsp;return&nbsp;an&nbsp;<a href="builtins.html#object">object</a>&nbsp;from&nbsp;the&nbsp;pickle&nbsp;data&nbsp;stored&nbsp;in&nbsp;a&nbsp;file.<br>
+&nbsp;<br>
+This&nbsp;is&nbsp;equivalent&nbsp;to&nbsp;``Unpickler(file).<a href="#-load">load</a>()``,&nbsp;but&nbsp;may&nbsp;be&nbsp;more<br>
+efficient.<br>
+&nbsp;<br>
+The&nbsp;protocol&nbsp;version&nbsp;of&nbsp;the&nbsp;pickle&nbsp;is&nbsp;detected&nbsp;automatically,&nbsp;so&nbsp;no<br>
+protocol&nbsp;argument&nbsp;is&nbsp;needed.&nbsp;&nbsp;Bytes&nbsp;past&nbsp;the&nbsp;pickled&nbsp;<a href="builtins.html#object">object</a>'s<br>
+representation&nbsp;are&nbsp;ignored.<br>
+&nbsp;<br>
+The&nbsp;argument&nbsp;*file*&nbsp;must&nbsp;have&nbsp;two&nbsp;methods,&nbsp;a&nbsp;read()&nbsp;method&nbsp;that&nbsp;takes<br>
+an&nbsp;integer&nbsp;argument,&nbsp;and&nbsp;a&nbsp;readline()&nbsp;method&nbsp;that&nbsp;requires&nbsp;no<br>
+arguments.&nbsp;&nbsp;Both&nbsp;methods&nbsp;should&nbsp;return&nbsp;bytes.&nbsp;&nbsp;Thus&nbsp;*file*&nbsp;can&nbsp;be&nbsp;a<br>
+binary&nbsp;file&nbsp;<a href="builtins.html#object">object</a>&nbsp;opened&nbsp;for&nbsp;reading,&nbsp;an&nbsp;io.BytesIO&nbsp;<a href="builtins.html#object">object</a>,&nbsp;or&nbsp;any<br>
+other&nbsp;custom&nbsp;<a href="builtins.html#object">object</a>&nbsp;that&nbsp;meets&nbsp;this&nbsp;interface.<br>
+&nbsp;<br>
+Optional&nbsp;keyword&nbsp;arguments&nbsp;are&nbsp;*fix_imports*,&nbsp;*encoding*&nbsp;and&nbsp;*errors*,<br>
+which&nbsp;are&nbsp;used&nbsp;to&nbsp;control&nbsp;compatibility&nbsp;support&nbsp;for&nbsp;pickle&nbsp;stream<br>
+generated&nbsp;by&nbsp;Python&nbsp;2.&nbsp;&nbsp;If&nbsp;*fix_imports*&nbsp;is&nbsp;True,&nbsp;pickle&nbsp;will&nbsp;try&nbsp;to<br>
+map&nbsp;the&nbsp;old&nbsp;Python&nbsp;2&nbsp;names&nbsp;to&nbsp;the&nbsp;new&nbsp;names&nbsp;used&nbsp;in&nbsp;Python&nbsp;3.&nbsp;&nbsp;The<br>
+*encoding*&nbsp;and&nbsp;*errors*&nbsp;tell&nbsp;pickle&nbsp;how&nbsp;to&nbsp;decode&nbsp;8-bit&nbsp;string<br>
+instances&nbsp;pickled&nbsp;by&nbsp;Python&nbsp;2;&nbsp;these&nbsp;default&nbsp;to&nbsp;'ASCII'&nbsp;and&nbsp;'strict',<br>
+respectively.&nbsp;&nbsp;The&nbsp;*encoding*&nbsp;can&nbsp;be&nbsp;'bytes'&nbsp;to&nbsp;read&nbsp;these&nbsp;8-bit<br>
+string&nbsp;instances&nbsp;as&nbsp;bytes&nbsp;objects.</tt></dd></dl>
+</td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#55aa55">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Data</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#55aa55"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><strong>HIGHEST_PROTOCOL</strong> = 4</td></tr></table>
+</body></html>

@@ -1,0 +1,98 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: module fetcher</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>fetcher</strong></big></big></font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:/home/chrisk/Software/GFOSS/gsoc2018-GG-extraction/src/main/fetcher.py">/home/chrisk/Software/GFOSS/gsoc2018-GG-extraction/src/main/fetcher.py</a></font></td></tr></table>
+    <p></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#aa55cc">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Modules</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="datetime.html">datetime</a><br>
+<a href="errno.html">errno</a><br>
+<a href="glob.html">glob</a><br>
+</td><td width="25%" valign=top><a href="os.html">os</a><br>
+<a href="platform.html">platform</a><br>
+<a href="re.html">re</a><br>
+</td><td width="25%" valign=top><a href="sys.html">sys</a><br>
+<a href="time.html">time</a><br>
+<a href="selenium.webdriver.html">selenium.webdriver</a><br>
+</td><td width="25%" valign=top></td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ee77aa">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Classes</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#ee77aa"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl>
+<dt><font face="helvetica, arial"><a href="builtins.html#object">builtins.object</a>
+</font></dt><dd>
+<dl>
+<dt><font face="helvetica, arial"><a href="fetcher.html#Fetcher">Fetcher</a>
+</font></dt></dl>
+</dd>
+</dl>
+ <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="Fetcher">class <strong>Fetcher</strong></a>(<a href="builtins.html#object">builtins.object</a>)</font></td></tr>
+    
+<tr><td bgcolor="#ffc8d8"><tt>&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="Fetcher-__init__"><strong>__init__</strong></a>(self, pdf_source)</dt><dd><tt>Initialize&nbsp;self.&nbsp;&nbsp;See&nbsp;help(type(self))&nbsp;for&nbsp;accurate&nbsp;signature.</tt></dd></dl>
+
+<dl><dt><a name="Fetcher-download_all_issues"><strong>download_all_issues</strong></a>(self, type, year)</dt></dl>
+
+<dl><dt><a name="Fetcher-extract_download_links"><strong>extract_download_links</strong></a>(self, html, issue_type)</dt></dl>
+
+<dl><dt><a name="Fetcher-file_exists"><strong>file_exists</strong></a>(self, directory, file_name, file_extension='pdf')</dt></dl>
+
+<dl><dt><a name="Fetcher-find_start_number"><strong>find_start_number</strong></a>(self, type, year)</dt></dl>
+
+<dl><dt><a name="Fetcher-handle_download"><strong>handle_download</strong></a>(self, download_page, params)</dt></dl>
+
+<dl><dt><a name="Fetcher-reset_download_settings"><strong>reset_download_settings</strong></a>(self, download_dir)</dt></dl>
+
+<dl><dt><a name="Fetcher-scrape_pdfs"><strong>scrape_pdfs</strong></a>(self, year_start=2016, year_end=2017, issue_types=[], input_dir='../data')</dt></dl>
+
+<dl><dt><a name="Fetcher-set_chromeOptions"><strong>set_chromeOptions</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="Fetcher-set_download_folder"><strong>set_download_folder</strong></a>(self, download_dir)</dt></dl>
+
+<dl><dt><a name="Fetcher-set_driver"><strong>set_driver</strong></a>(self, chromeOptions)</dt></dl>
+
+<hr>
+Static methods defined here:<br>
+<dl><dt><a name="Fetcher-fetch_paorgs"><strong>fetch_paorgs</strong></a>(local_files)</dt><dd><tt>Return&nbsp;a&nbsp;list&nbsp;of&nbsp;detected&nbsp;paorgs&nbsp;with&nbsp;their&nbsp;approximation<br>
+&nbsp;<br>
+@param&nbsp;local_files:&nbsp;A&nbsp;list&nbsp;of&nbsp;local&nbsp;.xlsx&nbsp;files,&nbsp;currently&nbsp;hardcoded&nbsp;as:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;['../data/NE_resources/DIAVGEIA_ORGS.xlsx',&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'../data/NE_resources/20170615_organosi_mhtrooy_foreon_2017.xlsx']<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@&nbsp;Parser.get_paorgs</tt></dd></dl>
+
+<dl><dt><a name="Fetcher-scrape_paorgs"><strong>scrape_paorgs</strong></a>(local_files)</dt></dl>
+
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<hr>
+Data and other attributes defined here:<br>
+<dl><dt><strong>download_folder</strong> = 'pdfs'</dl>
+
+</td></tr></table></td></tr></table>
+</body></html>
