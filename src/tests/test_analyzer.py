@@ -5,121 +5,121 @@ class AnalyzerTest(Context):
 
 	def test_get_respa_kw_analysis_of_paorg_pres_decree_txts_1(self):
 
-			ref_respa_pdf_path = self.test_pdfs_dir + '/Presidential_Decree_Issues/'
-			txt_1 = self.parser.get_txt('1_Pres_Decree', pdf_path=ref_respa_pdf_path)
-			txt_2 = self.parser.get_txt('2_Pres_Decree', pdf_path=ref_respa_pdf_path)
-			txt_3 = self.parser.get_txt('3_Pres_Decree', pdf_path=ref_respa_pdf_path)
-			txt_4 = self.parser.get_txt('4_Pres_Decree', pdf_path=ref_respa_pdf_path)
-			txt_5 = self.parser.get_txt('5_Pres_Decree', pdf_path=ref_respa_pdf_path)
+		ref_respa_pdf_path = self.test_pdfs_dir + '/Presidential_Decree_Issues/'
+		txt_1 = self.parser.get_txt('1_Pres_Decree', pdf_path=ref_respa_pdf_path)
+		txt_2 = self.parser.get_txt('2_Pres_Decree', pdf_path=ref_respa_pdf_path)
+		txt_3 = self.parser.get_txt('3_Pres_Decree', pdf_path=ref_respa_pdf_path)
+		txt_4 = self.parser.get_txt('4_Pres_Decree', pdf_path=ref_respa_pdf_path)
+		txt_5 = self.parser.get_txt('5_Pres_Decree', pdf_path=ref_respa_pdf_path)
 
-			## 
-			#  Decision Contents
-			##
-			dec_contents_1 = self.parser.get_dec_contents(txt_1);
-			dec_contents_2 = self.parser.get_dec_contents(txt_2); 
-			dec_contents_3 = self.parser.get_dec_contents(txt_3); 
-			dec_contents_4 = self.parser.get_dec_contents(txt_4);
-			dec_contents_5 = self.parser.get_dec_contents(txt_5);
-			
-			## 
-			#  Decision Summaries
-			## 
-			dec_summaries_1 = self.parser.get_dec_summaries(txt_1);
-			dec_summaries_2 = self.parser.get_dec_summaries(txt_2);
-			dec_summaries_3 = self.parser.get_dec_summaries(txt_3);
-			dec_summaries_4 = self.parser.get_dec_summaries(txt_4);
-			dec_summaries_5 = self.parser.get_dec_summaries(txt_5);
+		## 
+		#  Decision Contents
+		##
+		dec_contents_1 = self.parser.get_dec_contents(txt_1);
+		dec_contents_2 = self.parser.get_dec_contents(txt_2); 
+		dec_contents_3 = self.parser.get_dec_contents(txt_3); 
+		dec_contents_4 = self.parser.get_dec_contents(txt_4);
+		dec_contents_5 = self.parser.get_dec_contents(txt_5);
+		
+		## 
+		#  Decision Summaries
+		## 
+		dec_summaries_1 = self.parser.get_dec_summaries(txt_1);
+		dec_summaries_2 = self.parser.get_dec_summaries(txt_2);
+		dec_summaries_3 = self.parser.get_dec_summaries(txt_3);
+		dec_summaries_4 = self.parser.get_dec_summaries(txt_4);
+		dec_summaries_5 = self.parser.get_dec_summaries(txt_5);
 
-			## 
-			#  Decisions
-			##
-			decisions_1 = self.parser.get_decisions(txt_1)
-			decisions_2 = self.parser.get_decisions(txt_2)
-			decisions_3 = self.parser.get_decisions(txt_3)
-			decisions_4 = self.parser.get_decisions(txt_4)
-			decisions_5 = self.parser.get_decisions(txt_5)
+		## 
+		#  Decisions
+		##
+		decisions_1 = self.parser.get_decisions(txt_1)
+		decisions_2 = self.parser.get_decisions(txt_2)
+		decisions_3 = self.parser.get_decisions(txt_3)
+		decisions_4 = self.parser.get_decisions(txt_4)
+		decisions_5 = self.parser.get_decisions(txt_5)
 
-			self.assertTrue(len(decisions_1) == 1);
-			self.assertTrue(len(decisions_2) == 1); 
-			self.assertTrue(len(decisions_3) == 1); 
-			self.assertTrue(len(decisions_4) == 1);
-			self.assertTrue(len(decisions_5) == 1);
+		self.assertTrue(len(decisions_1) == 1);
+		self.assertTrue(len(decisions_2) == 1); 
+		self.assertTrue(len(decisions_3) == 1); 
+		self.assertTrue(len(decisions_4) == 1);
+		self.assertTrue(len(decisions_5) == 1);
 
-			# Convert any dict to list
-			if isinstance(decisions_1, dict): decisions_1 = list(decisions_1.values())
-			if isinstance(decisions_2, dict): decisions_2 = list(decisions_2.values())
-			if isinstance(decisions_3, dict): decisions_3 = list(decisions_3.values())
-			if isinstance(decisions_4, dict): decisions_4 = list(decisions_4.values())
-			if isinstance(decisions_5, dict): decisions_5 = list(decisions_5.values())
+		# Convert any dict to list
+		if isinstance(decisions_1, dict): decisions_1 = list(decisions_1.values())
+		if isinstance(decisions_2, dict): decisions_2 = list(decisions_2.values())
+		if isinstance(decisions_3, dict): decisions_3 = list(decisions_3.values())
+		if isinstance(decisions_4, dict): decisions_4 = list(decisions_4.values())
+		if isinstance(decisions_5, dict): decisions_5 = list(decisions_5.values())
 
-			articles_1 = self.parser.get_articles(decisions_1[0])
-			articles_2 = self.parser.get_articles(decisions_2[0])
-			articles_3 = self.parser.get_articles(decisions_3[0])
-			articles_4 = self.parser.get_articles(decisions_4[0])
-			articles_5 = self.parser.get_articles(decisions_5[0])
+		articles_1 = self.parser.get_articles(decisions_1[0])
+		articles_2 = self.parser.get_articles(decisions_2[0])
+		articles_3 = self.parser.get_articles(decisions_3[0])
+		articles_4 = self.parser.get_articles(decisions_4[0])
+		articles_5 = self.parser.get_articles(decisions_5[0])
 
-			# Convert any dict to list
-			if isinstance(articles_1, dict): articles_1 = list(articles_1.values())
-			if isinstance(articles_2, dict): articles_2 = list(articles_2.values())
-			if isinstance(articles_3, dict): articles_3 = list(articles_3.values())
-			if isinstance(articles_4, dict): articles_4 = list(articles_4.values())
-			if isinstance(articles_5, dict): articles_5 = list(articles_5.values())
+		# Convert any dict to list
+		if isinstance(articles_1, dict): articles_1 = list(articles_1.values())
+		if isinstance(articles_2, dict): articles_2 = list(articles_2.values())
+		if isinstance(articles_3, dict): articles_3 = list(articles_3.values())
+		if isinstance(articles_4, dict): articles_4 = list(articles_4.values())
+		if isinstance(articles_5, dict): articles_5 = list(articles_5.values())
 
-			print(dec_summaries_1, "\n", self.analyzer.get_n_gram_analysis_data([txt_1]), "\n")
-			print(dec_summaries_2, "\n", self.analyzer.get_n_gram_analysis_data([txt_2]), "\n")
-			print(dec_summaries_3, "\n", self.analyzer.get_n_gram_analysis_data([txt_3]), "\n")
-			print(dec_summaries_4, "\n", self.analyzer.get_n_gram_analysis_data([txt_4]), "\n")
-			print(dec_summaries_5, "\n", self.analyzer.get_n_gram_analysis_data([txt_5]), "\n")
+		print(dec_summaries_1, "\n", self.analyzer.get_n_gram_analysis_data([txt_1]), "\n")
+		print(dec_summaries_2, "\n", self.analyzer.get_n_gram_analysis_data([txt_2]), "\n")
+		print(dec_summaries_3, "\n", self.analyzer.get_n_gram_analysis_data([txt_3]), "\n")
+		print(dec_summaries_4, "\n", self.analyzer.get_n_gram_analysis_data([txt_4]), "\n")
+		print(dec_summaries_5, "\n", self.analyzer.get_n_gram_analysis_data([txt_5]), "\n")
 
 	def test_get_respa_kw_analysis_of_paorg_pres_decree_txts_2(self):
 
-			ref_respa_pdf_path = self.test_pdfs_dir + '/Presidential_Decree_Issues/'
-			txt_1 = self.parser.get_txt('6_Pres_Decree', pdf_path=ref_respa_pdf_path)
-			txt_2 = self.parser.get_txt('7_Pres_Decree', pdf_path=ref_respa_pdf_path)
-			txt_3 = self.parser.get_txt('8_Pres_Decree', pdf_path=ref_respa_pdf_path)
+		ref_respa_pdf_path = self.test_pdfs_dir + '/Presidential_Decree_Issues/'
+		txt_1 = self.parser.get_txt('6_Pres_Decree', pdf_path=ref_respa_pdf_path)
+		txt_2 = self.parser.get_txt('7_Pres_Decree', pdf_path=ref_respa_pdf_path)
+		txt_3 = self.parser.get_txt('8_Pres_Decree', pdf_path=ref_respa_pdf_path)
 
-			## 
-			#  Decision Contents
-			##
-			dec_contents_1 = self.parser.get_dec_contents(txt_1);
-			dec_contents_2 = self.parser.get_dec_contents(txt_2); 
-			dec_contents_3 = self.parser.get_dec_contents(txt_3); 
-			
-			## 
-			#  Decision Summaries
-			## 
-			dec_summaries_1 = self.parser.get_dec_summaries(txt_1);
-			dec_summaries_2 = self.parser.get_dec_summaries(txt_2);
-			dec_summaries_3 = self.parser.get_dec_summaries(txt_3);
+		## 
+		#  Decision Contents
+		##
+		dec_contents_1 = self.parser.get_dec_contents(txt_1);
+		dec_contents_2 = self.parser.get_dec_contents(txt_2); 
+		dec_contents_3 = self.parser.get_dec_contents(txt_3); 
+		
+		## 
+		#  Decision Summaries
+		## 
+		dec_summaries_1 = self.parser.get_dec_summaries(txt_1);
+		dec_summaries_2 = self.parser.get_dec_summaries(txt_2);
+		dec_summaries_3 = self.parser.get_dec_summaries(txt_3);
 
-			## 
-			#  Decisions
-			##
-			decisions_1 = self.parser.get_decisions(txt_1)
-			decisions_2 = self.parser.get_decisions(txt_2)
-			decisions_3 = self.parser.get_decisions(txt_3)
+		## 
+		#  Decisions
+		##
+		decisions_1 = self.parser.get_decisions(txt_1)
+		decisions_2 = self.parser.get_decisions(txt_2)
+		decisions_3 = self.parser.get_decisions(txt_3)
 
-			self.assertTrue(len(decisions_1) == 1);
-			self.assertTrue(len(decisions_2) == 1); 
-			self.assertTrue(len(decisions_3) == 1); 
+		self.assertTrue(len(decisions_1) == 1);
+		self.assertTrue(len(decisions_2) == 1); 
+		self.assertTrue(len(decisions_3) == 1); 
 
-			# Convert any dict to list
-			if isinstance(decisions_1, dict): decisions_1 = list(decisions_1.values())
-			if isinstance(decisions_2, dict): decisions_2 = list(decisions_2.values())
-			if isinstance(decisions_3, dict): decisions_3 = list(decisions_3.values())
+		# Convert any dict to list
+		if isinstance(decisions_1, dict): decisions_1 = list(decisions_1.values())
+		if isinstance(decisions_2, dict): decisions_2 = list(decisions_2.values())
+		if isinstance(decisions_3, dict): decisions_3 = list(decisions_3.values())
 
-			articles_1 = self.parser.get_articles(decisions_1[0])
-			articles_2 = self.parser.get_articles(decisions_2[0])
-			articles_3 = self.parser.get_articles(decisions_3[0])
+		articles_1 = self.parser.get_articles(decisions_1[0])
+		articles_2 = self.parser.get_articles(decisions_2[0])
+		articles_3 = self.parser.get_articles(decisions_3[0])
 
-			# Convert any dict to list
-			if isinstance(articles_1, dict): articles_1 = list(articles_1.values())
-			if isinstance(articles_2, dict): articles_2 = list(articles_2.values())
-			if isinstance(articles_3, dict): articles_3 = list(articles_3.values())
-			
-			print(dec_summaries_1, "\n", self.analyzer.get_n_gram_analysis_data([txt_1]), "\n")
-			print(dec_summaries_2, "\n", self.analyzer.get_n_gram_analysis_data([txt_2]), "\n")
-			print(dec_summaries_3, "\n", self.analyzer.get_n_gram_analysis_data([txt_3]), "\n")
+		# Convert any dict to list
+		if isinstance(articles_1, dict): articles_1 = list(articles_1.values())
+		if isinstance(articles_2, dict): articles_2 = list(articles_2.values())
+		if isinstance(articles_3, dict): articles_3 = list(articles_3.values())
+		
+		print(dec_summaries_1, "\n", self.analyzer.get_n_gram_analysis_data([txt_1]), "\n")
+		print(dec_summaries_2, "\n", self.analyzer.get_n_gram_analysis_data([txt_2]), "\n")
+		print(dec_summaries_3, "\n", self.analyzer.get_n_gram_analysis_data([txt_3]), "\n")
 
 	def test_respa_kw_analysis_of_paorg_pres_decree_articles_1(self):
 
@@ -297,7 +297,7 @@ class AnalyzerTest(Context):
 		txt_path = self.test_txts_dir + '/for_training_data/Non-RespAs/paragraphs/'
 		pickle_file = 'non_respa_paragraphs_dict.pkl'
 
-		rel_non_respa_paragraphs_path = '..' + txt_path
+		rel_non_respa_paragraphs_path = txt_path
 		rel_pickle_file_path = '..' + '/data/respa_clf_models/paragraph_respa_classifier_data/' + pickle_file
 
 		non_respa_paragraphs = []
@@ -354,13 +354,13 @@ class AnalyzerTest(Context):
 
 		# Dump to pickle file
 		data = merged_non_respa_prgrph_n_grams_dict
-		self.helper.write_to_pickle_file(data, rel_pickle_file_path)
+		# self.helper.write_to_pickle_file(data, rel_pickle_file_path)
 
 	def test_pickle_merged_respa_paragraphs_dict(self):
 		txt_path = self.test_txts_dir + '/for_training_data/RespAs/paragraphs/'
 		pickle_file = 'respa_paragraphs_dict.pkl'
 
-		rel_respa_paragraphs_path = '..' + txt_path
+		rel_respa_paragraphs_path = txt_path
 		rel_pickle_file_path = '..' + '/data/respa_clf_models/paragraph_respa_classifier_data/' + pickle_file
 		
 		respa_paragraphs = []
@@ -419,7 +419,7 @@ class AnalyzerTest(Context):
 
 		# Dump to pickle file
 		data = merged_respa_prgrph_n_grams_dict
-		self.helper.write_to_pickle_file(data, rel_pickle_file_path)
+		# self.helper.write_to_pickle_file(data, rel_pickle_file_path)
 
 	def test_unit_paragraph_occurences_by_type_1(self):
 		pdf_path = self.test_pdfs_dir + '/Presidential_Decree_Issues/'
