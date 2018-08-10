@@ -172,6 +172,7 @@ if __name__ == '__main__':
     # Parse Command Line Arguments
     parser = argparse.ArgumentParser(
         description='''Fetch Greek Government Gazette Issues from the ET.
+For more info: https://github.com/eellak/gsoc2018-GG-extraction/wiki/Fetch
         ''', 
         formatter_class=argparse.RawTextHelpFormatter)
     required = parser.add_argument_group('required arguments')

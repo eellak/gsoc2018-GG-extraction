@@ -65,6 +65,7 @@ def list_files(input_dir, suffix, recursive=True):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='''
         Convert pdfs to txts.
+For more info: https://github.com/eellak/gsoc2018-GG-extraction/wiki/Convert
     ''')
 
     required = parser.add_argument_group('required arguments')
