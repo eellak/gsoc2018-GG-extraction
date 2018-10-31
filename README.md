@@ -84,6 +84,8 @@ As OrderedDict data, JSON or XML formats.
 
 A set of data and metadata extractors was also implemented to extract useful sections and bits of information such as decision contents, summaries, bodies, etc. from Decision Issues as well as articles, issue dates, numbers, serial numbers etc. from different kinds of Issues.
 
+One should assume an ~80% accuracy rate for the segmentation and extraction of the appropriate Responsibility sections. 
+
 ---
 My progress can be found at [Projects](https://github.com/eellak/gsoc2018-GG-extraction/projects)
 and  short presentation of the project can be found at [Final Report](https://gist.github.com/ckarageorgkaneen/e04fbc5c35a99d06fe3718201ad7990c).
